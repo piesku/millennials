@@ -6,7 +6,7 @@ customElements.define(
     class extends Card {
         override render() {
             return `
-                <a-card name="Robin Hood" cost="1" text="Argh!" image="${Sprites.RobinHood}"></a-card>
+                <a-card name="Robin Hood" cost="1" power="2" text="Coz' he ain't eatin' too much" image="${Sprites.RobinHood}"></a-card>
             `;
         }
 
