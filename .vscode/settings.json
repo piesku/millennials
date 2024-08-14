@@ -2,6 +2,7 @@
     "files.exclude": {
         "package-lock.json": true
     },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
         "source.organizeImports": "explicit"

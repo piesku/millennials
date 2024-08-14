@@ -1,56 +1,11 @@
 <!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>The Dirty Dozen</title>
-        <style>
-            body {
-                font-family: Arial, sans-serif;
-                display: flex;
-                flex-direction: column;
-                height: 100vh;
-                margin: 0;
-                padding: 0;
-            }
-            a-table {
-                flex-grow: 1;
-                background-color: #2c8f2c;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-            a-hand {
-                height: 150px;
-                background-color: #1c5a1c;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                padding: 10px;
-            }
-            a-card {
-                width: 80px;
-                height: 120px;
-                background-color: white;
-                border: 1px solid black;
-                border-radius: 5px;
-                margin: 0 5px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                font-size: 24px;
-                cursor: move;
-                user-select: none;
-            }
-            a-card.dragging {
-                opacity: 0.5;
-            }
-        </style>
-    </head>
-    <body>
-        <a-table></a-table>
-        <a-hand></a-hand>
+<meta charset="utf8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        <script src="./index.js"> </script>
-    </body>
-</html>
+<title>The Dirty Dozen</title>
+<link rel="stylesheet" href="./game.css" />
+
+<a-table></a-table>
+<a-hand></a-hand>
+
+<script src="./index.js"></script>
