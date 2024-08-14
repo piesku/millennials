@@ -15,11 +15,13 @@ export class Card extends HTMLElement {
             target.classList.remove("dragging");
         });
 
-        this.render();
+        this.innerHTML = this.render();
 
         this.draggable = true;
         this.id = next_id().toString();
     }
 
-    render() {}
+    render() {
+        return "";
+    }
 }
