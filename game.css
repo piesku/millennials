@@ -20,22 +20,3 @@ a-hand {
     background-color: #1c5a1c;
     padding: 10px;
 }
-
-a-card {
-    width: 80px;
-    height: 120px;
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 5px;
-    margin: 0 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    cursor: move;
-    user-select: none;
-}
-
-a-card.dragging {
-    opacity: 0.5;
-}

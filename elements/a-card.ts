@@ -3,6 +3,7 @@ customElements.define(
     class extends HTMLElement {
         constructor() {
             super();
+            this.attachShadow({mode: "open"});
         }
 
         connectedCallback() {
@@ -10,18 +11,22 @@ customElements.define(
             const cost = this.getAttribute("cost") ?? "";
             const text = this.getAttribute("text") ?? "";
 
-            this.innerHTML = `
+            this.shadowRoot!.innerHTML = `
               <style>
                 :host {
-                  display: inline-block;
-                  width: 60px;
-                  height: 100px;
+                  display: block;
+                  width: 80px;
+                  height: 120px;
                   background-color: white;
                   border: 1px solid black;
-                  border-radius: 10px;
-                  text-align: center;
-                  font-size: 24px;
-                  line-height: 100px;
+                  border-radius: 5px;
+                  margin: 0 5px;
+                  cursor: move;
+                  user-select: none;
+                }
+
+                :host(.dragging) {
+                  opacity: 0.5;
                 }
               </style>
 
@@ -35,19 +40,6 @@ customElements.define(
                 </div>
               </flex-col>
             `;
-
-            this.addEventListener("dragstart", (e) => {
-                let target = e.target as HTMLElement;
-                if (e.dataTransfer) {
-                    e.dataTransfer.setData("text/plain", target.id);
-                    target.classList.add("dragging");
-                }
-            });
-
-            this.addEventListener("dragend", (e) => {
-                let target = e.target as HTMLElement;
-                target.classList.remove("dragging");
-            });
         }
     },
 );
