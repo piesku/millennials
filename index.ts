@@ -1,44 +1,16 @@
-import {next_id} from "./lib/id.js";
+import "./elements/a-card.js";
+import "./elements/a-hand.js";
+import "./layout/flex-col.js";
+import "./layout/flex-row.js";
 
-const suits = ["♠", "♥", "♦", "♣"];
-const values = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+import "./cards/forrest-gump.js";
 
 const hand = document.querySelector("a-hand")!;
 const table = document.querySelector("a-table")!;
 
-function CreateCard(card_spec: string) {
-    const card = document.createElement("a-card");
-    card.textContent = card_spec;
-    card.draggable = true;
-    card.id = next_id().toString();
-
-    card.addEventListener("dragstart", (e) => {
-        let target = e.target as HTMLElement;
-        if (e.dataTransfer) {
-            e.dataTransfer.setData("text/plain", target.id);
-            target.classList.add("dragging");
-        }
-    });
-
-    card.addEventListener("dragend", (e) => {
-        let target = e.target as HTMLElement;
-        target.classList.remove("dragging");
-    });
-
-    return card;
-}
-
-// Create and shuffle the deck
-const deck = suits.flatMap((suit) => values.map((value) => `${value}${suit}`));
-for (let i = deck.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [deck[i], deck[j]] = [deck[j], deck[i]];
-}
-
 // Deal 5 cards to the hand
 for (let i = 0; i < 5; i++) {
-    const card = CreateCard(deck.pop()!);
-    hand.appendChild(card);
+    hand.appendChild(document.createElement("forrest-gump"));
 }
 
 // Set up the table as a drop zone
