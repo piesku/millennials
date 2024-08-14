@@ -17,15 +17,16 @@
         "watch": "tsc --noEmit --watch -p ."
     },
     "devDependencies": {
-        "esbuild": "0.23",
-        "prettier": "3.3",
-        "typescript": "5.5",
         "cssnano": "7.0",
+        "esbuild": "0.23",
         "htmlnano": "2.1",
         "posthtml": "0.16",
         "posthtml-inline-assets": "3.1",
+        "prettier": "3.3",
         "roadroller": "2.1",
-        "terser": "5.31"
+        "spritesmith": "^3.4.1",
+        "terser": "5.31",
+        "typescript": "5.5"
     },
     "engines": {
         "node": ">=18"
