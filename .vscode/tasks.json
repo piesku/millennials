@@ -4,17 +4,30 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "esbuild (transpile, bundle, serve)",
+            "label": "dev-serve",
+            "group": "build",
+            "type": "npm",
+            "script": "start",
+            "isBackground": true
+        },
+        {
+            "label": "type-check",
+            "group": "build",
+            "type": "npm",
+            "script": "watch",
+            "isBackground": true,
+            "problemMatcher": "$tsc-watch"
+        },
+        {
+            "label": "All (default)",
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
-            "type": "npm",
-            "script": "start",
-            "isBackground": true,
+            "dependsOn": ["dev-serve", "type-check"],
             "runOptions": {
                 "runOn": "folderOpen"
             }
-        },
+        }
     ]
 }
