@@ -19,9 +19,13 @@ export class Card extends HTMLElement {
 
         this.draggable = true;
         this.id = next_id().toString();
+
+        this.addEventListener("CardEntersTable", this);
     }
 
     render() {
         return "";
     }
+
+    handleEvent(event: Event) {}
 }
