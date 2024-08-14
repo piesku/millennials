@@ -2,7 +2,7 @@
 s/'use strict';//
 
 # Remove indents
-s/^ *//
+s/^\s+//
 
 # Remove double-slash comments
 s/\/\/ .*//

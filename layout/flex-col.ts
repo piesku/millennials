@@ -8,28 +8,28 @@ customElements.define(
 
         connectedCallback() {
             this.shadowRoot!.innerHTML = `
-				<style>
-					:host {
-						height: 100%;
-						display: flex;
-						flex-direction: column;
-					}
+                <style>
+                    :host {
+                        height: 100%;
+                        display: flex;
+                        flex-direction: column;
+                    }
 
-					:host([wrap]) {
-						flex-wrap: wrap;
-					}
+                    :host([wrap]) {
+                        flex-wrap: wrap;
+                    }
 
-					:host([reverse]) {
-						flex-direction: column-reverse;
-					}
+                    :host([reverse]) {
+                        flex-direction: column-reverse;
+                    }
 
-					:host([center]) {
-						justify-content: center;
-						align-items: center;
-					}
-				</style>
-				<slot></slot>
-			`;
+                    :host([center]) {
+                        justify-content: center;
+                        align-items: center;
+                    }
+                </style>
+                <slot></slot>
+            `;
         }
     },
 );
