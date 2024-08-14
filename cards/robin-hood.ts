@@ -2,11 +2,11 @@ import {Sprites} from "../sprites/sprites.js";
 import {Card} from "./Card.js";
 
 customElements.define(
-    "forrest-gump",
+    "robin-hood",
     class extends Card {
         override render() {
             return `
-                <a-card name="Forrest Gump" cost="3" text="Hi!" image="${Sprites.ForrestGump}"></a-card>
+                <a-card name="Robin Hood" cost="1" text="Argh!" image="${Sprites.RobinHood}"></a-card>
             `;
         }
 
