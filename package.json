@@ -1,0 +1,23 @@
+{
+    "name": "dirty12",
+    "version": "0.0.0",
+    "private": true,
+    "description": "A js13kGames 2024 game.",
+    "contributors": [
+        "Stanisław Małolepszy <sta@malolepszy.org>",
+        "Michał Budzyński <michal@virtualdesign.pl>"
+    ],
+    "license": "ISC",
+    "scripts": {
+        "lint": "prettier --check \"**/*.ts\"",
+        "pretty": "prettier --write \"**/*.ts\"",
+        "start": "esbuild ./index.js --define:DEBUG=true --target=es2020 --preserve-symlinks --bundle --sourcemap --outdir=. --outbase=. --color=false --servedir=. --serve=1234"
+    },
+    "devDependencies": {
+        "esbuild": "0.23",
+        "prettier": "3.3"
+    },
+    "engines": {
+        "node": ">=18"
+    }
+}
