@@ -5,6 +5,5 @@ customElements.define(
     class extends Location {
         Name = "Death Star";
         Description = "A moon-sized Imperial military battlestation.";
-        Points = 100;
     },
 );

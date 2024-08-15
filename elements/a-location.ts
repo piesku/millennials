@@ -10,6 +10,9 @@ customElements.define(
         }
 
         connectedCallback() {
+            const name = this.getAttribute("name") ?? "";
+            const description = this.getAttribute("description") ?? "";
+
             this.shadowRoot!.innerHTML = `
                 <style>
                     .location {
@@ -26,6 +29,7 @@ customElements.define(
                     .drop-zone {
                         display: flex;
                         justify-content: space-between;
+                        align-items: center;
                         width: 100%;
                     }
                     .drop-area {
@@ -41,18 +45,25 @@ customElements.define(
                         width: 100%;
                         margin-top: 10px;
                     }
+                    .name-description {
+                        text-align: center;
+                        margin: 0 10px;
+                    }
                 </style>
                 <div class="location">
-                    <div class="description">
-                        <slot name="description"></slot>
-                    </div>
                     <div class="drop-zone">
                         <div class="drop-area" id="player-drop-area"></div>
+                        <div class="name-description">
+                            <div class="name">${name}</div>
+                            <div class="description">
+                                <slot name="description">${description}</slot>
+                            </div>
+                        </div>
                         <div class="drop-area" id="enemy-drop-area"></div>
                     </div>
                     <div class="points">
-                        <div>Player Points: <span id="player-points">${this.playerPoints}</span></div>
-                        <div>Enemy Points: <span id="enemy-points">${this.enemyPoints}</span></div>
+                        <div><span id="player-points">${this.playerPoints}</span></div>
+                        <div><span id="enemy-points">${this.enemyPoints}</span></div>
                     </div>
                 </div>
             `;
@@ -86,7 +97,7 @@ customElements.define(
                         : this.shadowRoot!.getElementById("enemy-drop-area")!;
                 if (dropArea.children.length < 4) {
                     dropArea.appendChild(card);
-                    this.updatePoints(side, parseInt(card.getAttribute("power")!));
+                    this.updatePoints(side, parseInt(card.children[0].getAttribute("power")!));
                 }
             }
         }
