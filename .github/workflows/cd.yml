@@ -3,16 +3,18 @@ on:
     push:
         branches:
             - "main"
+permissions:
+    contents: write
 jobs:
     build-and-deploy:
         runs-on: ubuntu-latest
         steps:
             - name: 🛎️ Check out
-              uses: actions/checkout@v2
+              uses: actions/checkout@v4
             - name: 🧮 Use Node.js
-              uses: actions/setup-node@v1
+              uses: actions/setup-node@v4
               with:
-                  node-version: 16.x
+                  node-version: 18.x
             - name: 📦 Install dependencies
               run: npm ci
             - name: 🧽 Lint
@@ -20,7 +22,7 @@ jobs:
             - name: 🛠️ Build
               run: make -C play index.html
             - name: 🚀 Deploy
-              uses: JamesIves/github-pages-deploy-action@4.1.1
+              uses: JamesIves/github-pages-deploy-action@v4
               with:
                   branch: gh-pages
                   folder: play
