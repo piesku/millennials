@@ -16,6 +16,10 @@ import "./cards/obi-wan-kenobi.js";
 import "./cards/robin-hood.js";
 import "./cards/robo-cop.js";
 import "./cards/super-man.js";
+import "./cards/tmnt-donatello.js";
+import "./cards/tmnt-leonardo.js";
+import "./cards/tmnt-michaelangelo.js";
+import "./cards/tmnt-raphael.js";
 
 import "./locations/arkham-asylum.js";
 import "./locations/death-star.js";
@@ -37,7 +41,12 @@ const elements = [
     "ne-o",
     "luke-skywalker",
     "robo-cop",
+    "tmnt-leonardo",
+    "tmnt-michaelangelo",
+    "tmnt-donatello",
+    "tmnt-raphael",
 ];
+
 for (let i = 0; i < 8; i++) {
     hand.appendChild(document.createElement(element(elements)));
 }

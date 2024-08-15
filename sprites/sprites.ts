@@ -9,4 +9,8 @@ export const enum Sprites {
     HarryPotter,
     Batman,
     Superman,
+    Leonardo,
+    Donatello,
+    Raphael,
+    MichaelAngelo,
 }
