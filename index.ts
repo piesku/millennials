@@ -17,7 +17,9 @@ import "./cards/robin-hood.js";
 import "./cards/robo-cop.js";
 import "./cards/super-man.js";
 
+import "./locations/arkham-asylum.js";
 import "./locations/death-star.js";
+import "./locations/future-hill-valley.js";
 
 import {element, set_seed} from "./lib/random.js";
 
@@ -41,6 +43,7 @@ for (let i = 0; i < 8; i++) {
 }
 
 const table = document.querySelector("a-table")!;
-for (let i = 0; i < 3; i++) {
-    table.appendChild(document.createElement("death-star"));
+const locations = ["death-star", "arkham-asylum", "future-hill-valley"];
+for (let i = 0; i < locations.length; i++) {
+    table.appendChild(document.createElement(locations[i]));
 }
