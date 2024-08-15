@@ -28,7 +28,10 @@ game.roadroller.js: game.terser.js | node_modules
 	npx --quiet roadroller -O1 --dirty $< -o $@
 
 game.html: ../index.html
-	sed 's/index.js/game.roadroller.js/' $< > $@
+	sed \
+		-e 's/index.js/game.roadroller.js/' \
+		-e 's/\.\/sprites/..\/sprites/' \
+		$< > $@
 
 index.html: game.html game.roadroller.js posthtml.cjs | node_modules
 	node posthtml.cjs $< > $@
