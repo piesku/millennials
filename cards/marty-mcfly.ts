@@ -4,11 +4,11 @@ import {Card} from "./Card.js";
 customElements.define(
     "marty-mcfly",
     class extends Card {
-        override render() {
-            return `
-                <a-card name="Marty McFly" cost="1" power="3" text="Alzheimer, I'm in you!" image="${Sprites.MartyMcFly}"></a-card>
-            `;
-        }
+        Name = "Marty McFly";
+        Cost = 1;
+        Power = 3;
+        Text = "Alzheimer, I'm in you!";
+        Sprite = Sprites.MartyMcFly;
 
         override handleEvent(event: Event) {
             switch (event.type) {
