@@ -68,7 +68,7 @@ for (let i = 0; i < enemies.length; i++) {
     for (let j = 0; j < enemies[i].count; j++) {
         const randomLocation = element(locations);
         const locationElement = document.querySelector(randomLocation)!;
-        const enemyDropZone = locationElement.children[0].shadowRoot!.querySelector("#enemy-drop-area")!;
+        const enemyDropZone = locationElement.shadowRoot!.children[0].shadowRoot!.querySelector("#enemy-drop-area")!;
 
         enemyDropZone.appendChild(document.createElement(enemies[i].type));
     }
