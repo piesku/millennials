@@ -19,9 +19,15 @@
 <img hidden src="./sprites/spritesheet.png.webp" />
 
 <battle-controller>
-    <a-table style="flex: 1;"></a-table>
-    <button>End Turn</button>
-    <a-hand></a-hand>
+    <an-actor who="player1">
+        <a-hand></a-hand>
+    </an-actor>
+
+    <a-table style="flex: 1; align-items: center;"></a-table>
+
+    <an-actor who="player2">
+        <a-hand></a-hand>
+    </an-actor>
 </battle-controller>
 
 <script src="./index.js"></script>

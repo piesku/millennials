@@ -10,12 +10,9 @@ customElements.define(
 
         connectedCallback() {
             this.shadowRoot!.innerHTML = html`
-                <style>
-                    :host {
-                        display: block;
-                    }
-                </style>
-                <slot></slot>
+                <flex-col style="justify-content: center;">
+                    <slot></slot>
+                </flex-col>
             `;
         }
     },
