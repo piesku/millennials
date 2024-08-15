@@ -9,7 +9,14 @@ customElements.define(
         }
 
         connectedCallback() {
-            this.shadowRoot!.innerHTML = html`<slot></slot> `;
+            this.shadowRoot!.innerHTML = html`
+                <style>
+                    :host {
+                        display: block;
+                    }
+                </style>
+                <slot></slot>
+            `;
         }
     },
 );

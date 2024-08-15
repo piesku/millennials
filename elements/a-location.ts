@@ -1,3 +1,4 @@
+import {Card} from "../cards/Card.js";
 import {html} from "../lib/html.js";
 
 customElements.define(
@@ -87,7 +88,7 @@ customElements.define(
         handleDrop(event: DragEvent, side: "player" | "enemy") {
             event.preventDefault();
             const data = event.dataTransfer!.getData("text/plain");
-            const card = document.getElementById(data);
+            const card = document.getElementById(data) as Card;
             if (card) {
                 const dropArea =
                     side === "player"
@@ -95,7 +96,7 @@ customElements.define(
                         : this.shadowRoot!.getElementById("enemy-drop-area")!;
                 if (dropArea.children.length < 4) {
                     dropArea.appendChild(card);
-                    this.updatePoints(side, parseInt(card.children[0].getAttribute("power")!));
+                    this.updatePoints(side, card.Power);
                 }
             }
         }
