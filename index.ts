@@ -7,10 +7,12 @@ import "./layout/flex-row.js";
 import "./cards/bat-man.js";
 import "./cards/forrest-gump.js";
 import "./cards/harry-potter.js";
+import "./cards/luke-skywalker.js";
 import "./cards/marty-mcfly.js";
 import "./cards/ne-o.js";
 import "./cards/obi-wan-kenobi.js";
 import "./cards/robin-hood.js";
+import "./cards/robo-cop.js";
 import "./cards/super-man.js";
 
 import {element, set_seed} from "./lib/random.js";
@@ -27,7 +29,9 @@ const elements = [
     "harry-potter",
     "bat-man",
     "ne-o",
+    "luke-skywalker",
+    "robo-cop",
 ];
-for (let i = 0; i < 5; i++) {
+for (let i = 0; i < 8; i++) {
     hand.appendChild(document.createElement(element(elements)));
 }
