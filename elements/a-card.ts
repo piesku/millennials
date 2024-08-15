@@ -20,14 +20,8 @@ customElements.define(
             const spriteYPosition = (spriteSize + spriteMargin) * imageIndex * scale;
 
             const img_src = document.querySelector("body > img[hidden]")?.getAttribute("src");
-            let backgroundImageUrl = "/sprites/spritesheet.png.webp";
-            if (img_src) {
-                if (img_src.startsWith("data:image")) {
-                    backgroundImageUrl = img_src;
-                } else {
-                    backgroundImageUrl = `url(${img_src})`;
-                }
-            }
+            const backgroundImageUrl = `url(${img_src})`;
+
             this.shadowRoot!.innerHTML = `
               <style>
                 :host {
