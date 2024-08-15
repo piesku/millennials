@@ -1,6 +1,8 @@
 import "./elements/a-card.js";
 import "./elements/a-hand.js";
+import "./elements/a-location.js";
 import "./elements/a-table.js";
+
 import "./layout/flex-col.js";
 import "./layout/flex-row.js";
 
@@ -14,6 +16,8 @@ import "./cards/obi-wan-kenobi.js";
 import "./cards/robin-hood.js";
 import "./cards/robo-cop.js";
 import "./cards/super-man.js";
+
+import "./locations/death-star.js";
 
 import {element, set_seed} from "./lib/random.js";
 
@@ -34,4 +38,9 @@ const elements = [
 ];
 for (let i = 0; i < 8; i++) {
     hand.appendChild(document.createElement(element(elements)));
+}
+
+const table = document.querySelector("a-table")!;
+for (let i = 0; i < 3; i++) {
+    table.appendChild(document.createElement("death-star"));
 }
