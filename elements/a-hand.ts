@@ -1,3 +1,5 @@
+import {html} from "../lib/html.js";
+
 customElements.define(
     "a-hand",
     class extends HTMLElement {
@@ -7,7 +9,7 @@ customElements.define(
         }
 
         connectedCallback() {
-            this.shadowRoot!.innerHTML = `
+            this.shadowRoot!.innerHTML = html`
                 <flex-row>
                     <slot></slot>
                 </flex-row>

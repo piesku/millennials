@@ -1,3 +1,5 @@
+import {html} from "../lib/html.js";
+
 customElements.define(
     "a-location",
     class extends HTMLElement {
@@ -13,7 +15,7 @@ customElements.define(
             const name = this.getAttribute("name") ?? "";
             const description = this.getAttribute("description") ?? "";
 
-            this.shadowRoot!.innerHTML = `
+            this.shadowRoot!.innerHTML = html`
                 <style>
                     .location {
                         display: flex;

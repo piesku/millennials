@@ -1,3 +1,5 @@
+import {html} from "../lib/html.js";
+
 customElements.define(
     "a-table",
     class extends HTMLElement {
@@ -7,9 +9,7 @@ customElements.define(
         }
 
         connectedCallback() {
-            this.shadowRoot!.innerHTML = `
-                <slot></slot>
-            `;
+            this.shadowRoot!.innerHTML = html`<slot></slot> `;
         }
     },
 );
