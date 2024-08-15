@@ -18,7 +18,7 @@ jobs:
             - name: 🧽 Lint
               run: npm run lint
             - name: 🛠️ Build
-              run: make
+              run: make -C play index.html
             - name: 🚀 Deploy
               uses: JamesIves/github-pages-deploy-action@4.1.1
               with:
