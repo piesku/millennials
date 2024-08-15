@@ -22,6 +22,7 @@ customElements.define(
                         border: 1px solid #000;
                         padding: 10px;
                         margin: 10px;
+                        background-color: #246b24;
                     }
                     .description {
                         margin: 10px 0;
@@ -40,10 +41,7 @@ customElements.define(
                         flex-wrap: wrap;
                     }
                     .points {
-                        display: flex;
-                        justify-content: space-between;
-                        width: 100%;
-                        margin-top: 10px;
+                        margin: 5px;
                     }
                     .name-description {
                         text-align: center;
@@ -53,17 +51,15 @@ customElements.define(
                 <div class="location">
                     <div class="drop-zone">
                         <div class="drop-area" id="player-drop-area"></div>
+                        <div id="player-points" class="points">${this.playerPoints}</div>
                         <div class="name-description">
                             <div class="name">${name}</div>
                             <div class="description">
                                 <slot name="description">${description}</slot>
                             </div>
                         </div>
+                        <div id="enemy-points" class="points">${this.enemyPoints}</div>
                         <div class="drop-area" id="enemy-drop-area"></div>
-                    </div>
-                    <div class="points">
-                        <div><span id="player-points">${this.playerPoints}</span></div>
-                        <div><span id="enemy-points">${this.enemyPoints}</span></div>
                     </div>
                 </div>
             `;
