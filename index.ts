@@ -21,6 +21,8 @@ import "./cards/tmnt-leonardo.js";
 import "./cards/tmnt-michaelangelo.js";
 import "./cards/tmnt-raphael.js";
 
+import "./cards/enemies/empire.js";
+
 import "./locations/arkham-asylum.js";
 import "./locations/death-star.js";
 import "./locations/future-hill-valley.js";
@@ -55,4 +57,19 @@ const table = document.querySelector("a-table")!;
 const locations = ["death-star", "arkham-asylum", "future-hill-valley"];
 for (let i = 0; i < locations.length; i++) {
     table.appendChild(document.createElement(locations[i]));
+}
+
+const enemies = [
+    {type: "darth-vader", count: 1},
+    {type: "storm-trooper", count: 3},
+];
+
+for (let i = 0; i < enemies.length; i++) {
+    for (let j = 0; j < enemies[i].count; j++) {
+        const randomLocation = element(locations);
+        const locationElement = document.querySelector(randomLocation)!;
+        const enemyDropZone = locationElement.children[0].shadowRoot!.querySelector("#enemy-drop-area")!;
+
+        enemyDropZone.appendChild(document.createElement(enemies[i].type));
+    }
 }

@@ -13,4 +13,7 @@ export const enum Sprites {
     Donatello,
     Raphael,
     MichaelAngelo,
+
+    DarthVader,
+    Stormtrooper,
 }
