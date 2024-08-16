@@ -46,13 +46,13 @@ export class ActorController extends HTMLElement {
         const hand = this.querySelector("a-hand")!;
         const deck = this.querySelector("a-deck")!;
 
+        yield;
+
         if (deck.firstElementChild) {
             console.log("draws a card");
             hand.appendChild(deck.firstElementChild);
-            yield;
         } else {
             console.log("but the deck is empty");
-            yield;
         }
     }
 }

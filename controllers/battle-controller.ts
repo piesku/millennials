@@ -31,7 +31,7 @@ customElements.define(
         async InitBattle() {
             for (let _ of this.StartBattle()) {
                 console.log("tick");
-                await delay(1000);
+                await delay(450);
             }
         }
 
