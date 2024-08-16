@@ -1,19 +1,18 @@
+import {CardElement} from "../elements/a-card.js";
 import {element} from "../lib/random.js";
 import {delay} from "../lib/timeout.js";
 import {ActorController} from "./actor-controller.js";
 
-customElements.define(
-    "battle-controller",
-    class extends HTMLElement {
-        CurrentTurn = 0;
+export class BattleController extends HTMLElement {
+    CurrentTurn = 0;
 
-        constructor() {
-            super();
-            this.attachShadow({mode: "open"});
-        }
+    constructor() {
+        super();
+        this.attachShadow({mode: "open"});
+    }
 
-        connectedCallback() {
-            this.shadowRoot!.innerHTML = `
+    connectedCallback() {
+        this.shadowRoot!.innerHTML = `
                 <style>
                     :host {
                         display: block;
@@ -25,53 +24,58 @@ customElements.define(
                 </flex-col>
             `;
 
-            this.InitBattle();
+        this.InitBattle();
+    }
+
+    async InitBattle() {
+        for (let _ of this.StartBattle()) {
+            await delay(250);
+        }
+    }
+
+    *StartBattle() {
+        const table = this.querySelector("a-table")!;
+        const locations = ["death-star", "arkham-asylum", "future-hill-valley"];
+        for (let i = 0; i < locations.length; i++) {
+            table.appendChild(document.createElement(locations[i]));
         }
 
-        async InitBattle() {
-            for (let _ of this.StartBattle()) {
-                console.log("tick");
-                await delay(450);
+        const player1 = this.querySelector("actor-controller[who=player1]")! as ActorController;
+        yield* player1.SetupBattle();
+
+        const enemies = [
+            {type: "darth-vader", count: 0},
+            {type: "storm-trooper", count: 0},
+        ];
+
+        for (let i = 0; i < enemies.length; i++) {
+            for (let j = 0; j < enemies[i].count; j++) {
+                const randomLocation = element(locations);
+                const locationElement = this.querySelector(randomLocation)!;
+                const enemyDropZone = locationElement
+                    .shadowRoot!.querySelector("a-location")!
+                    .shadowRoot!.querySelector("#enemy-drop-area")!;
+                enemyDropZone.appendChild(document.createElement(enemies[i].type));
             }
         }
+    }
 
-        *StartBattle() {
-            const table = this.querySelector("a-table")!;
-            const locations = ["death-star", "arkham-asylum", "future-hill-valley"];
-            for (let i = 0; i < locations.length; i++) {
-                table.appendChild(document.createElement(locations[i]));
-            }
+    *StartTurn() {
+        // Start the turn
+    }
 
-            const player1 = this.querySelector("actor-controller[who=player1]")! as ActorController;
-            yield* player1.SetupBattle();
-
-            const enemies = [
-                {type: "darth-vader", count: 0},
-                {type: "storm-trooper", count: 0},
-            ];
-
-            for (let i = 0; i < enemies.length; i++) {
-                for (let j = 0; j < enemies[i].count; j++) {
-                    const randomLocation = element(locations);
-                    const locationElement = this.querySelector(randomLocation)!;
-                    const enemyDropZone = locationElement
-                        .shadowRoot!.querySelector("a-location")!
-                        .shadowRoot!.querySelector("#enemy-drop-area")!;
-                    enemyDropZone.appendChild(document.createElement(enemies[i].type));
-                }
-            }
+    async RunEndTurn() {
+        for (let _ of this.EndTurn()) {
+            await delay(250);
         }
+    }
 
-        *StartTurn() {
-            // Start the turn
+    *EndTurn() {
+        // TODO Just for testing.
+        for (let card of this.querySelectorAll<CardElement>("a-table a-card")) {
+            yield* card.Controller.Reveal();
         }
+    }
+}
 
-        *EndTurn() {
-            // End the turn
-        }
-
-        *PlayCard() {
-            // Play a card
-        }
-    },
-);
+customElements.define("battle-controller", BattleController);

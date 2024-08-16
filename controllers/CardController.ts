@@ -8,6 +8,8 @@ export abstract class CardController extends HTMLElement {
     abstract Text: string;
     abstract Sprite: Sprites;
 
+    IsRevealed = false;
+
     connectedCallback() {
         this.innerHTML = `
             <a-card name="${this.Name}" cost="${this.Cost}" power="${this.Power}" text="${this.Text}" image="${this.Sprite}"></a-card>
@@ -30,6 +32,12 @@ export abstract class CardController extends HTMLElement {
         });
 
         this.addEventListener("CardEntersTable", this);
+    }
+
+    *Reveal() {
+        yield console.log(`${this.Name} is revealed`);
+        this.IsRevealed = true;
+        this.querySelector("a-card")!.setAttribute("revealed", "");
     }
 
     handleEvent(event: Event) {}

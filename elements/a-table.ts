@@ -1,3 +1,4 @@
+import {BattleController} from "../controllers/battle-controller.js";
 import {html} from "../lib/html.js";
 
 customElements.define(
@@ -11,9 +12,17 @@ customElements.define(
         connectedCallback() {
             this.shadowRoot!.innerHTML = html`
                 <flex-col style="justify-content: center;">
+                    <button>End Turn</button>
                     <slot></slot>
                 </flex-col>
             `;
+
+            this.shadowRoot!.querySelector("button")!.addEventListener("click", () => {
+                // this.dispatchEvent(new CustomEvent("end-turn"));
+
+                let battle = this.closest("battle-controller")! as BattleController;
+                battle.RunEndTurn();
+            });
         }
     },
 );
