@@ -34,7 +34,6 @@ customElements.define(
                         background-color: white;
                         border: 1px solid black;
                         border-radius: 5px;
-                        margin: 0 5px;
                         cursor: move;
                         user-select: none;
                         position: relative;

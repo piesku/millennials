@@ -11,12 +11,18 @@ customElements.define(
         connectedCallback() {
             this.shadowRoot!.innerHTML = html`
                 <style>
-                    :host > * {
-                        background-image: url("./assets/unrevealed.webp");
-                        margin-right: -18px;
+                    :host {
+                        display: block;
+                        height: 200px;
+                        background-color: #1c5a1c;
+                        padding: 10px;
+                    }
+
+                    slot::slotted(*) {
+                        margin-right: -115px;
                     }
                 </style>
-                <flex-row wrap>
+                <flex-row>
                     <slot></slot>
                 </flex-row>
             `;

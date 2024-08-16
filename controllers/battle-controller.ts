@@ -1,5 +1,6 @@
 import {element} from "../lib/random.js";
 import {delay} from "../lib/timeout.js";
+import {ActorController} from "./actor-controller.js";
 
 customElements.define(
     "battle-controller",
@@ -35,32 +36,14 @@ customElements.define(
         }
 
         *StartBattle() {
-            const hand = this.querySelector("a-hand")!;
-            const cards = [
-                "forrest-gump",
-                "robin-hood",
-                "marty-mcfly",
-                "super-man",
-                "obi-wan-kenobi",
-                "harry-potter",
-                "bat-man",
-                "ne-o",
-                "luke-skywalker",
-                "robo-cop",
-                "tmnt-leonardo",
-                "tmnt-michaelangelo",
-                "tmnt-donatello",
-                "tmnt-raphael",
-            ];
-            for (let i = 0; i < 3; i++) {
-                hand.appendChild(document.createElement(element(cards)));
-            }
-
             const table = this.querySelector("a-table")!;
             const locations = ["death-star", "arkham-asylum", "future-hill-valley"];
             for (let i = 0; i < locations.length; i++) {
                 table.appendChild(document.createElement(locations[i]));
             }
+
+            const player1 = this.querySelector("actor-controller[who=player1]")! as ActorController;
+            yield* player1.SetupBattle();
 
             const enemies = [
                 {type: "darth-vader", count: 0},
@@ -85,10 +68,6 @@ customElements.define(
 
         *EndTurn() {
             // End the turn
-        }
-
-        *DrawCard() {
-            // Draw a card
         }
 
         *PlayCard() {

@@ -6,6 +6,7 @@ import "./elements/a-table.js";
 import "./elements/location-owner.js";
 import "./elements/location-slot.js";
 
+import "./controllers/actor-controller.js";
 import "./controllers/battle-controller.js";
 
 import "./layout/flex-col.js";
