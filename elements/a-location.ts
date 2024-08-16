@@ -1,4 +1,5 @@
 import {html} from "../lib/html.js";
+import {Location} from "../locations/Location.js";
 
 customElements.define(
     "a-location",
@@ -67,6 +68,10 @@ customElements.define(
                     <location-slot label=4></location-slot>
                 </location-owner>
             `;
+        }
+
+        get Location(): Location {
+            return this.parentElement as Location;
         }
 
         updatePoints(side: "player" | "enemy", points: number) {

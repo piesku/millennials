@@ -1,3 +1,4 @@
+import {Card} from "../cards/Card.js";
 import {html} from "../lib/html.js";
 
 customElements.define(
@@ -96,6 +97,10 @@ customElements.define(
                     <div class="description">${text}</div>
                 </flex-col>
             `;
+        }
+
+        get Card(): Card {
+            return this.parentElement as Card;
         }
     },
 );

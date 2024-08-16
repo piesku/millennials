@@ -8,13 +8,10 @@ export abstract class Card extends HTMLElement {
     abstract Text: string;
     abstract Sprite: Sprites;
 
-    constructor() {
-        super();
-        this.attachShadow({mode: "open"});
-    }
-
     connectedCallback() {
-        this.shadowRoot!.innerHTML = this.Render();
+        this.innerHTML = `
+            <a-card name="${this.Name}" cost="${this.Cost}" power="${this.Power}" text="${this.Text}" image="${this.Sprite}"></a-card>
+        `;
 
         this.draggable = true;
         this.id = next_id().toString();
@@ -33,12 +30,6 @@ export abstract class Card extends HTMLElement {
         });
 
         this.addEventListener("CardEntersTable", this);
-    }
-
-    Render() {
-        return `
-            <a-card name="${this.Name}" cost="${this.Cost}" power="${this.Power}" text="${this.Text}" image="${this.Sprite}"></a-card>
-        `;
     }
 
     handleEvent(event: Event) {}
