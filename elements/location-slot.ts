@@ -20,6 +20,10 @@ customElements.define(
                         width: 60px;
                         height: 90px;
                     }
+
+                    slot::slotted(*) {
+                        transform: scale(0.5) translate(-50%, -50%);
+                    }
                 </style>
                 <slot>${label}</slot>
             `;
