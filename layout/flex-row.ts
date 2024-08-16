@@ -10,7 +10,6 @@ customElements.define(
             this.shadowRoot!.innerHTML = `
                 <style>
                     :host {
-                        width: 100%;
                         display: flex;
                         flex-direction: row;
                     }

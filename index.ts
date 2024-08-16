@@ -1,7 +1,10 @@
 import "./elements/a-card.js";
+import "./elements/a-deck.js";
 import "./elements/a-hand.js";
 import "./elements/a-location.js";
 import "./elements/a-table.js";
+import "./elements/location-owner.js";
+import "./elements/location-slot.js";
 
 import "./controllers/battle-controller.js";
 

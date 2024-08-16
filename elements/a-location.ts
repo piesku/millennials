@@ -1,4 +1,3 @@
-import {Card} from "../cards/Card.js";
 import {html} from "../lib/html.js";
 
 customElements.define(
@@ -19,9 +18,6 @@ customElements.define(
             this.shadowRoot!.innerHTML = html`
                 <style>
                     .location {
-                        display: flex;
-                        flex-direction: column;
-                        align-items: center;
                         border: 1px solid #000;
                         padding: 10px;
                         margin: 10px;
@@ -30,18 +26,9 @@ customElements.define(
                     .description {
                         margin: 10px 0;
                     }
-                    .drop-zone {
-                        display: flex;
-                        justify-content: space-between;
-                        align-items: center;
-                        width: 100%;
-                    }
-                    .drop-area {
+                    slot[name^="player"]::slotted(*) {
                         border: 1px dashed #000;
                         width: 45%;
-                        min-height: 100px;
-                        display: flex;
-                        flex-wrap: wrap;
                     }
                     .points {
                         margin: 5px;
@@ -51,54 +38,35 @@ customElements.define(
                         margin: 0 10px;
                     }
                 </style>
-                <div class="location">
-                    <div class="drop-zone">
-                        <div class="drop-area" id="player-drop-area"></div>
-                        <div id="player-points" class="points">${this.playerPoints}</div>
-                        <div class="name-description">
-                            <div class="name">${name}</div>
-                            <div class="description">
-                                <slot name="description">${description}</slot>
-                            </div>
+                <flex-row class="location">
+                    <slot name="player1"></slot>
+                    <div id="player-points" class="points">${this.playerPoints}</div>
+                    <div class="name-description">
+                        <div class="name">${name}</div>
+                        <div class="description">
+                            <slot name="description">${description}</slot>
                         </div>
-                        <div id="enemy-points" class="points">${this.enemyPoints}</div>
-                        <div class="drop-area" id="enemy-drop-area"></div>
                     </div>
-                </div>
+                    <div id="enemy-points" class="points">${this.enemyPoints}</div>
+                    <slot name="player2"></slot>
+                </flex-row>
             `;
 
-            this.setupDropAreas();
-        }
+            this.innerHTML = `
+                <location-owner slot="player1">
+                    <location-slot label=1></location-slot>
+                    <location-slot label=2></location-slot>
+                    <location-slot label=3></location-slot>
+                    <location-slot label=4></location-slot>
+                </location-owner>
 
-        setupDropAreas() {
-            const playerDropArea = this.shadowRoot!.getElementById("player-drop-area")!;
-            const enemyDropArea = this.shadowRoot!.getElementById("enemy-drop-area")!;
-
-            playerDropArea.addEventListener("dragover", (e) => this.handleDragOver(e));
-            playerDropArea.addEventListener("drop", (e) => this.handleDrop(e, "player"));
-
-            enemyDropArea.addEventListener("dragover", (e) => this.handleDragOver(e));
-            enemyDropArea.addEventListener("drop", (e) => this.handleDrop(e, "enemy"));
-        }
-
-        handleDragOver(event: DragEvent) {
-            event.preventDefault();
-        }
-
-        handleDrop(event: DragEvent, side: "player" | "enemy") {
-            event.preventDefault();
-            const data = event.dataTransfer!.getData("text/plain");
-            const card = document.getElementById(data) as Card;
-            if (card) {
-                const dropArea =
-                    side === "player"
-                        ? this.shadowRoot!.getElementById("player-drop-area")!
-                        : this.shadowRoot!.getElementById("enemy-drop-area")!;
-                if (dropArea.children.length < 4) {
-                    dropArea.appendChild(card);
-                    this.updatePoints(side, card.Power);
-                }
-            }
+                <location-owner slot="player2" reverse>
+                    <location-slot label=1></location-slot>
+                    <location-slot label=2></location-slot>
+                    <location-slot label=3></location-slot>
+                    <location-slot label=4></location-slot>
+                </location-owner>
+            `;
         }
 
         updatePoints(side: "player" | "enemy", points: number) {

@@ -19,15 +19,17 @@
 <img hidden src="./sprites/spritesheet.png.webp" />
 
 <battle-controller>
-    <an-actor who="player1">
+    <actor-controller who="player1">
+        <a-deck></a-deck>
         <a-hand></a-hand>
-    </an-actor>
+    </actor-controller>
 
     <a-table style="flex: 1; align-items: center;"></a-table>
 
-    <an-actor who="player2">
+    <actor-controller who="player2">
+        <a-deck></a-deck>
         <a-hand></a-hand>
-    </an-actor>
+    </actor-controller>
 </battle-controller>
 
 <script src="./index.js"></script>
