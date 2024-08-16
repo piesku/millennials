@@ -1,4 +1,5 @@
 import {CardElement} from "../elements/a-card.js";
+import {html} from "../lib/html.js";
 import {element} from "../lib/random.js";
 import {delay} from "../lib/timeout.js";
 import {ActorController} from "./actor-controller.js";
@@ -12,17 +13,21 @@ export class BattleController extends HTMLElement {
     }
 
     connectedCallback() {
-        this.shadowRoot!.innerHTML = `
-                <style>
-                    :host {
-                        display: block;
-                        height: 100vh;
-                    }
-                </style>
-                <flex-col>
-                    <slot></slot>
-                </flex-col>
-            `;
+        this.shadowRoot!.innerHTML = html`
+            <style>
+                :host {
+                    display: block;
+                    height: 100vh;
+                }
+                ::slotted(a-table) {
+                    flex: 1;
+                    align-items: center;
+                }
+            </style>
+            <flex-col>
+                <slot></slot>
+            </flex-col>
+        `;
 
         this.InitBattle();
     }

@@ -1,3 +1,4 @@
+import {html} from "../lib/html.js";
 import {element} from "../lib/random.js";
 
 export class ActorController extends HTMLElement {
@@ -7,7 +8,15 @@ export class ActorController extends HTMLElement {
     }
 
     connectedCallback() {
-        this.shadowRoot!.innerHTML = `
+        this.shadowRoot!.innerHTML = html`
+            <style>
+                ::slotted(a-deck) {
+                    flex: 1;
+                }
+                ::slotted(a-hand) {
+                    flex: 3;
+                }
+            </style>
             <flex-row>
                 <slot></slot>
             </flex-row>
