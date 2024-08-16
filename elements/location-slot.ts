@@ -1,4 +1,4 @@
-import {Card} from "../cards/Card.js";
+import {CardController} from "../controllers/CardController.js";
 import {html} from "../lib/html.js";
 
 customElements.define(
@@ -39,7 +39,7 @@ customElements.define(
                     return;
                 }
                 const data = e.dataTransfer!.getData("text/plain");
-                const card = document.getElementById(data) as Card;
+                const card = document.getElementById(data) as CardController;
                 if (card) {
                     this.appendChild(card);
                 }

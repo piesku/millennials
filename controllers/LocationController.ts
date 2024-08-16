@@ -1,4 +1,4 @@
-export abstract class Location extends HTMLElement {
+export abstract class LocationController extends HTMLElement {
     abstract Name: string;
     abstract Description: string;
 

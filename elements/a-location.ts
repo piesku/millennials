@@ -1,5 +1,5 @@
+import {LocationController} from "../controllers/LocationController.js";
 import {html} from "../lib/html.js";
-import {Location} from "../locations/Location.js";
 
 customElements.define(
     "a-location",
@@ -70,8 +70,8 @@ customElements.define(
             `;
         }
 
-        get Location(): Location {
-            return this.parentElement as Location;
+        get Controller(): LocationController {
+            return this.parentElement as LocationController;
         }
 
         updatePoints(side: "player" | "enemy", points: number) {

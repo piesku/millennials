@@ -1,4 +1,4 @@
-import {Card} from "../cards/Card.js";
+import {CardController} from "../controllers/CardController.js";
 import {html} from "../lib/html.js";
 
 customElements.define(
@@ -98,8 +98,8 @@ customElements.define(
             `;
         }
 
-        get Card(): Card {
-            return this.parentElement as Card;
+        get Controller(): CardController {
+            return this.parentElement as CardController;
         }
     },
 );

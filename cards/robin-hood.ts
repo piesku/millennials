@@ -1,9 +1,9 @@
+import {CardController} from "../controllers/CardController.js";
 import {Sprites} from "../sprites/sprites.js";
-import {Card} from "./Card.js";
 
 customElements.define(
     "robin-hood",
-    class extends Card {
+    class extends CardController {
         Name = "Robin Hood";
         Cost = 1;
         Power = 2;

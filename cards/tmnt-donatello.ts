@@ -1,9 +1,9 @@
+import {CardController} from "../controllers/CardController.js";
 import {Sprites} from "../sprites/sprites.js";
-import {Card} from "./Card.js";
 
 customElements.define(
     "tmnt-donatello",
-    class extends Card {
+    class extends CardController {
         Name = "Donatello";
         Cost = 3;
         Power = 5;

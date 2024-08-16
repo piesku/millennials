@@ -1,9 +1,9 @@
+import {CardController} from "../../controllers/CardController.js";
 import {Sprites} from "../../sprites/sprites.js";
-import {Card} from "../Card.js";
 
 customElements.define(
     "darth-vader",
-    class extends Card {
+    class extends CardController {
         Name = "Darth Vader";
         Cost = 5;
         Power = 8;
@@ -22,7 +22,7 @@ customElements.define(
 
 customElements.define(
     "storm-trooper",
-    class extends Card {
+    class extends CardController {
         Name = "Stormtrooper";
         Cost = 1;
         Power = 2;

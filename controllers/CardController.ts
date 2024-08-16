@@ -1,7 +1,7 @@
 import {next_id} from "../lib/id.js";
 import {Sprites} from "../sprites/sprites.js";
 
-export abstract class Card extends HTMLElement {
+export abstract class CardController extends HTMLElement {
     abstract Name: string;
     abstract Cost: number;
     abstract Power: number;
