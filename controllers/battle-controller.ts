@@ -1,6 +1,6 @@
 import {CardElement} from "../elements/a-card.js";
 import {html} from "../lib/html.js";
-import {element} from "../lib/random.js";
+import {element, set_seed} from "../lib/random.js";
 import {delay} from "../lib/timeout.js";
 import {ActorController} from "./actor-controller.js";
 
@@ -10,6 +10,7 @@ export class BattleController extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({mode: "open"});
+        set_seed(Math.random());
     }
 
     connectedCallback() {
