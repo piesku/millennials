@@ -42,6 +42,7 @@ customElements.define(
                 const card = document.getElementById(data) as CardController;
                 if (card) {
                     this.appendChild(card);
+                    card.Element.classList.add("frontside");
                 }
             });
         }

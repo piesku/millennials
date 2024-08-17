@@ -79,6 +79,12 @@ export class BattleController extends HTMLElement {
     }
 
     *EndTurn() {
+        for (let card of this.querySelectorAll<CardElement>("a-table a-card")) {
+            if (!card.Controller.IsRevealed) {
+                card.classList.remove("frontside");
+            }
+        }
+
         // TODO Just for testing.
         for (let card of this.querySelectorAll<CardElement>("a-table a-card")) {
             yield* card.Controller.Reveal();
