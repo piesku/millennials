@@ -4,16 +4,16 @@ import {Sprites} from "../sprites/sprites.js";
 customElements.define(
     "obi-wan-kenobi",
     class extends CardController {
-        Name = "Obi-Wan Kenobi";
+        Name = "Kobi-Two Enobi";
         Cost = 3;
         Power = 5;
-        Text = "Hello there!";
+        Text = "";
         Sprite = Sprites.ObiWanKenobi;
 
         override handleEvent(event: Event) {
             switch (event.type) {
                 case "CardEntersTable":
-                    console.log("Obi-Wan Kenobi enters the table");
+                    console.log(`${this.Name} enters the table`);
                     break;
             }
         }

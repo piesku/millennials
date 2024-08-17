@@ -4,10 +4,10 @@ import {Sprites} from "../sprites/sprites.js";
 customElements.define(
     "tmnt-leonardo",
     class extends CardController {
-        Name = "Leonardo";
+        Name = "Beksiński";
         Cost = 3;
         Power = 5;
-        Text = "Leader of the Teenage Mutant Ninja Turtles";
+        Text = "";
         Sprite = Sprites.Leonardo;
 
         override handleEvent(event: Event) {

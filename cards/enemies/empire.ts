@@ -4,16 +4,16 @@ import {Sprites} from "../../sprites/sprites.js";
 customElements.define(
     "darth-vader",
     class extends CardController {
-        Name = "Darth Vader";
+        Name = "Varth Dader";
         Cost = 5;
         Power = 8;
-        Text = "I am your father";
+        Text = "";
         Sprite = Sprites.DarthVader;
 
         override handleEvent(event: Event) {
             switch (event.type) {
                 case "CardEntersTable":
-                    console.log("Darth Vader enters the table");
+                    console.log(`${this.Name} enters the table`);
                     break;
             }
         }
@@ -23,16 +23,16 @@ customElements.define(
 customElements.define(
     "storm-trooper",
     class extends CardController {
-        Name = "Stormtrooper";
+        Name = "Raintroopers";
         Cost = 1;
         Power = 2;
-        Text = "For the Empire!";
+        Text = "";
         Sprite = Sprites.Stormtrooper;
 
         override handleEvent(event: Event) {
             switch (event.type) {
                 case "CardEntersTable":
-                    console.log("Stormtrooper enters the table");
+                    console.log(`${this.Name} enters the table`);
                     break;
             }
         }

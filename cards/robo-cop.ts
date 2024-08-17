@@ -4,7 +4,7 @@ import {Sprites} from "../sprites/sprites.js";
 customElements.define(
     "robo-cop",
     class extends CardController {
-        Name = "Robocop";
+        Name = "Coprobo";
         Cost = 2;
         Power = 4;
         Text = "Part man, part machine, all cop";
@@ -13,7 +13,7 @@ customElements.define(
         override handleEvent(event: Event) {
             switch (event.type) {
                 case "CardEntersTable":
-                    console.log("Robocop enters the table");
+                    console.log(`${this.Name} enters the table`);
                     break;
             }
         }

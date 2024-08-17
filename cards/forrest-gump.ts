@@ -4,7 +4,7 @@ import {Sprites} from "../sprites/sprites.js";
 customElements.define(
     "forrest-gump",
     class extends CardController {
-        Name = "Forrest Gump";
+        Name = "Gorrest Fump";
         Cost = 3;
         Power = 2;
         Text = "Run Forrest, Run!";

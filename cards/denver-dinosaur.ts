@@ -4,7 +4,7 @@ import {Sprites} from "../sprites/sprites.js";
 customElements.define(
     "denver-dinosaur",
     class extends CardController {
-        Name = "Denver Dinosaur";
+        Name = "Vender Dinosaur";
         Cost = 5;
         Power = 8;
         Text = "";

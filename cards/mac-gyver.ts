@@ -4,7 +4,7 @@ import {Sprites} from "../sprites/sprites.js";
 customElements.define(
     "mac-gyver",
     class extends CardController {
-        Name = "MacGyver";
+        Name = "GacMyver";
         Cost = 3;
         Power = 5;
         Text = "";

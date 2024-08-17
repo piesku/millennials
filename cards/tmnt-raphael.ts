@@ -4,7 +4,7 @@ import {Sprites} from "../sprites/sprites.js";
 customElements.define(
     "tmnt-raphael",
     class extends CardController {
-        Name = "Raphael";
+        Name = "Monet";
         Cost = 3;
         Power = 5;
         Text = "The muscle of the Teenage Mutant Ninja Turtles";
@@ -13,7 +13,7 @@ customElements.define(
         override handleEvent(event: Event) {
             switch (event.type) {
                 case "CardEntersTable":
-                    console.log("Raphael enters the table");
+                    console.log(`${this.Name} enters the table`);
                     break;
             }
         }

@@ -4,7 +4,7 @@ import {Sprites} from "../sprites/sprites.js";
 customElements.define(
     "bat-man",
     class extends CardController {
-        Name = "Batman";
+        Name = "Matban";
         Cost = 3;
         Power = 5;
         Text = "The Dark Knight";
