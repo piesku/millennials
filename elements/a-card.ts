@@ -76,30 +76,31 @@ export class CardElement extends HTMLElement {
                     font-size: 20px;
                 }
 
-                .header span:nth-child(2) {
-                    flex-grow: 1;
-                    text-align: center;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
-                    max-width: ${targetSize - 8}px;
-                    font-size: 14px;
-                }
-
                 .description {
                     text-align: center;
                     font-family: Arial, sans-serif;
-                    font-size: 0.9em;
+                    font-size: 0.8em;
+                }
+
+                .name {
+                    text-align: center;
+                    font-family: Arial, sans-serif;
+                    font-size: 1em;
+                    white-space: normal;
+                    word-wrap: break-word;
+                    padding: 0 2px;
+                    font-weight: bold;
+                    background-color: rgba(255, 255, 255, 0.5);
                 }
             </style>
 
             <flex-col>
                 <div class="header">
                     <span>${cost}</span>
-                    <span>${name}</span>
                     <span>${power}</span>
                 </div>
                 <div class="sprite"></div>
+                <div class="name">${name}</div>
                 <div class="description">${text}</div>
             </flex-col>
         `;
