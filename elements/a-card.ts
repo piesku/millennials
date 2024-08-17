@@ -11,7 +11,7 @@ export class CardElement extends HTMLElement {
         const name = this.getAttribute("name") ?? "";
         const cost = this.getAttribute("cost") ?? "";
         const power = this.getAttribute("power") ?? "";
-        const text = "Add the top card of your deck the first free slot of this location"; //this.getAttribute("text") ?? "";
+        const text = this.getAttribute("text") ?? "";
         const imageIndex = parseInt(this.getAttribute("image") ?? "0", 10);
         const spriteSize = 16;
         const spriteMargin = 1;
@@ -59,11 +59,6 @@ export class CardElement extends HTMLElement {
                     background-size: ${targetSize}px auto;
                     image-rendering: pixelated;
                     margin: 0 auto;
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    right: 0;
-                    bottom: 0;
                 }
 
                 .header {
@@ -74,8 +69,10 @@ export class CardElement extends HTMLElement {
                     font-family: Arial, sans-serif;
                     margin-bottom: 5px;
                     padding: 0 2px;
-                    position: relative;
-                    z-index: 1;
+                    position: absolute;
+                    top: 0;
+                    width: 100%;
+                    background-color: rgba(255, 255, 255, 0.5);
                 }
 
                 .header span {
@@ -87,8 +84,7 @@ export class CardElement extends HTMLElement {
                     position: absolute;
                     bottom: 0;
                     width: 100%;
-                    z-index: 1;
-                    background-color: rgba(255, 255, 255, 0.5);
+                    background-color: rgba(255, 255, 255, 0.7);
                     text-align: center;
                     font-family: Arial, sans-serif;
                 }
