@@ -3,9 +3,11 @@ import {html} from "../lib/html.js";
 import {element, set_seed} from "../lib/random.js";
 import {delay} from "../lib/timeout.js";
 import {ActorController} from "./actor-controller.js";
+import {CardController} from "./CardController.js";
 
 export class BattleController extends HTMLElement {
     CurrentTurn = 0;
+    PlayedCardsQueue: Array<CardController> = [];
 
     constructor() {
         super();
@@ -31,6 +33,11 @@ export class BattleController extends HTMLElement {
         `;
 
         this.InitBattle();
+
+        this.addEventListener("card-played", (e) => {
+            let ce = e as CustomEvent;
+            this.PlayedCardsQueue.push(ce.detail);
+        });
     }
 
     async InitBattle() {
@@ -88,9 +95,9 @@ export class BattleController extends HTMLElement {
             }
         }
 
-        // TODO Just for testing.
-        for (let card of this.querySelectorAll<CardElement>("a-table a-card")) {
-            yield* card.Controller.Reveal();
+        let unrevealed_cards = this.PlayedCardsQueue.filter((card) => !card.IsRevealed);
+        for (let card of unrevealed_cards) {
+            yield* card.Reveal();
         }
     }
 }

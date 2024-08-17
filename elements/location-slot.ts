@@ -1,4 +1,6 @@
+import {BattleController} from "../controllers/battle-controller.js";
 import {CardController} from "../controllers/CardController.js";
+import {CardEventKind} from "../events.js";
 import {html} from "../lib/html.js";
 
 customElements.define(
@@ -41,8 +43,16 @@ customElements.define(
                 const data = e.dataTransfer!.getData("text/plain");
                 const card = document.getElementById(data) as CardController;
                 if (card) {
+                    this.closest("battle-controller")! as BattleController;
                     this.appendChild(card);
                     card.Element.classList.add("frontside");
+
+                    this.dispatchEvent(
+                        new CustomEvent(CardEventKind.Played, {
+                            bubbles: true,
+                            detail: card,
+                        }),
+                    );
                 }
             });
         }
