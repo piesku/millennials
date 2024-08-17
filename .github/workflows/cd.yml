@@ -44,9 +44,12 @@ jobs:
         needs: build
         runs-on: ubuntu-latest
         steps:
+            - name: 🛎️ Check out
+              uses: actions/checkout@v4
             - uses: actions/download-artifact@v4
               with:
                   name: play
+                  path: play
             - run: sudo apt-get install -y p7zip-full
             - name: 📦 Package
               run: make -C play index.zip SEVEN_ZIP=7z
