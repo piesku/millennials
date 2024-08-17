@@ -1,3 +1,5 @@
+SEVEN_ZIP ?= 7zz
+ROADROLLER_FLAGS ?= -O1
 SOURCES := $(shell find . -type f -name "*.ts")
 
 all: index.html
@@ -24,8 +26,7 @@ game.terser.js: game.sed.js terser_compress.txt | node_modules
 	> $@
 
 game.roadroller.js: game.terser.js | node_modules
-# Set -O2 for better (and longer) compression.
-	npx --quiet roadroller -O1 --dirty $< -o $@
+	npx --quiet roadroller $(ROADROLLER_FLAGS) --dirty $< -o $@
 
 game.html: ../index.html
 	sed \
@@ -38,7 +39,7 @@ index.html: game.html game.roadroller.js posthtml.cjs | node_modules
 
 # https://www.7-zip.org/download.html
 index.zip: index.html
-	7zz a -mx=9 -mfb=256 -mpass=15 $@ $(CURDIR)/$^
+	$(SEVEN_ZIP) a -mx=9 -mfb=256 -mpass=15 $@ $(CURDIR)/$^
 
 .PHONY: clean
 clean:
