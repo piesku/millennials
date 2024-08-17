@@ -11,7 +11,7 @@ export class CardElement extends HTMLElement {
         const name = this.getAttribute("name") ?? "";
         const cost = this.getAttribute("cost") ?? "";
         const power = this.getAttribute("power") ?? "";
-        const text = this.getAttribute("text") ?? "";
+        const text = "Add the top card of your deck the first free slot of this location"; //this.getAttribute("text") ?? "";
         const imageIndex = parseInt(this.getAttribute("image") ?? "0", 10);
         const spriteSize = 16;
         const spriteMargin = 1;
@@ -59,6 +59,11 @@ export class CardElement extends HTMLElement {
                     background-size: ${targetSize}px auto;
                     image-rendering: pixelated;
                     margin: 0 auto;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
                 }
 
                 .header {
@@ -69,6 +74,8 @@ export class CardElement extends HTMLElement {
                     font-family: Arial, sans-serif;
                     margin-bottom: 5px;
                     padding: 0 2px;
+                    position: relative;
+                    z-index: 1;
                 }
 
                 .header span {
@@ -76,21 +83,26 @@ export class CardElement extends HTMLElement {
                     font-size: 20px;
                 }
 
-                .description {
+                .text-container {
+                    position: absolute;
+                    bottom: 0;
+                    width: 100%;
+                    z-index: 1;
+                    background-color: rgba(255, 255, 255, 0.5);
                     text-align: center;
                     font-family: Arial, sans-serif;
-                    font-size: 0.8em;
                 }
 
                 .name {
-                    text-align: center;
-                    font-family: Arial, sans-serif;
                     font-size: 1em;
                     white-space: normal;
                     word-wrap: break-word;
                     padding: 0 2px;
                     font-weight: bold;
-                    background-color: rgba(255, 255, 255, 0.5);
+                }
+
+                .description {
+                    font-size: 0.8em;
                 }
             </style>
 
@@ -100,8 +112,10 @@ export class CardElement extends HTMLElement {
                     <span>${power}</span>
                 </div>
                 <div class="sprite"></div>
-                <div class="name">${name}</div>
-                <div class="description">${text}</div>
+                <div class="text-container">
+                    <div class="name">${name}</div>
+                    <div class="description">${text}</div>
+                </div>
             </flex-col>
         `;
     }
