@@ -1,8 +1,8 @@
 # Remove strict mode
-s/'use strict';//
+s/"use strict";//
 
 # Remove indents
-s/^\s+//
+s/^[[:blank:]]*//
 
 # Remove double-slash comments
 s/\/\/ .*//
