@@ -47,7 +47,10 @@ export abstract class CardController extends HTMLElement {
             return this.closest("actor-controller") as ActorController;
         }
     }
-
+    get Rival(): ActorController {
+        let all_actors = Array.from(document.querySelectorAll("actor-controller")) as ActorController[];
+        return all_actors.find((actor) => actor !== this.Owner)!;
+    }
     get Location(): LocationController {
         return (this.closest("a-location") as LocationElement).Controller;
     }

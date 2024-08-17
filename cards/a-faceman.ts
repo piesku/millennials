@@ -5,17 +5,11 @@ customElements.define(
     "a-faceman",
     class extends CardController {
         Name = "B-Team Shitface";
-        Cost = 3;
-        Power = 5;
-        Text = "";
+        Cost = 2;
+        Power = 3;
+        Text = "Draw a card from your rival's deck";
         Sprite = Sprites.Faceman;
 
-        override handleEvent(event: Event) {
-            switch (event.type) {
-                case "CardEntersTable":
-                    console.log(`${this.Name} enters the table`);
-                    break;
-            }
-        }
+        override *OnReveal() {}
     },
 );
