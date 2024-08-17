@@ -36,4 +36,6 @@ export const enum Sprites {
     Buzz,
     Denver,
     Blade,
+    JackSparrow,
+    KungFuPanda,
 }

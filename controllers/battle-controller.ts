@@ -47,11 +47,11 @@ export class BattleController extends HTMLElement {
             table.appendChild(document.createElement(locations[i]));
         }
 
-        const player1 = this.querySelector("#p1")! as ActorController;
-        yield* player1.SetupBattle();
+        const player = this.querySelector("#player")! as ActorController;
+        yield* player.SetupBattle();
 
-        const player2 = this.querySelector("#p2")! as ActorController;
-        yield* player2.SetupBattle();
+        const rival = this.querySelector("#rival")! as ActorController;
+        yield* rival.SetupBattle();
 
         const enemies = [
             {type: "darth-vader", count: 0},
