@@ -5,16 +5,29 @@ customElements.define(
     "a-baracus",
     class extends CardController {
         Name = "B-Team A.B. Bacarus";
-        Cost = 3;
-        Power = 5;
-        Text = "";
+        Cost = 2;
+        Power = 2;
+        Text = "If in the middle location +3 power";
         Sprite = Sprites.BABaracus;
 
-        override handleEvent(event: Event) {
-            switch (event.type) {
-                case "CardEntersTable":
-                    console.log(`${this.Name} enters the table`);
+        override *OnReveal() {
+            const battle_cotroller = this.closest("battle-controller")!;
+            const locations = battle_cotroller.querySelectorAll("a-location");
+            let locationIndex = -1;
+
+            for (let index = 0; index < locations.length; index++) {
+                console.log(locations[index]);
+                if (locations[index].contains(this)) {
+                    locationIndex = index;
                     break;
+                }
+            }
+
+            if (locationIndex === 1) {
+                alert("do modifier magic");
+                yield `${this.Name} gains +3 power for being in the middle location`;
+            } else {
+                yield `${this.Name} does not gain any additional power`;
             }
         }
     },
