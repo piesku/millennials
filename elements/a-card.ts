@@ -67,17 +67,13 @@ export class CardElement extends HTMLElement {
                     align-items: center;
                     font-size: 0.8em;
                     font-family: Arial, sans-serif;
-                    margin-bottom: 5px;
-                    padding: 0 2px;
-                    position: absolute;
-                    top: 0;
-                    width: 100%;
+                    padding: 0 3px;
                     background-color: rgba(255, 255, 255, 0.5);
                 }
 
                 .header span {
                     font-weight: bold;
-                    font-size: 20px;
+                    font-size: 16px;
                 }
 
                 .text-container {
