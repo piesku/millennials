@@ -10,7 +10,7 @@ spritesheet.png: $(SPRITES)
 	node spritesmith.cjs $^ $@
 
 spritesheet.reduced.png: spritesheet.png
-	magick $< -colors 64 -strip $@
+	magick $< -colors 64 -depth 8 $@
 
 spritesheet.png.webp: spritesheet.reduced.png
 	cwebp -short -z 9 $< -o $@
