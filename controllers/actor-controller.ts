@@ -1,5 +1,4 @@
 import {html} from "../lib/html.js";
-import {element} from "../lib/random.js";
 
 export class ActorController extends HTMLElement {
     constructor() {
@@ -24,26 +23,11 @@ export class ActorController extends HTMLElement {
     }
 
     *SetupBattle() {
-        const cards = [
-            "forrest-gump",
-            "robin-hood",
-            "marty-mcfly",
-            "super-man",
-            "obi-wan-kenobi",
-            "harry-potter",
-            "bat-man",
-            "ne-o",
-            "luke-skywalker",
-            "robo-cop",
-            "tmnt-leonardo",
-            "tmnt-michaelangelo",
-            "tmnt-donatello",
-            "tmnt-raphael",
-        ];
+        const cards = ["mor-ty", "sim-ba", "woo-dy", "robo-cop", "tmnt-donatello", "kre-cik"];
 
         const deck = this.querySelector("a-deck")!;
-        for (let i = 0; i < cards.length; i++) {
-            deck.appendChild(document.createElement(element(cards)));
+        for (let i = 0; i < 12; i++) {
+            deck.appendChild(document.createElement(cards[i % cards.length]));
         }
 
         for (let i = 0; i < 3; i++) {

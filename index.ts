@@ -15,17 +15,21 @@ import "./layout/flex-row.js";
 import "./cards/bat-man.js";
 import "./cards/forrest-gump.js";
 import "./cards/harry-potter.js";
+import "./cards/kre-cik.js";
 import "./cards/luke-skywalker.js";
 import "./cards/marty-mcfly.js";
+import "./cards/mor-ty.js";
 import "./cards/ne-o.js";
 import "./cards/obi-wan-kenobi.js";
 import "./cards/robin-hood.js";
 import "./cards/robo-cop.js";
+import "./cards/sim-ba.js";
 import "./cards/super-man.js";
 import "./cards/tmnt-donatello.js";
 import "./cards/tmnt-leonardo.js";
 import "./cards/tmnt-michaelangelo.js";
 import "./cards/tmnt-raphael.js";
+import "./cards/woo-dy.js";
 
 import "./cards/enemies/empire.js";
 
