@@ -34,7 +34,8 @@ export class BattleController extends HTMLElement {
     }
 
     async InitBattle() {
-        for (let _ of this.StartBattle()) {
+        for (let message of this.StartBattle()) {
+            console.log(message);
             await delay(250);
         }
     }
@@ -46,7 +47,7 @@ export class BattleController extends HTMLElement {
             table.appendChild(document.createElement(locations[i]));
         }
 
-        const player1 = this.querySelector("actor-controller[who=player1]")! as ActorController;
+        const player1 = this.querySelector("#p1")! as ActorController;
         yield* player1.SetupBattle();
 
         const enemies = [
@@ -71,7 +72,8 @@ export class BattleController extends HTMLElement {
     }
 
     async RunEndTurn() {
-        for (let _ of this.EndTurn()) {
+        for (let message of this.EndTurn()) {
+            console.log(message);
             await delay(250);
         }
     }

@@ -63,7 +63,6 @@ export class ActorController extends HTMLElement {
         const deck = this.querySelector("a-deck")!;
         for (let i = 0; i < 12; i++) {
             const card = element(cards);
-            console.log({card});
             deck.appendChild(document.createElement(card));
         }
 
@@ -77,10 +76,10 @@ export class ActorController extends HTMLElement {
         const deck = this.querySelector("a-deck")!;
 
         if (deck.firstElementChild) {
-            yield console.log("draws a card");
+            yield "draws a card";
             hand.appendChild(deck.firstElementChild);
         } else {
-            yield console.log("but the deck is empty");
+            yield "but the deck is empty";
         }
     }
 }

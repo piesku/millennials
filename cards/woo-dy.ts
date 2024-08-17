@@ -7,8 +7,20 @@ customElements.define(
         Name = "Toy Cowboy";
         Cost = 3;
         Power = 4;
-        Text = "";
+        Text = "Add the top card of your deck here.";
         Sprite = Sprites.Woody;
+
+        override *Reveal() {
+            yield* super.Reveal();
+
+            let card = this.Owner.querySelector("a-deck")!.firstElementChild as CardController;
+            if (card) {
+                yield `${this.Name} adds ${card.Name} to the table`;
+                yield* this.Location.AddCard(card, this.Owner.id);
+            } else {
+                yield "but the deck is empty";
+            }
+        }
 
         override handleEvent(event: Event) {
             switch (event.type) {

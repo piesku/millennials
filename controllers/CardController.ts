@@ -1,5 +1,8 @@
+import {LocationElement} from "../elements/a-location.js";
 import {next_id} from "../lib/id.js";
 import {Sprites} from "../sprites/sprites.js";
+import {ActorController} from "./actor-controller.js";
+import {LocationController} from "./LocationController.js";
 
 export abstract class CardController extends HTMLElement {
     abstract Name: string;
@@ -34,8 +37,22 @@ export abstract class CardController extends HTMLElement {
         this.addEventListener("CardEntersTable", this);
     }
 
+    get Owner(): ActorController {
+        let location_owner = this.closest("location-owner");
+        if (location_owner) {
+            let actor_id = location_owner.getAttribute("slot")!;
+            return document.getElementById(actor_id) as ActorController;
+        } else {
+            return this.closest("actor-controller") as ActorController;
+        }
+    }
+
+    get Location(): LocationController {
+        return (this.closest("a-location") as LocationElement).Controller;
+    }
+
     *Reveal() {
-        yield console.log(`${this.Name} is revealed`);
+        yield `${this.Name} is revealed`;
         this.IsRevealed = true;
         this.querySelector("a-card")!.setAttribute("revealed", "");
     }
