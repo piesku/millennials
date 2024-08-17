@@ -44,7 +44,7 @@ export class ActorController extends HTMLElement {
             "mac-gyver",
             "marty-mcfly",
             "mor-ty",
-            "mufasa",
+            "mufa-sa",
             "ne-o",
             "obi-wan-kenobi",
             "rick-sanchez",
