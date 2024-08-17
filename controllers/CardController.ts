@@ -53,8 +53,13 @@ export abstract class CardController extends HTMLElement {
 
     *Reveal() {
         yield `${this.Name} is revealed`;
+        this.querySelector("a-card")!.classList.add("frontside");
+        yield* this.OnReveal();
         this.IsRevealed = true;
-        this.querySelector("a-card")!.setAttribute("revealed", "");
+    }
+
+    *OnReveal() {
+        yield `it does nothing special`;
     }
 
     handleEvent(event: Event) {}

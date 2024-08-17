@@ -43,7 +43,7 @@ export class CardElement extends HTMLElement {
                 }
 
                 :host-context(a-hand) > *,
-                :host([revealed]) > * {
+                :host(.frontside) > * {
                     visibility: visible;
                 }
 
