@@ -16,7 +16,6 @@ customElements.define(
             let locationIndex = -1;
 
             for (let index = 0; index < locations.length; index++) {
-                console.log(locations[index]);
                 if (locations[index].contains(this)) {
                     locationIndex = index;
                     break;
