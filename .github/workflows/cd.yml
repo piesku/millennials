@@ -29,14 +29,17 @@ jobs:
         needs: build
         runs-on: ubuntu-latest
         steps:
+            - name: 🛎️ Check out
+              uses: actions/checkout@v4
             - uses: actions/download-artifact@v4
               with:
                   name: play
+                  path: play
             - name: 🚀 Deploy
               uses: JamesIves/github-pages-deploy-action@v4
               with:
                   branch: gh-pages
-                  folder: .
+                  folder: play
     package:
         needs: build
         runs-on: ubuntu-latest
@@ -44,7 +47,7 @@ jobs:
             - uses: actions/download-artifact@v4
               with:
                   name: play
-            - run: apt-get update && apt-get install -y p7zip-full
+            - run: sudo apt-get install -y p7zip-full
             - name: 📦 Package
               run: make index.zip SEVEN_ZIP=7z
             - uses: actions/upload-artifact@v4
