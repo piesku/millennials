@@ -41,13 +41,6 @@ export class LocationSlot extends HTMLElement {
             if (card) {
                 this.appendChild(card);
                 card.Element.classList.add("frontside");
-
-                this.dispatchEvent(
-                    new CustomEvent("card-dropped", {
-                        bubbles: true,
-                        detail: card,
-                    }),
-                );
             }
         });
     }

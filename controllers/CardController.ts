@@ -12,6 +12,7 @@ export abstract class CardController extends HTMLElement {
     abstract Text: string;
     abstract Sprite: Sprites;
 
+    Id = next_id();
     IsRevealed = false;
 
     connectedCallback() {
@@ -20,7 +21,7 @@ export abstract class CardController extends HTMLElement {
         `;
 
         this.draggable = true;
-        this.id = next_id().toString();
+        this.id = this.Id.toString();
 
         this.addEventListener("dragstart", (e) => {
             let target = e.target as HTMLElement;

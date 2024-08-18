@@ -34,9 +34,12 @@ export class BattleController extends HTMLElement {
 
         this.InitBattle();
 
-        this.addEventListener("card-dropped", (e) => {
-            let ce = e as CustomEvent;
-            this.PlayedCardsQueue.push(ce.detail);
+        this.addEventListener("drop", (e) => {
+            const data = e.dataTransfer!.getData("text/plain");
+            const card = document.getElementById(data) as CardController;
+            if (card) {
+                this.PlayedCardsQueue.push(card);
+            }
         });
 
         this.addEventListener("click", (e) => {
