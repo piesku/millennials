@@ -24,7 +24,7 @@ customElements.define(
 
             if (locationIndex === 1) {
                 yield `${this.Name} gains +3 power for being in the middle location`;
-                this.AddModifier(this.Name, "addpower", 3);
+                this.AddModifier(this, "addpower", 3);
             } else {
                 yield `${this.Name} does not gain any additional power`;
             }

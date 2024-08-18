@@ -111,9 +111,41 @@ export class BattleController extends HTMLElement {
         let unrevealed_cards = this.PlayedCardsQueue.filter((card) => !card.IsRevealed);
         for (let card of unrevealed_cards) {
             yield* card.Reveal();
+            yield* this.BroadcastMessage("card-enters-table", card);
         }
 
         yield* this.StartTurn();
+    }
+
+    *BroadcastMessage(kind: string, card: CardController) {
+        // First, broadcast the message to the card's location.
+        yield* card.Location.OnCardMessage(kind, card);
+
+        // Then, broadcast the message to other revealed cards in the same location.
+        for (let other of card.Location.GetRevealedCards()) {
+            if (other !== card) {
+                yield* other.OnCardMessage(kind, card);
+            }
+        }
+
+        // Finally, broadcast the message to other locations and their revealed cards.
+        let locations = [...this.querySelectorAll<LocationElement>("a-location")]
+            .map((location) => location.Controller)
+            .filter((location) => location !== card.Location);
+        for (let location of locations) {
+            yield* location.OnCardMessage(kind, card);
+
+            for (let other of location.GetRevealedCards()) {
+                yield* other.OnCardMessage(kind, card);
+            }
+        }
+    }
+
+    GetRevealedCards(actor?: string) {
+        let locations = [...this.querySelectorAll<LocationElement>("a-location")].map(
+            (location) => location.Controller,
+        );
+        return locations.flatMap((location) => location.GetRevealedCards(actor));
     }
 }
 

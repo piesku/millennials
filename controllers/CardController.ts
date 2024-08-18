@@ -3,6 +3,7 @@ import {LocationElement} from "../elements/a-location.js";
 import {next_id} from "../lib/id.js";
 import {Sprites} from "../sprites/sprites.js";
 import {ActorController} from "./ActorController.js";
+import {BattleController} from "./BattleController.js";
 import {LocationController} from "./LocationController.js";
 
 export abstract class CardController extends HTMLElement {
@@ -80,6 +81,11 @@ export abstract class CardController extends HTMLElement {
         let all_actors = Array.from(document.querySelectorAll("actor-controller")) as ActorController[];
         return all_actors.find((actor) => actor !== this.Owner)!;
     }
+
+    get Battle(): BattleController {
+        return this.closest("battle-controller") as BattleController;
+    }
+
     get Location(): LocationController {
         return (this.closest("a-location") as LocationElement).Controller;
     }
@@ -88,9 +94,10 @@ export abstract class CardController extends HTMLElement {
         return this.querySelector("a-card") as CardElement;
     }
 
-    AddModifier(origin: string, op: string, value: number) {
+    AddModifier(origin: CardController, op: string, value: number) {
         let modifier = document.createElement("a-modifier")!;
-        modifier.setAttribute("origin", origin);
+        modifier.setAttribute("origin-id", origin.id);
+        modifier.setAttribute("origin-name", origin.Name);
         modifier.setAttribute("op", op);
         modifier.setAttribute("value", value.toString());
         this.appendChild(modifier);
@@ -110,6 +117,16 @@ export abstract class CardController extends HTMLElement {
     *OnReveal() {
         yield `it does nothing special`;
     }
+
+    *OnTrash() {
+        // The default teardown is to remove all modifiers that originated from this card.
+        let modifiers = this.querySelectorAll(`a-modifier[origin-id=${this.id}]`);
+        for (let modifier of modifiers) {
+            modifier.remove();
+        }
+    }
+
+    *OnCardMessage(kind: string, card: CardController): Generator<string, void> {}
 
     handleEvent(event: Event) {}
 }

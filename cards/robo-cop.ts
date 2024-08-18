@@ -14,7 +14,7 @@ customElements.define(
             let other_revealed_cards = this.Location.GetRevealedCards(this.Owner.id);
             for (let card of other_revealed_cards) {
                 yield `${card.Name} gets +1 power`;
-                card.AddModifier(this.Name, "addpower", 1);
+                card.AddModifier(this, "addpower", 1);
             }
         }
 

@@ -32,6 +32,8 @@ export abstract class LocationController extends HTMLElement {
             .filter((card) => card.IsRevealed);
     }
 
+    *OnCardMessage(kind: string, card: CardController) {}
+
     *AddCard(card: CardController, owner: string, slot_index?: number) {
         const side = this.querySelector(`location-owner[slot=${owner}]`)!;
         if (slot_index === undefined) {
