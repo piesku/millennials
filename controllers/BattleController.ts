@@ -2,7 +2,7 @@ import {CardElement} from "../elements/a-card.js";
 import {html} from "../lib/html.js";
 import {set_seed} from "../lib/random.js";
 import {delay} from "../lib/timeout.js";
-import {ActorController} from "./actor-controller.js";
+import {ActorController} from "./ActorController.js";
 import {CardController} from "./CardController.js";
 
 export class BattleController extends HTMLElement {

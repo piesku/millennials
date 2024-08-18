@@ -2,7 +2,7 @@ import {CardElement} from "../elements/a-card.js";
 import {LocationElement} from "../elements/a-location.js";
 import {next_id} from "../lib/id.js";
 import {Sprites} from "../sprites/sprites.js";
-import {ActorController} from "./actor-controller.js";
+import {ActorController} from "./ActorController.js";
 import {LocationController} from "./LocationController.js";
 
 export abstract class CardController extends HTMLElement {
