@@ -32,6 +32,13 @@ export class ActorController extends HTMLElement {
         `;
     }
 
+    // TODO How to do this better?
+    ReRender() {
+        let avatar = this.querySelector("a-avatar")!;
+        avatar.setAttribute("current-energy", this.CurrentEnergy.toString());
+        avatar.setAttribute("max-energy", this.MaxEnergy.toString());
+    }
+
     *StartBattle() {
         const cards = [
             "a-baracus",
@@ -84,9 +91,7 @@ export class ActorController extends HTMLElement {
         yield* this.DrawCard();
 
         this.CurrentEnergy = this.MaxEnergy = turn;
-        let avatar = this.querySelector("a-avatar")!;
-        avatar.setAttribute("current-energy", this.CurrentEnergy.toString());
-        avatar.setAttribute("max-energy", this.MaxEnergy.toString());
+        this.ReRender();
     }
 
     *DrawCard() {

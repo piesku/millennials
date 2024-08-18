@@ -129,8 +129,8 @@ export class BattleController extends HTMLElement {
         for (let location of locations) {
             yield* location.OnMessage(kind);
 
-            for (let other of location.GetRevealedCards()) {
-                yield* other.OnMessage(kind);
+            for (let card of location.GetRevealedCards()) {
+                yield* card.OnMessage(kind);
             }
         }
     }
