@@ -21,7 +21,7 @@ export abstract class CardController extends HTMLElement {
             <a-card name="${this.Name}" cost="${this.CurrentCost}" power="${this.CurrentPower}" text="${this.Text}" image="${this.Sprite}" onclick="this.nextElementSibling.showModal();"></a-card>
         `;
 
-        this.draggable = true;
+        this.draggable = this.Owner.id !== "rival";
         this.id = this.Id.toString();
 
         this.addEventListener("dragstart", (e) => {
