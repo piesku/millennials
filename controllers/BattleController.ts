@@ -1,4 +1,5 @@
 import {CardElement} from "../elements/a-card.js";
+import {LocationElement} from "../elements/a-location.js";
 import {html} from "../lib/html.js";
 import {set_seed} from "../lib/random.js";
 import {delay} from "../lib/timeout.js";
@@ -39,6 +40,8 @@ export class BattleController extends HTMLElement {
             const card = document.getElementById(data) as CardController;
             if (card) {
                 this.PlayedCardsQueue.push(card);
+                let location = card.closest<LocationElement>("a-location")!.Controller;
+                console.log(`you play ${card.Name} to ${location.Name}`);
             }
         });
 
@@ -83,6 +86,8 @@ export class BattleController extends HTMLElement {
 
         const rival = this.querySelector("#rival")! as ActorController;
         yield* rival.StartTurn(this.CurrentTurn);
+
+        yield* rival.RivalAI();
     }
 
     async RunEndTurn() {
