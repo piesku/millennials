@@ -67,6 +67,8 @@ export class BattleController extends HTMLElement {
             table.appendChild(document.createElement(locations[i]));
         }
 
+        yield "--- Lights… camera… action! ---";
+
         const player = this.querySelector("#player")! as ActorController;
         yield* player.StartBattle();
 
@@ -110,6 +112,8 @@ export class BattleController extends HTMLElement {
         for (let card of unrevealed_cards) {
             yield* card.Reveal();
         }
+
+        yield* this.StartTurn();
     }
 }
 

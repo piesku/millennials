@@ -4,6 +4,7 @@ import {LocationSlot} from "../elements/location-slot.js";
 import {html} from "../lib/html.js";
 import {element} from "../lib/random.js";
 import {BattleController} from "./BattleController.js";
+import {CardController} from "./CardController.js";
 
 export class ActorController extends HTMLElement {
     MaxEnergy = 0;
@@ -93,8 +94,9 @@ export class ActorController extends HTMLElement {
         const deck = this.querySelector("a-deck")!;
 
         if (deck.firstElementChild) {
-            yield `${this.id} draws a card`;
-            hand.appendChild(deck.firstElementChild);
+            let card = deck.firstElementChild as CardController;
+            yield `${this.id} draws ${card.Name}`;
+            hand.appendChild(card);
         } else {
             yield "but the deck is empty";
         }
