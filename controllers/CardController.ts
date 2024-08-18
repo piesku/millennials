@@ -18,7 +18,7 @@ export abstract class CardController extends HTMLElement {
 
     connectedCallback() {
         this.innerHTML = `
-            <a-card name="${this.Name}" cost="${this.CurrentCost}" power="${this.CurrentPower}" text="${this.Text}" image="${this.Sprite}"></a-card>
+            <a-card name="${this.Name}" cost="${this.CurrentCost}" power="${this.CurrentPower}" text="${this.Text}" image="${this.Sprite}" onclick="this.nextElementSibling.showModal();"></a-card>
         `;
 
         this.draggable = true;
@@ -100,7 +100,7 @@ export abstract class CardController extends HTMLElement {
         modifier.setAttribute("origin-name", origin.Name);
         modifier.setAttribute("op", op);
         modifier.setAttribute("value", value.toString());
-        this.appendChild(modifier);
+        this.querySelector("a-card")!.appendChild(modifier);
 
         let card_element = this.querySelector("a-card")!;
         card_element.setAttribute("cost", this.CurrentCost.toString());

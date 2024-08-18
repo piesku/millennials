@@ -25,6 +25,35 @@ export class CardElement extends HTMLElement {
 
         const img_src = document.querySelector("body > img[hidden]")?.getAttribute("src");
         const backgroundImageUrl = `url(${img_src})`;
+        const card_body = html`
+            <div class="header">
+                <span
+                    id="cost"
+                    class="${parseInt(cost) > this.InitialCost
+                        ? "incr"
+                        : parseInt(cost) < this.InitialCost
+                          ? "decr"
+                          : ""}"
+                >
+                    ${cost}
+                </span>
+                <span
+                    id="power"
+                    class="${parseInt(power) > this.InitialPower
+                        ? "incr"
+                        : parseInt(power) < this.InitialPower
+                          ? "decr"
+                          : ""}"
+                >
+                    ${power}
+                </span>
+            </div>
+            <div class="sprite"></div>
+            <div class="text-container">
+                <div class="name">${name}</div>
+                <div class="description">${text}</div>
+            </div>
+        `;
 
         this.shadowRoot!.innerHTML = html`
             <style>
@@ -110,37 +139,47 @@ export class CardElement extends HTMLElement {
                 .description {
                     font-size: 0.8em;
                 }
+
+                dialog,
+                dialog:active {
+                    background: transparent;
+                    outline: none;
+                    border: none;
+                    width: 120px;
+                    min-height: 180px;
+                    scale: 3;
+                    overflow: visible;
+                }
+
+                card-detail {
+                    width: 120px;
+                    height: 180px;
+                    background: white;
+                    border: 1px solid black;
+                    padding: 0;
+                    user-select: none;
+                    position: relative;
+                }
+
+                card-modifiers {
+                    font-size: 30%;
+                    margin: 0 10px;
+                    width: 100px;
+                    background: white;
+                }
             </style>
 
-            <flex-col>
-                <div class="header">
-                    <span
-                        id="cost"
-                        class="${parseInt(cost) > this.InitialCost
-                            ? "incr"
-                            : parseInt(cost) < this.InitialCost
-                              ? "decr"
-                              : ""}"
-                    >
-                        ${cost}
-                    </span>
-                    <span
-                        id="power"
-                        class="${parseInt(power) > this.InitialPower
-                            ? "incr"
-                            : parseInt(power) < this.InitialPower
-                              ? "decr"
-                              : ""}"
-                    >
-                        ${power}
-                    </span>
-                </div>
-                <div class="sprite"></div>
-                <div class="text-container">
-                    <div class="name">${name}</div>
-                    <div class="description">${text}</div>
-                </div>
-            </flex-col>
+            <flex-col onclick="event.stopPropagation(); this.nextElementSibling.showModal();">${card_body}</flex-col>
+            <dialog onclick="event.stopPropagation(); this.close()">
+                <flex-col>
+                    <card-detail>
+                        <flex-col>${card_body}</flex-col>
+                    </card-detail>
+                    <card-modifiers>
+                        <slot></slot>
+                    </card-modifiers>
+                </flex-col>
+            </dialog>
         `;
     }
 
