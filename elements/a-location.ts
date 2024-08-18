@@ -25,7 +25,7 @@ export class LocationElement extends HTMLElement {
                 .description {
                     margin: 10px 0;
                 }
-                slot[name^="p"]::slotted(*) {
+                ::slotted(location-owner) {
                     border: 1px dashed #000;
                     width: 45%;
                 }
@@ -38,7 +38,7 @@ export class LocationElement extends HTMLElement {
                 }
             </style>
             <flex-row class="location">
-                <slot name="p1"></slot>
+                <slot name="rival"></slot>
                 <div id="player-points" class="points">${this.playerPoints}</div>
                 <div class="name-description">
                     <div class="name">${name}</div>
@@ -47,25 +47,9 @@ export class LocationElement extends HTMLElement {
                     </div>
                 </div>
                 <div id="enemy-points" class="points">${this.enemyPoints}</div>
-                <slot name="p2"></slot>
+                <slot name="player"></slot>
             </flex-row>
         `;
-
-        this.innerHTML = `
-                <location-owner slot="p1">
-                    <location-slot label=1></location-slot>
-                    <location-slot label=2></location-slot>
-                    <location-slot label=3></location-slot>
-                    <location-slot label=4></location-slot>
-                </location-owner>
-
-                <location-owner slot="p2" reverse>
-                    <location-slot label=1></location-slot>
-                    <location-slot label=2></location-slot>
-                    <location-slot label=3></location-slot>
-                    <location-slot label=4></location-slot>
-                </location-owner>
-            `;
     }
 
     get Controller(): LocationController {

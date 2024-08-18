@@ -7,7 +7,21 @@ export abstract class LocationController extends HTMLElement {
 
     connectedCallback() {
         this.innerHTML = `
-            <a-location name="${this.Name}" description="${this.Description}"></a-location>
+            <a-location name="${this.Name}" description="${this.Description}">
+                <location-owner slot="player">
+                    <location-slot label=1></location-slot>
+                    <location-slot label=2></location-slot>
+                    <location-slot label=3></location-slot>
+                    <location-slot label=4></location-slot>
+                </location-owner>
+
+                <location-owner slot="rival" reverse>
+                    <location-slot label=1></location-slot>
+                    <location-slot label=2></location-slot>
+                    <location-slot label=3></location-slot>
+                    <location-slot label=4></location-slot>
+                </location-owner>
+            </a-location>
         `;
     }
 
