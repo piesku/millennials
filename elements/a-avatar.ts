@@ -17,9 +17,16 @@ export class AvatarElement extends HTMLElement {
                     display: block;
                     padding: 10px;
                 }
+                h2 {
+                    margin-top: 0;
+                }
+                ::slotted(button) {
+                    flex: 1;
+                    margin-top: 10px;
+                }
             </style>
             <flex-col>
-                <div>${name}</div>
+                <h2>${name}</h2>
                 <div>Energy: ${current_energy}/${max_energy}</div>
                 <slot></slot>
             </flex-col>

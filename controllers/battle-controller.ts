@@ -39,8 +39,11 @@ export class BattleController extends HTMLElement {
             this.PlayedCardsQueue.push(ce.detail);
         });
 
-        this.addEventListener("end-turn-clicked", (e) => {
-            this.RunEndTurn();
+        this.addEventListener("click", (e) => {
+            let target = e.target as HTMLElement;
+            if (target.id === "end-turn") {
+                this.RunEndTurn();
+            }
         });
     }
 
