@@ -1,6 +1,7 @@
 import {CardElement} from "../elements/a-card.js";
 import {LocationElement} from "../elements/a-location.js";
 import {next_id} from "../lib/id.js";
+import {Message} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 import {ActorController} from "./ActorController.js";
 import {BattleController} from "./BattleController.js";
@@ -15,6 +16,7 @@ export abstract class CardController extends HTMLElement {
 
     Id = next_id();
     IsRevealed = false;
+    TurnPlayed = 0;
 
     connectedCallback() {
         this.innerHTML = `
@@ -112,10 +114,11 @@ export abstract class CardController extends HTMLElement {
         this.querySelector("a-card")!.classList.add("frontside");
         yield* this.OnReveal();
         this.IsRevealed = true;
+        this.TurnPlayed = this.Battle.CurrentTurn;
     }
 
-    *OnReveal() {
-        yield `it does nothing special`;
+    *OnReveal(): Generator<string, void> {
+        // yield `it does nothing special`;
     }
 
     *OnTrash() {
@@ -126,7 +129,7 @@ export abstract class CardController extends HTMLElement {
         }
     }
 
-    *OnCardMessage(kind: string, card: CardController): Generator<string, void> {}
+    *OnMessage(kind: Message, card?: CardController): Generator<string, void> {}
 
     handleEvent(event: Event) {}
 }

@@ -1,4 +1,5 @@
 import {CardController} from "../controllers/CardController.js";
+import {Message} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 
 customElements.define(
@@ -17,9 +18,9 @@ customElements.define(
             }
         }
 
-        override *OnCardMessage(kind: string, card: CardController) {
+        override *OnMessage(kind: Message, card: CardController) {
             switch (kind) {
-                case "card-enters-table":
+                case Message.CardEntersTable:
                     if (card.Owner === this.Owner) {
                         yield `it has +1 power from ${this.Name}`;
                         card.AddModifier(this, "addpower", 1);

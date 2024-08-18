@@ -1,4 +1,5 @@
 import {CardElement} from "../elements/a-card.js";
+import {Message} from "../messages.js";
 import {CardController} from "./CardController.js";
 
 export abstract class LocationController extends HTMLElement {
@@ -32,7 +33,7 @@ export abstract class LocationController extends HTMLElement {
             .filter((card) => card.IsRevealed);
     }
 
-    *OnCardMessage(kind: string, card: CardController) {}
+    *OnMessage(kind: Message, card?: CardController): Generator<string, void> {}
 
     *AddCard(card: CardController, owner: string, slot_index?: number) {
         const side = this.querySelector(`location-owner[slot=${owner}]`)!;

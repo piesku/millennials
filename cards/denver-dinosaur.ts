@@ -1,4 +1,5 @@
 import {CardController} from "../controllers/CardController.js";
+import {Message} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 
 customElements.define(
@@ -7,13 +8,16 @@ customElements.define(
         Name = "Vender Dinosaur";
         Cost = 5;
         Power = 8;
-        Text = "";
+        Text = "After each turn, gain 1 Power for each unspent Energy.";
         Sprite = Sprites.Denver;
 
-        override handleEvent(event: Event) {
-            switch (event.type) {
-                case "CardEntersTable":
-                    console.log(`${this.Name} enters the table`);
+        override *OnMessage(kind: Message) {
+            switch (kind) {
+                case Message.TurnEnds:
+                    if (this.Owner.CurrentEnergy > 0) {
+                        yield `${this.Name} gains +${this.Owner.CurrentEnergy} power`;
+                        this.AddModifier(this, "addpower", this.Owner.CurrentEnergy);
+                    }
                     break;
             }
         }

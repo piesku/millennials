@@ -3,6 +3,7 @@ import {LocationElement} from "../elements/a-location.js";
 import {html} from "../lib/html.js";
 import {set_seed} from "../lib/random.js";
 import {delay} from "../lib/timeout.js";
+import {Message} from "../messages.js";
 import {ActorController} from "./ActorController.js";
 import {CardController} from "./CardController.js";
 
@@ -75,6 +76,7 @@ export class BattleController extends HTMLElement {
         const rival = this.querySelector("#rival")! as ActorController;
         yield* rival.StartBattle();
 
+        yield* this.BroadcastGameMessage(Message.BattleStarts);
         yield* this.StartTurn();
     }
 
@@ -88,6 +90,8 @@ export class BattleController extends HTMLElement {
 
         const rival = this.querySelector("#rival")! as ActorController;
         yield* rival.StartTurn(this.CurrentTurn);
+
+        yield* this.BroadcastGameMessage(Message.TurnStarts);
 
         yield* rival.RivalAI();
     }
@@ -111,20 +115,34 @@ export class BattleController extends HTMLElement {
         let unrevealed_cards = this.PlayedCardsQueue.filter((card) => !card.IsRevealed);
         for (let card of unrevealed_cards) {
             yield* card.Reveal();
-            yield* this.BroadcastMessage("card-enters-table", card);
+            yield* this.BroadcastCardMessage(Message.CardEntersTable, card);
         }
 
+        yield* this.BroadcastGameMessage(Message.TurnEnds);
         yield* this.StartTurn();
     }
 
-    *BroadcastMessage(kind: string, card: CardController) {
+    *BroadcastGameMessage(kind: Message) {
+        let locations = [...this.querySelectorAll<LocationElement>("a-location")].map(
+            (location) => location.Controller,
+        );
+        for (let location of locations) {
+            yield* location.OnMessage(kind);
+
+            for (let other of location.GetRevealedCards()) {
+                yield* other.OnMessage(kind);
+            }
+        }
+    }
+
+    *BroadcastCardMessage(kind: Message, card: CardController) {
         // First, broadcast the message to the card's location.
-        yield* card.Location.OnCardMessage(kind, card);
+        yield* card.Location.OnMessage(kind, card);
 
         // Then, broadcast the message to other revealed cards in the same location.
         for (let other of card.Location.GetRevealedCards()) {
             if (other !== card) {
-                yield* other.OnCardMessage(kind, card);
+                yield* other.OnMessage(kind, card);
             }
         }
 
@@ -133,10 +151,10 @@ export class BattleController extends HTMLElement {
             .map((location) => location.Controller)
             .filter((location) => location !== card.Location);
         for (let location of locations) {
-            yield* location.OnCardMessage(kind, card);
+            yield* location.OnMessage(kind, card);
 
             for (let other of location.GetRevealedCards()) {
-                yield* other.OnCardMessage(kind, card);
+                yield* other.OnMessage(kind, card);
             }
         }
     }
