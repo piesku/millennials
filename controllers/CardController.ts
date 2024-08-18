@@ -17,7 +17,7 @@ export abstract class CardController extends HTMLElement {
 
     connectedCallback() {
         this.innerHTML = `
-            <a-card name="${this.Name}" cost="${this.Cost}" power="${this.Power}" text="${this.Text}" image="${this.Sprite}"></a-card>
+            <a-card name="${this.Name}" cost="${this.CurrentCost}" power="${this.CurrentPower}" text="${this.Text}" image="${this.Sprite}"></a-card>
         `;
 
         this.draggable = true;
@@ -39,6 +39,34 @@ export abstract class CardController extends HTMLElement {
         this.addEventListener("CardEntersTable", this);
     }
 
+    get CurrentCost() {
+        let result = this.Cost;
+        for (let modifier of this.querySelectorAll("a-modifier")) {
+            let op = modifier.getAttribute("op")!;
+            let value = parseInt(modifier.getAttribute("value")!);
+            switch (op) {
+                case "addcost":
+                    result += value;
+                    break;
+            }
+        }
+        return result;
+    }
+
+    get CurrentPower() {
+        let result = this.Cost;
+        for (let modifier of this.querySelectorAll("a-modifier")) {
+            let op = modifier.getAttribute("op")!;
+            let value = parseInt(modifier.getAttribute("value")!);
+            switch (op) {
+                case "addpower":
+                    result += value;
+                    break;
+            }
+        }
+        return result;
+    }
+
     get Owner(): ActorController {
         let location_owner = this.closest("location-owner");
         if (location_owner) {
@@ -58,6 +86,18 @@ export abstract class CardController extends HTMLElement {
 
     get Element(): CardElement {
         return this.querySelector("a-card") as CardElement;
+    }
+
+    AddModifier(origin: string, op: string, value: number) {
+        let modifier = document.createElement("a-modifier")!;
+        modifier.setAttribute("origin", origin);
+        modifier.setAttribute("op", op);
+        modifier.setAttribute("value", value.toString());
+        this.appendChild(modifier);
+
+        let card_element = this.querySelector("a-card")!;
+        card_element.setAttribute("cost", this.CurrentCost.toString());
+        card_element.setAttribute("power", this.CurrentPower.toString());
     }
 
     *Reveal() {

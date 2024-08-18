@@ -12,7 +12,6 @@ export class DeckElement extends HTMLElement {
                 :host {
                     display: block;
                     height: 200px;
-                    background-color: #1c5a1c;
                     padding: 10px;
                 }
 

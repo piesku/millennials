@@ -14,13 +14,7 @@ customElements.define(
             let other_revealed_cards = this.Location.GetRevealedCards(this.Owner.id);
             for (let card of other_revealed_cards) {
                 yield `${card.Name} gets +1 power`;
-
-                // TODO Helper on CardController?
-                let modifier = document.createElement("a-modifier")!;
-                modifier.setAttribute("origin", this.Name);
-                modifier.setAttribute("op", "addpower");
-                modifier.setAttribute("value", "1");
-                card.appendChild(modifier);
+                card.AddModifier(this.Name, "addpower", 1);
             }
         }
 

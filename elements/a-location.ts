@@ -17,13 +17,12 @@ export class LocationElement extends HTMLElement {
                     border: 1px solid #000;
                     padding: 10px;
                     margin: 10px;
-                    background-color: #246b24;
+                    background-color: bisque;
                 }
                 .description {
                     margin: 10px 0;
                 }
                 ::slotted(location-owner) {
-                    border: 1px dashed #000;
                     width: 45%;
                 }
                 .points {

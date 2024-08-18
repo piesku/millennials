@@ -2,6 +2,9 @@ import {CardController} from "../controllers/CardController.js";
 import {html} from "../lib/html.js";
 
 export class CardElement extends HTMLElement {
+    InitialCost = parseInt(this.getAttribute("cost") ?? "0");
+    InitialPower = parseInt(this.getAttribute("power") ?? "0");
+
     constructor() {
         super();
         this.attachShadow({mode: "open"});
@@ -35,7 +38,6 @@ export class CardElement extends HTMLElement {
                     cursor: move;
                     user-select: none;
                     position: relative;
-                    overflow: hidden;
                 }
 
                 :host > * {
@@ -76,6 +78,18 @@ export class CardElement extends HTMLElement {
                     font-size: 16px;
                 }
 
+                #cost.incr,
+                #power.decr {
+                    color: red;
+                    scale: 5;
+                }
+
+                #cost.decr,
+                #power.incr {
+                    color: green;
+                    scale: 5;
+                }
+
                 .text-container {
                     position: absolute;
                     bottom: 0;
@@ -100,8 +114,26 @@ export class CardElement extends HTMLElement {
 
             <flex-col>
                 <div class="header">
-                    <span>${cost}</span>
-                    <span>${power}</span>
+                    <span
+                        id="cost"
+                        class="${parseInt(cost) > this.InitialCost
+                            ? "incr"
+                            : parseInt(cost) < this.InitialCost
+                              ? "decr"
+                              : ""}"
+                    >
+                        ${cost}
+                    </span>
+                    <span
+                        id="power"
+                        class="${parseInt(power) > this.InitialPower
+                            ? "incr"
+                            : parseInt(power) < this.InitialPower
+                              ? "decr"
+                              : ""}"
+                    >
+                        ${power}
+                    </span>
                 </div>
                 <div class="sprite"></div>
                 <div class="text-container">
@@ -110,6 +142,12 @@ export class CardElement extends HTMLElement {
                 </div>
             </flex-col>
         `;
+    }
+
+    static observedAttributes = ["cost", "power"];
+
+    attributeChangedCallback(name: string, old_value: string, new_value: string) {
+        this.connectedCallback();
     }
 
     get Controller(): CardController {

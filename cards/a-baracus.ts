@@ -23,12 +23,8 @@ customElements.define(
             }
 
             if (locationIndex === 1) {
-                let modifier = document.createElement("a-modifier")!;
-                modifier.setAttribute("origin", this.Name);
-                modifier.setAttribute("op", "addpower");
-                modifier.setAttribute("value", "3");
-                this.appendChild(modifier);
                 yield `${this.Name} gains +3 power for being in the middle location`;
+                this.AddModifier(this.Name, "addpower", 3);
             } else {
                 yield `${this.Name} does not gain any additional power`;
             }
