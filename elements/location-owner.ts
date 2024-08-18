@@ -7,9 +7,12 @@ export class LocationOwner extends HTMLElement {
     }
 
     connectedCallback() {
-        const reverse = this.getAttribute("reverse") !== null;
         this.shadowRoot!.innerHTML = html`
-            <flex-row wrap ${reverse && "reverse"} style="justify-content: space-between; align-content: center;">
+            <flex-row
+                wrap
+                ${this.getAttribute("reverse") !== null && "reverse"}
+                style="justify-content: space-between; align-content: center;"
+            >
                 <slot></slot>
             </flex-row>
         `;

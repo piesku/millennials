@@ -35,7 +35,7 @@ export class LocationElement extends HTMLElement {
                 }
             </style>
             <flex-row class="location">
-                <slot name="rival"></slot>
+                <slot name="player"></slot>
                 <div id="player-points" class="points">${0}</div>
                 <div class="name-description">
                     <div class="name">${name}</div>
@@ -44,7 +44,7 @@ export class LocationElement extends HTMLElement {
                     </div>
                 </div>
                 <div id="enemy-points" class="points">${0}</div>
-                <slot name="player"></slot>
+                <slot name="rival"></slot>
             </flex-row>
         `;
     }

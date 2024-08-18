@@ -59,14 +59,24 @@ export class BattleController extends HTMLElement {
         }
 
         const player = this.querySelector("#player")! as ActorController;
-        yield* player.SetupBattle();
+        yield* player.StartBattle();
 
         const rival = this.querySelector("#rival")! as ActorController;
-        yield* rival.SetupBattle();
+        yield* rival.StartBattle();
+
+        yield* this.StartTurn();
     }
 
     *StartTurn() {
-        // Start the turn
+        this.CurrentTurn++;
+
+        yield `--- Start Turn ${this.CurrentTurn} ---`;
+
+        const player = this.querySelector("#player")! as ActorController;
+        yield* player.StartTurn(this.CurrentTurn);
+
+        const rival = this.querySelector("#rival")! as ActorController;
+        yield* rival.StartTurn(this.CurrentTurn);
     }
 
     async RunEndTurn() {

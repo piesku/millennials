@@ -2,6 +2,9 @@ import {html} from "../lib/html.js";
 import {element} from "../lib/random.js";
 
 export class ActorController extends HTMLElement {
+    MaxEnergy = 0;
+    CurrentEnergy = 0;
+
     constructor() {
         super();
         this.attachShadow({mode: "open"});
@@ -10,6 +13,7 @@ export class ActorController extends HTMLElement {
     connectedCallback() {
         this.shadowRoot!.innerHTML = html`
             <style>
+                ::slotted(a-avatar),
                 ::slotted(a-deck) {
                     flex: 1;
                 }
@@ -23,7 +27,7 @@ export class ActorController extends HTMLElement {
         `;
     }
 
-    *SetupBattle() {
+    *StartBattle() {
         const cards = [
             "a-baracus",
             "a-faceman",
@@ -69,6 +73,15 @@ export class ActorController extends HTMLElement {
         for (let i = 0; i < 3; i++) {
             yield* this.DrawCard();
         }
+    }
+
+    *StartTurn(turn: number) {
+        yield* this.DrawCard();
+
+        this.CurrentEnergy = this.MaxEnergy = turn;
+        let avatar = this.querySelector("a-avatar")!;
+        avatar.setAttribute("current-energy", this.CurrentEnergy.toString());
+        avatar.setAttribute("max-energy", this.MaxEnergy.toString());
     }
 
     *DrawCard() {
