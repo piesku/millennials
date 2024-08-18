@@ -151,6 +151,10 @@ export class CardElement extends HTMLElement {
                     overflow: visible;
                 }
 
+                dialog::backdrop {
+                    background: radial-gradient(#f69d3caa, #3f87a6aa);
+                }
+
                 card-detail {
                     width: 120px;
                     height: 180px;
