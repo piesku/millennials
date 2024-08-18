@@ -1,6 +1,6 @@
 import {CardElement} from "../elements/a-card.js";
 import {html} from "../lib/html.js";
-import {element, set_seed} from "../lib/random.js";
+import {set_seed} from "../lib/random.js";
 import {delay} from "../lib/timeout.js";
 import {ActorController} from "./actor-controller.js";
 import {CardController} from "./CardController.js";
@@ -63,22 +63,6 @@ export class BattleController extends HTMLElement {
 
         const rival = this.querySelector("#rival")! as ActorController;
         yield* rival.SetupBattle();
-
-        const enemies = [
-            {type: "darth-vader", count: 0},
-            {type: "storm-trooper", count: 0},
-        ];
-
-        for (let i = 0; i < enemies.length; i++) {
-            for (let j = 0; j < enemies[i].count; j++) {
-                const randomLocation = element(locations);
-                const locationElement = this.querySelector(randomLocation)!;
-                const enemyDropZone = locationElement
-                    .shadowRoot!.querySelector("a-location")!
-                    .shadowRoot!.querySelector("#enemy-drop-area")!;
-                enemyDropZone.appendChild(document.createElement(enemies[i].type));
-            }
-        }
     }
 
     *StartTurn() {

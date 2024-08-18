@@ -2,9 +2,6 @@ import {LocationController} from "../controllers/LocationController.js";
 import {html} from "../lib/html.js";
 
 export class LocationElement extends HTMLElement {
-    playerPoints: number = 0;
-    enemyPoints: number = 0;
-
     constructor() {
         super();
         this.attachShadow({mode: "open"});
@@ -39,14 +36,14 @@ export class LocationElement extends HTMLElement {
             </style>
             <flex-row class="location">
                 <slot name="rival"></slot>
-                <div id="player-points" class="points">${this.playerPoints}</div>
+                <div id="player-points" class="points">${0}</div>
                 <div class="name-description">
                     <div class="name">${name}</div>
                     <div class="description">
                         <slot name="description">${description}</slot>
                     </div>
                 </div>
-                <div id="enemy-points" class="points">${this.enemyPoints}</div>
+                <div id="enemy-points" class="points">${0}</div>
                 <slot name="player"></slot>
             </flex-row>
         `;
@@ -54,16 +51,6 @@ export class LocationElement extends HTMLElement {
 
     get Controller(): LocationController {
         return this.parentElement as LocationController;
-    }
-
-    updatePoints(side: "player" | "enemy", points: number) {
-        if (side === "player") {
-            this.playerPoints += points;
-            this.shadowRoot!.getElementById("player-points")!.textContent = this.playerPoints.toString();
-        } else {
-            this.enemyPoints += points;
-            this.shadowRoot!.getElementById("enemy-points")!.textContent = this.enemyPoints.toString();
-        }
     }
 }
 

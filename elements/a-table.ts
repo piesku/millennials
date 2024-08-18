@@ -15,6 +15,7 @@ export class TableElement extends HTMLElement {
         `;
 
         this.shadowRoot!.querySelector("button")!.addEventListener("click", () => {
+            // TODO Maybe extract to a CustomElement class?
             this.dispatchEvent(new CustomEvent("end-turn-clicked", {bubbles: true, composed: true}));
         });
     }
