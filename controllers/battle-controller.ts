@@ -34,9 +34,13 @@ export class BattleController extends HTMLElement {
 
         this.InitBattle();
 
-        this.addEventListener("card-played", (e) => {
+        this.addEventListener("card-dropped", (e) => {
             let ce = e as CustomEvent;
             this.PlayedCardsQueue.push(ce.detail);
+        });
+
+        this.addEventListener("end-turn-clicked", (e) => {
+            this.RunEndTurn();
         });
     }
 
@@ -89,6 +93,8 @@ export class BattleController extends HTMLElement {
     }
 
     *EndTurn() {
+        yield "--- End Turn ---";
+
         for (let card of this.querySelectorAll<CardElement>("a-table a-card")) {
             if (!card.Controller.IsRevealed) {
                 card.classList.remove("frontside");

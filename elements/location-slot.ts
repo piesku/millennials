@@ -1,5 +1,4 @@
 import {CardController} from "../controllers/CardController.js";
-import {CardEventKind} from "../events.js";
 import {html} from "../lib/html.js";
 
 export class LocationSlot extends HTMLElement {
@@ -44,7 +43,7 @@ export class LocationSlot extends HTMLElement {
                 card.Element.classList.add("frontside");
 
                 this.dispatchEvent(
-                    new CustomEvent(CardEventKind.Played, {
+                    new CustomEvent("card-dropped", {
                         bubbles: true,
                         detail: card,
                     }),
