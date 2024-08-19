@@ -9,13 +9,5 @@ customElements.define(
         Power = 2;
         Text = "";
         Sprite = Sprites.RobinHood;
-
-        override handleEvent(event: Event) {
-            switch (event.type) {
-                case "CardEntersTable":
-                    console.log(`${this.Name} enters the table`);
-                    break;
-            }
-        }
     },
 );

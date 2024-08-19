@@ -9,13 +9,5 @@ customElements.define(
         Power = 5;
         Text = "The muscle of the Teenage Mutant Ninja Turtles";
         Sprite = Sprites.Raphael;
-
-        override handleEvent(event: Event) {
-            switch (event.type) {
-                case "CardEntersTable":
-                    console.log(`${this.Name} enters the table`);
-                    break;
-            }
-        }
     },
 );

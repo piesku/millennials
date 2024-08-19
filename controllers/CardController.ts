@@ -38,8 +38,6 @@ export abstract class CardController extends HTMLElement {
             let target = e.target as HTMLElement;
             target.classList.remove("dragging");
         });
-
-        this.addEventListener("CardEntersTable", this);
     }
 
     get CurrentCost() {
@@ -130,6 +128,4 @@ export abstract class CardController extends HTMLElement {
     }
 
     *OnMessage(kind: Message, card?: CardController): Generator<string, void> {}
-
-    handleEvent(event: Event) {}
 }

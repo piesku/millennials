@@ -9,14 +9,6 @@ customElements.define(
         Power = 8;
         Text = "";
         Sprite = Sprites.DarthVader;
-
-        override handleEvent(event: Event) {
-            switch (event.type) {
-                case "CardEntersTable":
-                    console.log(`${this.Name} enters the table`);
-                    break;
-            }
-        }
     },
 );
 
@@ -28,13 +20,5 @@ customElements.define(
         Power = 2;
         Text = "";
         Sprite = Sprites.Stormtrooper;
-
-        override handleEvent(event: Event) {
-            switch (event.type) {
-                case "CardEntersTable":
-                    console.log(`${this.Name} enters the table`);
-                    break;
-            }
-        }
     },
 );

@@ -9,7 +9,5 @@ customElements.define(
         Power = 3;
         Text = "Draw a card from your rival's deck";
         Sprite = Sprites.Faceman;
-
-        override *OnReveal() {}
     },
 );

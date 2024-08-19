@@ -9,13 +9,5 @@ customElements.define(
         Power = 2;
         Text = "Run Forrest, Run!";
         Sprite = Sprites.ForrestGump;
-
-        override handleEvent(event: Event) {
-            switch (event.type) {
-                case "CardEntersTable":
-                    console.log("CardEntersTable");
-                    break;
-            }
-        }
     },
 );

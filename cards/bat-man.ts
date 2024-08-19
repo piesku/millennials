@@ -9,13 +9,5 @@ customElements.define(
         Power = 5;
         Text = "The Dark Knight";
         Sprite = Sprites.Batman;
-
-        override handleEvent(event: Event) {
-            switch (event.type) {
-                case "CardEntersTable":
-                    console.log("Batman enters the table");
-                    break;
-            }
-        }
     },
 );

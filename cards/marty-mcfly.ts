@@ -9,13 +9,5 @@ customElements.define(
         Power = 3;
         Text = "Alzheimer, I'm in you!";
         Sprite = Sprites.MartyMcFly;
-
-        override handleEvent(event: Event) {
-            switch (event.type) {
-                case "CardEntersTable":
-                    console.log("CardEntersTable");
-                    break;
-            }
-        }
     },
 );
