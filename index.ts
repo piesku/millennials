@@ -10,6 +10,7 @@ import "./elements/location-slot.js";
 
 import "./controllers/ActorController.js";
 import "./controllers/BattleController.js";
+import "./controllers/PlayerController.js";
 
 import "./layout/flex-col.js";
 import "./layout/flex-row.js";
@@ -48,7 +49,7 @@ import "./cards/tmnt-michaelangelo.js";
 import "./cards/tmnt-raphael.js";
 import "./cards/woo-dy.js";
 
-import "./cards/enemies/empire.js";
+import "./villains/empire.js";
 
 import "./locations/arkham-asylum.js";
 import "./locations/death-star.js";

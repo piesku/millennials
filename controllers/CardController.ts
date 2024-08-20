@@ -75,18 +75,29 @@ export abstract class CardController extends HTMLElement {
         return result;
     }
 
+    ClosestActor(): ActorController {
+        let node: HTMLElement | null = this;
+        while ((node = node.parentElement)) {
+            if (node instanceof ActorController) {
+                break;
+            }
+        }
+        return node as ActorController;
+    }
+
     get Owner(): ActorController {
         let location_owner = this.closest("location-owner");
         if (location_owner) {
             let actor_id = location_owner.getAttribute("slot")!;
             return document.getElementById(actor_id) as ActorController;
         } else {
-            return this.closest("actor-controller") as ActorController;
+            return this.ClosestActor();
         }
     }
+
     get Rival(): ActorController {
-        let all_actors = Array.from(document.querySelectorAll("actor-controller")) as ActorController[];
-        return all_actors.find((actor) => actor !== this.Owner)!;
+        let id = this.Owner.id === "player" ? "rival" : "player";
+        return document.getElementById(id) as ActorController;
     }
 
     get Battle(): BattleController {
