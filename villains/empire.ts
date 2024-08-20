@@ -1,9 +1,5 @@
 import {ActorController} from "../controllers/ActorController.js";
-import {BattleController} from "../controllers/BattleController.js";
 import {CardController} from "../controllers/CardController.js";
-import {CardElement} from "../elements/a-card.js";
-import {LocationElement} from "../elements/a-location.js";
-import {LocationSlot} from "../elements/location-slot.js";
 import {element} from "../lib/random.js";
 import {Sprites} from "../sprites/sprites.js";
 
@@ -49,20 +45,8 @@ customElements.define(
             }
         }
 
-        override *RivalAI() {
-            // TODO Pick a card that can be played this turn given its cost.
-            // TODO Add a while loop.
-            let card = element(this.querySelectorAll<CardElement>("a-hand a-card")).Controller;
+        // override *RivalAI() {
 
-            let battle = this.closest<BattleController>("battle-controller")!;
-            let empty_slots = battle.querySelectorAll<LocationSlot>(
-                "location-owner[slot=rival] location-slot:not(:has(a-card))",
-            );
-            let slot = element(empty_slots);
-            let location = slot.closest<LocationElement>("a-location")!.Controller;
-            yield `rival plays ${card.Name} to ${location.Name}`;
-            slot.appendChild(card);
-            battle.PlayedCardsQueue.push(card);
-        }
+        // }
     },
 );

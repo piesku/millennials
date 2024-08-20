@@ -1,4 +1,9 @@
+import {CardElement} from "../elements/a-card.js";
+import {LocationElement} from "../elements/a-location.js";
+import {LocationSlot} from "../elements/location-slot.js";
 import {html} from "../lib/html.js";
+import {element} from "../lib/random.js";
+import {BattleController} from "./BattleController.js";
 import {CardController} from "./CardController.js";
 
 export abstract class ActorController extends HTMLElement {
@@ -57,5 +62,28 @@ export abstract class ActorController extends HTMLElement {
         }
     }
 
-    *RivalAI(): Generator<string, void> {}
+    *RivalAI(): Generator<string, void> {
+        while (true) {
+            let playableCards = Array.from(this.querySelectorAll<CardElement>("a-hand a-card"))
+                .map((card) => card.Controller)
+                .filter((controller) => controller.CurrentCost <= this.CurrentEnergy);
+
+            if (playableCards.length === 0) {
+                yield `${this.Name} cannot play any more cards this turn`;
+                break;
+            }
+
+            let card = element(playableCards);
+
+            let battle = this.closest<BattleController>("battle-controller")!;
+            let empty_slots = battle.querySelectorAll<LocationSlot>(
+                "location-owner[slot=rival] location-slot:not(:has(a-card))",
+            );
+            let slot = element(empty_slots);
+            let location = slot.closest<LocationElement>("a-location")!.Controller;
+            yield `${this.Name} plays ${card.Name} to ${location.Name}`;
+            slot.appendChild(card);
+            battle.PlayedCardsQueue.push(card);
+        }
+    }
 }
