@@ -7,6 +7,17 @@ import {Message} from "../messages.js";
 import {ActorController} from "./ActorController.js";
 import {CardController} from "./CardController.js";
 
+const Log = (message: string) => {
+    const logDisplay = document.querySelector("log-display");
+    if (logDisplay) {
+        if (message.startsWith("---") && message.endsWith("---")) {
+            message = `<h3>${message.slice(3, -3).trim()}</h3>`;
+        }
+        logDisplay.innerHTML += `<div>${message}</div>`;
+        logDisplay.scrollTop = logDisplay.scrollHeight;
+    }
+};
+
 export class BattleController extends HTMLElement {
     CurrentTurn = 0;
     MaxTurns = 6;
@@ -23,7 +34,7 @@ export class BattleController extends HTMLElement {
         this.shadowRoot!.innerHTML = html`
             <style>
                 :host {
-                    display: block;
+                    display: flex;
                     height: 100vh;
                 }
                 ::slotted(a-table) {
@@ -45,9 +56,6 @@ export class BattleController extends HTMLElement {
                 const energy_left = card.Owner.CurrentEnergy;
                 const card_cost = card.CurrentCost;
                 if (card_cost > energy_left) {
-                    console.log(
-                        `Not enough energy to play ${card.Name}. Required: ${card_cost}, Available: ${energy_left}`,
-                    );
                     return false;
                 }
 
@@ -70,7 +78,7 @@ export class BattleController extends HTMLElement {
 
     async InitBattle() {
         for (let message of this.StartBattle()) {
-            console.log(message);
+            Log(message);
             await delay(250);
         }
     }

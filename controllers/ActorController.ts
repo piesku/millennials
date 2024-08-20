@@ -57,7 +57,11 @@ export abstract class ActorController extends HTMLElement {
             yield "but the hand is full";
         } else if (deck.firstElementChild) {
             let card = deck.firstElementChild as CardController;
-            yield `${this.id} draws ${card.Name}`;
+            if (this.id === "rival") {
+                yield `${this.id} draws a card`;
+            } else {
+                yield `${this.id} draws ${card.Name}`;
+            }
             hand.appendChild(card);
         } else {
             yield "but the deck is empty";
@@ -71,7 +75,6 @@ export abstract class ActorController extends HTMLElement {
                 .filter((controller) => controller.CurrentCost <= this.CurrentEnergy);
 
             if (playableCards.length === 0) {
-                yield `${this.Name} cannot play any more cards this turn`;
                 break;
             }
 

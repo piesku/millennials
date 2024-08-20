@@ -14,26 +14,55 @@
     [hidden] {
         display: none;
     }
+
+    log-display {
+        display: flex;
+        flex-direction: column;
+        width: 300px;
+        height: 100vh;
+        overflow-y: auto;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 10px;
+        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+    }
+
+    body {
+        display: flex;
+        flex-direction: row;
+    }
+
+    battle-controller {
+        flex: 4;
+    }
+
+    log-display {
+        flex: 1;
+    }
 </style>
 
-<img hidden src="./sprites/spritesheet.png.webp" />
+<body>
+    <img hidden src="./sprites/spritesheet.png.webp" />
 
-<battle-controller>
-    <empire-controller id="rival">
-        <a-avatar name="Rival"></a-avatar>
-        <a-hand></a-hand>
-        <a-deck reverse></a-deck>
-    </empire-controller>
+    <battle-controller>
+        <empire-controller id="rival">
+            <a-avatar name="Rival"></a-avatar>
+            <a-hand></a-hand>
+            <a-deck reverse></a-deck>
+        </empire-controller>
 
-    <a-table></a-table>
+        <a-table></a-table>
 
-    <player-controller id="player">
-        <a-deck></a-deck>
-        <a-hand></a-hand>
-        <a-avatar name="You">
-            <button id="end-turn">End Turn</button>
-        </a-avatar>
-    </player-controller>
-</battle-controller>
+        <player-controller id="player">
+            <a-deck></a-deck>
+            <a-hand></a-hand>
+            <a-avatar name="You">
+                <button id="end-turn">End Turn</button>
+            </a-avatar>
+        </player-controller>
+    </battle-controller>
 
-<script src="./index.js"></script>
+    <log-display>
+    </log-display>
+
+    <script src="./index.js"></script>
+</body>
