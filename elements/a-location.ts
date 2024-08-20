@@ -26,7 +26,11 @@ export class LocationElement extends HTMLElement {
                     width: 45%;
                 }
                 .points {
-                    margin: 5px;
+                    margin: 20px;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    font-size: 20px;
                 }
                 .name-description {
                     text-align: center;

@@ -154,7 +154,7 @@ export class CardElement extends HTMLElement {
 
                 dialog,
                 dialog:active {
-                    background: transparent;
+                    background: transparent !important;
                     outline: none;
                     border: none;
                     width: 120px;
