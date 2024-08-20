@@ -27,6 +27,13 @@ export abstract class CardController extends HTMLElement {
         this.id = this.Id.toString();
 
         this.addEventListener("dragstart", (e) => {
+            const energy_left = this.Owner.CurrentEnergy;
+            const card_cost = this.CurrentCost;
+            if (card_cost > energy_left) {
+                e.preventDefault();
+                return false;
+            }
+
             let target = e.target as HTMLElement;
             if (e.dataTransfer) {
                 e.dataTransfer.setData("text/plain", target.id);

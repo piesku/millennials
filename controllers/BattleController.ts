@@ -40,6 +40,18 @@ export class BattleController extends HTMLElement {
             const data = e.dataTransfer!.getData("text/plain");
             const card = document.getElementById(data) as CardController;
             if (card) {
+                const energy_left = card.Owner.CurrentEnergy;
+                const card_cost = card.CurrentCost;
+                if (card_cost > energy_left) {
+                    console.log(
+                        `Not enough energy to play ${card.Name}. Required: ${card_cost}, Available: ${energy_left}`,
+                    );
+                    return false;
+                }
+
+                card.Owner.CurrentEnergy -= card.CurrentCost;
+                card.Owner.ReRender();
+
                 this.PlayedCardsQueue.push(card);
                 let location = card.closest<LocationElement>("a-location")!.Controller;
                 console.log(`you play ${card.Name} to ${location.Name}`);
