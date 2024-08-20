@@ -82,7 +82,7 @@ export abstract class ActorController extends HTMLElement {
                 "location-owner[slot=rival] location-slot:not(:has(a-card))",
             );
             let slot = element(empty_slots);
-            let location = slot.closest<LocationElement>("a-location")!.Controller;
+            let location = slot.closest<LocationElement>("a-location")!.Instance;
             yield `${this.Name} plays ${card.Name} to ${location.Name}`;
             slot.appendChild(card);
             battle.PlayedCardsQueue.push(card);

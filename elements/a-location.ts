@@ -1,15 +1,32 @@
 import {LocationController} from "../controllers/LocationController.js";
 import {html} from "../lib/html.js";
+import {ArkhamAsylum} from "../locations/arkham-asylum.js";
+import {DeathStar} from "../locations/death-star.js";
+import {FutureHillValey} from "../locations/future-hill-valley.js";
 
 export class LocationElement extends HTMLElement {
+    Instance!: LocationController;
+
+    static Controllers: Record<string, new (el: LocationElement) => LocationController> = {
+        "arkham-asylum": ArkhamAsylum,
+        "death-star": DeathStar,
+        "future-hill-valley": FutureHillValey,
+    };
+
     constructor() {
         super();
         this.attachShadow({mode: "open"});
     }
 
+    static observedAttributes = ["type"];
+    attributeChangedCallback(name: string, _oldValue: string, newValue: string) {
+        this.Instance = new LocationElement.Controllers[newValue](this);
+    }
+
     connectedCallback() {
-        const name = this.getAttribute("name") ?? "";
-        const description = this.getAttribute("description") ?? "";
+        if (DEBUG && !this.hasAttribute("type")) {
+            throw new Error("LocationElement: type attribute is required");
+        }
 
         this.shadowRoot!.innerHTML = html`
             <style>
@@ -41,19 +58,31 @@ export class LocationElement extends HTMLElement {
                 <slot name="player"></slot>
                 <div id="player-points" class="points">${0}</div>
                 <div class="name-description">
-                    <div class="name">${name}</div>
+                    <div class="name">${this.Instance.Name}</div>
                     <div class="description">
-                        <slot name="description">${description}</slot>
+                        <slot name="description">${this.Instance.Description}</slot>
                     </div>
                 </div>
                 <div id="enemy-points" class="points">${0}</div>
                 <slot name="rival"></slot>
             </flex-row>
         `;
-    }
 
-    get Controller(): LocationController {
-        return this.parentElement as LocationController;
+        this.innerHTML = `
+            <location-owner slot="player">
+                <location-slot label=1></location-slot>
+                <location-slot label=2></location-slot>
+                <location-slot label=3></location-slot>
+                <location-slot label=4></location-slot>
+            </location-owner>
+
+            <location-owner slot="rival" reverse>
+                <location-slot label=1></location-slot>
+                <location-slot label=2></location-slot>
+                <location-slot label=3></location-slot>
+                <location-slot label=4></location-slot>
+            </location-owner>
+        `;
     }
 }
 

@@ -55,7 +55,7 @@ export class BattleController extends HTMLElement {
                 card.Owner.ReRender();
 
                 this.PlayedCardsQueue.push(card);
-                let location = card.closest<LocationElement>("a-location")!.Controller;
+                let location = card.closest<LocationElement>("a-location")!.Instance;
                 console.log(`you play ${card.Name} to ${location.Name}`);
             }
         });
@@ -79,7 +79,9 @@ export class BattleController extends HTMLElement {
         const table = this.querySelector("a-table")!;
         const locations = ["death-star", "arkham-asylum", "future-hill-valley"];
         for (let i = 0; i < locations.length; i++) {
-            table.appendChild(document.createElement(locations[i]));
+            let location = document.createElement("a-location");
+            location.setAttribute("type", locations[i]);
+            table.appendChild(location);
         }
 
         yield "--- Lights… camera… action! ---";
@@ -146,9 +148,7 @@ export class BattleController extends HTMLElement {
     }
 
     *BroadcastGameMessage(kind: Message) {
-        let locations = [...this.querySelectorAll<LocationElement>("a-location")].map(
-            (location) => location.Controller,
-        );
+        let locations = [...this.querySelectorAll<LocationElement>("a-location")].map((location) => location.Instance);
         for (let location of locations) {
             yield* location.OnMessage(kind);
 
@@ -171,7 +171,7 @@ export class BattleController extends HTMLElement {
 
         // Finally, broadcast the message to other locations and their revealed cards.
         let locations = [...this.querySelectorAll<LocationElement>("a-location")]
-            .map((location) => location.Controller)
+            .map((location) => location.Instance)
             .filter((location) => location !== card.Location);
         for (let location of locations) {
             yield* location.OnMessage(kind, card);
@@ -183,9 +183,7 @@ export class BattleController extends HTMLElement {
     }
 
     GetRevealedCards(actor?: string) {
-        let locations = [...this.querySelectorAll<LocationElement>("a-location")].map(
-            (location) => location.Controller,
-        );
+        let locations = [...this.querySelectorAll<LocationElement>("a-location")].map((location) => location.Instance);
         return locations.flatMap((location) => location.GetRevealedCards(actor));
     }
 }

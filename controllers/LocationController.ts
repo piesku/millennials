@@ -1,33 +1,16 @@
 import {CardElement} from "../elements/a-card.js";
+import {LocationElement} from "../elements/a-location.js";
 import {Message} from "../messages.js";
 import {CardController} from "./CardController.js";
 
-export abstract class LocationController extends HTMLElement {
+export abstract class LocationController {
     abstract Name: string;
     abstract Description: string;
 
-    connectedCallback() {
-        this.innerHTML = `
-            <a-location name="${this.Name}" description="${this.Description}">
-                <location-owner slot="player">
-                    <location-slot label=1></location-slot>
-                    <location-slot label=2></location-slot>
-                    <location-slot label=3></location-slot>
-                    <location-slot label=4></location-slot>
-                </location-owner>
-
-                <location-owner slot="rival" reverse>
-                    <location-slot label=1></location-slot>
-                    <location-slot label=2></location-slot>
-                    <location-slot label=3></location-slot>
-                    <location-slot label=4></location-slot>
-                </location-owner>
-            </a-location>
-        `;
-    }
+    constructor(public Element: LocationElement) {}
 
     GetRevealedCards(actor?: string) {
-        let root = actor ? this.querySelector(`location-owner[slot=${actor}]`)! : this;
+        let root = actor ? this.Element.querySelector(`location-owner[slot=${actor}]`)! : this.Element;
         return Array.from(root.querySelectorAll<CardElement>("a-card"))
             .map((card) => card.Controller)
             .filter((card) => card.IsRevealed);
@@ -36,7 +19,7 @@ export abstract class LocationController extends HTMLElement {
     *OnMessage(kind: Message, card?: CardController): Generator<string, void> {}
 
     *AddCard(card: CardController, owner: string, slot_index?: number) {
-        const side = this.querySelector(`location-owner[slot=${owner}]`)!;
+        const side = this.Element.querySelector(`location-owner[slot=${owner}]`)!;
         if (slot_index === undefined) {
             let slot = side.querySelector("location-slot:not(:has(a-card))");
             if (slot) {

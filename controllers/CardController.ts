@@ -105,7 +105,7 @@ export abstract class CardController extends HTMLElement {
     }
 
     get Location(): LocationController {
-        return (this.closest("a-location") as LocationElement).Controller;
+        return (this.closest("a-location") as LocationElement).Instance;
     }
 
     get Element(): CardElement {
