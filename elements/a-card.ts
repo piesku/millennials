@@ -69,6 +69,17 @@ export class CardElement extends HTMLElement {
                     position: relative;
                 }
 
+                :host(:not(.frontside)) {
+                    background: #f6d365;
+                    background-image: repeating-linear-gradient(
+                        45deg,
+                        rgba(255, 255, 255, 0.2) 0px,
+                        #f6d365 10px,
+                        #fda085 20px
+                    );
+                }
+
+                :host-context(#rival) > *,
                 :host > * {
                     visibility: hidden;
                 }
@@ -76,6 +87,7 @@ export class CardElement extends HTMLElement {
                 :host-context(a-hand) > *,
                 :host(.frontside) > * {
                     visibility: visible;
+                    background-color: white;
                 }
 
                 :host(.dragging) {
