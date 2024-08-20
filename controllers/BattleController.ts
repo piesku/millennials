@@ -9,6 +9,8 @@ import {CardController} from "./CardController.js";
 
 export class BattleController extends HTMLElement {
     CurrentTurn = 0;
+    MaxTurns = 6;
+
     PlayedCardsQueue: Array<CardController> = [];
 
     constructor() {
@@ -131,7 +133,16 @@ export class BattleController extends HTMLElement {
         }
 
         yield* this.BroadcastGameMessage(Message.TurnEnds);
-        yield* this.StartTurn();
+
+        if (this.CurrentTurn >= this.MaxTurns) {
+            yield* this.GameEnd();
+        } else {
+            yield* this.StartTurn();
+        }
+    }
+
+    *GameEnd() {
+        console.log("Game Over");
     }
 
     *BroadcastGameMessage(kind: Message) {

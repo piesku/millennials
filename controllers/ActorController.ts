@@ -84,6 +84,9 @@ export abstract class ActorController extends HTMLElement {
             yield `${this.Name} plays ${card.Name} to ${location.Name}`;
             slot.appendChild(card);
             battle.PlayedCardsQueue.push(card);
+
+            this.CurrentEnergy -= card.CurrentCost;
+            this.ReRender();
         }
     }
 }
