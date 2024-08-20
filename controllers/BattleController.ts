@@ -34,7 +34,7 @@ export class BattleController extends HTMLElement {
         this.shadowRoot!.innerHTML = html`
             <style>
                 :host {
-                    display: flex;
+                    display: block;
                     height: 100vh;
                 }
                 ::slotted(a-table) {
