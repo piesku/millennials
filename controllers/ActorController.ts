@@ -53,7 +53,9 @@ export abstract class ActorController extends HTMLElement {
         const hand = this.querySelector("a-hand")!;
         const deck = this.querySelector("a-deck")!;
 
-        if (deck.firstElementChild) {
+        if (deck.firstElementChild && hand.children.length >= 7) {
+            yield "but the hand is full";
+        } else if (deck.firstElementChild) {
             let card = deck.firstElementChild as CardController;
             yield `${this.id} draws ${card.Name}`;
             hand.appendChild(card);
