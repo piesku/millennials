@@ -58,9 +58,9 @@ export abstract class ActorController extends HTMLElement {
         } else if (deck.firstElementChild) {
             let card = deck.firstElementChild as CardController;
             if (this.id === "rival") {
-                yield `${this.id} draws a card`;
+                yield `${this.Name} draws a card`;
             } else {
-                yield `${this.id} draws ${card.Name}`;
+                yield `${this.Name} draw ${card.Name}`;
             }
             hand.appendChild(card);
         } else {
@@ -86,7 +86,11 @@ export abstract class ActorController extends HTMLElement {
             );
             let slot = element(empty_slots);
             let location = slot.closest<LocationElement>("a-location")!.Instance;
-            yield `${this.Name} plays ${card.Name} to ${location.Name}`;
+            if (this.id === "rival") {
+                yield `${this.Name} plays a card to ${location.Name}`;
+            } else {
+                yield `${this.Name} plays ${card.Name} to ${location.Name}`;
+            }
             slot.appendChild(card);
             battle.PlayedCardsQueue.push(card);
 

@@ -122,7 +122,7 @@ export class BattleController extends HTMLElement {
 
     async RunEndTurn() {
         for (let message of this.EndTurn()) {
-            console.log(message);
+            Log(message);
             await delay(250);
         }
     }
@@ -152,7 +152,7 @@ export class BattleController extends HTMLElement {
     }
 
     *GameEnd() {
-        console.log("Game Over");
+        Log("Game Over");
     }
 
     *BroadcastGameMessage(kind: Message) {
