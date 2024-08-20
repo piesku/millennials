@@ -49,9 +49,9 @@ export abstract class ActorController extends HTMLElement {
         this.ReRender();
     }
 
-    *DrawCard() {
+    *DrawCard(target?: Element) {
         const hand = this.querySelector("a-hand")!;
-        const deck = this.querySelector("a-deck")!;
+        const deck = target ?? this.querySelector("a-deck")!;
 
         if (deck.firstElementChild && hand.children.length >= 7) {
             yield "but the hand is full";

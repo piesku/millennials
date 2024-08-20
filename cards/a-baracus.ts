@@ -4,7 +4,7 @@ import {Sprites} from "../sprites/sprites.js";
 customElements.define(
     "a-baracus",
     class extends CardController {
-        Name = "B-Team A.B. Bacarus";
+        Name = "B-Team C.D. Bacarus";
         Cost = 2;
         Power = 2;
         Text = "If in the middle location +3 power";
