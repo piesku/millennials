@@ -40,7 +40,7 @@ export class LocationElement extends HTMLElement {
                     margin: 10px 0;
                 }
                 ::slotted(location-owner) {
-                    width: 45%;
+                    width: 35%;
                 }
                 .points {
                     margin: 20px;
@@ -51,7 +51,7 @@ export class LocationElement extends HTMLElement {
                 }
                 .name-description {
                     text-align: center;
-                    margin: 0 10px;
+                    width: 30%;
                 }
             </style>
             <flex-row class="location">
