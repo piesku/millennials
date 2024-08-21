@@ -1,4 +1,4 @@
-import {AvatarElement} from "../elements/a-avatar.js";
+import {ActorElement} from "../elements/a-actor.js";
 import {CardElement} from "../elements/a-card.js";
 import {LocationElement} from "../elements/a-location.js";
 import {next_id} from "../lib/id.js";
@@ -53,17 +53,17 @@ export abstract class CardController {
         let location_owner = this.Element.closest("location-owner");
         if (location_owner) {
             let actor_id = location_owner.getAttribute("slot")!;
-            let actor = document.getElementById(actor_id) as AvatarElement;
+            let actor = document.getElementById(actor_id) as ActorElement;
             return actor.Instance;
         } else {
-            let actor_element = this.Element.closest("a-avatar") as AvatarElement;
+            let actor_element = this.Element.closest("a-actor") as ActorElement;
             return actor_element.Instance;
         }
     }
 
     get Rival(): ActorController {
         let actor_id = this.Owner.Type === "player" ? "villain" : "player";
-        let actor = document.getElementById(actor_id) as AvatarElement;
+        let actor = document.getElementById(actor_id) as ActorElement;
         return actor.Instance;
     }
 

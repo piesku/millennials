@@ -3,10 +3,10 @@ import {PlayerController} from "../controllers/PlayerController.js";
 import {html} from "../lib/html.js";
 import {EmpireController} from "../villains/empire.js";
 
-export class AvatarElement extends HTMLElement {
+export class ActorElement extends HTMLElement {
     Instance!: ActorController;
 
-    static Controllers: Record<string, new (el: AvatarElement) => ActorController> = {
+    static Controllers: Record<string, new (el: ActorElement) => ActorController> = {
         player: PlayerController,
         empire: EmpireController,
     };
@@ -18,7 +18,7 @@ export class AvatarElement extends HTMLElement {
 
     static observedAttributes = ["type"];
     attributeChangedCallback(name: string, old_value: string, new_value: string) {
-        this.Instance = new AvatarElement.Controllers[new_value](this);
+        this.Instance = new ActorElement.Controllers[new_value](this);
     }
 
     connectedCallback() {
@@ -59,4 +59,4 @@ export class AvatarElement extends HTMLElement {
     }
 }
 
-customElements.define("a-avatar", AvatarElement);
+customElements.define("a-actor", ActorElement);

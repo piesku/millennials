@@ -1,4 +1,4 @@
-import {AvatarElement} from "../elements/a-avatar.js";
+import {ActorElement} from "../elements/a-actor.js";
 import {CardElement} from "../elements/a-card.js";
 import {LocationElement} from "../elements/a-location.js";
 import {LocationSlot} from "../elements/location-slot.js";
@@ -11,7 +11,7 @@ export abstract class ActorController {
     MaxEnergy = 0;
     CurrentEnergy = 0;
 
-    constructor(public Element: AvatarElement) {}
+    constructor(public Element: ActorElement) {}
 
     abstract StartBattle(): Generator<string, void>;
 

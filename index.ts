@@ -1,4 +1,4 @@
-import "./elements/a-avatar.js";
+import "./elements/a-actor.js";
 import "./elements/a-card.js";
 import "./elements/a-deck.js";
 import "./elements/a-hand.js";

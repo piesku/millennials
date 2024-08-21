@@ -1,4 +1,4 @@
-import {AvatarElement} from "../elements/a-avatar.js";
+import {ActorElement} from "../elements/a-actor.js";
 import {CardElement} from "../elements/a-card.js";
 import {LocationElement} from "../elements/a-location.js";
 import {html} from "../lib/html.js";
@@ -91,10 +91,10 @@ export class BattleController extends HTMLElement {
 
         yield "--- Lights… camera… action! ---";
 
-        const player = this.querySelector("a-avatar[type=player]") as AvatarElement;
+        const player = this.querySelector("a-actor[type=player]") as ActorElement;
         yield* player.Instance.StartBattle();
 
-        const villain = this.querySelector("a-avatar:not([type=player])") as AvatarElement;
+        const villain = this.querySelector("a-actor:not([type=player])") as ActorElement;
         yield* villain.Instance.StartBattle();
 
         yield* this.BroadcastGameMessage(Message.BattleStarts);
@@ -106,10 +106,10 @@ export class BattleController extends HTMLElement {
 
         yield `--- Start Turn ${this.CurrentTurn} ---`;
 
-        const player = this.querySelector("a-avatar[type=player]") as AvatarElement;
+        const player = this.querySelector("a-actor[type=player]") as ActorElement;
         yield* player.Instance.StartTurn(this.CurrentTurn);
 
-        const villain = this.querySelector("a-avatar:not([type=player])") as AvatarElement;
+        const villain = this.querySelector("a-actor:not([type=player])") as ActorElement;
         yield* villain.Instance.StartTurn(this.CurrentTurn);
 
         yield* this.BroadcastGameMessage(Message.TurnStarts);
