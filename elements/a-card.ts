@@ -101,6 +101,30 @@ export class CardElement extends HTMLElement {
             throw new Error("CardElement: type attribute is required");
         }
 
+        this.ReRender();
+
+        this.addEventListener("dragstart", (e) => {
+            const energy_left = this.Instance.Owner.CurrentEnergy;
+            const card_cost = this.Instance.CurrentCost;
+            if (card_cost > energy_left) {
+                e.preventDefault();
+                return false;
+            }
+
+            let target = e.target as HTMLElement;
+            if (e.dataTransfer) {
+                e.dataTransfer.setData("text/plain", target.id);
+                target.classList.add("dragging");
+            }
+        });
+
+        this.addEventListener("dragend", (e) => {
+            let target = e.target as HTMLElement;
+            target.classList.remove("dragging");
+        });
+    }
+
+    ReRender() {
         const spriteSize = 16;
         const spriteMargin = 1;
         const targetSize = 120;
@@ -286,26 +310,6 @@ export class CardElement extends HTMLElement {
 
         this.draggable = this.Instance.Owner.id !== "rival";
         this.id = this.Instance.Id.toString();
-
-        this.addEventListener("dragstart", (e) => {
-            const energy_left = this.Instance.Owner.CurrentEnergy;
-            const card_cost = this.Instance.CurrentCost;
-            if (card_cost > energy_left) {
-                e.preventDefault();
-                return false;
-            }
-
-            let target = e.target as HTMLElement;
-            if (e.dataTransfer) {
-                e.dataTransfer.setData("text/plain", target.id);
-                target.classList.add("dragging");
-            }
-        });
-
-        this.addEventListener("dragend", (e) => {
-            let target = e.target as HTMLElement;
-            target.classList.remove("dragging");
-        });
     }
 }
 

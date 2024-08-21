@@ -88,6 +88,9 @@ export abstract class CardController {
         modifier.setAttribute("op", op);
         modifier.setAttribute("value", value.toString());
         this.Element.appendChild(modifier);
+
+        // TODO Perhaps a MutationObserver would be a better way to handle this?
+        this.Element.ReRender();
     }
 
     *Reveal() {
