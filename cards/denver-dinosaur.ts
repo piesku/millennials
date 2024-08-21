@@ -6,8 +6,8 @@ customElements.define(
     "denver-dinosaur",
     class extends CardController {
         Name = "Vender Dinosaur";
-        Cost = 5;
-        Power = 8;
+        Cost = 1;
+        Power = 0;
         Text = "After each turn, gain 1 Power for each unspent Energy.";
         Sprite = Sprites.Denver;
 

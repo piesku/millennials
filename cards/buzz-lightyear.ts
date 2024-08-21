@@ -6,8 +6,8 @@ customElements.define(
     "buzz-lightyear",
     class extends CardController {
         Name = "Buzzer Astronaut";
-        Cost = 4;
-        Power = 6;
+        Cost = 0;
+        Power = 1;
         Text = "+1 energy next turn";
         Sprite = Sprites.Buzz;
 

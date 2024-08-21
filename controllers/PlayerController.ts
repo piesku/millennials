@@ -8,10 +8,10 @@ export class PlayerController extends ActorController {
         const cards = [
             // "a-baracus",
             // "a-faceman",
-            // "a-hannibal",
+            "a-hannibal",
             // "a-murdock",
             "bat-man",
-            // "bla-de",
+            "bla-de",
             // "buzz-lightyear",
             // "denver-dinosaur",
             // "forrest-gump",
