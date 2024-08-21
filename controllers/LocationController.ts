@@ -12,7 +12,7 @@ export abstract class LocationController {
     GetRevealedCards(actor?: string) {
         let root = actor ? this.Element.querySelector(`location-owner[slot=${actor}]`)! : this.Element;
         return Array.from(root.querySelectorAll<CardElement>("a-card"))
-            .map((card) => card.Controller)
+            .map((card) => card.Instance)
             .filter((card) => card.IsRevealed);
     }
 
@@ -23,7 +23,7 @@ export abstract class LocationController {
         if (slot_index === undefined) {
             let slot = side.querySelector("location-slot:not(:has(a-card))");
             if (slot) {
-                slot.appendChild(card);
+                slot.appendChild(card.Element);
                 yield* card.Reveal();
             } else {
                 yield "no empty slots";
@@ -31,7 +31,7 @@ export abstract class LocationController {
         } else {
             const slot = side.querySelector(`location-slot[label=${slot_index + 1}]`)!;
             if (slot) {
-                slot.appendChild(card);
+                slot.appendChild(card.Element);
                 yield* card.Reveal();
             } else {
                 yield "but the slot is already occupied";

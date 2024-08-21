@@ -1,4 +1,5 @@
 import {element} from "../lib/random.js";
+import {Sprites} from "../sprites/sprites.js";
 import {ActorController} from "./ActorController.js";
 
 export class PlayerController extends ActorController {
@@ -8,10 +9,10 @@ export class PlayerController extends ActorController {
         const cards = [
             // "a-baracus",
             // "a-faceman",
-            "a-hannibal",
+            Sprites.Hannibal,
             // "a-murdock",
-            "bat-man",
-            "bla-de",
+            Sprites.Batman,
+            Sprites.Blade,
             // "buzz-lightyear",
             // "denver-dinosaur",
             // "forrest-gump",
@@ -43,8 +44,9 @@ export class PlayerController extends ActorController {
 
         const deck = this.querySelector("a-deck")!;
         for (let i = 0; i < 12; i++) {
-            const card = element(cards);
-            deck.appendChild(document.createElement(card));
+            let card = document.createElement("a-card");
+            card.setAttribute("type", element(cards).toString());
+            deck.appendChild(card);
         }
 
         for (let i = 0; i < 3; i++) {

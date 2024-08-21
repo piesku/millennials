@@ -7,7 +7,7 @@ import {ActorController} from "./ActorController.js";
 import {BattleController} from "./BattleController.js";
 import {LocationController} from "./LocationController.js";
 
-export abstract class CardController extends HTMLElement {
+export abstract class CardController {
     abstract Name: string;
     abstract Cost: number;
     abstract Power: number;
@@ -18,38 +18,11 @@ export abstract class CardController extends HTMLElement {
     IsRevealed = false;
     TurnPlayed = 0;
 
-    connectedCallback() {
-        this.innerHTML = `
-            <a-card name="${this.Name}" cost="${this.CurrentCost}" power="${this.CurrentPower}" text="${this.Text}" image="${this.Sprite}" onclick="this.nextElementSibling.showModal();"></a-card>
-        `;
-
-        this.draggable = this.Owner.id !== "rival";
-        this.id = this.Id.toString();
-
-        this.addEventListener("dragstart", (e) => {
-            const energy_left = this.Owner.CurrentEnergy;
-            const card_cost = this.CurrentCost;
-            if (card_cost > energy_left) {
-                e.preventDefault();
-                return false;
-            }
-
-            let target = e.target as HTMLElement;
-            if (e.dataTransfer) {
-                e.dataTransfer.setData("text/plain", target.id);
-                target.classList.add("dragging");
-            }
-        });
-
-        this.addEventListener("dragend", (e) => {
-            let target = e.target as HTMLElement;
-            target.classList.remove("dragging");
-        });
-    }
+    constructor(public Element: CardElement) {}
 
     get CurrentCost() {
         let result = this.Cost;
-        for (let modifier of this.querySelectorAll("a-modifier")) {
+        for (let modifier of this.Element.querySelectorAll("a-modifier")) {
             let op = modifier.getAttribute("op")!;
             let value = parseInt(modifier.getAttribute("value")!);
             switch (op) {
@@ -62,8 +35,8 @@ export abstract class CardController extends HTMLElement {
     }
 
     get CurrentPower() {
-        let result = this.Cost;
-        for (let modifier of this.querySelectorAll("a-modifier")) {
+        let result = this.Power;
+        for (let modifier of this.Element.querySelectorAll("a-modifier")) {
             let op = modifier.getAttribute("op")!;
             let value = parseInt(modifier.getAttribute("value")!);
             switch (op) {
@@ -76,7 +49,7 @@ export abstract class CardController extends HTMLElement {
     }
 
     ClosestActor(): ActorController {
-        let node: HTMLElement | null = this;
+        let node: HTMLElement | null = this.Element;
         while ((node = node.parentElement)) {
             if (node instanceof ActorController) {
                 break;
@@ -86,7 +59,7 @@ export abstract class CardController extends HTMLElement {
     }
 
     get Owner(): ActorController {
-        let location_owner = this.closest("location-owner");
+        let location_owner = this.Element.closest("location-owner");
         if (location_owner) {
             let actor_id = location_owner.getAttribute("slot")!;
             return document.getElementById(actor_id) as ActorController;
@@ -101,33 +74,25 @@ export abstract class CardController extends HTMLElement {
     }
 
     get Battle(): BattleController {
-        return this.closest("battle-controller") as BattleController;
+        return this.Element.closest("battle-controller") as BattleController;
     }
 
     get Location(): LocationController {
-        return (this.closest("a-location") as LocationElement).Instance;
-    }
-
-    get Element(): CardElement {
-        return this.querySelector("a-card") as CardElement;
+        return (this.Element.closest("a-location") as LocationElement).Instance;
     }
 
     AddModifier(origin: CardController, op: string, value: number) {
         let modifier = document.createElement("a-modifier")!;
-        modifier.setAttribute("origin-id", origin.id);
+        modifier.setAttribute("origin-id", origin.Id.toString());
         modifier.setAttribute("origin-name", origin.Name);
         modifier.setAttribute("op", op);
         modifier.setAttribute("value", value.toString());
-        this.querySelector("a-card")!.appendChild(modifier);
-
-        let card_element = this.querySelector("a-card")!;
-        card_element.setAttribute("cost", this.CurrentCost.toString());
-        card_element.setAttribute("power", this.CurrentPower.toString());
+        this.Element.appendChild(modifier);
     }
 
     *Reveal() {
         yield `${this.Name} is revealed`;
-        this.querySelector("a-card")!.classList.add("frontside");
+        this.Element.classList.add("frontside");
         yield* this.OnReveal();
         this.IsRevealed = true;
         this.TurnPlayed = this.Battle.CurrentTurn;
@@ -139,7 +104,7 @@ export abstract class CardController extends HTMLElement {
 
     *OnTrash() {
         // The default teardown is to remove all modifiers that originated from this card.
-        let modifiers = this.querySelectorAll(`a-modifier[origin-id=${this.id}]`);
+        let modifiers = this.Element.querySelectorAll(`a-modifier[origin-id=${this.Id}]`);
         for (let modifier of modifiers) {
             modifier.remove();
         }
@@ -153,7 +118,7 @@ export abstract class CardController extends HTMLElement {
             const trashElement = actor.querySelector("a-trash");
             if (trashElement) {
                 this.OnTrash();
-                trashElement.appendChild(this);
+                trashElement.appendChild(this.Element);
                 yield `${this.Name} has been moved to the trash`;
             } else {
                 yield `No trash element found for actor ${this.Owner}`;

@@ -1,23 +1,22 @@
 import {CardController} from "../controllers/CardController.js";
+import {CardElement} from "../elements/a-card.js";
 import {Sprites} from "../sprites/sprites.js";
 
-customElements.define(
-    "woo-dy",
-    class extends CardController {
-        Name = "Toy Cowboy";
-        Cost = 3;
-        Power = 4;
-        Text = "Add the top card of your deck here.";
-        Sprite = Sprites.Woody;
+export class Woody extends CardController {
+    Name = "Toy Cowboy";
+    Cost = 3;
+    Power = 4;
+    Text = "Add the top card of your deck here.";
+    Sprite = Sprites.Woody;
 
-        override *OnReveal() {
-            let card = this.Owner.querySelector("a-deck")!.firstElementChild as CardController;
-            if (card) {
-                yield `it adds ${card.Name} to the table`;
-                yield* this.Location.AddCard(card, this.Owner.id);
-            } else {
-                yield "but the deck is empty";
-            }
+    override *OnReveal() {
+        let deck = this.Owner.querySelector("a-deck")!;
+        let card = deck.firstElementChild as CardElement;
+        if (card) {
+            yield `it adds ${card.Instance.Name} to the table`;
+            yield* this.Location.AddCard(card.Instance, this.Owner.id);
+        } else {
+            yield "but the deck is empty";
         }
-    },
-);
+    }
+}

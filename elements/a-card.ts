@@ -1,27 +1,112 @@
+import {Baracus} from "../cards/a-baracus.js";
+import {Faceman} from "../cards/a-faceman.js";
+import {Hannibal} from "../cards/a-hannibal.js";
+import {Murdock} from "../cards/a-murdock.js";
+import {Batman} from "../cards/bat-man.js";
+import {Blade} from "../cards/bla-de.js";
+import {BuzzLightyear} from "../cards/buzz-lightyear.js";
+import {DenverDinosaur} from "../cards/denver-dinosaur.js";
+import {ForrestGump} from "../cards/forrest-gump.js";
+import {HarryPotter} from "../cards/harry-potter.js";
+import {Hermione} from "../cards/hermi-one.js";
+import {HomerSimpson} from "../cards/homer-simpson.js";
+import {IndianaJones} from "../cards/indiana-jones.js";
+import {JackSparrow} from "../cards/JackSparrow.js";
+import {JamesBond} from "../cards/james-bond.js";
+import {Krecik} from "../cards/kre-cik.js";
+import {KungFuPanda} from "../cards/KungFuPanda.js";
+import {LukeSkywalker} from "../cards/luke-skywalker.js";
+import {MacGyver} from "../cards/mac-gyver.js";
+import {MartyMcFly} from "../cards/marty-mcfly.js";
+import {Morty} from "../cards/mor-ty.js";
+import {Mufasa} from "../cards/mufa-sa.js";
+import {Neo} from "../cards/ne-o.js";
+import {ObiWanKenobi} from "../cards/obi-wan-kenobi.js";
+import {RickSanchez} from "../cards/rick-sanchez.js";
+import {RobinHood} from "../cards/robin-hood.js";
+import {Robocop} from "../cards/robo-cop.js";
+import {Ron} from "../cards/ron-wesley.js";
+import {Simba} from "../cards/sim-ba.js";
+import {Superman} from "../cards/super-man.js";
+import {Donatello} from "../cards/tmnt-donatello.js";
+import {Leonardo} from "../cards/tmnt-leonardo.js";
+import {MichaelAngelo} from "../cards/tmnt-michaelangelo.js";
+import {Raphael} from "../cards/tmnt-raphael.js";
+import {Woody} from "../cards/woo-dy.js";
 import {CardController} from "../controllers/CardController.js";
 import {html} from "../lib/html.js";
+import {Sprites} from "../sprites/sprites.js";
+import {DarthVader, Stormtrooper} from "../villains/empire.js";
 
 export class CardElement extends HTMLElement {
-    InitialCost = parseInt(this.getAttribute("cost") ?? "0");
-    InitialPower = parseInt(this.getAttribute("power") ?? "0");
+    Instance!: CardController;
+
+    static Controllers: Record<Sprites, new (el: CardElement) => CardController> = {
+        [Sprites.RobinHood]: RobinHood,
+        [Sprites.MartyMcFly]: MartyMcFly,
+        [Sprites.ForrestGump]: ForrestGump,
+        [Sprites.LukeSkywalker]: LukeSkywalker,
+        [Sprites.Robocop]: Robocop,
+        [Sprites.ObiWanKenobi]: ObiWanKenobi,
+        [Sprites.Neo]: Neo,
+        [Sprites.HarryPotter]: HarryPotter,
+        [Sprites.Batman]: Batman,
+        [Sprites.Superman]: Superman,
+        [Sprites.Leonardo]: Leonardo,
+        [Sprites.Donatello]: Donatello,
+        [Sprites.Raphael]: Raphael,
+        [Sprites.MichaelAngelo]: MichaelAngelo,
+        [Sprites.DarthVader]: DarthVader,
+        [Sprites.Stormtrooper]: Stormtrooper,
+        [Sprites.Morty]: Morty,
+        [Sprites.Simba]: Simba,
+        [Sprites.Woody]: Woody,
+        [Sprites.Krecik]: Krecik,
+        [Sprites.MacGyver]: MacGyver,
+        [Sprites.Hannibal]: Hannibal,
+        [Sprites.Faceman]: Faceman,
+        [Sprites.Murdock]: Murdock,
+        [Sprites.BABaracus]: Baracus,
+        [Sprites.Mufasa]: Mufasa,
+        [Sprites.IndianaJones]: IndianaJones,
+        [Sprites.JamesBond]: JamesBond,
+        [Sprites.Hermione]: Hermione,
+        [Sprites.Ron]: Ron,
+        [Sprites.RickSanchez]: RickSanchez,
+        [Sprites.Homer]: HomerSimpson,
+        [Sprites.Buzz]: BuzzLightyear,
+        [Sprites.Denver]: DenverDinosaur,
+        [Sprites.Blade]: Blade,
+        [Sprites.JackSparrow]: JackSparrow,
+        [Sprites.KungFuPanda]: KungFuPanda,
+    };
+
+    BaseCost = NaN;
+    BasePower = NaN;
 
     constructor() {
         super();
         this.attachShadow({mode: "open"});
     }
 
+    static observedAttributes = ["type"];
+    attributeChangedCallback(name: string, old_value: string, new_value: string) {
+        this.Instance = new CardElement.Controllers[parseInt(new_value) as Sprites](this);
+        this.BaseCost = this.Instance.Cost;
+        this.BasePower = this.Instance.Power;
+    }
+
     connectedCallback() {
-        const name = this.getAttribute("name") ?? "";
-        const cost = this.getAttribute("cost") ?? "";
-        const power = this.getAttribute("power") ?? "";
-        const text = this.getAttribute("text") ?? "";
-        const imageIndex = parseInt(this.getAttribute("image") ?? "0", 10);
+        if (DEBUG && !this.hasAttribute("type")) {
+            throw new Error("CardElement: type attribute is required");
+        }
+
         const spriteSize = 16;
         const spriteMargin = 1;
         const targetSize = 120;
         const scale = targetSize / spriteSize;
 
-        const spriteYPosition = (spriteSize + spriteMargin) * imageIndex * scale;
+        const spriteYPosition = (spriteSize + spriteMargin) * this.Instance.Sprite * scale;
 
         const img_src = document.querySelector("body > img[hidden]")?.getAttribute("src");
         const backgroundImageUrl = `url(${img_src})`;
@@ -29,29 +114,29 @@ export class CardElement extends HTMLElement {
             <div class="header">
                 <span
                     id="cost"
-                    class="${parseInt(cost) > this.InitialCost
+                    class="${this.Instance.CurrentCost > this.BaseCost
                         ? "incr"
-                        : parseInt(cost) < this.InitialCost
+                        : this.Instance.CurrentCost < this.BaseCost
                           ? "decr"
                           : ""}"
                 >
-                    ${cost}
+                    ${this.Instance.CurrentCost}
                 </span>
                 <span
                     id="power"
-                    class="${parseInt(power) > this.InitialPower
+                    class="${this.Instance.CurrentPower > this.BasePower
                         ? "incr"
-                        : parseInt(power) < this.InitialPower
+                        : this.Instance.CurrentPower < this.BasePower
                           ? "decr"
                           : ""}"
                 >
-                    ${power}
+                    ${this.Instance.CurrentPower}
                 </span>
             </div>
             <div class="sprite"></div>
             <div class="text-container">
-                <div class="name">${name}</div>
-                <div class="description">${text}</div>
+                <div class="name">${this.Instance.Name}</div>
+                <div class="description">${this.Instance.Text}</div>
             </div>
         `;
 
@@ -186,6 +271,7 @@ export class CardElement extends HTMLElement {
             </style>
 
             <flex-col onclick="event.stopPropagation(); this.nextElementSibling.showModal();">${card_body}</flex-col>
+
             <dialog onclick="event.stopPropagation(); this.close()">
                 <flex-col>
                     <card-detail>
@@ -197,16 +283,29 @@ export class CardElement extends HTMLElement {
                 </flex-col>
             </dialog>
         `;
-    }
 
-    static observedAttributes = ["cost", "power"];
+        this.draggable = this.Instance.Owner.id !== "rival";
+        this.id = this.Instance.Id.toString();
 
-    attributeChangedCallback(name: string, old_value: string, new_value: string) {
-        this.connectedCallback();
-    }
+        this.addEventListener("dragstart", (e) => {
+            const energy_left = this.Instance.Owner.CurrentEnergy;
+            const card_cost = this.Instance.CurrentCost;
+            if (card_cost > energy_left) {
+                e.preventDefault();
+                return false;
+            }
 
-    get Controller(): CardController {
-        return this.parentElement as CardController;
+            let target = e.target as HTMLElement;
+            if (e.dataTransfer) {
+                e.dataTransfer.setData("text/plain", target.id);
+                target.classList.add("dragging");
+            }
+        });
+
+        this.addEventListener("dragend", (e) => {
+            let target = e.target as HTMLElement;
+            target.classList.remove("dragging");
+        });
     }
 }
 

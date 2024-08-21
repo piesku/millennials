@@ -51,20 +51,20 @@ export class BattleController extends HTMLElement {
 
         this.addEventListener("drop", (e) => {
             const data = e.dataTransfer!.getData("text/plain");
-            const card = document.getElementById(data) as CardController;
+            const card = document.getElementById(data) as CardElement;
             if (card) {
-                const energy_left = card.Owner.CurrentEnergy;
-                const card_cost = card.CurrentCost;
+                const energy_left = card.Instance.Owner.CurrentEnergy;
+                const card_cost = card.Instance.CurrentCost;
                 if (card_cost > energy_left) {
                     return false;
                 }
 
-                card.Owner.CurrentEnergy -= card.CurrentCost;
-                card.Owner.ReRender();
+                card.Instance.Owner.CurrentEnergy -= card.Instance.CurrentCost;
+                card.Instance.Owner.ReRender();
 
-                this.PlayedCardsQueue.push(card);
+                this.PlayedCardsQueue.push(card.Instance);
                 let location = card.closest<LocationElement>("a-location")!.Instance;
-                console.log(`you play ${card.Name} to ${location.Name}`);
+                console.log(`you play ${card.Instance.Name} to ${location.Name}`);
             }
         });
 
@@ -131,7 +131,7 @@ export class BattleController extends HTMLElement {
         yield "--- End Turn ---";
 
         for (let card of this.querySelectorAll<CardElement>("a-table a-card")) {
-            if (!card.Controller.IsRevealed) {
+            if (!card.Instance.IsRevealed) {
                 card.classList.remove("frontside");
             }
         }

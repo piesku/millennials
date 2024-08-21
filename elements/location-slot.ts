@@ -1,5 +1,5 @@
-import {CardController} from "../controllers/CardController.js";
 import {html} from "../lib/html.js";
+import {CardElement} from "./a-card.js";
 
 export class LocationSlot extends HTMLElement {
     constructor() {
@@ -37,10 +37,10 @@ export class LocationSlot extends HTMLElement {
                 return;
             }
             const data = e.dataTransfer!.getData("text/plain");
-            const card = document.getElementById(data) as CardController;
+            const card = document.getElementById(data) as CardElement;
             if (card) {
                 this.appendChild(card);
-                card.Element.classList.add("frontside");
+                card.classList.add("frontside");
             }
         });
     }

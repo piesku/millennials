@@ -4,7 +4,6 @@ import {LocationSlot} from "../elements/location-slot.js";
 import {html} from "../lib/html.js";
 import {element} from "../lib/random.js";
 import {BattleController} from "./BattleController.js";
-import {CardController} from "./CardController.js";
 
 export abstract class ActorController extends HTMLElement {
     abstract Name: string;
@@ -56,11 +55,11 @@ export abstract class ActorController extends HTMLElement {
         if (deck.firstElementChild && hand.children.length >= 7) {
             yield "but the hand is full";
         } else if (deck.firstElementChild) {
-            let card = deck.firstElementChild as CardController;
+            let card = deck.firstElementChild! as CardElement;
             if (this.id === "rival") {
                 yield `${this.Name} draws a card`;
             } else {
-                yield `${this.Name} draw ${card.Name}`;
+                yield `${this.Name} draw ${card.Instance.Name}`;
             }
             hand.appendChild(card);
         } else {
@@ -70,9 +69,9 @@ export abstract class ActorController extends HTMLElement {
 
     *RivalAI(): Generator<string, void> {
         while (true) {
-            let playableCards = Array.from(this.querySelectorAll<CardElement>("a-hand a-card"))
-                .map((card) => card.Controller)
-                .filter((controller) => controller.CurrentCost <= this.CurrentEnergy);
+            let playableCards = Array.from(this.querySelectorAll<CardElement>("a-hand a-card")).filter(
+                (card) => card.Instance.CurrentCost <= this.CurrentEnergy,
+            );
 
             if (playableCards.length === 0) {
                 break;
@@ -89,12 +88,12 @@ export abstract class ActorController extends HTMLElement {
             if (this.id === "rival") {
                 yield `${this.Name} plays a card to ${location.Name}`;
             } else {
-                yield `${this.Name} plays ${card.Name} to ${location.Name}`;
+                yield `${this.Name} plays ${card.Instance.Name} to ${location.Name}`;
             }
             slot.appendChild(card);
-            battle.PlayedCardsQueue.push(card);
+            battle.PlayedCardsQueue.push(card.Instance);
 
-            this.CurrentEnergy -= card.CurrentCost;
+            this.CurrentEnergy -= card.Instance.CurrentCost;
             this.ReRender();
         }
     }
