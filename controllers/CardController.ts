@@ -146,4 +146,20 @@ export abstract class CardController extends HTMLElement {
     }
 
     *OnMessage(kind: Message, card?: CardController): Generator<string, void> {}
+
+    *Trash() {
+        const actor = this.Owner;
+        if (actor) {
+            const trashElement = actor.querySelector("a-trash");
+            if (trashElement) {
+                this.OnTrash();
+                trashElement.appendChild(this);
+                yield `${this.Name} has been moved to the trash`;
+            } else {
+                yield `No trash element found for actor ${this.Owner}`;
+            }
+        } else {
+            yield `No actor found for owner ${this.Owner}`;
+        }
+    }
 }

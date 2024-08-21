@@ -6,11 +6,11 @@ export class PlayerController extends ActorController {
 
     *StartBattle() {
         const cards = [
-            "a-baracus",
-            "a-faceman",
-            "a-hannibal",
-            "a-murdock",
-            // "bat-man",
+            // "a-baracus",
+            // "a-faceman",
+            // "a-hannibal",
+            // "a-murdock",
+            "bat-man",
             // "bla-de",
             // "buzz-lightyear",
             // "denver-dinosaur",
