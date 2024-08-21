@@ -3,6 +3,7 @@ import {Sprites} from "../sprites/sprites.js";
 import {ActorController} from "./ActorController.js";
 
 export class PlayerController extends ActorController {
+    Type = "player" as const;
     Name = "You";
 
     *StartBattle() {
@@ -42,7 +43,7 @@ export class PlayerController extends ActorController {
             // "woo-dy",
         ];
 
-        const deck = this.querySelector("a-deck")!;
+        const deck = this.Element.querySelector("a-deck")!;
         for (let i = 0; i < 12; i++) {
             let card = document.createElement("a-card");
             card.setAttribute("type", element(cards).toString());
@@ -54,5 +55,3 @@ export class PlayerController extends ActorController {
         }
     }
 }
-
-customElements.define("player-controller", PlayerController);

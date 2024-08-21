@@ -64,7 +64,7 @@ export class LocationElement extends HTMLElement {
                     </div>
                 </div>
                 <div id="enemy-points" class="points">${0}</div>
-                <slot name="rival"></slot>
+                <slot name="villain"></slot>
             </flex-row>
         `;
 
@@ -76,7 +76,7 @@ export class LocationElement extends HTMLElement {
                 <location-slot label=4></location-slot>
             </location-owner>
 
-            <location-owner slot="rival" reverse>
+            <location-owner slot="villain" reverse>
                 <location-slot label=1></location-slot>
                 <location-slot label=2></location-slot>
                 <location-slot label=3></location-slot>

@@ -10,7 +10,7 @@ export class Murdock extends CardController {
     Sprite = Sprites.Murdock;
 
     override *OnReveal() {
-        const hand = this.Owner.querySelector("a-hand")!;
+        const hand = this.Owner.Element.querySelector("a-hand")!;
         console.log({hand});
         for (let card of hand.querySelectorAll<CardElement>("a-card")) {
             yield `${card.Instance.Name} gets +1 power from ${this.Name}`;

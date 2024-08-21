@@ -12,7 +12,6 @@ export class DeckElement extends HTMLElement {
                 :host {
                     display: block;
                     height: 200px;
-                    padding: 10px;
                 }
 
                 slot::slotted(*) {

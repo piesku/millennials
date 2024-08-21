@@ -42,23 +42,20 @@
     <img hidden src="./sprites/spritesheet.png.webp" />
 
     <battle-controller>
-        <empire-controller id="rival">
-            <a-avatar name="Rival"></a-avatar>
-            <a-hand></a-hand>
+        <a-avatar type="empire" id="villain">
             <a-deck reverse></a-deck>
+            <a-hand></a-hand>
             <a-trash></a-trash>
-        </empire-controller>
+        </a-avatar>
 
         <a-table></a-table>
 
-        <player-controller id="player">
+        <a-avatar type="player" id="player">
             <a-deck></a-deck>
             <a-hand></a-hand>
-            <a-avatar name="You">
-                <button id="end-turn">End Turn</button>
-            </a-avatar>
             <a-trash></a-trash>
-        </player-controller>
+            <button slot="end">End Turn</button>
+        </a-avatar>
     </battle-controller>
 
     <log-display>

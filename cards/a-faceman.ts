@@ -9,7 +9,7 @@ export class Faceman extends CardController {
     Sprite = Sprites.Faceman;
 
     override *OnReveal() {
-        let rival_deck = this.Rival.querySelector("a-deck")!;
+        let rival_deck = this.Rival.Element.querySelector("a-deck")!;
         yield `${this.Owner.Name} draws a card from ${this.Rival.Name}'s deck`;
         yield* this.Owner.DrawCard(rival_deck);
     }

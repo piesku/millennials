@@ -10,7 +10,7 @@ export class Batman extends CardController {
     Sprite = Sprites.Batman;
 
     override *OnReveal(): Generator<string, void> {
-        const opponentDeck = this.Rival.querySelector("a-deck");
+        const opponentDeck = this.Rival.Element.querySelector("a-deck");
         if (opponentDeck && opponentDeck.firstElementChild) {
             const topCard = opponentDeck.firstElementChild as CardElement;
             yield* topCard.Instance.Trash();

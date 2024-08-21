@@ -25,30 +25,28 @@ export class Stormtrooper extends CardController {
     }
 }
 
-customElements.define(
-    "empire-controller",
-    class extends ActorController {
-        Name = "Empire";
-        Description = "The Empire is a powerful force that seeks to control the galaxy";
+export class EmpireController extends ActorController {
+    Type = "villain" as const;
+    Name = "Empire";
+    Description = "The Empire is a powerful force that seeks to control the galaxy";
 
-        *StartBattle() {
-            const deck = this.querySelector("a-deck")!;
-            const cardDistribution = {
-                [Sprites.Stormtrooper]: 11,
-                [Sprites.DarthVader]: 1,
-            };
+    *StartBattle() {
+        const deck = this.Element.querySelector("a-deck")!;
+        const cardDistribution = {
+            [Sprites.Stormtrooper]: 11,
+            [Sprites.DarthVader]: 1,
+        };
 
-            for (const [sprite, count] of Object.entries(cardDistribution)) {
-                for (let i = 0; i < count; i++) {
-                    let card = document.createElement("a-card");
-                    card.setAttribute("type", sprite);
-                    deck.appendChild(card);
-                }
-            }
-
-            for (let i = 0; i < 3; i++) {
-                yield* this.DrawCard();
+        for (const [sprite, count] of Object.entries(cardDistribution)) {
+            for (let i = 0; i < count; i++) {
+                let card = document.createElement("a-card");
+                card.setAttribute("type", sprite);
+                deck.appendChild(card);
             }
         }
-    },
-);
+
+        for (let i = 0; i < 3; i++) {
+            yield* this.DrawCard();
+        }
+    }
+}

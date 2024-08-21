@@ -10,7 +10,7 @@ export class Blade extends CardController {
     Sprite = Sprites.Blade;
 
     override *OnReveal() {
-        const deck = this.Owner.querySelector("a-deck");
+        const deck = this.Owner.Element.querySelector("a-deck");
         if (deck && deck.firstElementChild) {
             const topCard = deck.firstElementChild as CardElement;
             yield `${topCard.Instance.Name} gets +2 power from ${this.Name}`;

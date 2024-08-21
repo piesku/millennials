@@ -10,7 +10,7 @@ export class Hannibal extends CardController {
     Sprite = Sprites.Hannibal;
 
     override *OnReveal() {
-        for (let card of this.Battle.GetRevealedCards(this.Owner.id)) {
+        for (let card of this.Battle.GetRevealedCards(this.Owner)) {
             yield `${card.Name} has +1 power`;
             card.AddModifier(this, "addpower", 1);
         }

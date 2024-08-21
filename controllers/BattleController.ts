@@ -1,3 +1,4 @@
+import {AvatarElement} from "../elements/a-avatar.js";
 import {CardElement} from "../elements/a-card.js";
 import {LocationElement} from "../elements/a-location.js";
 import {html} from "../lib/html.js";
@@ -33,10 +34,6 @@ export class BattleController extends HTMLElement {
     connectedCallback() {
         this.shadowRoot!.innerHTML = html`
             <style>
-                :host {
-                    display: block;
-                    height: 100vh;
-                }
                 ::slotted(a-table) {
                     flex: 1;
                     align-items: center;
@@ -60,7 +57,7 @@ export class BattleController extends HTMLElement {
                 }
 
                 card.Instance.Owner.CurrentEnergy -= card.Instance.CurrentCost;
-                card.Instance.Owner.ReRender();
+                card.Instance.Owner.Element.ReRender();
 
                 this.PlayedCardsQueue.push(card.Instance);
                 let location = card.closest<LocationElement>("a-location")!.Instance;
@@ -70,7 +67,7 @@ export class BattleController extends HTMLElement {
 
         this.addEventListener("click", (e) => {
             let target = e.target as HTMLElement;
-            if (target.id === "end-turn") {
+            if (target.slot === "end") {
                 this.RunEndTurn();
             }
         });
@@ -94,11 +91,11 @@ export class BattleController extends HTMLElement {
 
         yield "--- Lights… camera… action! ---";
 
-        const player = this.querySelector("#player")! as ActorController;
-        yield* player.StartBattle();
+        const player = this.querySelector("a-avatar[type=player]") as AvatarElement;
+        yield* player.Instance.StartBattle();
 
-        const rival = this.querySelector("#rival")! as ActorController;
-        yield* rival.StartBattle();
+        const villain = this.querySelector("a-avatar:not([type=player])") as AvatarElement;
+        yield* villain.Instance.StartBattle();
 
         yield* this.BroadcastGameMessage(Message.BattleStarts);
         yield* this.StartTurn();
@@ -109,15 +106,15 @@ export class BattleController extends HTMLElement {
 
         yield `--- Start Turn ${this.CurrentTurn} ---`;
 
-        const player = this.querySelector("#player")! as ActorController;
-        yield* player.StartTurn(this.CurrentTurn);
+        const player = this.querySelector("a-avatar[type=player]") as AvatarElement;
+        yield* player.Instance.StartTurn(this.CurrentTurn);
 
-        const rival = this.querySelector("#rival")! as ActorController;
-        yield* rival.StartTurn(this.CurrentTurn);
+        const villain = this.querySelector("a-avatar:not([type=player])") as AvatarElement;
+        yield* villain.Instance.StartTurn(this.CurrentTurn);
 
         yield* this.BroadcastGameMessage(Message.TurnStarts);
 
-        yield* rival.RivalAI();
+        yield* villain.Instance.RivalAI();
     }
 
     async RunEndTurn() {
@@ -190,7 +187,7 @@ export class BattleController extends HTMLElement {
         }
     }
 
-    GetRevealedCards(actor?: string) {
+    GetRevealedCards(actor?: ActorController) {
         let locations = [...this.querySelectorAll<LocationElement>("a-location")].map((location) => location.Instance);
         return locations.flatMap((location) => location.GetRevealedCards(actor));
     }

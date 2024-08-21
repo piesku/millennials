@@ -10,11 +10,11 @@ export class Woody extends CardController {
     Sprite = Sprites.Woody;
 
     override *OnReveal() {
-        let deck = this.Owner.querySelector("a-deck")!;
+        let deck = this.Owner.Element.querySelector("a-deck")!;
         let card = deck.firstElementChild as CardElement;
         if (card) {
             yield `it adds ${card.Instance.Name} to the table`;
-            yield* this.Location.AddCard(card.Instance, this.Owner.id);
+            yield* this.Location.AddCard(card.Instance, this.Owner);
         } else {
             yield "but the deck is empty";
         }

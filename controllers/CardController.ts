@@ -1,3 +1,4 @@
+import {AvatarElement} from "../elements/a-avatar.js";
 import {CardElement} from "../elements/a-card.js";
 import {LocationElement} from "../elements/a-location.js";
 import {next_id} from "../lib/id.js";
@@ -48,29 +49,22 @@ export abstract class CardController {
         return result;
     }
 
-    ClosestActor(): ActorController {
-        let node: HTMLElement | null = this.Element;
-        while ((node = node.parentElement)) {
-            if (node instanceof ActorController) {
-                break;
-            }
-        }
-        return node as ActorController;
-    }
-
     get Owner(): ActorController {
         let location_owner = this.Element.closest("location-owner");
         if (location_owner) {
             let actor_id = location_owner.getAttribute("slot")!;
-            return document.getElementById(actor_id) as ActorController;
+            let actor = document.getElementById(actor_id) as AvatarElement;
+            return actor.Instance;
         } else {
-            return this.ClosestActor();
+            let actor_element = this.Element.closest("a-avatar") as AvatarElement;
+            return actor_element.Instance;
         }
     }
 
     get Rival(): ActorController {
-        let id = this.Owner.id === "player" ? "rival" : "player";
-        return document.getElementById(id) as ActorController;
+        let actor_id = this.Owner.Type === "player" ? "villain" : "player";
+        let actor = document.getElementById(actor_id) as AvatarElement;
+        return actor.Instance;
     }
 
     get Battle(): BattleController {
@@ -118,7 +112,7 @@ export abstract class CardController {
     *Trash() {
         const actor = this.Owner;
         if (actor) {
-            const trashElement = actor.querySelector("a-trash");
+            const trashElement = actor.Element.querySelector("a-trash");
             if (trashElement) {
                 this.OnTrash();
                 trashElement.appendChild(this.Element);

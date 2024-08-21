@@ -188,7 +188,7 @@ export class CardElement extends HTMLElement {
                     );
                 }
 
-                :host-context(#rival) > *,
+                :host-context(#villain) > *,
                 :host > * {
                     visibility: hidden;
                 }
@@ -308,7 +308,7 @@ export class CardElement extends HTMLElement {
             </dialog>
         `;
 
-        this.draggable = this.Instance.Owner.id !== "rival";
+        this.draggable = this.Instance.Owner.Type !== "villain";
         this.id = this.Instance.Id.toString();
     }
 }

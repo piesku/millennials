@@ -1,6 +1,7 @@
 import {CardElement} from "../elements/a-card.js";
 import {LocationElement} from "../elements/a-location.js";
 import {Message} from "../messages.js";
+import {ActorController} from "./ActorController.js";
 import {CardController} from "./CardController.js";
 
 export abstract class LocationController {
@@ -9,8 +10,8 @@ export abstract class LocationController {
 
     constructor(public Element: LocationElement) {}
 
-    GetRevealedCards(actor?: string) {
-        let root = actor ? this.Element.querySelector(`location-owner[slot=${actor}]`)! : this.Element;
+    GetRevealedCards(actor?: ActorController) {
+        let root = actor ? this.Element.querySelector(`location-owner[slot=${actor.Type}]`)! : this.Element;
         return Array.from(root.querySelectorAll<CardElement>("a-card"))
             .map((card) => card.Instance)
             .filter((card) => card.IsRevealed);
@@ -18,8 +19,8 @@ export abstract class LocationController {
 
     *OnMessage(kind: Message, card?: CardController): Generator<string, void> {}
 
-    *AddCard(card: CardController, owner: string, slot_index?: number) {
-        const side = this.Element.querySelector(`location-owner[slot=${owner}]`)!;
+    *AddCard(card: CardController, owner: ActorController, slot_index?: number) {
+        const side = this.Element.querySelector(`location-owner[slot=${owner.Type}]`)!;
         if (slot_index === undefined) {
             let slot = side.querySelector("location-slot:not(:has(a-card))");
             if (slot) {

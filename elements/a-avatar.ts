@@ -1,16 +1,27 @@
+import {ActorController} from "../controllers/ActorController.js";
+import {PlayerController} from "../controllers/PlayerController.js";
 import {html} from "../lib/html.js";
+import {EmpireController} from "../villains/empire.js";
 
 export class AvatarElement extends HTMLElement {
+    Instance!: ActorController;
+
+    static Controllers: Record<string, new (el: AvatarElement) => ActorController> = {
+        player: PlayerController,
+        empire: EmpireController,
+    };
+
     constructor() {
         super();
         this.attachShadow({mode: "open"});
     }
 
-    connectedCallback() {
-        let name = this.getAttribute("name") ?? "";
-        let current_energy = this.getAttribute("current-energy") ?? "0";
-        let max_energy = this.getAttribute("max-energy") ?? "0";
+    static observedAttributes = ["type"];
+    attributeChangedCallback(name: string, old_value: string, new_value: string) {
+        this.Instance = new AvatarElement.Controllers[new_value](this);
+    }
 
+    connectedCallback() {
         this.shadowRoot!.innerHTML = html`
             <style>
                 :host {
@@ -24,18 +35,26 @@ export class AvatarElement extends HTMLElement {
                     flex: 1;
                     margin-top: 10px;
                 }
+                flex-col,
+                ::slotted(a-deck) {
+                    flex: 1;
+                }
+                ::slotted(a-hand) {
+                    flex: 3;
+                }
             </style>
-            <flex-col>
-                <h2>${name}</h2>
-                <div>Energy: ${current_energy}/${max_energy}</div>
+            <flex-row ${this.Instance.Type === "villain" && "reverse"}>
                 <slot></slot>
-            </flex-col>
+                <flex-col>
+                    <h2>${this.Instance.Name}</h2>
+                    <div>Energy: ${this.Instance.CurrentEnergy}/${this.Instance.MaxEnergy}</div>
+                    <slot name="end"></slot>
+                </flex-col>
+            </flex-row>
         `;
     }
 
-    static observedAttributes = ["current-energy", "max-energy"];
-
-    attributeChangedCallback(name: string, old_value: string, new_value: string) {
+    ReRender() {
         this.connectedCallback();
     }
 }
