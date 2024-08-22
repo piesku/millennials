@@ -8,14 +8,14 @@ export class PlayerController extends ActorController {
 
     *StartBattle() {
         const cards = [
-            // "a-baracus",
-            // "a-faceman",
+            Sprites.BABaracus,
+            Sprites.Faceman,
             Sprites.Hannibal,
-            // "a-murdock",
+            Sprites.Murdock,
             Sprites.Batman,
             Sprites.Blade,
-            // "buzz-lightyear",
-            // "denver-dinosaur",
+            Sprites.Buzz,
+            Sprites.Denver,
             // "forrest-gump",
             // "harry-potter",
             // "hermi-one",
@@ -32,7 +32,7 @@ export class PlayerController extends ActorController {
             // "obi-wan-kenobi",
             // "rick-sanchez",
             // "robin-hood",
-            // "robo-cop",
+            Sprites.Robocop,
             // "ron-wesley",
             // "sim-ba",
             // "super-man",
@@ -40,7 +40,7 @@ export class PlayerController extends ActorController {
             // "tmnt-leonardo",
             // "tmnt-michaelangelo",
             // "tmnt-raphael",
-            // "woo-dy",
+            Sprites.Woody,
         ];
 
         const deck = this.Element.querySelector("a-deck")!;
