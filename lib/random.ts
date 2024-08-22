@@ -22,3 +22,12 @@ export function element<T>(list: Array<T>): T;
 export function element(list: Array<any> | NodeList) {
     return list[integer(0, list.length - 1)];
 }
+
+export function shuffle<T>(arr: Array<T>) {
+    // https://en.wikipedia.org/wiki/Fisher–Yates_shuffle
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(rand() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+}
