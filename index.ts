@@ -11,6 +11,7 @@ import "./elements/location-slot.js";
 
 import "./controllers/ActorController.js";
 import "./controllers/BattleController.js";
+import "./controllers/GameController.js";
 import "./controllers/PlayerController.js";
 
 import "./layout/flex-col.js";

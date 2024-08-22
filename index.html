@@ -15,51 +15,15 @@
         display: none;
     }
 
-    log-display {
-        display: flex;
-        flex-direction: column;
-        width: 300px;
-        height: calc(100vh - 100px);
-        overflow-y: auto;
-        background-color: rgba(255, 255, 255, 0.8);
-        padding: 10px;
-        box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-        flex: 1;
-        padding-bottom: 100px;
-    }
-
-    body {
-        display: flex;
-        flex-direction: row;
-    }
-
-    battle-controller {
-        flex: 4;
+    game-controller {
+        display: block;
     }
 </style>
 
 <body>
     <img hidden src="./sprites/spritesheet.png.webp" />
 
-    <battle-controller>
-        <a-actor type="empire" id="villain">
-            <a-deck reverse></a-deck>
-            <a-hand></a-hand>
-            <a-trash></a-trash>
-        </a-actor>
-
-        <a-table></a-table>
-
-        <a-actor type="player" id="player">
-            <a-deck></a-deck>
-            <a-hand></a-hand>
-            <a-trash></a-trash>
-            <button slot="end">End Turn</button>
-        </a-actor>
-    </battle-controller>
-
-    <log-display>
-    </log-display>
+    <game-controller view="battle"></game-controller>
 
     <script src="./index.js"></script>
 </body>

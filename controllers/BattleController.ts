@@ -9,7 +9,7 @@ import {ActorController} from "./ActorController.js";
 import {CardController} from "./CardController.js";
 
 const Log = (message: string) => {
-    const logDisplay = document.querySelector("log-display");
+    const logDisplay = document.querySelector("a-log") as HTMLElement;
     if (logDisplay) {
         if (message.startsWith("---") && message.endsWith("---")) {
             message = `<h3>${message.slice(3, -3).trim()}</h3>`;
@@ -38,10 +38,26 @@ export class BattleController extends HTMLElement {
                     flex: 1;
                     align-items: center;
                 }
+
+                ::slotted(a-log) {
+                    display: flex;
+                    flex-direction: column;
+                    width: 300px;
+                    height: calc(100vh - 100px);
+                    overflow-y: auto;
+                    background-color: rgba(255, 255, 255, 0.8);
+                    padding: 10px;
+                    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+                    flex: 1;
+                    padding-bottom: 100px;
+                }
             </style>
-            <flex-col>
-                <slot></slot>
-            </flex-col>
+            <flex-row>
+                <flex-col style="flex: 4;">
+                    <slot></slot>
+                </flex-col>
+                <slot name="log"></slot>
+            </flex-row>
         `;
 
         this.InitBattle();
