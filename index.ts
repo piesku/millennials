@@ -11,9 +11,9 @@ import "./elements/location-owner.js";
 import "./elements/location-slot.js";
 
 import "./controllers/ActorController.js";
-import "./controllers/GameController.js";
 import "./controllers/PlayerController.js";
 import "./elements/battle-scene.js";
+import "./elements/game-container.js";
 
 import "./layout/flex-col.js";
 import "./layout/flex-row.js";

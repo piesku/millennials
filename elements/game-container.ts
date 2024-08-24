@@ -1,6 +1,6 @@
 import {html} from "../lib/html.js";
 
-export class GameController extends HTMLElement {
+export class GameContainer extends HTMLElement {
     static observedAttributes = ["view"];
     attributeChangedCallback() {
         switch (this.getAttribute("view")) {
@@ -64,4 +64,4 @@ export class GameController extends HTMLElement {
     }
 }
 
-customElements.define("game-controller", GameController);
+customElements.define("game-container", GameContainer);
