@@ -8,12 +8,12 @@ export class PlayerController extends ActorController {
 
     *StartBattle() {
         let game = this.Element.closest("game-container") as GameContainer;
-        let cards = game.getAttribute("cards")!.split(",");
+        let cards = [...game.PlayerDeck];
 
         const deck = this.Element.querySelector("a-deck")!;
         for (let card_type of shuffle(cards)) {
             let card = document.createElement("a-card");
-            card.setAttribute("type", card_type);
+            card.setAttribute("type", card_type.toString());
             deck.appendChild(card);
         }
 

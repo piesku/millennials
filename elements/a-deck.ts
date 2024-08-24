@@ -23,7 +23,7 @@ export class DeckElement extends HTMLElement {
                     margin-left: -115px;
                 }
             </style>
-            <flex-row ${this.getAttribute("reverse") !== null && "reverse"}>
+            <flex-row start ${this.getAttribute("reverse") !== null && "reverse"}>
                 <slot></slot>
             </flex-row>
         `;

@@ -14,7 +14,7 @@ export class HandElement extends HTMLElement {
                     height: 200px;
                 }
             </style>
-            <flex-row>
+            <flex-row center>
                 <slot></slot>
             </flex-row>
         `;

@@ -1,12 +1,10 @@
 {
     "compilerOptions": {
-        "target": "es2022",
+        "target": "esnext",
         "module": "es2022",
         "moduleResolution": "bundler",
         "strict": true,
-        "noImplicitOverride": true,
+        "noImplicitOverride": true
     },
-    "exclude": [
-        "node_modules"
-    ]
+    "exclude": ["node_modules"]
 }

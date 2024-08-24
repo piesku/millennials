@@ -7,6 +7,7 @@ import {Message} from "../messages.js";
 import {ActorElement} from "./a-actor.js";
 import {CardElement} from "./a-card.js";
 import {LocationElement} from "./a-location.js";
+import {GameContainer} from "./game-container.js";
 
 const Log = (message: string) => {
     const logDisplay = document.querySelector("a-log") as HTMLElement;
@@ -22,6 +23,7 @@ const Log = (message: string) => {
 export class BattleScene extends HTMLElement {
     CurrentTurn = 0;
     MaxTurns = 6;
+    State: "playing" | "won" | "lost" = "playing";
 
     PlayedCardsQueue: Array<CardController> = [];
 
@@ -39,6 +41,10 @@ export class BattleScene extends HTMLElement {
                     align-items: center;
                 }
 
+                ::slotted(a-actor) {
+                    flex: 1;
+                }
+
                 ::slotted(a-log) {
                     display: flex;
                     flex-direction: column;
@@ -51,10 +57,20 @@ export class BattleScene extends HTMLElement {
                     flex: 1;
                     padding-bottom: 100px;
                 }
+
+                button {
+                    margin: 10px;
+                    width: 100px;
+                }
             </style>
             <flex-row>
                 <flex-col style="flex: 4;">
-                    <slot></slot>
+                    <slot name="villain"></slot>
+                    <slot name="table"></slot>
+                    <flex-row>
+                        <slot name="player"></slot>
+                        <button id="end">End Turn</button>
+                    </flex-row>
                 </flex-col>
                 <slot name="log"></slot>
             </flex-row>
@@ -81,10 +97,20 @@ export class BattleScene extends HTMLElement {
             }
         });
 
-        this.addEventListener("click", (e) => {
+        this.shadowRoot!.addEventListener("click", (e) => {
             let target = e.target as HTMLElement;
-            if (target.slot === "end") {
-                this.RunEndTurn();
+            if (target.id === "end") {
+                switch (this.State) {
+                    case "playing":
+                        this.RunEndTurn();
+                        break;
+                    case "won":
+                        let game = this.closest("game-container") as GameContainer;
+                        game.ProgressToNextOpponent();
+                        break;
+                    case "lost":
+                        break;
+                }
             }
         });
     }
@@ -165,7 +191,13 @@ export class BattleScene extends HTMLElement {
     }
 
     *GameEnd() {
-        Log("Game Over");
+        yield "--- Game Over ---";
+        yield* this.BroadcastGameMessage(Message.BattleEnds);
+
+        // TODO Calculate the winner.
+
+        this.State = "won";
+        this.shadowRoot!.querySelector("#end")!.textContent = "You Win";
     }
 
     *BroadcastGameMessage(kind: Message) {

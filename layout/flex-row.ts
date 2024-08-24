@@ -12,6 +12,7 @@ customElements.define(
                     :host {
                         display: flex;
                         flex-direction: row;
+                        justify-content: space-between;
                     }
 
                     :host([wrap]) {
@@ -25,6 +26,14 @@ customElements.define(
                     :host([center]) {
                         justify-content: center;
                         align-items: center;
+                    }
+
+                    :host([start]) {
+                        justify-content: flex-start;
+                    }
+
+                    :host([end]) {
+                        justify-content: flex-end;
                     }
                 </style>
                 <slot></slot>

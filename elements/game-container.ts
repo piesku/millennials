@@ -1,4 +1,5 @@
 import {html} from "../lib/html.js";
+import {Sprites} from "../sprites/sprites.js";
 
 export class GameContainer extends HTMLElement {
     static observedAttributes = ["view"];
@@ -16,23 +17,30 @@ export class GameContainer extends HTMLElement {
             case "battle":
                 this.innerHTML = html`
                     <battle-scene>
-                        <a-actor type="empire" id="villain">
+                        <a-actor type="empire" id="villain" slot="villain">
                             <a-deck reverse></a-deck>
                             <a-hand></a-hand>
                             <a-trash></a-trash>
                         </a-actor>
 
-                        <a-table></a-table>
+                        <a-table slot="table"></a-table>
 
-                        <a-actor type="player" id="player">
+                        <a-actor type="player" id="player" slot="player">
                             <a-deck></a-deck>
                             <a-hand></a-hand>
                             <a-trash></a-trash>
-                            <button slot="end">End Turn</button>
                         </a-actor>
 
                         <a-log slot="log"></a-log>
                     </battle-scene>
+                `;
+                break;
+            case "prepare":
+                this.innerHTML = html`
+                    <battle-prepare>
+                        <div slot="shop"></div>
+                        <div slot="deck"></div>
+                    </battle-prepare>
                 `;
                 break;
             case "collection":
@@ -47,6 +55,10 @@ export class GameContainer extends HTMLElement {
         this.addEventListener("click", (e) => {
             let target = e.target as HTMLElement;
             switch (target.id) {
+                case "title":
+                    history.pushState("title", "", "");
+                    this.setAttribute("view", "title");
+                    break;
                 case "battle":
                     history.pushState("battle", "", "#battle");
                     this.setAttribute("view", "battle");
@@ -55,14 +67,39 @@ export class GameContainer extends HTMLElement {
                     history.pushState("collection", "", "#collection");
                     this.setAttribute("view", "collection");
                     break;
-                default:
-                    this.setAttribute("view", "title");
             }
         });
 
         window.addEventListener("popstate", (e) => {
             this.setAttribute("view", e.state ?? "title");
         });
+    }
+
+    PlayerDeck = [
+        Sprites.BABaracus,
+        Sprites.BABaracus,
+        Sprites.BABaracus,
+        Sprites.Faceman,
+        Sprites.Faceman,
+        Sprites.Faceman,
+        Sprites.Hannibal,
+        Sprites.Hannibal,
+        Sprites.Hannibal,
+        Sprites.Murdock,
+        Sprites.Murdock,
+        Sprites.Murdock,
+    ];
+    OrderedOpponents = ["empire", "empire", "empire"];
+    CurrentOpponent = 0;
+
+    ProgressToNextOpponent() {
+        this.CurrentOpponent++;
+        if (this.CurrentOpponent >= this.OrderedOpponents.length) {
+            alert("You win!");
+        }
+
+        history.pushState("prepare", "", "#prepare");
+        this.setAttribute("view", "prepare");
     }
 }
 

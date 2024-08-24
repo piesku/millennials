@@ -32,7 +32,7 @@ export class CollectionViewer extends HTMLElement {
                 }
             </style>
             <h1>Card Collection (${all_cards.length})</h1>
-            <flex-row wrap style="gap: 20px;">
+            <flex-row wrap start style="gap: 20px;">
                 <slot></slot>
             </flex-row>
         `;

@@ -48,7 +48,6 @@ export class ActorElement extends HTMLElement {
                 <flex-col>
                     <h2>${this.Instance.Name}</h2>
                     <div>Energy: ${this.Instance.CurrentEnergy}/${this.Instance.MaxEnergy}</div>
-                    <slot name="end"></slot>
                 </flex-col>
             </flex-row>
         `;
