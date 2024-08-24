@@ -23,13 +23,7 @@ export class BattlePrepare extends HTMLElement {
                 let card = e.target as CardElement;
                 if (e.dataTransfer) {
                     e.dataTransfer.setData("text/plain", card.id);
-                    card.classList.add("dragging");
                 }
-            });
-
-            card.addEventListener("dragend", (e) => {
-                let card = e.target as HTMLElement;
-                card.classList.remove("dragging");
             });
 
             all_cards.push(card);
@@ -55,10 +49,15 @@ export class BattlePrepare extends HTMLElement {
                     const data = e.dataTransfer.getData("text/plain");
                     const new_card = document.getElementById(data) as CardElement;
                     if (new_card) {
+                        // Update the deck view.
                         let offset = player_cards.indexOf(card);
                         player_cards.splice(offset, 1, new_card);
+                        deck.replaceChildren(...player_cards);
+
+                        // Update the deck data.
                         game.PlayerDeck = player_cards.map((card) => card.Instance.Sprite);
 
+                        // Go to the next battle.
                         history.pushState("battle", "", "#battle");
                         game.setAttribute("view", "battle");
                     }

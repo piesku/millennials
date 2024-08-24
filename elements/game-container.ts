@@ -73,6 +73,16 @@ export class GameContainer extends HTMLElement {
         window.addEventListener("popstate", (e) => {
             this.setAttribute("view", e.state ?? "title");
         });
+
+        this.addEventListener("dragstart", (e) => {
+            let card = e.target as HTMLElement;
+            card.classList.add("dragging");
+        });
+
+        this.addEventListener("dragend", (e) => {
+            let card = e.target as HTMLElement;
+            card.classList.remove("dragging");
+        });
     }
 
     PlayerDeck = [

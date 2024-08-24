@@ -30,10 +30,11 @@ export abstract class ActorController {
             yield "but the hand is full";
         } else if (deck.firstElementChild) {
             let card = deck.firstElementChild! as CardElement;
-            if (this.Element.id === "villain") {
+            if (this.Type === "villain") {
                 yield `${this.Name} draws a card`;
             } else {
                 yield `${this.Name} draw ${card.Instance.Name}`;
+                card.setAttribute("draggable", "true");
             }
             hand.appendChild(card);
         } else {
