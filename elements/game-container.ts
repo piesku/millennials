@@ -42,15 +42,17 @@ export class GameContainer extends HTMLElement {
     }
 
     connectedCallback() {
+        this.setAttribute("view", history.state);
+
         this.addEventListener("click", (e) => {
             let target = e.target as HTMLElement;
             switch (target.id) {
                 case "battle":
-                    history.pushState("battle", "", "battle");
+                    history.pushState("battle", "", "#battle");
                     this.setAttribute("view", "battle");
                     break;
                 case "collection":
-                    history.pushState("collection", "", "collection");
+                    history.pushState("collection", "", "#collection");
                     this.setAttribute("view", "collection");
                     break;
                 default:
