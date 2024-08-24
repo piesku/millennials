@@ -65,6 +65,8 @@ export class BattlePrepare extends HTMLElement {
                     background-size: ${target_size}px auto;
                     image-rendering: pixelated;
                     margin: 0 auto;
+                    border: 1px solid black;
+                    border-radius: 5px;
                 }
             </style>
             <h1>Prepare For the Next Battle</h1>
