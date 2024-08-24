@@ -2,7 +2,6 @@ import {html} from "../lib/html.js";
 import {clamp} from "../lib/number.js";
 import {element} from "../lib/random.js";
 import {CardElement} from "./a-card.js";
-import {LocationElement} from "./a-location.js";
 import {GameContainer} from "./game-container.js";
 
 export class BattlePrepare extends HTMLElement {
@@ -70,13 +69,12 @@ export class BattlePrepare extends HTMLElement {
         player_cards.sort(CardElement.Compare);
 
         let villain = game.OrderedOpponents[game.CurrentOpponent];
-        let location_element = document.createElement("a-location") as LocationElement;
 
         const sprite_height = 16;
         const sprite_padding = 1;
         const target_size = 240;
         const scale = target_size / sprite_height;
-        const sprite_y = (sprite_height + sprite_padding) * villain.Sprite * scale;
+        const sprite_y = (sprite_height + sprite_padding) * villain.Actor.Instance.Sprite * scale;
 
         const img_src = document.querySelector("body > img[hidden]")?.getAttribute("src");
         const background_url = `url(${img_src})`;
@@ -119,17 +117,15 @@ export class BattlePrepare extends HTMLElement {
                 <div style="width:280px">
                     <h2>Next Up</h2>
                     <div style="padding:20px; background:lightblue; border-radius:5px;">
-                        <h3 style="margin-top:0;">${villain.Name}</h3>
+                        <h3 style="margin-top:0;">${villain.Actor.Instance.Name}</h3>
                         <div class="sprite"></div>
-                        ${villain.Locations.map((location_type) => {
-                            // TODO: Hacky way of reading name and desc from the controller.
-                            let controller = LocationElement.Controllers[location_type];
-                            let location = new controller(location_element);
-                            return html`
-                                <h4>${location.Name}</h4>
-                                <p>${location.Description}</p>
-                            `;
-                        })}
+                        <p><i>${villain.Actor.Instance.Description}</i></p>
+                        ${villain.Locations.map(
+                            (location) => html`
+                                <h4>${location.Instance.Name}</h4>
+                                <p>${location.Instance.Description}</p>
+                            `,
+                        )}
                     </div>
                 </div>
             </flex-row>

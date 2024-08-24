@@ -1,5 +1,7 @@
 import {ActorController} from "../actors/ActorController.js";
 import {EmpireController} from "../actors/empire.js";
+import {KungFuController} from "../actors/kungfu.js";
+import {PiratesController} from "../actors/pirates.js";
 import {PlayerController} from "../actors/player.js";
 import {html} from "../lib/html.js";
 
@@ -9,6 +11,8 @@ export class ActorElement extends HTMLElement {
     static Controllers: Record<string, new (el: ActorElement) => ActorController> = {
         player: PlayerController,
         empire: EmpireController,
+        pirates: PiratesController,
+        kungfu: KungFuController,
     };
 
     constructor() {

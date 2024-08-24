@@ -2,11 +2,14 @@ import {CardElement} from "../elements/a-card.js";
 import {HandElement} from "../elements/a-hand.js";
 import {GameContainer} from "../elements/game-container.js";
 import {shuffle} from "../lib/random.js";
+import {Sprites} from "../sprites/sprites.js";
 import {ActorController} from "./ActorController.js";
 
 export class PlayerController extends ActorController {
     Type = "player" as const;
     Name = "You";
+    Sprite = Sprites.Murdock;
+    Description = "The Good Guys";
 
     *StartBattle() {
         let game = this.Element.closest("game-container") as GameContainer;

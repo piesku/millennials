@@ -4,10 +4,13 @@ import {LocationElement} from "../elements/a-location.js";
 import {BattleScene} from "../elements/battle-scene.js";
 import {LocationSlot} from "../elements/location-slot.js";
 import {element} from "../lib/random.js";
+import {Sprites} from "../sprites/sprites.js";
 
 export abstract class ActorController {
     abstract Type: "player" | "villain";
     abstract Name: string;
+    abstract Sprite: Sprites;
+    abstract Description: string;
     MaxEnergy = 0;
     CurrentEnergy = 0;
 

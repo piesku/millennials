@@ -17,3 +17,24 @@ function shift(values: Array<Interpolation>) {
 export function html(strings: TemplateStringsArray, ...values: Array<Interpolation>) {
     return strings.reduce((out, cur) => out + shift(values) + cur);
 }
+
+export function fragment(string: string) {
+    let template = document.createElement("template");
+    template.innerHTML = string;
+    return template.content;
+}
+
+export function create<T extends HTMLElement>(
+    tag: string,
+    props: Record<string, string>,
+    ...children: Array<Node | string>
+) {
+    let element = document.createElement(tag) as T;
+    for (let [key, value] of Object.entries(props)) {
+        element.setAttribute(key, value);
+    }
+    for (let child of children) {
+        element.append(child);
+    }
+    return element;
+}

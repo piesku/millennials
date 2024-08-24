@@ -1,5 +1,7 @@
-import {html} from "../lib/html.js";
+import {create, html} from "../lib/html.js";
 import {Sprites} from "../sprites/sprites.js";
+import {ActorElement} from "./a-actor.js";
+import {LocationElement} from "./a-location.js";
 
 export class GameContainer extends HTMLElement {
     static observedAttributes = ["view"];
@@ -101,9 +103,28 @@ export class GameContainer extends HTMLElement {
     ];
     OrderedOpponents = [
         {
-            Name: "Varth Dader",
-            Sprite: Sprites.DarthVader,
-            Locations: ["death-star", "arkham-asylum", "future-hill-valley"],
+            Actor: create<ActorElement>("a-actor", {type: "empire"}),
+            Locations: [
+                create<LocationElement>("a-location", {type: "death-star"}),
+                create<LocationElement>("a-location", {type: "arkham-asylum"}),
+                create<LocationElement>("a-location", {type: "future-hill-valley"}),
+            ],
+        },
+        {
+            Actor: create<ActorElement>("a-actor", {type: "pirates"}),
+            Locations: [
+                create<LocationElement>("a-location", {type: "death-star"}),
+                create<LocationElement>("a-location", {type: "arkham-asylum"}),
+                create<LocationElement>("a-location", {type: "future-hill-valley"}),
+            ],
+        },
+        {
+            Actor: create<ActorElement>("a-actor", {type: "kungfu"}),
+            Locations: [
+                create<LocationElement>("a-location", {type: "death-star"}),
+                create<LocationElement>("a-location", {type: "arkham-asylum"}),
+                create<LocationElement>("a-location", {type: "future-hill-valley"}),
+            ],
         },
     ];
     CurrentOpponent = 0;

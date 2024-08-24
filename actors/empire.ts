@@ -28,6 +28,7 @@ export class Stormtrooper extends CardController {
 export class EmpireController extends ActorController {
     Type = "villain" as const;
     Name = "Empire";
+    Sprite = Sprites.DarthVader;
     Description = "The Empire is a powerful force that seeks to control the galaxy";
 
     *StartBattle() {
