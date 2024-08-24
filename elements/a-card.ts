@@ -196,7 +196,6 @@ export class CardElement extends HTMLElement {
                 :host-context(a-hand) > *,
                 :host(.frontside) > * {
                     visibility: visible;
-                    background-color: white;
                 }
 
                 :host(.dragging) {
@@ -219,8 +218,7 @@ export class CardElement extends HTMLElement {
                     align-items: center;
                     font-size: 0.8em;
                     font-family: Arial, sans-serif;
-                    padding: 0 3px;
-                    background-color: rgba(255, 255, 255, 0.5);
+                    margin: 0 3px;
                 }
 
                 .header span {
@@ -245,6 +243,7 @@ export class CardElement extends HTMLElement {
                     bottom: 0;
                     width: 100%;
                     background-color: rgba(255, 255, 255, 0.7);
+                    border-radius: 5px;
                     text-align: center;
                     font-family: Arial, sans-serif;
                 }
