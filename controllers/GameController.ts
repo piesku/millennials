@@ -45,16 +45,21 @@ export class GameController extends HTMLElement {
         this.addEventListener("click", (e) => {
             let target = e.target as HTMLElement;
             switch (target.id) {
-                case "title":
-                    this.setAttribute("view", "title");
-                    break;
                 case "battle":
+                    history.pushState("battle", "", "battle");
                     this.setAttribute("view", "battle");
                     break;
                 case "collection":
+                    history.pushState("collection", "", "collection");
                     this.setAttribute("view", "collection");
                     break;
+                default:
+                    this.setAttribute("view", "title");
             }
+        });
+
+        window.addEventListener("popstate", (e) => {
+            this.setAttribute("view", e.state ?? "title");
         });
     }
 }
