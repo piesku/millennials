@@ -89,7 +89,13 @@ export class GameContainer extends HTMLElement {
         Sprites.Murdock,
         Sprites.Murdock,
     ];
-    OrderedOpponents = ["empire", "empire", "empire"];
+    OrderedOpponents = [
+        {
+            Name: "Varth Dader",
+            Sprite: Sprites.DarthVader,
+            Locations: ["death-star", "arkham-asylum", "future-hill-valley"],
+        },
+    ];
     CurrentOpponent = 0;
 
     ProgressToNextOpponent() {

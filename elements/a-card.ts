@@ -125,15 +125,15 @@ export class CardElement extends HTMLElement {
     }
 
     ReRender() {
-        const spriteSize = 16;
-        const spriteMargin = 1;
-        const targetSize = 120;
-        const scale = targetSize / spriteSize;
-
-        const spriteYPosition = (spriteSize + spriteMargin) * this.Instance.Sprite * scale;
+        const sprite_height = 16;
+        const sprite_padding = 1;
+        const target_size = 120;
+        const scale = target_size / sprite_height;
+        const sprite_y = (sprite_height + sprite_padding) * this.Instance.Sprite * scale;
 
         const img_src = document.querySelector("body > img[hidden]")?.getAttribute("src");
-        const backgroundImageUrl = `url(${img_src})`;
+        const background_url = `url(${img_src})`;
+
         const card_body = html`
             <div class="header">
                 <span
@@ -205,11 +205,11 @@ export class CardElement extends HTMLElement {
                 }
 
                 .sprite {
-                    width: ${targetSize}px;
-                    height: ${targetSize}px;
-                    background-image: ${backgroundImageUrl};
-                    background-position: 0 -${spriteYPosition}px;
-                    background-size: ${targetSize}px auto;
+                    width: ${target_size}px;
+                    height: ${target_size}px;
+                    background-image: ${background_url};
+                    background-position: 0 -${sprite_y}px;
+                    background-size: ${target_size}px auto;
                     image-rendering: pixelated;
                     margin: 0 auto;
                 }
@@ -315,6 +315,14 @@ export class CardElement extends HTMLElement {
 
         if (this.closest("battle-scene")) {
             this.draggable = this.Instance.Owner.Type !== "villain";
+        }
+    }
+
+    static Compare(a: CardElement, b: CardElement) {
+        if (a.Instance.Cost !== b.Instance.Cost) {
+            return a.Instance.Cost - b.Instance.Cost;
+        } else {
+            return a.Instance.Name.localeCompare(b.Instance.Name);
         }
     }
 }

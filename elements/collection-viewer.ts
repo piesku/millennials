@@ -16,13 +16,7 @@ export class CollectionViewer extends HTMLElement {
             all_cards.push(card);
         }
 
-        all_cards.sort((a, b) => {
-            if (a.Instance.Cost !== b.Instance.Cost) {
-                return a.Instance.Cost - b.Instance.Cost;
-            } else {
-                return a.Instance.Name.localeCompare(b.Instance.Name);
-            }
-        });
+        all_cards.sort(CardElement.Compare);
 
         this.shadowRoot!.innerHTML = html`
             <style>
