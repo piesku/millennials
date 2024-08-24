@@ -196,6 +196,8 @@ export class CardElement extends HTMLElement {
                 :host-context(a-hand) > *,
                 :host(.frontside) > * {
                     visibility: visible;
+                    background: white;
+                    border-radius: 5px;
                 }
 
                 :host(.dragging) {
