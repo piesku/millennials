@@ -8,7 +8,8 @@ export class GameController extends HTMLElement {
                 this.innerHTML = html`
                     <flex-col style="height:100vh; justify-content:center; align-items:center;">
                         <h1><i>The Dirty Dozen</i></h1>
-                        <button id="start">Start Game</button>
+                        <button id="battle">Start Game</button>
+                        <button id="collection">Collection</button>
                     </flex-col>
                 `;
                 break;
@@ -34,14 +35,25 @@ export class GameController extends HTMLElement {
                     </battle-controller>
                 `;
                 break;
+            case "collection":
+                this.innerHTML = html` <collection-viewer></collection-viewer> `;
+                break;
         }
     }
 
     connectedCallback() {
         this.addEventListener("click", (e) => {
             let target = e.target as HTMLElement;
-            if (target.id === "start") {
-                this.setAttribute("view", "battle");
+            switch (target.id) {
+                case "title":
+                    this.setAttribute("view", "title");
+                    break;
+                case "battle":
+                    this.setAttribute("view", "battle");
+                    break;
+                case "collection":
+                    this.setAttribute("view", "collection");
+                    break;
             }
         });
     }

@@ -308,8 +308,11 @@ export class CardElement extends HTMLElement {
             </dialog>
         `;
 
-        this.draggable = this.Instance.Owner.Type !== "villain";
         this.id = this.Instance.Id.toString();
+
+        if (this.closest("battle-controller")) {
+            this.draggable = this.Instance.Owner.Type !== "villain";
+        }
     }
 }
 
