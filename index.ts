@@ -1,5 +1,4 @@
-import "./layout/flex-col.js";
-import "./layout/flex-row.js";
+import "./lib/layout.js";
 
 import "./elements/a-actor.js";
 import "./elements/a-card.js";

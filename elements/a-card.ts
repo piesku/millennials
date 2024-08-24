@@ -295,12 +295,14 @@ export class CardElement extends HTMLElement {
                 }
             </style>
 
-            <flex-col onclick="event.stopPropagation(); this.nextElementSibling.showModal();">${card_body}</flex-col>
+            <flex-col start onclick="event.stopPropagation(); this.nextElementSibling.showModal();"
+                >${card_body}</flex-col
+            >
 
             <dialog onclick="event.stopPropagation(); this.close()">
                 <flex-col>
                     <card-detail>
-                        <flex-col>${card_body}</flex-col>
+                        <flex-col start>${card_body}</flex-col>
                     </card-detail>
                     <card-modifiers>
                         <slot></slot>
