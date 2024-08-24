@@ -1,3 +1,6 @@
+import "./layout/flex-col.js";
+import "./layout/flex-row.js";
+
 import "./elements/a-actor.js";
 import "./elements/a-card.js";
 import "./elements/a-deck.js";
@@ -6,17 +9,14 @@ import "./elements/a-location.js";
 import "./elements/a-modifier.js";
 import "./elements/a-table.js";
 import "./elements/a-trash.js";
+import "./elements/battle-scene.js";
 import "./elements/collection-viewer.js";
+import "./elements/game-container.js";
 import "./elements/location-owner.js";
 import "./elements/location-slot.js";
 
-import "./actors/ActorController.js";
+import "./actors/empire.js";
 import "./actors/player.js";
-import "./elements/battle-scene.js";
-import "./elements/game-container.js";
-
-import "./layout/flex-col.js";
-import "./layout/flex-row.js";
 
 import "./cards/a-baracus.js";
 import "./cards/a-faceman.js";
@@ -51,8 +51,6 @@ import "./cards/tmnt-leonardo.js";
 import "./cards/tmnt-michaelangelo.js";
 import "./cards/tmnt-raphael.js";
 import "./cards/woo-dy.js";
-
-import "./actors/empire.js";
 
 import "./locations/arkham-asylum.js";
 import "./locations/death-star.js";
