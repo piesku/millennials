@@ -16,7 +16,22 @@ export class BattlePrepare extends HTMLElement {
         for (let card_type in CardElement.Controllers) {
             let card = document.createElement("a-card") as CardElement;
             card.setAttribute("type", card_type);
+            card.setAttribute("draggable", "true");
             card.classList.add("frontside");
+
+            card.addEventListener("dragstart", (e) => {
+                let card = e.target as CardElement;
+                if (e.dataTransfer) {
+                    e.dataTransfer.setData("text/plain", card.id);
+                    card.classList.add("dragging");
+                }
+            });
+
+            card.addEventListener("dragend", (e) => {
+                let card = e.target as HTMLElement;
+                card.classList.remove("dragging");
+            });
+
             all_cards.push(card);
         }
 
@@ -29,6 +44,27 @@ export class BattlePrepare extends HTMLElement {
             let card = document.createElement("a-card") as CardElement;
             card.setAttribute("type", card_type.toString());
             card.classList.add("frontside");
+
+            card.addEventListener("dragover", (e) => {
+                e.preventDefault();
+            });
+
+            card.addEventListener("drop", (e) => {
+                e.preventDefault();
+                if (e.dataTransfer) {
+                    const data = e.dataTransfer.getData("text/plain");
+                    const new_card = document.getElementById(data) as CardElement;
+                    if (new_card) {
+                        let offset = player_cards.indexOf(card);
+                        player_cards.splice(offset, 1, new_card);
+                        game.PlayerDeck = player_cards.map((card) => card.Instance.Sprite);
+
+                        history.pushState("battle", "", "#battle");
+                        game.setAttribute("view", "battle");
+                    }
+                }
+            });
+
             player_cards.push(card);
         }
 

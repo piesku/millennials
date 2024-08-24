@@ -102,26 +102,6 @@ export class CardElement extends HTMLElement {
         }
 
         this.ReRender();
-
-        this.addEventListener("dragstart", (e) => {
-            const energy_left = this.Instance.Owner.CurrentEnergy;
-            const card_cost = this.Instance.CurrentCost;
-            if (card_cost > energy_left) {
-                e.preventDefault();
-                return false;
-            }
-
-            let target = e.target as HTMLElement;
-            if (e.dataTransfer) {
-                e.dataTransfer.setData("text/plain", target.id);
-                target.classList.add("dragging");
-            }
-        });
-
-        this.addEventListener("dragend", (e) => {
-            let target = e.target as HTMLElement;
-            target.classList.remove("dragging");
-        });
     }
 
     ReRender() {
@@ -201,7 +181,7 @@ export class CardElement extends HTMLElement {
                 }
 
                 :host(.dragging) {
-                    opacity: 0.5;
+                    opacity: 0.3;
                 }
 
                 .sprite {
@@ -312,10 +292,6 @@ export class CardElement extends HTMLElement {
         `;
 
         this.id = this.Instance.Id.toString();
-
-        if (this.closest("battle-scene")) {
-            this.draggable = this.Instance.Owner.Type !== "villain";
-        }
     }
 
     static Compare(a: CardElement, b: CardElement) {
