@@ -15,7 +15,7 @@ export class GameController extends HTMLElement {
                 break;
             case "battle":
                 this.innerHTML = html`
-                    <battle-controller>
+                    <battle-scene>
                         <a-actor type="empire" id="villain">
                             <a-deck reverse></a-deck>
                             <a-hand></a-hand>
@@ -32,7 +32,7 @@ export class GameController extends HTMLElement {
                         </a-actor>
 
                         <a-log slot="log"></a-log>
-                    </battle-controller>
+                    </battle-scene>
                 `;
                 break;
             case "collection":

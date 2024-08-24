@@ -310,7 +310,7 @@ export class CardElement extends HTMLElement {
 
         this.id = this.Instance.Id.toString();
 
-        if (this.closest("battle-controller")) {
+        if (this.closest("battle-scene")) {
             this.draggable = this.Instance.Owner.Type !== "villain";
         }
     }

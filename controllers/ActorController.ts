@@ -1,9 +1,9 @@
 import {ActorElement} from "../elements/a-actor.js";
 import {CardElement} from "../elements/a-card.js";
 import {LocationElement} from "../elements/a-location.js";
+import {BattleScene} from "../elements/battle-scene.js";
 import {LocationSlot} from "../elements/location-slot.js";
 import {element} from "../lib/random.js";
-import {BattleController} from "./BattleController.js";
 
 export abstract class ActorController {
     abstract Type: "player" | "villain";
@@ -53,7 +53,7 @@ export abstract class ActorController {
 
             let card = element(playableCards);
 
-            let battle = this.Element.closest<BattleController>("battle-controller")!;
+            let battle = this.Element.closest<BattleScene>("battle-scene")!;
             let empty_slots = battle.querySelectorAll<LocationSlot>(
                 "location-owner[slot=villain] location-slot:not(:has(a-card))",
             );

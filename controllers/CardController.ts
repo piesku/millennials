@@ -1,11 +1,11 @@
 import {ActorElement} from "../elements/a-actor.js";
 import {CardElement} from "../elements/a-card.js";
 import {LocationElement} from "../elements/a-location.js";
+import {BattleScene} from "../elements/battle-scene.js";
 import {next_id} from "../lib/id.js";
 import {Message} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 import {ActorController} from "./ActorController.js";
-import {BattleController} from "./BattleController.js";
 import {LocationController} from "./LocationController.js";
 
 export abstract class CardController {
@@ -67,8 +67,8 @@ export abstract class CardController {
         return actor.Instance;
     }
 
-    get Battle(): BattleController {
-        return this.Element.closest("battle-controller") as BattleController;
+    get Battle(): BattleScene {
+        return this.Element.closest("battle-scene") as BattleScene;
     }
 
     get Location(): LocationController {

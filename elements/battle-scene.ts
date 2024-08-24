@@ -1,12 +1,12 @@
-import {ActorElement} from "../elements/a-actor.js";
-import {CardElement} from "../elements/a-card.js";
-import {LocationElement} from "../elements/a-location.js";
+import {ActorController} from "../controllers/ActorController.js";
+import {CardController} from "../controllers/CardController.js";
 import {html} from "../lib/html.js";
 import {set_seed} from "../lib/random.js";
 import {delay} from "../lib/timeout.js";
 import {Message} from "../messages.js";
-import {ActorController} from "./ActorController.js";
-import {CardController} from "./CardController.js";
+import {ActorElement} from "./a-actor.js";
+import {CardElement} from "./a-card.js";
+import {LocationElement} from "./a-location.js";
 
 const Log = (message: string) => {
     const logDisplay = document.querySelector("a-log") as HTMLElement;
@@ -19,7 +19,7 @@ const Log = (message: string) => {
     }
 };
 
-export class BattleController extends HTMLElement {
+export class BattleScene extends HTMLElement {
     CurrentTurn = 0;
     MaxTurns = 6;
 
@@ -209,4 +209,4 @@ export class BattleController extends HTMLElement {
     }
 }
 
-customElements.define("battle-controller", BattleController);
+customElements.define("battle-scene", BattleScene);
