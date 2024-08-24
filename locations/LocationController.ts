@@ -1,8 +1,8 @@
+import {ActorController} from "../actors/ActorController.js";
+import {CardController} from "../cards/CardController.js";
 import {CardElement} from "../elements/a-card.js";
 import {LocationElement} from "../elements/a-location.js";
 import {Message} from "../messages.js";
-import {ActorController} from "./ActorController.js";
-import {CardController} from "./CardController.js";
 
 export abstract class LocationController {
     abstract Name: string;

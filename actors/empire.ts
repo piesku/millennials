@@ -1,6 +1,6 @@
-import {ActorController} from "../controllers/ActorController.js";
-import {CardController} from "../controllers/CardController.js";
+import {CardController} from "../cards/CardController.js";
 import {Sprites} from "../sprites/sprites.js";
+import {ActorController} from "./ActorController.js";
 
 export class DarthVader extends CardController {
     Name = "Varth Dader";

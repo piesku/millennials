@@ -1,3 +1,4 @@
+import {DarthVader, Stormtrooper} from "../actors/empire.js";
 import {Baracus} from "../cards/a-baracus.js";
 import {Faceman} from "../cards/a-faceman.js";
 import {Hannibal} from "../cards/a-hannibal.js";
@@ -5,6 +6,7 @@ import {Murdock} from "../cards/a-murdock.js";
 import {Batman} from "../cards/bat-man.js";
 import {Blade} from "../cards/bla-de.js";
 import {BuzzLightyear} from "../cards/buzz-lightyear.js";
+import {CardController} from "../cards/CardController.js";
 import {DenverDinosaur} from "../cards/denver-dinosaur.js";
 import {ForrestGump} from "../cards/forrest-gump.js";
 import {HarryPotter} from "../cards/harry-potter.js";
@@ -33,10 +35,8 @@ import {Leonardo} from "../cards/tmnt-leonardo.js";
 import {MichaelAngelo} from "../cards/tmnt-michaelangelo.js";
 import {Raphael} from "../cards/tmnt-raphael.js";
 import {Woody} from "../cards/woo-dy.js";
-import {CardController} from "../controllers/CardController.js";
 import {html} from "../lib/html.js";
 import {Sprites} from "../sprites/sprites.js";
-import {DarthVader, Stormtrooper} from "../villains/empire.js";
 
 export class CardElement extends HTMLElement {
     Instance!: CardController;

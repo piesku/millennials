@@ -1,4 +1,4 @@
-import {LocationController} from "../controllers/LocationController.js";
+import {LocationController} from "./LocationController.js";
 
 export class ArkhamAsylum extends LocationController {
     Name = "Arkham Asylum";

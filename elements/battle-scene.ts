@@ -1,5 +1,5 @@
-import {ActorController} from "../controllers/ActorController.js";
-import {CardController} from "../controllers/CardController.js";
+import {ActorController} from "../actors/ActorController.js";
+import {CardController} from "../cards/CardController.js";
 import {html} from "../lib/html.js";
 import {set_seed} from "../lib/random.js";
 import {delay} from "../lib/timeout.js";

@@ -1,5 +1,5 @@
-import {CardController} from "../controllers/CardController.js";
 import {Sprites} from "../sprites/sprites.js";
+import {CardController} from "./CardController.js";
 
 export class ForrestGump extends CardController {
     Name = "Gorrest Fump";

@@ -1,6 +1,6 @@
-import {CardController} from "../controllers/CardController.js";
 import {CardElement} from "../elements/a-card.js";
 import {Sprites} from "../sprites/sprites.js";
+import {CardController} from "./CardController.js";
 
 export class Woody extends CardController {
     Name = "Toy Cowboy";

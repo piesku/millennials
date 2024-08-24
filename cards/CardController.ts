@@ -1,12 +1,12 @@
+import {ActorController} from "../actors/ActorController.js";
 import {ActorElement} from "../elements/a-actor.js";
 import {CardElement} from "../elements/a-card.js";
 import {LocationElement} from "../elements/a-location.js";
 import {BattleScene} from "../elements/battle-scene.js";
 import {next_id} from "../lib/id.js";
+import {LocationController} from "../locations/LocationController.js";
 import {Message} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
-import {ActorController} from "./ActorController.js";
-import {LocationController} from "./LocationController.js";
 
 export abstract class CardController {
     abstract Name: string;

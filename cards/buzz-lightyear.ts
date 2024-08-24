@@ -1,6 +1,6 @@
-import {CardController} from "../controllers/CardController.js";
 import {Message} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
+import {CardController} from "./CardController.js";
 
 export class BuzzLightyear extends CardController {
     Name = "Buzzer Astronaut";

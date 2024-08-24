@@ -1,7 +1,7 @@
-import {ActorController} from "../controllers/ActorController.js";
-import {PlayerController} from "../controllers/PlayerController.js";
+import {ActorController} from "../actors/ActorController.js";
+import {EmpireController} from "../actors/empire.js";
+import {PlayerController} from "../actors/player.js";
 import {html} from "../lib/html.js";
-import {EmpireController} from "../villains/empire.js";
 
 export class ActorElement extends HTMLElement {
     Instance!: ActorController;

@@ -10,8 +10,8 @@ import "./elements/collection-viewer.js";
 import "./elements/location-owner.js";
 import "./elements/location-slot.js";
 
-import "./controllers/ActorController.js";
-import "./controllers/PlayerController.js";
+import "./actors/ActorController.js";
+import "./actors/player.js";
 import "./elements/battle-scene.js";
 import "./elements/game-container.js";
 
@@ -52,7 +52,7 @@ import "./cards/tmnt-michaelangelo.js";
 import "./cards/tmnt-raphael.js";
 import "./cards/woo-dy.js";
 
-import "./villains/empire.js";
+import "./actors/empire.js";
 
 import "./locations/arkham-asylum.js";
 import "./locations/death-star.js";

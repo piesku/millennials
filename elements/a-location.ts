@@ -1,8 +1,8 @@
-import {LocationController} from "../controllers/LocationController.js";
 import {html} from "../lib/html.js";
 import {ArkhamAsylum} from "../locations/arkham-asylum.js";
 import {DeathStar} from "../locations/death-star.js";
 import {FutureHillValey} from "../locations/future-hill-valley.js";
+import {LocationController} from "../locations/LocationController.js";
 
 export class LocationElement extends HTMLElement {
     Instance!: LocationController;
