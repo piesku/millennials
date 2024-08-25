@@ -1,6 +1,6 @@
 import {ActorController} from "../actors/ActorController.js";
 import {CardController} from "../cards/CardController.js";
-import {fragment, html} from "../lib/html.js";
+import {html} from "../lib/html.js";
 import {clamp} from "../lib/number.js";
 import {element, set_seed} from "../lib/random.js";
 import {delay} from "../lib/timeout.js";
@@ -27,7 +27,7 @@ const Log = (message: string) => {
 export class BattleScene extends HTMLElement {
     CurrentTurn = 0;
     MaxTurns = 6;
-    State: "playing" | "won" | "lost" = "playing";
+    State: "prep" | "playing" | "won" | "lost" = "prep";
 
     PlayedCardsQueue: Array<CardController> = [];
 
@@ -35,8 +35,37 @@ export class BattleScene extends HTMLElement {
         set_seed(Math.random());
 
         super();
-
         this.attachShadow({mode: "open"});
+
+        this.Render();
+    }
+
+    Render() {
+        let villain_element = this.querySelector<ActorElement>("a-actor:not([type=player])");
+        if (!villain_element && DEBUG) {
+            throw "BattleScene must have a villain";
+        }
+        let villain = villain_element!.Instance;
+
+        let location_elements = this.querySelectorAll<LocationElement>("a-location");
+        if (location_elements.length === 0 && DEBUG) {
+            throw "BattleScene must have locations";
+        }
+        let locations: Array<LocationController> = [];
+        for (let location of location_elements) {
+            locations.push(location.Instance);
+        }
+
+        const sprite_height = 16;
+        const sprite_padding = 1;
+        const target_size = 240;
+        const scale = target_size / sprite_height;
+        const sprite_y = (sprite_height + sprite_padding) * villain.Sprite * scale;
+
+        const img_src = document.querySelector("body > img[hidden]")?.getAttribute("src");
+        const background_url = `url(${img_src})`;
+
+        let current_view = this.State === "prep" ? "prep" : "playing";
         this.shadowRoot!.innerHTML = html`
             <style>
                 :host {
@@ -64,14 +93,13 @@ export class BattleScene extends HTMLElement {
                 ::slotted(a-log) {
                     display: flex;
                     flex-direction: column;
+                    box-sizing: border-box;
                     width: 300px;
-                    height: calc(100vh - 100px);
+                    height: 100vh;
                     overflow-y: auto;
                     background-color: rgba(255, 255, 255, 0.8);
-                    padding: 10px;
+                    padding: 10px 10px 100px;
                     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-                    flex: 1;
-                    padding-bottom: 100px;
                 }
 
                 button {
@@ -79,6 +107,64 @@ export class BattleScene extends HTMLElement {
                     width: 100px;
                 }
             </style>
+            <multi-view current="${current_view}">
+                <main name="prep" style="padding:20px;">
+                    <h1>Prepare For the Next Battle</h1>
+                    <flex-row gap start>
+                        <div>
+                            <h2>Shop (Pick 1)</h2>
+                            <div class="grid" style="background:darksalmon;">
+                                <slot name="shop"></slot>
+                            </div>
+                            <h2>Your Deck</h2>
+                            <div class="grid" style="background:darkseagreen;">
+                                <slot name="deck"></slot>
+                            </div>
+                        </div>
+                        <div style="width:280px">
+                            <h2>Next Up</h2>
+                            <div style="padding:20px; background:lightblue; border-radius:5px;">
+                                <h3 style="margin-top:0;">${villain.Name}</h3>
+                                <div
+                                    style="
+                                width: ${target_size}px;
+                                height: ${target_size}px;
+                                background-image: ${background_url};
+                                background-position: 0 -${sprite_y}px;
+                                background-size: ${target_size}px auto;
+                                image-rendering: pixelated;
+                                margin: 0 auto;
+                                border: 1px solid black;
+                                border-radius: 5px;
+                            "
+                                ></div>
+                                <p><i>${villain.Description}</i></p>
+                                ${locations.map(
+                                    (location) => html`
+                                        <h4>${location.Name}</h4>
+                                        <p>${location.Description}</p>
+                                    `,
+                                )}
+                            </div>
+                        </div>
+                    </flex-row>
+                </main>
+                <main name="playing">
+                    <flex-row>
+                        <flex-col style="flex: 1;">
+                            <slot name="villain"></slot>
+                            <flex-col style="flex: 1; justify-content: center;">
+                                <slot name="location"></slot>
+                            </flex-col>
+                            <flex-row>
+                                <slot name="player"></slot>
+                                <button id="end">${this.State === "playing" ? "End Turn" : "Next!"}</button>
+                            </flex-row>
+                        </flex-col>
+                        <slot name="log"></slot>
+                    </flex-row>
+                </main>
+            </multi-view>
         `;
     }
 
@@ -121,83 +207,6 @@ export class BattleScene extends HTMLElement {
     }
 
     PrepareBattle() {
-        for (let main of this.shadowRoot!.querySelectorAll("main")) {
-            main.remove();
-        }
-
-        for (let card of this.querySelectorAll("a-card")) {
-            card.remove();
-        }
-
-        let villain_element = this.querySelector<ActorElement>("a-actor:not([type=player])");
-        if (!villain_element && DEBUG) {
-            throw "BattleScene must have a villain";
-        }
-        let villain = villain_element!.Instance;
-
-        let location_elements = this.querySelectorAll<LocationElement>("a-location");
-        if (location_elements.length === 0 && DEBUG) {
-            throw "BattleScene must have locations";
-        }
-        let locations: Array<LocationController> = [];
-        for (let location of location_elements) {
-            locations.push(location.Instance);
-        }
-
-        const sprite_height = 16;
-        const sprite_padding = 1;
-        const target_size = 240;
-        const scale = target_size / sprite_height;
-        const sprite_y = (sprite_height + sprite_padding) * villain.Sprite * scale;
-
-        const img_src = document.querySelector("body > img[hidden]")?.getAttribute("src");
-        const background_url = `url(${img_src})`;
-
-        let main = fragment(html`
-            <main style="padding:20px;">
-                <h1>Prepare For the Next Battle</h1>
-                <flex-row gap start>
-                    <div>
-                        <h2>Shop (Pick 1)</h2>
-                        <div class="grid" style="background:darksalmon;">
-                            <slot name="shop"></slot>
-                        </div>
-                        <h2>Your Deck</h2>
-                        <div class="grid" style="background:darkseagreen;">
-                            <slot name="deck"></slot>
-                        </div>
-                    </div>
-                    <div style="width:280px">
-                        <h2>Next Up</h2>
-                        <div style="padding:20px; background:lightblue; border-radius:5px;">
-                            <h3 style="margin-top:0;">${villain.Name}</h3>
-                            <div
-                                style="
-                                width: ${target_size}px;
-                                height: ${target_size}px;
-                                background-image: ${background_url};
-                                background-position: 0 -${sprite_y}px;
-                                background-size: ${target_size}px auto;
-                                image-rendering: pixelated;
-                                margin: 0 auto;
-                                border: 1px solid black;
-                                border-radius: 5px;
-                            "
-                            ></div>
-                            <p><i>${villain.Description}</i></p>
-                            ${locations.map(
-                                (location) => html`
-                                    <h4>${location.Name}</h4>
-                                    <p>${location.Description}</p>
-                                `,
-                            )}
-                        </div>
-                    </div>
-                </flex-row>
-            </main>
-        `);
-        this.shadowRoot!.append(main);
-
         let all_cards: Array<CardElement> = [];
         for (let card_type in CardElement.Controllers) {
             let card = document.createElement("a-card") as CardElement;
@@ -266,28 +275,8 @@ export class BattleScene extends HTMLElement {
     }
 
     async InitBattle() {
-        let main = fragment(html`
-            <flex-row>
-                <flex-col style="flex: 4;">
-                    <slot name="villain"></slot>
-                    <flex-col style="flex: 1; justify-content: center;">
-                        <slot name="location"></slot>
-                    </flex-col>
-                    <flex-row>
-                        <slot name="player"></slot>
-                        <button id="end">End Turn</button>
-                    </flex-row>
-                </flex-col>
-                <slot name="log"></slot>
-            </flex-row>
-        `);
-        this.shadowRoot!.append(main);
-
-        window.scrollTo({
-            top: document.body.scrollHeight,
-            left: 0,
-            behavior: "smooth",
-        });
+        this.State = "playing";
+        this.Render();
 
         for (let message of this.StartBattle()) {
             Log(message);
@@ -356,13 +345,13 @@ export class BattleScene extends HTMLElement {
     }
 
     *GameEnd() {
-        yield "--- Game Over ---";
-        yield* this.BroadcastGameMessage(Message.BattleEnds);
-
         // TODO Calculate the winner.
 
+        yield "--- You Win ---";
+        yield* this.BroadcastGameMessage(Message.BattleEnds);
+
         this.State = "won";
-        this.shadowRoot!.querySelector("#end")!.textContent = "You Win";
+        this.Render();
     }
 
     *BroadcastGameMessage(kind: Message) {
