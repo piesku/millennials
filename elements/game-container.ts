@@ -6,77 +6,62 @@ export class GameContainer extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({mode: "open"});
+
+        history.pushState(this.GetState(), "", "");
     }
 
-    Render() {
-        let view = this.getAttribute("view");
+    ReRender() {
         this.shadowRoot!.innerHTML = html`
             <style>
                 :host {
                     display: block;
                 }
-                main {
-                    display: none;
-                }
-                main[name="${view}"] {
-                    display: block;
-                }
             </style>
-            <main name="title">
-                <flex-col style="height:100vh; justify-content:center; align-items:center;">
-                    <h1><i>The Dirty Dozen</i></h1>
-                    <button id="run">Start a New Run</button>
-                    <button id="collection">Collection</button>
-                </flex-col>
-            </main>
-
-            <main name="run">
-                <slot></slot>
-            </main>
-
-            <main name="collection">
-                <collection-viewer></collection-viewer>
-            </main>
+            <multi-view current="${this.CurrentView}">
+                <main name="title">
+                    <flex-col name="title" style="height:100vh; justify-content:center; align-items:center;">
+                        <h1><i>The Dirty Dozen</i></h1>
+                        <button id="run">Start a New Run</button>
+                        <button id="collection">Collection</button>
+                    </flex-col>
+                </main>
+                <main name="run">
+                    <slot></slot>
+                </main>
+                <collection-viewer name="collection"></collection-viewer>
+            </multi-view>
         `;
     }
 
-    static observedAttributes = ["view"];
-    attributeChangedCallback() {
-        this.Render();
-
-        switch (this.getAttribute("view")) {
-            case "run":
-                let battle = this.querySelectorAll<BattleScene>("battle-scene")[this.CurrentOpponent];
-                battle.PrepareBattle();
-                break;
-        }
-    }
-
     connectedCallback() {
-        this.setAttribute("view", history.state?.CurrentView ?? "title");
-
         this.shadowRoot!.addEventListener("click", (e) => {
             let target = e.target as HTMLElement;
             switch (target.id) {
                 case "title":
-                    history.pushState(this.GetState("title"), "", "");
-                    this.setAttribute("view", "title");
+                    this.CurrentView = "title";
+                    history.pushState(this.GetState(), "", "");
                     break;
                 case "run":
-                    history.pushState(this.GetState("run"), "", "#run");
-                    this.setAttribute("view", "run");
+                    this.CurrentView = "run";
+                    history.pushState(this.GetState(), "", "#run");
+
+                    let battle = this.querySelectorAll<BattleScene>("battle-scene")[this.CurrentOpponent];
+                    battle.PrepareBattle();
                     break;
                 case "collection":
-                    history.pushState(this.GetState("collection"), "", "#collection");
-                    this.setAttribute("view", "collection");
+                    this.CurrentView = "collection";
+                    history.pushState(this.GetState(), "", "#collection");
                     break;
             }
+
+            this.ReRender();
         });
 
         window.addEventListener("popstate", (e) => {
-            this.setAttribute("view", e.state?.CurrentView ?? "title");
-            this.CurrentOpponent = e.state?.CurrentOpponent ?? 0;
-            this.PlayerDeck = e.state?.PlayerDeck ?? this.PlayerDeck;
+            if (e.state) {
+                Object.assign(this, e.state);
+                this.ReRender();
+            }
         });
 
         this.addEventListener("dragstart", (e) => {
@@ -89,7 +74,7 @@ export class GameContainer extends HTMLElement {
             card.classList.remove("dragging");
         });
 
-        this.Render();
+        this.ReRender();
     }
 
     PlayerDeck = [
@@ -108,6 +93,7 @@ export class GameContainer extends HTMLElement {
     ];
 
     CurrentOpponent = 0;
+    CurrentView = history.state?.CurrentView ?? "title";
 
     ProgressToNextOpponent() {
         this.CurrentOpponent++;
@@ -115,7 +101,7 @@ export class GameContainer extends HTMLElement {
             alert("You win the run!");
         }
 
-        history.pushState(this.GetState("run"), "");
+        history.pushState(this.GetState(), "");
 
         let battle = this.querySelectorAll<BattleScene>("battle-scene")[this.CurrentOpponent];
         battle.PrepareBattle();
@@ -127,9 +113,9 @@ export class GameContainer extends HTMLElement {
         });
     }
 
-    GetState(view: string) {
+    GetState() {
         return {
-            CurrentView: view,
+            CurrentView: this.CurrentView,
             CurrentOpponent: this.CurrentOpponent,
             PlayerDeck: this.PlayerDeck,
         };

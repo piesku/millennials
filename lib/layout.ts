@@ -94,3 +94,34 @@ customElements.define(
         }
     },
 );
+
+customElements.define(
+    "multi-view",
+    class extends HTMLElement {
+        constructor() {
+            super();
+            this.attachShadow({mode: "open"});
+        }
+
+        connectedCallback() {
+            this.shadowRoot!.innerHTML = `
+                <style>
+                    ::slotted(*) {
+                        display: none;
+                    }
+
+                    ::slotted([selected]) {
+                        display: block;
+                    }
+                </style>
+                <slot></slot>
+            `;
+        }
+
+        static observedAttributes = ["current"];
+        attributeChangedCallback(name: string, old_value: string, new_value: string) {
+            this.querySelector(`[name=${old_value}]`)?.removeAttribute("selected");
+            this.querySelector(`[name=${new_value}]`)?.setAttribute("selected", "true");
+        }
+    },
+);
