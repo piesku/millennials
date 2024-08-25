@@ -26,7 +26,9 @@ export class GameContainer extends HTMLElement {
                     </flex-col>
                 </main>
                 <main name="run">
-                    <slot></slot>
+                    <multi-view current="${this.CurrentOpponent}">
+                        <slot></slot>
+                    </multi-view>
                 </main>
                 <collection-viewer name="collection"></collection-viewer>
             </multi-view>
@@ -43,10 +45,7 @@ export class GameContainer extends HTMLElement {
                     break;
                 case "run":
                     this.CurrentView = "run";
-                    history.pushState(this.GetState(), "", "#run");
-
-                    let battle = this.querySelectorAll<BattleScene>("battle-scene")[this.CurrentOpponent];
-                    battle.PrepareBattle();
+                    this.ProgressToNextOpponent();
                     break;
                 case "collection":
                     this.CurrentView = "collection";
@@ -92,7 +91,7 @@ export class GameContainer extends HTMLElement {
         Sprites.Murdock,
     ];
 
-    CurrentOpponent = 0;
+    CurrentOpponent = -1;
     CurrentView = history.state?.CurrentView ?? "title";
 
     ProgressToNextOpponent() {
@@ -101,16 +100,11 @@ export class GameContainer extends HTMLElement {
             alert("You win the run!");
         }
 
-        history.pushState(this.GetState(), "");
+        history.pushState(this.GetState(), "", "#run");
+        this.ReRender();
 
         let battle = this.querySelectorAll<BattleScene>("battle-scene")[this.CurrentOpponent];
         battle.PrepareBattle();
-
-        window.scrollTo({
-            top: document.body.scrollHeight,
-            left: 0,
-            behavior: "smooth",
-        });
     }
 
     GetState() {

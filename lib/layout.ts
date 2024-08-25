@@ -1,3 +1,5 @@
+import {html} from "./html.js";
+
 customElements.define(
     "flex-row",
     class extends HTMLElement {
@@ -103,25 +105,25 @@ customElements.define(
             this.attachShadow({mode: "open"});
         }
 
-        connectedCallback() {
-            this.shadowRoot!.innerHTML = `
+        static observedAttributes = ["current"];
+        attributeChangedCallback() {
+            this.Render();
+        }
+
+        Render() {
+            let current = this.getAttribute("current");
+            this.shadowRoot!.innerHTML = html`
                 <style>
                     ::slotted(*) {
                         display: none;
                     }
 
-                    ::slotted([selected]) {
+                    ::slotted([name="${current}"]) {
                         display: block;
                     }
                 </style>
                 <slot></slot>
             `;
-        }
-
-        static observedAttributes = ["current"];
-        attributeChangedCallback(name: string, old_value: string, new_value: string) {
-            this.querySelector(`[name=${old_value}]`)?.removeAttribute("selected");
-            this.querySelector(`[name=${new_value}]`)?.setAttribute("selected", "true");
         }
     },
 );
