@@ -5,50 +5,64 @@ import {BattleScene} from "./battle-scene.js";
 export class GameContainer extends HTMLElement {
     constructor() {
         super();
-        let shadow = this.attachShadow({mode: "open"});
-        shadow.innerHTML = html`<slot></slot>`;
+        this.attachShadow({mode: "open"});
     }
 
-    static observedAttributes = [];
+    Render() {
+        let view = this.getAttribute("view");
+        this.shadowRoot!.innerHTML = html`
+            <style>
+                :host {
+                    display: block;
+                }
+                main {
+                    display: none;
+                }
+                main[name="${view}"] {
+                    display: block;
+                }
+            </style>
+            <main name="title">
+                <flex-col style="height:100vh; justify-content:center; align-items:center;">
+                    <h1><i>The Dirty Dozen</i></h1>
+                    <button id="run">Start a New Run</button>
+                    <button id="collection">Collection</button>
+                </flex-col>
+            </main>
+
+            <main name="run">
+                <slot></slot>
+            </main>
+
+            <main name="collection">
+                <collection-viewer></collection-viewer>
+            </main>
+        `;
+    }
+
+    static observedAttributes = ["view"];
     attributeChangedCallback() {
+        this.Render();
+
         switch (this.getAttribute("view")) {
-            case "title":
-                this.innerHTML = html`
-                    <flex-col style="height:100vh; justify-content:center; align-items:center;">
-                        <h1><i>The Dirty Dozen</i></h1>
-                        <button id="battle">Start Game</button>
-                        <button id="collection">Collection</button>
-                    </flex-col>
-                `;
-                break;
-            case "battle":
-                this.shadowRoot!.innerHTML = html``;
-                break;
-            case "prepare":
-                this.innerHTML = html`
-                    <battle-prepare>
-                        <div slot="shop"></div>
-                        <div slot="deck"></div>
-                    </battle-prepare>
-                `;
-                break;
-            case "collection":
-                this.innerHTML = html` <collection-viewer></collection-viewer> `;
+            case "run":
+                let battle = this.querySelectorAll<BattleScene>("battle-scene")[this.CurrentOpponent];
+                battle.PrepareBattle();
                 break;
         }
     }
 
     connectedCallback() {
-        this.addEventListener("click", (e) => {
+        this.shadowRoot!.addEventListener("click", (e) => {
             let target = e.target as HTMLElement;
             switch (target.id) {
                 case "title":
                     history.pushState("title", "", "");
                     this.setAttribute("view", "title");
                     break;
-                case "battle":
-                    history.pushState("battle", "", "#battle");
-                    this.setAttribute("view", "battle");
+                case "run":
+                    history.pushState("run", "", "#run");
+                    this.setAttribute("view", "run");
                     break;
                 case "collection":
                     history.pushState("collection", "", "#collection");
@@ -71,8 +85,7 @@ export class GameContainer extends HTMLElement {
             card.classList.remove("dragging");
         });
 
-        let battle = this.querySelectorAll<BattleScene>("battle-scene")[this.CurrentOpponent];
-        battle.PrepareBattle();
+        this.Render();
     }
 
     PlayerDeck = [
