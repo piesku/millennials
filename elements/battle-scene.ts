@@ -11,7 +11,7 @@ import {CardElement} from "./a-card.js";
 import {LocationElement} from "./a-location.js";
 import {GameContainer} from "./game-container.js";
 
-const INTERVAL = 1;
+const INTERVAL = 100;
 
 const Log = (message: string) => {
     const logDisplay = document.querySelector("a-log") as HTMLElement;
