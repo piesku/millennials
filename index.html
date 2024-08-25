@@ -24,24 +24,8 @@
     <img hidden src="./sprites/spritesheet.png.webp" />
 
     <game-container>
-        <player-deck hidden>
-            <a-card type="21"></a-card>
-            <a-card type="21"></a-card>
-            <a-card type="21"></a-card>
-            <a-card type="22"></a-card>
-            <a-card type="22"></a-card>
-            <a-card type="22"></a-card>
-            <a-card type="23"></a-card>
-            <a-card type="23"></a-card>
-            <a-card type="23"></a-card>
-            <a-card type="24"></a-card>
-            <a-card type="24"></a-card>
-            <a-card type="24"></a-card>
-        </player-deck>
 
         <battle-scene>
-            <battle-prepare>
-            </battle-prepare>
             <a-actor type="empire" id="villain" slot="villain">
                 <a-deck reverse></a-deck>
                 <a-hand></a-hand>
@@ -57,6 +41,7 @@
             </a-actor>
             <a-log slot="log"></a-log>
         </battle-scene>
+
         <battle-scene>
             <a-actor type="pirates" id="villain" slot="villain">
                 <a-deck reverse></a-deck>
@@ -73,6 +58,7 @@
             </a-actor>
             <a-log slot="log"></a-log>
         </battle-scene>
+
         <battle-scene>
             <a-actor type="kungfu" id="villain" slot="villain">
                 <a-deck reverse></a-deck>
@@ -89,6 +75,7 @@
             </a-actor>
             <a-log slot="log"></a-log>
         </battle-scene>
+
     </game-container>
 
     <script src="./index.js"></script>

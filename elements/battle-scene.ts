@@ -1,6 +1,6 @@
 import {ActorController} from "../actors/ActorController.js";
 import {CardController} from "../cards/CardController.js";
-import {html} from "../lib/html.js";
+import {fragment, html} from "../lib/html.js";
 import {clamp} from "../lib/number.js";
 import {element, set_seed} from "../lib/random.js";
 import {delay} from "../lib/timeout.js";
@@ -10,6 +10,8 @@ import {ActorElement} from "./a-actor.js";
 import {CardElement} from "./a-card.js";
 import {LocationElement} from "./a-location.js";
 import {GameContainer} from "./game-container.js";
+
+const INTERVAL = 1;
 
 const Log = (message: string) => {
     const logDisplay = document.querySelector("a-log") as HTMLElement;
@@ -39,7 +41,12 @@ export class BattleScene extends HTMLElement {
             <style>
                 :host {
                     display: block;
-                    padding: 20px;
+                }
+
+                main {
+                    box-sizing: border-box;
+                    height: 100vh;
+                    overflow-y: auto;
                 }
 
                 .grid {
@@ -72,7 +79,6 @@ export class BattleScene extends HTMLElement {
                     width: 100px;
                 }
             </style>
-            <main></main>
         `;
     }
 
@@ -139,26 +145,26 @@ export class BattleScene extends HTMLElement {
         const img_src = document.querySelector("body > img[hidden]")?.getAttribute("src");
         const background_url = `url(${img_src})`;
 
-        let main = this.shadowRoot!.querySelector("main")!;
-        main.innerHTML = html`
-            <h1>Prepare For the Next Battle</h1>
-            <flex-row gap start>
-                <div>
-                    <h2>Shop (Pick 1)</h2>
-                    <div class="grid" style="background:darksalmon;">
-                        <slot name="shop"></slot>
+        let main = fragment(html`
+            <main style="padding:20px;">
+                <h1>Prepare For the Next Battle</h1>
+                <flex-row gap start>
+                    <div>
+                        <h2>Shop (Pick 1)</h2>
+                        <div class="grid" style="background:darksalmon;">
+                            <slot name="shop"></slot>
+                        </div>
+                        <h2>Your Deck</h2>
+                        <div class="grid" style="background:darkseagreen;">
+                            <slot name="deck"></slot>
+                        </div>
                     </div>
-                    <h2>Your Deck</h2>
-                    <div class="grid" style="background:darkseagreen;">
-                        <slot name="deck"></slot>
-                    </div>
-                </div>
-                <div style="width:280px">
-                    <h2>Next Up</h2>
-                    <div style="padding:20px; background:lightblue; border-radius:5px;">
-                        <h3 style="margin-top:0;">${villain.Name}</h3>
-                        <div
-                            style="
+                    <div style="width:280px">
+                        <h2>Next Up</h2>
+                        <div style="padding:20px; background:lightblue; border-radius:5px;">
+                            <h3 style="margin-top:0;">${villain.Name}</h3>
+                            <div
+                                style="
                                 width: ${target_size}px;
                                 height: ${target_size}px;
                                 background-image: ${background_url};
@@ -169,18 +175,20 @@ export class BattleScene extends HTMLElement {
                                 border: 1px solid black;
                                 border-radius: 5px;
                             "
-                        ></div>
-                        <p><i>${villain.Description}</i></p>
-                        ${locations.map(
-                            (location) => html`
-                                <h4>${location.Name}</h4>
-                                <p>${location.Description}</p>
-                            `,
-                        )}
+                            ></div>
+                            <p><i>${villain.Description}</i></p>
+                            ${locations.map(
+                                (location) => html`
+                                    <h4>${location.Name}</h4>
+                                    <p>${location.Description}</p>
+                                `,
+                            )}
+                        </div>
                     </div>
-                </div>
-            </flex-row>
-        `;
+                </flex-row>
+            </main>
+        `);
+        this.shadowRoot!.append(main);
 
         let all_cards: Array<CardElement> = [];
         for (let card_type in CardElement.Controllers) {
@@ -250,9 +258,8 @@ export class BattleScene extends HTMLElement {
     }
 
     async InitBattle() {
-        let main = this.shadowRoot!.querySelector("main")!;
-        main.innerHTML = html`
-            <flex-row name="battle">
+        let main = fragment(html`
+            <flex-row>
                 <flex-col style="flex: 4;">
                     <slot name="villain"></slot>
                     <flex-col style="flex: 1; justify-content: center;">
@@ -265,11 +272,18 @@ export class BattleScene extends HTMLElement {
                 </flex-col>
                 <slot name="log"></slot>
             </flex-row>
-        `;
+        `);
+        this.shadowRoot!.append(main);
+
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            left: 0,
+            behavior: "smooth",
+        });
 
         for (let message of this.StartBattle()) {
             Log(message);
-            await delay(250);
+            await delay(INTERVAL);
         }
     }
 
@@ -305,7 +319,7 @@ export class BattleScene extends HTMLElement {
     async RunEndTurn() {
         for (let message of this.EndTurn()) {
             Log(message);
-            await delay(250);
+            await delay(INTERVAL);
         }
     }
 

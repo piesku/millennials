@@ -71,7 +71,7 @@ export class GameContainer extends HTMLElement {
             card.classList.remove("dragging");
         });
 
-        let battle = this.querySelectorAll<BattleScene>("battle-scene")[0];
+        let battle = this.querySelectorAll<BattleScene>("battle-scene")[this.CurrentOpponent];
         battle.PrepareBattle();
     }
 
@@ -93,8 +93,27 @@ export class GameContainer extends HTMLElement {
     CurrentOpponent = 0;
 
     ProgressToNextOpponent() {
-        history.pushState("prepare", "", "#prepare");
-        this.setAttribute("view", "prepare");
+        this.CurrentOpponent++;
+        if (this.CurrentOpponent >= this.querySelectorAll<BattleScene>("battle-scene").length) {
+            alert("You win the run!");
+        }
+
+        history.pushState(
+            {
+                CurrentOpponent: this.CurrentOpponent,
+                PlayerDeck: this.PlayerDeck,
+            },
+            "",
+        );
+
+        let battle = this.querySelectorAll<BattleScene>("battle-scene")[this.CurrentOpponent];
+        battle.PrepareBattle();
+
+        window.scrollTo({
+            top: document.body.scrollHeight,
+            left: 0,
+            behavior: "smooth",
+        });
     }
 }
 

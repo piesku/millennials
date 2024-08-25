@@ -11,7 +11,6 @@ export class HandElement extends HTMLElement {
             <style>
                 :host {
                     display: block;
-                    height: 200px;
                 }
             </style>
             <flex-row center>

@@ -30,7 +30,7 @@ export class ActorElement extends HTMLElement {
             <style>
                 :host {
                     display: block;
-                    padding: 10px;
+                    padding: 20px;
                 }
                 h2 {
                     margin-top: 0;
