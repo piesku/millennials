@@ -1,3 +1,5 @@
+import {html} from "./html.js";
+
 customElements.define(
     "flex-row",
     class extends HTMLElement {
@@ -87,6 +89,53 @@ customElements.define(
 
                     :host([gap]) {
                         gap: 20px;
+                    }
+                </style>
+                <slot></slot>
+            `;
+        }
+    },
+);
+
+customElements.define(
+    "stack-layout",
+    class extends HTMLElement {
+        constructor() {
+            super();
+            this.attachShadow({mode: "open"});
+        }
+
+        static observedAttributes = ["active"];
+        attributeChangedCallback(name: string) {
+            if (name === "active") {
+                this.Render();
+            }
+        }
+
+        connectedCallback() {
+            this.Render();
+        }
+
+        Render() {
+            const current = this.getAttribute("active");
+            this.shadowRoot!.innerHTML = html`
+                <style>
+                    :host {
+                        display: block;
+                        position: relative;
+                        width: 100vw;
+                        height: 100vh;
+                    }
+                    ::slotted(*) {
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        display: none;
+                    }
+                    ::slotted([name="${current}"]) {
+                        display: block;
                     }
                 </style>
                 <slot></slot>

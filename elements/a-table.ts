@@ -8,6 +8,11 @@ export class TableElement extends HTMLElement {
 
     connectedCallback() {
         this.shadowRoot!.innerHTML = html`
+            <style>
+                :host {
+                    display: block;
+                }
+            </style>
             <flex-col style="justify-content: center;">
                 <slot></slot>
             </flex-col>

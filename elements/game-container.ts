@@ -1,10 +1,15 @@
-import {create, html} from "../lib/html.js";
+import {html} from "../lib/html.js";
 import {Sprites} from "../sprites/sprites.js";
-import {ActorElement} from "./a-actor.js";
-import {LocationElement} from "./a-location.js";
+import {BattleScene} from "./battle-scene.js";
 
 export class GameContainer extends HTMLElement {
-    static observedAttributes = ["view"];
+    constructor() {
+        super();
+        let shadow = this.attachShadow({mode: "open"});
+        shadow.innerHTML = html`<slot></slot>`;
+    }
+
+    static observedAttributes = [];
     attributeChangedCallback() {
         switch (this.getAttribute("view")) {
             case "title":
@@ -17,25 +22,7 @@ export class GameContainer extends HTMLElement {
                 `;
                 break;
             case "battle":
-                this.innerHTML = html`
-                    <battle-scene>
-                        <a-actor type="empire" id="villain" slot="villain">
-                            <a-deck reverse></a-deck>
-                            <a-hand></a-hand>
-                            <a-trash></a-trash>
-                        </a-actor>
-
-                        <a-table slot="table"></a-table>
-
-                        <a-actor type="player" id="player" slot="player">
-                            <a-deck></a-deck>
-                            <a-hand></a-hand>
-                            <a-trash></a-trash>
-                        </a-actor>
-
-                        <a-log slot="log"></a-log>
-                    </battle-scene>
-                `;
+                this.shadowRoot!.innerHTML = html``;
                 break;
             case "prepare":
                 this.innerHTML = html`
@@ -52,8 +39,6 @@ export class GameContainer extends HTMLElement {
     }
 
     connectedCallback() {
-        this.setAttribute("view", history.state);
-
         this.addEventListener("click", (e) => {
             let target = e.target as HTMLElement;
             switch (target.id) {
@@ -85,6 +70,9 @@ export class GameContainer extends HTMLElement {
             let card = e.target as HTMLElement;
             card.classList.remove("dragging");
         });
+
+        let battle = this.querySelectorAll<BattleScene>("battle-scene")[0];
+        battle.PrepareBattle();
     }
 
     PlayerDeck = [
@@ -101,40 +89,10 @@ export class GameContainer extends HTMLElement {
         Sprites.Murdock,
         Sprites.Murdock,
     ];
-    OrderedOpponents = [
-        {
-            Actor: create<ActorElement>("a-actor", {type: "empire"}),
-            Locations: [
-                create<LocationElement>("a-location", {type: "death-star"}),
-                create<LocationElement>("a-location", {type: "arkham-asylum"}),
-                create<LocationElement>("a-location", {type: "future-hill-valley"}),
-            ],
-        },
-        {
-            Actor: create<ActorElement>("a-actor", {type: "pirates"}),
-            Locations: [
-                create<LocationElement>("a-location", {type: "death-star"}),
-                create<LocationElement>("a-location", {type: "arkham-asylum"}),
-                create<LocationElement>("a-location", {type: "future-hill-valley"}),
-            ],
-        },
-        {
-            Actor: create<ActorElement>("a-actor", {type: "kungfu"}),
-            Locations: [
-                create<LocationElement>("a-location", {type: "death-star"}),
-                create<LocationElement>("a-location", {type: "arkham-asylum"}),
-                create<LocationElement>("a-location", {type: "future-hill-valley"}),
-            ],
-        },
-    ];
+
     CurrentOpponent = 0;
 
     ProgressToNextOpponent() {
-        this.CurrentOpponent++;
-        if (this.CurrentOpponent >= this.OrderedOpponents.length) {
-            alert("You win!");
-        }
-
         history.pushState("prepare", "", "#prepare");
         this.setAttribute("view", "prepare");
     }
