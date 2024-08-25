@@ -121,6 +121,14 @@ export class BattleScene extends HTMLElement {
     }
 
     PrepareBattle() {
+        for (let main of this.shadowRoot!.querySelectorAll("main")) {
+            main.remove();
+        }
+
+        for (let card of this.querySelectorAll("a-card")) {
+            card.remove();
+        }
+
         let villain_element = this.querySelector<ActorElement>("a-actor:not([type=player])");
         if (!villain_element && DEBUG) {
             throw "BattleScene must have a villain";

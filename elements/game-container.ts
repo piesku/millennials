@@ -53,26 +53,30 @@ export class GameContainer extends HTMLElement {
     }
 
     connectedCallback() {
+        this.setAttribute("view", history.state?.CurrentView ?? "title");
+
         this.shadowRoot!.addEventListener("click", (e) => {
             let target = e.target as HTMLElement;
             switch (target.id) {
                 case "title":
-                    history.pushState("title", "", "");
+                    history.pushState(this.GetState("title"), "", "");
                     this.setAttribute("view", "title");
                     break;
                 case "run":
-                    history.pushState("run", "", "#run");
+                    history.pushState(this.GetState("run"), "", "#run");
                     this.setAttribute("view", "run");
                     break;
                 case "collection":
-                    history.pushState("collection", "", "#collection");
+                    history.pushState(this.GetState("collection"), "", "#collection");
                     this.setAttribute("view", "collection");
                     break;
             }
         });
 
         window.addEventListener("popstate", (e) => {
-            this.setAttribute("view", e.state ?? "title");
+            this.setAttribute("view", e.state?.CurrentView ?? "title");
+            this.CurrentOpponent = e.state?.CurrentOpponent ?? 0;
+            this.PlayerDeck = e.state?.PlayerDeck ?? this.PlayerDeck;
         });
 
         this.addEventListener("dragstart", (e) => {
@@ -111,13 +115,7 @@ export class GameContainer extends HTMLElement {
             alert("You win the run!");
         }
 
-        history.pushState(
-            {
-                CurrentOpponent: this.CurrentOpponent,
-                PlayerDeck: this.PlayerDeck,
-            },
-            "",
-        );
+        history.pushState(this.GetState("run"), "");
 
         let battle = this.querySelectorAll<BattleScene>("battle-scene")[this.CurrentOpponent];
         battle.PrepareBattle();
@@ -127,6 +125,14 @@ export class GameContainer extends HTMLElement {
             left: 0,
             behavior: "smooth",
         });
+    }
+
+    GetState(view: string) {
+        return {
+            CurrentView: view,
+            CurrentOpponent: this.CurrentOpponent,
+            PlayerDeck: this.PlayerDeck,
+        };
     }
 }
 
