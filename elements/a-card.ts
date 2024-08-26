@@ -117,10 +117,8 @@ export class CardElement extends HTMLElement {
     }
 
     ReRender() {
-        const sprite_height = 16;
-        const sprite_padding = 1;
-        const target_size = 120;
-        const scale = target_size / sprite_height;
+        const target_width = 120;
+        const target_height = 140;
 
         const color = generateColorFromSeed(this.Instance.Name);
         const nameParts = this.Instance.Name.split(" ");
@@ -205,8 +203,8 @@ export class CardElement extends HTMLElement {
                 }
 
                 .sprite {
-                    width: ${target_size}px;
-                    height: ${target_size}px;
+                    width: ${target_width}px;
+                    height: ${target_height}px;
                     margin: 0 auto;
                     display: flex;
                     align-items: center;
@@ -219,8 +217,8 @@ export class CardElement extends HTMLElement {
                 }
 
                 .sprite-border {
-                    width: ${target_size}px;
-                    height: ${target_size}px;
+                    width: ${target_width}px;
+                    height: ${target_height}px;
                     background-color: ${color};
                     overflow: hidden;
                 }
@@ -252,11 +250,14 @@ export class CardElement extends HTMLElement {
                 }
 
                 .text-container {
+                    box-sizing: border-box;
                     position: absolute;
                     bottom: 0;
                     width: 100%;
-                    background-color: rgba(255, 255, 255, 0.7);
-                    border-radius: 5px;
+                    min-height: 40px;
+                    padding: 1px;
+                    align-content: center;
+                    background-color: white;
                     text-align: center;
                     font-family: Arial, sans-serif;
                 }
@@ -270,7 +271,7 @@ export class CardElement extends HTMLElement {
                 }
 
                 .description {
-                    font-size: 0.8em;
+                    font-size: 0.7em;
                 }
 
                 dialog,
