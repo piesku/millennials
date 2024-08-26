@@ -6,8 +6,7 @@ export class GameContainer extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({mode: "open"});
-
-        history.pushState(this.GetState(), "", "");
+        this.PushState();
     }
 
     ReRender() {
@@ -41,7 +40,7 @@ export class GameContainer extends HTMLElement {
             switch (target.id) {
                 case "title":
                     this.CurrentView = "title";
-                    history.pushState(this.GetState(), "", "");
+                    this.PushState();
                     break;
                 case "run":
                     this.CurrentView = "run";
@@ -49,7 +48,7 @@ export class GameContainer extends HTMLElement {
                     break;
                 case "collection":
                     this.CurrentView = "collection";
-                    history.pushState(this.GetState(), "", "#collection");
+                    this.PushState();
                     break;
             }
 
@@ -73,6 +72,12 @@ export class GameContainer extends HTMLElement {
             card.classList.remove("dragging");
         });
 
+        switch (this.CurrentView) {
+            case "run":
+                this.InitBattle();
+                break;
+        }
+
         this.ReRender();
     }
 
@@ -91,8 +96,13 @@ export class GameContainer extends HTMLElement {
         Sprites.Murdock,
     ];
 
-    CurrentOpponent = -1;
+    CurrentOpponent = history.state?.CurrentOpponent ?? -1;
     CurrentView = history.state?.CurrentView ?? "title";
+
+    InitBattle() {
+        let battle = this.querySelectorAll<BattleScene>("battle-scene")[this.CurrentOpponent];
+        battle.PrepareBattle();
+    }
 
     ProgressToNextOpponent() {
         this.CurrentOpponent++;
@@ -100,19 +110,20 @@ export class GameContainer extends HTMLElement {
             alert("You win the run!");
         }
 
-        history.pushState(this.GetState(), "", "#run");
+        this.PushState();
         this.ReRender();
 
-        let battle = this.querySelectorAll<BattleScene>("battle-scene")[this.CurrentOpponent];
-        battle.PrepareBattle();
+        this.InitBattle();
     }
 
-    GetState() {
-        return {
+    PushState() {
+        let state = {
             CurrentView: this.CurrentView,
             CurrentOpponent: this.CurrentOpponent,
             PlayerDeck: this.PlayerDeck,
         };
+
+        history.pushState(state, this.CurrentView.toUpperCase(), "#" + this.CurrentView);
     }
 }
 
