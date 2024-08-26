@@ -173,7 +173,6 @@ export class CardElement extends HTMLElement {
                     cursor: move;
                     user-select: none;
                     position: relative;
-                    overflow: hidden;
                 }
 
                 :host(:not(.frontside)) {
