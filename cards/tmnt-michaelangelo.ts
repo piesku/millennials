@@ -10,6 +10,7 @@ export class MichaelAngelo extends CardController {
     Sprite = Sprites.MichaelAngelo;
 
     override *OnReveal(trace: Trace) {
+        trace.push(this);
         const all_revealed_cards = [
             ...this.Battle.GetRevealedCards(this.Owner),
             ...this.Battle.GetRevealedCards(this.Rival),

@@ -7,6 +7,8 @@ export const enum Message {
     TurnStarts,
     TurnEnds,
     CardEntersTable,
+    CardMovesFromLocation,
+    CardMovesToLocation,
 }
 
 export class Trace extends Array<CardController | LocationController | 1> {

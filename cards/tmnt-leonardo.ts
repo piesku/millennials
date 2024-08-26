@@ -10,6 +10,7 @@ export class Leonardo extends CardController {
     Sprite = Sprites.Leonardo;
 
     override *OnReveal(trace: Trace) {
+        trace.push(this);
         let points = 0;
         for (let card of this.Battle.GetRevealedCards(this.Owner)) {
             if (card.TurnPlayed === this.Battle.CurrentTurn) {

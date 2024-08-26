@@ -87,6 +87,8 @@ export abstract class CardController {
         this.Element.ReRender();
     }
 
+    *OnMessage(kind: Message, trace: Trace, card?: CardController): Generator<[Trace, string], void> {}
+
     *Reveal(trace: Trace) {
         if (trace.length === 0) {
             yield trace.log(`${this.Name} is revealed`);
@@ -103,6 +105,14 @@ export abstract class CardController {
         // yield trace.log(`it does nothing special`);
     }
 
+    *Trash(trace: Trace) {
+        const actor = this.Owner;
+        const trashElement = actor.Element.querySelector("a-trash")!;
+        yield* this.OnTrash(trace);
+        trashElement.appendChild(this.Element);
+        yield trace.log(`${this.Name} has been moved to the trash`);
+    }
+
     *OnTrash(trace: Trace): Generator<[Trace, string], void> {
         // The default teardown is to remove all modifiers that originated from this card.
         let modifiers = this.Element.querySelectorAll(`a-modifier[origin-id="${this.Id}"]`);
@@ -111,21 +121,28 @@ export abstract class CardController {
         }
     }
 
-    *OnMessage(kind: Message, trace: Trace, card?: CardController): Generator<[Trace, string], void> {}
+    *Move(trace: Trace, slot: HTMLElement, owner?: ActorController): Generator<[Trace, string], void> {
+        owner = owner ?? this.Owner;
 
-    *Trash(trace: Trace) {
-        const actor = this.Owner;
-        if (actor) {
-            const trashElement = actor.Element.querySelector("a-trash");
-            if (trashElement) {
-                yield* this.OnTrash(trace);
-                trashElement.appendChild(this.Element);
-                yield trace.log(`${this.Name} has been moved to the trash`);
-            } else {
-                yield trace.log(`No trash element found for actor ${this.Owner}`);
-            }
+        const current_location = this.Location;
+        const target_location = slot.closest<LocationElement>("a-location")!.Instance;
+
+        const is_slot_taken = !!slot.querySelector("a-card");
+        if (!is_slot_taken) {
+            yield* this.Battle.BroadcastCardMessage(Message.CardMovesFromLocation, trace.fork(), this);
+            slot.appendChild(this.Element);
+            yield* this.OnMove(trace);
+            yield trace.log(`${this.Name} moved from ${current_location.Name} to ${target_location.Name} `);
+            yield* this.Battle.BroadcastCardMessage(Message.CardMovesToLocation, trace.fork(), this);
+            this.OnMove(trace.fork());
         } else {
-            yield trace.log(`No actor found for owner ${this.Owner}`);
+            yield trace.log(
+                `${this.Name} could not move to ${target_location.Name} because the slot nr ${slot} is already taken`,
+            );
         }
+    }
+
+    *OnMove(trace: Trace): Generator<[Trace, string], void> {
+        // yield trace.log(`it does nothing special`);
     }
 }

@@ -390,6 +390,19 @@ export class BattleScene extends HTMLElement {
         return locations.flatMap((location) => location.GetRevealedCards(actor));
     }
 
+    GetEmptySlots(actor: ActorController, location: LocationController): Array<HTMLElement> {
+        let emptySlots: Array<HTMLElement> = [];
+        let slots = location.Element.querySelectorAll<HTMLElement>(
+            "location-owner[slot='" + actor.Type + "'] location-slot",
+        );
+        for (let slot of slots) {
+            if (!slot.querySelector("a-card")) {
+                emptySlots.push(slot);
+            }
+        }
+        return emptySlots;
+    }
+
     Log(trace: Trace, message: string) {
         const logDisplay = document.querySelector("a-log") as HTMLElement;
         if (logDisplay) {

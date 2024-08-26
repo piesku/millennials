@@ -82,9 +82,9 @@ export class GameContainer extends HTMLElement {
     }
 
     PlayerDeck = [
-        Sprites.BABaracus,
-        Sprites.BABaracus,
-        Sprites.BABaracus,
+        Sprites.Raphael,
+        Sprites.Raphael,
+        Sprites.Raphael,
         Sprites.Faceman,
         Sprites.Faceman,
         Sprites.Faceman,

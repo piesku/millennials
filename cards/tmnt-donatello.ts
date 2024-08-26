@@ -9,12 +9,13 @@ export class Donatello extends CardController {
     Text = "After you play a card, this gains +1 Power";
     Sprite = Sprites.Donatello;
 
-    override *OnMessage(kind: Message, trace: Trace, card: CardController) {
+    override *OnMessage(kind: Message, trace: Trace, card?: CardController) {
+        trace.push(this);
         switch (kind) {
             case Message.CardEntersTable:
-                if (card.Owner === this.Owner) {
+                if (card!.Owner === this.Owner) {
                     yield trace.log(`${this.Name} gets +1 power`);
-                    this.AddModifier(card, "addpower", 1);
+                    this.AddModifier(card!, "addpower", 1);
                 }
                 break;
         }
