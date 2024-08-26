@@ -5,6 +5,6 @@ export class JackSparrow extends CardController {
     Name = "Spack Jarrow";
     Cost = 0;
     Power = 0;
-    Text = "He's a pirate";
+    Text = "";
     Sprite = Sprites.JackSparrow;
 }

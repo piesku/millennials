@@ -5,6 +5,6 @@ export class HarryPotter extends CardController {
     Name = "Parry Hotter";
     Cost = 2;
     Power = 3;
-    Text = "The Boy Who Lived";
+    Text = "";
     Sprite = Sprites.HarryPotter;
 }

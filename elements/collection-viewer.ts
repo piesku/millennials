@@ -13,7 +13,10 @@ export class CollectionViewer extends HTMLElement {
             let card = document.createElement("a-card") as CardElement;
             card.setAttribute("type", card_type);
             card.classList.add("frontside");
-            all_cards.push(card);
+
+            if (card.Instance.Text) {
+                all_cards.push(card);
+            }
         }
 
         all_cards.sort(CardElement.Compare);

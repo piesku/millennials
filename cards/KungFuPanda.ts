@@ -5,6 +5,6 @@ export class KungFuPanda extends CardController {
     Name = "Karate Racoon";
     Cost = 0;
     Power = 0;
-    Text = "It's a global panda-mic.";
+    Text = "";
     Sprite = Sprites.KungFuPanda;
 }

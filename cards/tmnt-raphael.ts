@@ -5,6 +5,6 @@ export class Raphael extends CardController {
     Name = "Monet";
     Cost = 3;
     Power = 5;
-    Text = "The muscle of the Teenage Mutant Ninja Turtles";
+    Text = "";
     Sprite = Sprites.Raphael;
 }

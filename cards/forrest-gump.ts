@@ -5,6 +5,6 @@ export class ForrestGump extends CardController {
     Name = "Gorrest Fump";
     Cost = 3;
     Power = 2;
-    Text = "Run Forrest, Run!";
+    Text = "";
     Sprite = Sprites.ForrestGump;
 }
