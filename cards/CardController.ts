@@ -92,9 +92,11 @@ export abstract class CardController {
             yield trace.log(`${this.Name} is revealed`);
         }
         this.Element.classList.add("frontside");
-        yield* this.OnReveal(trace);
+        yield* this.OnReveal(trace.fork());
         this.IsRevealed = true;
         this.TurnPlayed = this.Battle.CurrentTurn;
+
+        yield* this.Battle.BroadcastCardMessage(Message.CardEntersTable, trace.fork(), this);
     }
 
     *OnReveal(trace: Trace): Generator<[Trace, string], void> {

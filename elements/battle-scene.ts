@@ -326,9 +326,7 @@ export class BattleScene extends HTMLElement {
 
         let unrevealed_cards = this.PlayedCardsQueue.filter((card) => !card.IsRevealed);
         for (let card of unrevealed_cards) {
-            let trace = new Trace();
-            yield* card.Reveal(trace.fork());
-            yield* this.BroadcastCardMessage(Message.CardEntersTable, trace.fork(), card);
+            yield* card.Reveal(new Trace());
         }
 
         yield* this.BroadcastGameMessage(Message.TurnEnds);
