@@ -122,7 +122,10 @@ export class CardElement extends HTMLElement {
 
         const color = generateColorFromSeed(this.Instance.Name);
         const nameParts = this.Instance.Name.split(" ");
-        const shortName = nameParts.length === 1 ? nameParts[0].substring(0, 2) : nameParts[0][0] + nameParts[1][0];
+        const shortName =
+            nameParts.length === 1
+                ? nameParts[0].substring(0, 2)
+                : nameParts[0][0] + nameParts[nameParts.length - 1][0];
 
         const card_body = html`
             <div class="header">
@@ -152,7 +155,7 @@ export class CardElement extends HTMLElement {
                 </span>
             </div>
             <div class="sprite-border">
-                <div class="sprite">${shortName}</div>
+                <div class="sprite">${shortName.toUpperCase()}</div>
                 </div>
                 <div class="text-container">
                     <div class="name">${this.Instance.Name}</div>
@@ -211,7 +214,7 @@ export class CardElement extends HTMLElement {
                     font-size: 100px;
                     font-family: "Comic Sans MS", "Comic Sans", cursive;
                     text-shadow: 2px 2px 2px white;
-                    transform: scale(1.5) translate(-5px, -5px) rotate(-35deg);
+                    transform: translate(-5px, -15px);
                     letter-spacing: -5px;
                 }
 
