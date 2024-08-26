@@ -105,7 +105,7 @@ export abstract class CardController {
 
     *OnTrash(trace: Trace): Generator<[Trace, string], void> {
         // The default teardown is to remove all modifiers that originated from this card.
-        let modifiers = this.Element.querySelectorAll(`a-modifier[origin-id=${this.Id}]`);
+        let modifiers = this.Element.querySelectorAll(`a-modifier[origin-id="${this.Id}"]`);
         for (let modifier of modifiers) {
             modifier.remove();
         }
