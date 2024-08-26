@@ -38,6 +38,18 @@ import {Woody} from "../cards/woo-dy.js";
 import {html} from "../lib/html.js";
 import {Sprites} from "../sprites/sprites.js";
 
+function generateColorFromSeed(seed: string): string {
+    let hash = 0;
+    for (let i = 0; i < seed.length; i++) {
+        hash = seed.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    let color = "#";
+    for (let i = 0; i < 3; i++) {
+        const value = (hash >> (i * 8)) & 0xff;
+        color += ("00" + value.toString(16)).substr(-2);
+    }
+    return color;
+}
 export class CardElement extends HTMLElement {
     Instance!: CardController;
 
@@ -109,38 +121,45 @@ export class CardElement extends HTMLElement {
         const sprite_padding = 1;
         const target_size = 120;
         const scale = target_size / sprite_height;
-        const sprite_y = (sprite_height + sprite_padding) * this.Instance.Sprite * scale;
 
-        const img_src = document.querySelector("body > img[hidden]")?.getAttribute("src");
-        const background_url = `url(${img_src})`;
+        const color = generateColorFromSeed(this.Instance.Name);
+        const nameParts = this.Instance.Name.split(" ");
+        const shortName = nameParts.length === 1 ? nameParts[0].substring(0, 2) : nameParts[0][0] + nameParts[1][0];
 
         const card_body = html`
             <div class="header">
                 <span
                     id="cost"
-                    class="${this.Instance.CurrentCost > this.BaseCost
-                        ? "incr"
-                        : this.Instance.CurrentCost < this.BaseCost
-                          ? "decr"
-                          : ""}"
+                    class="${
+                        this.Instance.CurrentCost > this.BaseCost
+                            ? "incr"
+                            : this.Instance.CurrentCost < this.BaseCost
+                              ? "decr"
+                              : ""
+                    }"
                 >
                     ${this.Instance.CurrentCost}
                 </span>
                 <span
                     id="power"
-                    class="${this.Instance.CurrentPower > this.BasePower
-                        ? "incr"
-                        : this.Instance.CurrentPower < this.BasePower
-                          ? "decr"
-                          : ""}"
+                    class="${
+                        this.Instance.CurrentPower > this.BasePower
+                            ? "incr"
+                            : this.Instance.CurrentPower < this.BasePower
+                              ? "decr"
+                              : ""
+                    }"
                 >
                     ${this.Instance.CurrentPower}
                 </span>
             </div>
-            <div class="sprite"></div>
-            <div class="text-container">
-                <div class="name">${this.Instance.Name}</div>
-                <div class="description">${this.Instance.Text}</div>
+            <div class="sprite-border">
+                <div class="sprite">${shortName}</div>
+                </div>
+                <div class="text-container">
+                    <div class="name">${this.Instance.Name}</div>
+                    <div class="description">${this.Instance.Text}</div>
+                </div>
             </div>
         `;
 
@@ -156,6 +175,7 @@ export class CardElement extends HTMLElement {
                     cursor: move;
                     user-select: none;
                     position: relative;
+                    overflow: hidden;
                 }
 
                 :host(:not(.frontside)) {
@@ -187,11 +207,22 @@ export class CardElement extends HTMLElement {
                 .sprite {
                     width: ${target_size}px;
                     height: ${target_size}px;
-                    background-image: ${background_url};
-                    background-position: 0 -${sprite_y}px;
-                    background-size: ${target_size}px auto;
-                    image-rendering: pixelated;
                     margin: 0 auto;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    font-size: 100px;
+                    font-family: "Comic Sans MS", "Comic Sans", cursive;
+                    text-shadow: 2px 2px 2px white;
+                    transform: scale(1.5) translate(-5px, -5px) rotate(-35deg);
+                    letter-spacing: -5px;
+                }
+
+                .sprite-border {
+                    width: ${target_size}px;
+                    height: ${target_size}px;
+                    background-color: ${color};
+                    overflow: hidden;
                 }
 
                 .header {
