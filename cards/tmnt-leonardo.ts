@@ -1,3 +1,4 @@
+import {Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
@@ -8,7 +9,7 @@ export class Leonardo extends CardController {
     Text = "Gain +2 Power for each card you revealed this turn";
     Sprite = Sprites.Leonardo;
 
-    override *OnReveal() {
+    override *OnReveal(trace: Trace) {
         let points = 0;
         for (let card of this.Battle.GetRevealedCards(this.Owner)) {
             if (card.TurnPlayed === this.Battle.CurrentTurn) {
@@ -17,6 +18,6 @@ export class Leonardo extends CardController {
         }
 
         this.AddModifier(this, "addpower", points * 2);
-        yield `${this.Name} gains ${points * 2} power for revealing ${points} cards this turn`;
+        yield trace.log(`${this.Name} gains ${points * 2} power for revealing ${points} cards this turn`);
     }
 }
