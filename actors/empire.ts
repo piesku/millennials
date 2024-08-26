@@ -1,4 +1,5 @@
 import {CardController} from "../cards/CardController.js";
+import {Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 import {ActorController} from "./ActorController.js";
 
@@ -16,11 +17,13 @@ export class Stormtrooper extends CardController {
     Power = 1;
     Text = `Once: +1 for each revealed ${this.Name}`;
     Sprite = Sprites.Stormtrooper;
-    override *OnReveal() {
+    override *OnReveal(trace: Trace) {
+        trace.push(this);
+
         const revealedCards = this.Battle.GetRevealedCards();
         const sameNameCards = revealedCards.filter((card) => card.Name === this.Name);
         const count = sameNameCards.length;
-        yield `There are ${count} ${this.Name} cards revealed`;
+        yield trace.log(`There are ${count} ${this.Name} cards revealed`);
         this.AddModifier(this, "addpower", count);
     }
 }
@@ -31,7 +34,7 @@ export class EmpireController extends ActorController {
     Sprite = Sprites.DarthVader;
     Description = "The Empire is a powerful force that seeks to control the galaxy";
 
-    *StartBattle() {
+    *StartBattle(trace: Trace) {
         const deck = this.Element.querySelector("a-deck")!;
         const cardDistribution = {
             [Sprites.Stormtrooper]: 11,
@@ -47,7 +50,7 @@ export class EmpireController extends ActorController {
         }
 
         for (let i = 0; i < 3; i++) {
-            yield* this.DrawCard();
+            yield* this.DrawCard(trace);
         }
     }
 }

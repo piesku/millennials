@@ -2,6 +2,7 @@ import {CardElement} from "../elements/a-card.js";
 import {HandElement} from "../elements/a-hand.js";
 import {GameContainer} from "../elements/game-container.js";
 import {shuffle} from "../lib/random.js";
+import {Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 import {ActorController} from "./ActorController.js";
 
@@ -11,7 +12,7 @@ export class PlayerController extends ActorController {
     Sprite = Sprites.Murdock;
     Description = "The Good Guys";
 
-    *StartBattle() {
+    *StartBattle(trace: Trace) {
         let game = this.Element.closest("game-container") as GameContainer;
         let cards = [...game.PlayerDeck];
 
@@ -41,7 +42,7 @@ export class PlayerController extends ActorController {
         }
 
         for (let i = 0; i < 3; i++) {
-            yield* this.DrawCard();
+            yield* this.DrawCard(trace);
         }
     }
 }

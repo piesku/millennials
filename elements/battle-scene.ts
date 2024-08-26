@@ -5,24 +5,13 @@ import {clamp} from "../lib/number.js";
 import {element, set_seed} from "../lib/random.js";
 import {delay} from "../lib/timeout.js";
 import {LocationController} from "../locations/LocationController.js";
-import {Message} from "../messages.js";
+import {Message, Trace} from "../messages.js";
 import {ActorElement} from "./a-actor.js";
 import {CardElement} from "./a-card.js";
 import {LocationElement} from "./a-location.js";
 import {GameContainer} from "./game-container.js";
 
 const INTERVAL = 100;
-
-const Log = (message: string) => {
-    const logDisplay = document.querySelector("a-log") as HTMLElement;
-    if (logDisplay) {
-        if (message.startsWith("---") && message.endsWith("---")) {
-            message = `<h3>${message.slice(3, -3).trim()}</h3>`;
-        }
-        logDisplay.innerHTML += `<div>${message}</div>`;
-        logDisplay.scrollTop = logDisplay.scrollHeight;
-    }
-};
 
 export class BattleScene extends HTMLElement {
     CurrentTurn = 0;
@@ -94,7 +83,7 @@ export class BattleScene extends HTMLElement {
                     display: flex;
                     flex-direction: column;
                     box-sizing: border-box;
-                    width: 300px;
+                    width: 400px;
                     height: 100vh;
                     overflow-y: auto;
                     background-color: rgba(255, 255, 255, 0.8);
@@ -278,50 +267,56 @@ export class BattleScene extends HTMLElement {
         this.State = "playing";
         this.Render();
 
-        for (let message of this.StartBattle()) {
-            Log(message);
+        for (let [trace, message] of this.StartBattle()) {
+            this.Log(trace, message);
             await delay(INTERVAL);
         }
     }
 
     *StartBattle() {
-        yield "--- Lights… camera… action! ---";
+        let trace = new Trace();
+
+        yield trace.log("--- Lights… camera… action! ---");
 
         const player = this.querySelector("a-actor[type=player]") as ActorElement;
-        yield* player.Instance.StartBattle();
+        yield* player.Instance.StartBattle(trace.fork());
 
         const villain = this.querySelector("a-actor:not([type=player])") as ActorElement;
-        yield* villain.Instance.StartBattle();
+        yield* villain.Instance.StartBattle(trace.fork());
 
         yield* this.BroadcastGameMessage(Message.BattleStarts);
         yield* this.StartTurn();
     }
 
     *StartTurn() {
+        let trace = new Trace();
+
         this.CurrentTurn++;
 
-        yield `--- Start Turn ${this.CurrentTurn} ---`;
+        yield trace.log(`--- Start Turn ${this.CurrentTurn} ---`);
 
         const player = this.querySelector("a-actor[type=player]") as ActorElement;
-        yield* player.Instance.StartTurn(this.CurrentTurn);
+        yield* player.Instance.StartTurn(this.CurrentTurn, trace.fork());
 
         const villain = this.querySelector("a-actor:not([type=player])") as ActorElement;
-        yield* villain.Instance.StartTurn(this.CurrentTurn);
+        yield* villain.Instance.StartTurn(this.CurrentTurn, trace.fork());
 
         yield* this.BroadcastGameMessage(Message.TurnStarts);
 
-        yield* villain.Instance.RivalAI();
+        yield* villain.Instance.RivalAI(trace.fork());
     }
 
     async RunEndTurn() {
-        for (let message of this.EndTurn()) {
-            Log(message);
+        for (let [trace, message] of this.EndTurn()) {
+            this.Log(trace, message);
             await delay(INTERVAL);
         }
     }
 
     *EndTurn() {
-        yield "--- End Turn ---";
+        let trace = new Trace();
+
+        yield trace.log("--- End Turn ---");
 
         for (let card of this.querySelectorAll<CardElement>("a-table a-card")) {
             if (!card.Instance.IsRevealed) {
@@ -331,8 +326,9 @@ export class BattleScene extends HTMLElement {
 
         let unrevealed_cards = this.PlayedCardsQueue.filter((card) => !card.IsRevealed);
         for (let card of unrevealed_cards) {
-            yield* card.Reveal();
-            yield* this.BroadcastCardMessage(Message.CardEntersTable, card);
+            let trace = new Trace();
+            yield* card.Reveal(trace.fork());
+            yield* this.BroadcastCardMessage(Message.CardEntersTable, trace.fork(), card);
         }
 
         yield* this.BroadcastGameMessage(Message.TurnEnds);
@@ -345,9 +341,11 @@ export class BattleScene extends HTMLElement {
     }
 
     *GameEnd() {
+        let trace = new Trace();
+
         // TODO Calculate the winner.
 
-        yield "--- You Win ---";
+        yield trace.log("--- You Win ---");
         yield* this.BroadcastGameMessage(Message.BattleEnds);
 
         this.State = "won";
@@ -357,22 +355,22 @@ export class BattleScene extends HTMLElement {
     *BroadcastGameMessage(kind: Message) {
         let locations = [...this.querySelectorAll<LocationElement>("a-location")].map((location) => location.Instance);
         for (let location of locations) {
-            yield* location.OnMessage(kind);
+            yield* location.OnMessage(kind, new Trace());
 
             for (let card of location.GetRevealedCards()) {
-                yield* card.OnMessage(kind);
+                yield* card.OnMessage(kind, new Trace());
             }
         }
     }
 
-    *BroadcastCardMessage(kind: Message, card: CardController) {
+    *BroadcastCardMessage(kind: Message, trace: Trace, card: CardController) {
         // First, broadcast the message to the card's location.
-        yield* card.Location.OnMessage(kind, card);
+        yield* card.Location.OnMessage(kind, trace.fork(), card);
 
         // Then, broadcast the message to other revealed cards in the same location.
         for (let other of card.Location.GetRevealedCards()) {
             if (other !== card) {
-                yield* other.OnMessage(kind, card);
+                yield* other.OnMessage(kind, trace.fork(), card);
             }
         }
 
@@ -381,10 +379,10 @@ export class BattleScene extends HTMLElement {
             .map((location) => location.Instance)
             .filter((location) => location !== card.Location);
         for (let location of locations) {
-            yield* location.OnMessage(kind, card);
+            yield* location.OnMessage(kind, trace.fork(), card);
 
             for (let other of location.GetRevealedCards()) {
-                yield* other.OnMessage(kind, card);
+                yield* other.OnMessage(kind, trace.fork(), card);
             }
         }
     }
@@ -392,6 +390,21 @@ export class BattleScene extends HTMLElement {
     GetRevealedCards(actor?: ActorController) {
         let locations = [...this.querySelectorAll<LocationElement>("a-location")].map((location) => location.Instance);
         return locations.flatMap((location) => location.GetRevealedCards(actor));
+    }
+
+    Log(trace: Trace, message: string) {
+        const logDisplay = document.querySelector("a-log") as HTMLElement;
+        if (logDisplay) {
+            if (message.startsWith("---") && message.endsWith("---")) {
+                message = `<h3>${message.slice(3, -3).trim()}</h3>`;
+            }
+            let indent = trace.map((item) => "…").join(" ");
+            logDisplay.innerHTML += `<div>${indent} ${message}</div>`;
+            logDisplay.scrollTo({
+                top: logDisplay.scrollHeight,
+                behavior: "smooth",
+            });
+        }
     }
 }
 

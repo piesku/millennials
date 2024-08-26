@@ -5,7 +5,7 @@ import {LocationElement} from "../elements/a-location.js";
 import {BattleScene} from "../elements/battle-scene.js";
 import {next_id} from "../lib/id.js";
 import {LocationController} from "../locations/LocationController.js";
-import {Message} from "../messages.js";
+import {Message, Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 
 export abstract class CardController {
@@ -87,19 +87,21 @@ export abstract class CardController {
         this.Element.ReRender();
     }
 
-    *Reveal() {
-        yield `${this.Name} is revealed`;
+    *Reveal(trace: Trace) {
+        if (trace.length === 0) {
+            yield trace.log(`${this.Name} is revealed`);
+        }
         this.Element.classList.add("frontside");
-        yield* this.OnReveal();
+        yield* this.OnReveal(trace);
         this.IsRevealed = true;
         this.TurnPlayed = this.Battle.CurrentTurn;
     }
 
-    *OnReveal(): Generator<string, void> {
-        // yield `it does nothing special`;
+    *OnReveal(trace: Trace): Generator<[Trace, string], void> {
+        // yield trace.log(`it does nothing special`);
     }
 
-    *OnTrash() {
+    *OnTrash(trace: Trace): Generator<[Trace, string], void> {
         // The default teardown is to remove all modifiers that originated from this card.
         let modifiers = this.Element.querySelectorAll(`a-modifier[origin-id=${this.Id}]`);
         for (let modifier of modifiers) {
@@ -107,21 +109,21 @@ export abstract class CardController {
         }
     }
 
-    *OnMessage(kind: Message, card?: CardController): Generator<string, void> {}
+    *OnMessage(kind: Message, trace: Trace, card?: CardController): Generator<[Trace, string], void> {}
 
-    *Trash() {
+    *Trash(trace: Trace) {
         const actor = this.Owner;
         if (actor) {
             const trashElement = actor.Element.querySelector("a-trash");
             if (trashElement) {
-                this.OnTrash();
+                yield* this.OnTrash(trace);
                 trashElement.appendChild(this.Element);
-                yield `${this.Name} has been moved to the trash`;
+                yield trace.log(`${this.Name} has been moved to the trash`);
             } else {
-                yield `No trash element found for actor ${this.Owner}`;
+                yield trace.log(`No trash element found for actor ${this.Owner}`);
             }
         } else {
-            yield `No actor found for owner ${this.Owner}`;
+            yield trace.log(`No actor found for owner ${this.Owner}`);
         }
     }
 }

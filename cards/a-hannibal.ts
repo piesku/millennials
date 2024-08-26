@@ -1,4 +1,4 @@
-import {Message} from "../messages.js";
+import {Message, Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
@@ -9,18 +9,22 @@ export class Hannibal extends CardController {
     Text = "Your other cards have +1 power.";
     Sprite = Sprites.Hannibal;
 
-    override *OnReveal() {
+    override *OnReveal(trace: Trace) {
+        trace.push(this);
+
         for (let card of this.Battle.GetRevealedCards(this.Owner)) {
-            yield `${card.Name} has +1 power`;
+            yield trace.log(`${card.Name} has +1 power`);
             card.AddModifier(this, "addpower", 1);
         }
     }
 
-    override *OnMessage(kind: Message, card: CardController) {
+    override *OnMessage(kind: Message, trace: Trace, card: CardController) {
+        trace.push(this);
+
         switch (kind) {
             case Message.CardEntersTable:
                 if (card.Owner === this.Owner) {
-                    yield `it has +1 power from ${this.Name}`;
+                    yield trace.log(`it has +1 power from ${this.Name}`);
                     card.AddModifier(this, "addpower", 1);
                 }
                 break;

@@ -1,3 +1,4 @@
+import {Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 import {ActorController} from "./ActorController.js";
 
@@ -7,7 +8,7 @@ export class PiratesController extends ActorController {
     Sprite = Sprites.JackSparrow;
     Description = "Argh";
 
-    *StartBattle() {
+    *StartBattle(trace: Trace) {
         const deck = this.Element.querySelector("a-deck")!;
         const cardDistribution = {
             [Sprites.Stormtrooper]: 11,
@@ -23,7 +24,7 @@ export class PiratesController extends ActorController {
         }
 
         for (let i = 0; i < 3; i++) {
-            yield* this.DrawCard();
+            yield* this.DrawCard(trace);
         }
     }
 }

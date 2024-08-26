@@ -4,6 +4,7 @@ import {LocationElement} from "../elements/a-location.js";
 import {BattleScene} from "../elements/battle-scene.js";
 import {LocationSlot} from "../elements/location-slot.js";
 import {element} from "../lib/random.js";
+import {Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 
 export abstract class ActorController {
@@ -16,36 +17,36 @@ export abstract class ActorController {
 
     constructor(public Element: ActorElement) {}
 
-    abstract StartBattle(): Generator<string, void>;
+    abstract StartBattle(trace: Trace): Generator<[Trace, string], void>;
 
-    *StartTurn(turn: number) {
-        yield* this.DrawCard();
+    *StartTurn(turn: number, trace: Trace) {
+        yield* this.DrawCard(trace);
 
         this.CurrentEnergy = this.MaxEnergy = turn;
         this.Element.ReRender();
     }
 
-    *DrawCard(target?: Element) {
+    *DrawCard(trace: Trace, target?: Element) {
         const hand = this.Element.querySelector("a-hand")!;
         const deck = target ?? this.Element.querySelector("a-deck")!;
 
         if (deck.firstElementChild && hand.children.length >= 7) {
-            yield "but the hand is full";
+            yield trace.log("but the hand is full");
         } else if (deck.firstElementChild) {
             let card = deck.firstElementChild! as CardElement;
             if (this.Type === "villain") {
-                yield `${this.Name} draws a card`;
+                yield trace.log(`${this.Name} draws a card`);
             } else {
-                yield `${this.Name} draw ${card.Instance.Name}`;
+                yield trace.log(`${this.Name} draw ${card.Instance.Name}`);
                 card.setAttribute("draggable", "true");
             }
             hand.appendChild(card);
         } else {
-            yield "but the deck is empty";
+            yield trace.log("but the deck is empty");
         }
     }
 
-    *RivalAI(): Generator<string, void> {
+    *RivalAI(trace: Trace) {
         while (true) {
             let playableCards = Array.from(this.Element.querySelectorAll<CardElement>("a-hand a-card")).filter(
                 (card) => card.Instance.CurrentCost <= this.CurrentEnergy,
@@ -64,9 +65,9 @@ export abstract class ActorController {
             let slot = element(empty_slots);
             let location = slot.closest<LocationElement>("a-location")!.Instance;
             if (this.Element.id === "villain") {
-                yield `${this.Name} plays a card to ${location.Name}`;
+                yield trace.log(`${this.Name} plays a card to ${location.Name}`);
             } else {
-                yield `${this.Name} plays ${card.Instance.Name} to ${location.Name}`;
+                yield trace.log(`${this.Name} plays ${card.Instance.Name} to ${location.Name}`);
             }
             slot.appendChild(card);
             battle.PlayedCardsQueue.push(card.Instance);

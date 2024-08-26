@@ -1,3 +1,4 @@
+import {Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
@@ -8,7 +9,9 @@ export class Baracus extends CardController {
     Text = "If in the middle location +3 power";
     Sprite = Sprites.BABaracus;
 
-    override *OnReveal() {
+    override *OnReveal(trace: Trace) {
+        trace.push(this);
+
         const locations = this.Battle.querySelectorAll("a-location");
         let locationIndex = -1;
 
@@ -20,10 +23,10 @@ export class Baracus extends CardController {
         }
 
         if (locationIndex === 1) {
-            yield `${this.Name} gains +3 power for being in the middle location`;
+            yield trace.log(`${this.Name} gains +3 power for being in the middle location`);
             this.AddModifier(this, "addpower", 3);
         } else {
-            yield `${this.Name} does not gain any additional power`;
+            yield trace.log(`${this.Name} does not gain any additional power`);
         }
     }
 }

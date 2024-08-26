@@ -1,3 +1,4 @@
+import {Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
@@ -8,10 +9,12 @@ export class Robocop extends CardController {
     Text = "Add 1 power to your other cards here";
     Sprite = Sprites.Robocop;
 
-    override *OnReveal() {
+    override *OnReveal(trace: Trace) {
+        trace.push(this);
+
         let other_revealed_cards = this.Location.GetRevealedCards(this.Owner);
         for (let card of other_revealed_cards) {
-            yield `${card.Name} gets +1 power`;
+            yield trace.log(`${card.Name} gets +1 power`);
             card.AddModifier(this, "addpower", 1);
         }
     }

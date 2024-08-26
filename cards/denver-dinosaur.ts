@@ -1,4 +1,4 @@
-import {Message} from "../messages.js";
+import {Message, Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
@@ -9,11 +9,13 @@ export class DenverDinosaur extends CardController {
     Text = "After each turn, gain 1 Power for each unspent Energy.";
     Sprite = Sprites.Denver;
 
-    override *OnMessage(kind: Message) {
+    override *OnMessage(kind: Message, trace: Trace) {
+        trace.push(this);
+
         switch (kind) {
             case Message.TurnEnds:
                 if (this.Owner.CurrentEnergy > 0) {
-                    yield `${this.Name} gains +${this.Owner.CurrentEnergy} power`;
+                    yield trace.log(`${this.Name} gains +${this.Owner.CurrentEnergy} power`);
                     this.AddModifier(this, "addpower", this.Owner.CurrentEnergy);
                 }
                 break;

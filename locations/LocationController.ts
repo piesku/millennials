@@ -2,7 +2,7 @@ import {ActorController} from "../actors/ActorController.js";
 import {CardController} from "../cards/CardController.js";
 import {CardElement} from "../elements/a-card.js";
 import {LocationElement} from "../elements/a-location.js";
-import {Message} from "../messages.js";
+import {Message, Trace} from "../messages.js";
 
 export abstract class LocationController {
     abstract Name: string;
@@ -17,25 +17,25 @@ export abstract class LocationController {
             .filter((card) => card.IsRevealed);
     }
 
-    *OnMessage(kind: Message, card?: CardController): Generator<string, void> {}
+    *OnMessage(kind: Message, trace: Trace, card?: CardController): Generator<[Trace, string], void> {}
 
-    *AddCard(card: CardController, owner: ActorController, slot_index?: number) {
+    *AddCard(card: CardController, trace: Trace, owner: ActorController, slot_index?: number) {
         const side = this.Element.querySelector(`location-owner[slot=${owner.Type}]`)!;
         if (slot_index === undefined) {
             let slot = side.querySelector("location-slot:not(:has(a-card))");
             if (slot) {
                 slot.appendChild(card.Element);
-                yield* card.Reveal();
+                yield* card.Reveal(trace);
             } else {
-                yield "no empty slots";
+                yield trace.log("no empty slots");
             }
         } else {
             const slot = side.querySelector(`location-slot[label=${slot_index + 1}]`)!;
             if (slot) {
                 slot.appendChild(card.Element);
-                yield* card.Reveal();
+                yield* card.Reveal(trace);
             } else {
-                yield "but the slot is already occupied";
+                yield trace.log("but the slot is already occupied");
             }
         }
     }

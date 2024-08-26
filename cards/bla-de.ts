@@ -1,4 +1,5 @@
 import {CardElement} from "../elements/a-card.js";
+import {Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
@@ -9,11 +10,13 @@ export class Blade extends CardController {
     Text = "Once: Give the top card of your deck +2 power";
     Sprite = Sprites.Blade;
 
-    override *OnReveal() {
+    override *OnReveal(trace: Trace) {
+        trace.push(this);
+
         const deck = this.Owner.Element.querySelector("a-deck");
         if (deck && deck.firstElementChild) {
             const topCard = deck.firstElementChild as CardElement;
-            yield `${topCard.Instance.Name} gets +2 power from ${this.Name}`;
+            yield trace.log(`${topCard.Instance.Name} gets +2 power from ${this.Name}`);
             topCard.Instance.AddModifier(this, "addpower", 2);
         }
     }
