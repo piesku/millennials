@@ -279,11 +279,11 @@ export class BattleScene extends HTMLElement {
 
         yield trace.log("--- Lights… camera… action! ---");
 
-        const player = this.querySelector("a-actor[type=player]") as ActorElement;
-        yield* player.Instance.StartBattle(trace.fork());
-
         const villain = this.querySelector("a-actor:not([type=player])") as ActorElement;
         yield* villain.Instance.StartBattle(trace.fork());
+
+        const player = this.querySelector("a-actor[type=player]") as ActorElement;
+        yield* player.Instance.StartBattle(trace.fork());
 
         yield* this.BroadcastGameMessage(Message.BattleStarts);
         yield* this.StartTurn();

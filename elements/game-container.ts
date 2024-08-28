@@ -81,7 +81,7 @@ export class GameContainer extends HTMLElement {
         this.ReRender();
     }
 
-    PlayerDeck = [
+    PlayerDeck = history.state?.PlayerDeck ?? [
         Sprites.Raphael,
         Sprites.Raphael,
         Sprites.Raphael,
