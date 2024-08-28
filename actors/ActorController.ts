@@ -2,7 +2,6 @@ import {ActorElement} from "../elements/a-actor.js";
 import {CardElement} from "../elements/a-card.js";
 import {LocationElement} from "../elements/a-location.js";
 import {BattleScene} from "../elements/battle-scene.js";
-import {LocationSlot} from "../elements/location-slot.js";
 import {element} from "../lib/random.js";
 import {Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
@@ -59,9 +58,7 @@ export abstract class ActorController {
             let card = element(playableCards);
 
             let battle = this.Element.closest<BattleScene>("battle-scene")!;
-            let empty_slots = battle.querySelectorAll<LocationSlot>(
-                "location-owner[slot=villain] location-slot:not(:has(a-card))",
-            );
+            let empty_slots = battle.GetEmptySlots(this);
             let slot = element(empty_slots);
             let location = slot.closest<LocationElement>("a-location")!.Instance;
             if (this.Element.id === "villain") {

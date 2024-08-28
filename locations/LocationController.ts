@@ -2,6 +2,7 @@ import {ActorController} from "../actors/ActorController.js";
 import {CardController} from "../cards/CardController.js";
 import {CardElement} from "../elements/a-card.js";
 import {LocationElement} from "../elements/a-location.js";
+import {LocationSlot} from "../elements/location-slot.js";
 import {Message, Trace} from "../messages.js";
 
 export abstract class LocationController {
@@ -15,6 +16,12 @@ export abstract class LocationController {
         return Array.from(root.querySelectorAll<CardElement>("a-card"))
             .map((card) => card.Instance)
             .filter((card) => card.IsRevealed);
+    }
+
+    GetEmptySlots(actor: ActorController) {
+        return this.Element.querySelectorAll<LocationSlot>(
+            `location-owner[slot=${actor.Type}] location-slot:not(:has(a-card))`,
+        );
     }
 
     *OnMessage(kind: Message, trace: Trace, card?: CardController): Generator<[Trace, string], void> {}

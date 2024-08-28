@@ -21,7 +21,7 @@ export class Raphael extends CardController {
             return;
         }
 
-        const empty_slots = this.Battle.GetEmptySlots(this.Rival, this.Location);
+        const empty_slots = this.Location.GetEmptySlots(this.Rival);
         if (empty_slots.length === 0) {
             yield trace.log("No empty slots on Rival's side of this location.");
             return;

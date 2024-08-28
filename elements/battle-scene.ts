@@ -10,6 +10,7 @@ import {ActorElement} from "./a-actor.js";
 import {CardElement} from "./a-card.js";
 import {LocationElement} from "./a-location.js";
 import {GameContainer} from "./game-container.js";
+import {LocationSlot} from "./location-slot.js";
 
 const INTERVAL = 100;
 
@@ -386,21 +387,15 @@ export class BattleScene extends HTMLElement {
     }
 
     GetRevealedCards(actor?: ActorController) {
-        let locations = [...this.querySelectorAll<LocationElement>("a-location")].map((location) => location.Instance);
-        return locations.flatMap((location) => location.GetRevealedCards(actor));
+        return [...this.querySelectorAll<LocationElement>("a-location")].flatMap((location) =>
+            location.Instance.GetRevealedCards(actor),
+        );
     }
 
-    GetEmptySlots(actor: ActorController, location: LocationController): Array<HTMLElement> {
-        let emptySlots: Array<HTMLElement> = [];
-        let slots = location.Element.querySelectorAll<HTMLElement>(
-            "location-owner[slot='" + actor.Type + "'] location-slot",
+    GetEmptySlots(actor: ActorController) {
+        return this.querySelectorAll<LocationSlot>(
+            `location-owner[slot=${actor.Type}] location-slot:not(:has(a-card))`,
         );
-        for (let slot of slots) {
-            if (!slot.querySelector("a-card")) {
-                emptySlots.push(slot);
-            }
-        }
-        return emptySlots;
     }
 
     Log(trace: Trace, message: string) {
