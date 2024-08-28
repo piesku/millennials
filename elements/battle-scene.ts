@@ -327,6 +327,7 @@ export class BattleScene extends HTMLElement {
 
         let unrevealed_cards = this.PlayedCardsQueue.filter((card) => !card.IsRevealed);
         for (let card of unrevealed_cards) {
+            yield* this.BroadcastCardMessage(Message.CardLeavesHand, new Trace(), card);
             yield* card.Reveal(new Trace());
         }
 
@@ -352,6 +353,10 @@ export class BattleScene extends HTMLElement {
     }
 
     *BroadcastGameMessage(kind: Message) {
+        if (DEBUG) {
+            console.log("%c" + Message[kind], "color: yellow");
+        }
+
         let locations = [...this.querySelectorAll<LocationElement>("a-location")].map((location) => location.Instance);
         for (let location of locations) {
             yield* location.OnMessage(kind, new Trace());
@@ -363,25 +368,34 @@ export class BattleScene extends HTMLElement {
     }
 
     *BroadcastCardMessage(kind: Message, trace: Trace, card: CardController) {
-        // First, broadcast the message to the card's location.
-        yield* card.Location.OnMessage(kind, trace.fork(), card);
-
-        // Then, broadcast the message to other revealed cards in the same location.
-        for (let other of card.Location.GetRevealedCards()) {
-            if (other !== card) {
-                yield* other.OnMessage(kind, trace.fork(), card);
-            }
+        if (DEBUG) {
+            console.log(Message[kind], card.Name);
         }
 
-        // Finally, broadcast the message to other locations and their revealed cards.
-        let locations = [...this.querySelectorAll<LocationElement>("a-location")]
-            .map((location) => location.Instance)
-            .filter((location) => location !== card.Location);
-        for (let location of locations) {
-            yield* location.OnMessage(kind, trace.fork(), card);
+        // First, broadcast the message to the card itself.
+        yield* card.OnMessageSelf(kind, trace.fork());
 
-            for (let other of location.GetRevealedCards()) {
-                yield* other.OnMessage(kind, trace.fork(), card);
+        if (card.Location) {
+            // Then, broadcast the message to the card's location.
+            yield* card.Location.OnMessage(kind, trace.fork(), card);
+
+            // Then, broadcast the message to other revealed cards in the same location.
+            for (let other of card.Location.GetRevealedCards()) {
+                if (other !== card) {
+                    yield* other.OnMessage(kind, trace.fork(), card);
+                }
+            }
+
+            // Finally, broadcast the message to other locations and their revealed cards.
+            let locations = [...this.querySelectorAll<LocationElement>("a-location")]
+                .map((location) => location.Instance)
+                .filter((location) => location !== card.Location);
+            for (let location of locations) {
+                yield* location.OnMessage(kind, trace.fork(), card);
+
+                for (let other of location.GetRevealedCards()) {
+                    yield* other.OnMessage(kind, trace.fork(), card);
+                }
             }
         }
     }
@@ -396,6 +410,13 @@ export class BattleScene extends HTMLElement {
         return this.querySelectorAll<LocationSlot>(
             `location-owner[slot=${actor.Type}] location-slot:not(:has(a-card))`,
         );
+    }
+
+    CleanUp(card: CardController) {
+        let modifiers = this.querySelectorAll(`a-modifier[origin-id="${card.Id}"]`);
+        for (let modifier of modifiers) {
+            modifier.remove();
+        }
     }
 
     Log(trace: Trace, message: string) {

@@ -17,13 +17,13 @@ export class Raphael extends CardController {
         );
 
         if (enemy_cards.length === 0) {
-            yield trace.log("No enemy cards with cost 1 or 2 to move.");
+            yield trace.log("but there are no cards to move");
             return;
         }
 
-        const empty_slots = this.Location.GetEmptySlots(this.Opponent);
+        const empty_slots = this.Location!.GetEmptySlots(this.Opponent);
         if (empty_slots.length === 0) {
-            yield trace.log("No empty slots on the opponent's side.");
+            yield trace.log("but there are no empty slots");
             return;
         }
 

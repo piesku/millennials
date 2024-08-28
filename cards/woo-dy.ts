@@ -17,7 +17,7 @@ export class Woody extends CardController {
         let card = deck.firstElementChild as CardElement;
         if (card) {
             yield trace.log(`it adds ${card.Instance.Name} to the table`);
-            yield* this.Location.AddCard(card.Instance, trace, this.Owner);
+            yield* this.Location!.AddCard(card.Instance, trace, this.Owner);
         } else {
             yield trace.log("but the deck is empty");
         }

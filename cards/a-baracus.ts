@@ -6,7 +6,7 @@ export class Baracus extends CardController {
     Name = "B-Team C.D. Bacarus";
     Cost = 2;
     Power = 2;
-    Text = "If in the middle location +3 power";
+    Text = "+3 power if revealed in the middle location";
     Sprite = Sprites.BABaracus;
 
     override *OnReveal(trace: Trace) {

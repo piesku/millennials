@@ -30,4 +30,14 @@ export class Hannibal extends CardController {
                 break;
         }
     }
+
+    override *OnMessageSelf(kind: Message, trace: Trace) {
+        trace.push(this);
+
+        switch (kind) {
+            case Message.CardLeavesTable:
+                this.Battle.CleanUp(this);
+                break;
+        }
+    }
 }

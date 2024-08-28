@@ -1,14 +1,22 @@
 import {CardController} from "./cards/CardController.js";
 import {LocationController} from "./locations/LocationController.js";
 
-export const enum Message {
+// TODO Use const enum.
+export enum Message {
     BattleStarts = 1,
     BattleEnds,
     TurnStarts,
     TurnEnds,
     CardEntersTable,
+    CardLeavesTable,
     CardMovesFromLocation,
     CardMovesToLocation,
+    CardEntersHand,
+    CardLeavesHand,
+    CardEntersDeck,
+    CardLeavesDeck,
+    CardEntersTrash,
+    CardLeavesTrash,
 }
 
 export class Trace extends Array<CardController | LocationController | 1> {

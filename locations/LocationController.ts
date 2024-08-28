@@ -24,26 +24,35 @@ export abstract class LocationController {
         );
     }
 
+    CleanUp(card: CardController) {
+        let modifiers = this.Element.querySelectorAll(`a-modifier[origin-id="${card.Id}"]`);
+        for (let modifier of modifiers) {
+            modifier.remove();
+        }
+    }
+
     *OnMessage(kind: Message, trace: Trace, card?: CardController): Generator<[Trace, string], void> {}
 
     *AddCard(card: CardController, trace: Trace, owner: ActorController, slot_index?: number) {
         const side = this.Element.querySelector(`location-owner[slot=${owner.Type}]`)!;
-        if (slot_index === undefined) {
-            let slot = side.querySelector("location-slot:not(:has(a-card))");
-            if (slot) {
-                slot.appendChild(card.Element);
-                yield* card.Reveal(trace);
-            } else {
-                yield trace.log("no empty slots");
+        let slot =
+            slot_index === undefined
+                ? side.querySelector("location-slot:not(:has(a-card))")
+                : side.querySelector(`location-slot[label=${slot_index + 1}]`);
+        if (slot) {
+            if (card.Element.closest("a-hand")) {
+                yield* owner.Battle.BroadcastCardMessage(Message.CardLeavesHand, trace, card);
+            } else if (card.Element.closest("a-deck")) {
+                yield* owner.Battle.BroadcastCardMessage(Message.CardLeavesDeck, trace, card);
+            } else if (card.Element.closest("a-trash")) {
+                yield* owner.Battle.BroadcastCardMessage(Message.CardLeavesTrash, trace, card);
             }
+            slot.appendChild(card.Element);
+            yield* card.Reveal(trace);
+        } else if (slot_index === undefined) {
+            yield trace.log("but there are no empty slots");
         } else {
-            const slot = side.querySelector(`location-slot[label=${slot_index + 1}]`)!;
-            if (slot) {
-                slot.appendChild(card.Element);
-                yield* card.Reveal(trace);
-            } else {
-                yield trace.log("but the slot is already occupied");
-            }
+            yield trace.log("but the slot is already occupied");
         }
     }
 }

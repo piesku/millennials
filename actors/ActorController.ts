@@ -3,7 +3,7 @@ import {CardElement} from "../elements/a-card.js";
 import {LocationElement} from "../elements/a-location.js";
 import {BattleScene} from "../elements/battle-scene.js";
 import {element} from "../lib/random.js";
-import {Trace} from "../messages.js";
+import {Message, Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 
 export abstract class ActorController {
@@ -15,6 +15,10 @@ export abstract class ActorController {
     CurrentEnergy = 0;
 
     constructor(public Element: ActorElement) {}
+
+    get Battle() {
+        return this.Element.closest<BattleScene>("battle-scene")!;
+    }
 
     abstract StartBattle(trace: Trace): Generator<[Trace, string], void>;
 
@@ -39,7 +43,10 @@ export abstract class ActorController {
                 yield trace.log(`${this.Name} draw ${card.Instance.Name}`);
                 card.setAttribute("draggable", "true");
             }
+
+            yield* this.Battle.BroadcastCardMessage(Message.CardLeavesDeck, trace, card.Instance);
             hand.appendChild(card);
+            yield* this.Battle.BroadcastCardMessage(Message.CardEntersHand, trace, card.Instance);
         } else {
             yield trace.log("but the deck is empty");
         }
@@ -57,8 +64,7 @@ export abstract class ActorController {
 
             let card = element(playableCards);
 
-            let battle = this.Element.closest<BattleScene>("battle-scene")!;
-            let empty_slots = battle.GetEmptySlots(this);
+            let empty_slots = this.Battle.GetEmptySlots(this);
             let slot = element(empty_slots);
             let location = slot.closest<LocationElement>("a-location")!.Instance;
             if (this.Element.id === "villain") {
@@ -67,7 +73,7 @@ export abstract class ActorController {
                 yield trace.log(`${this.Name} plays ${card.Instance.Name} to ${location.Name}`);
             }
             slot.appendChild(card);
-            battle.PlayedCardsQueue.push(card.Instance);
+            this.Battle.PlayedCardsQueue.push(card.Instance);
 
             this.CurrentEnergy -= card.Instance.CurrentCost;
             this.Element.ReRender();
