@@ -304,7 +304,7 @@ export class BattleScene extends HTMLElement {
 
         yield* this.BroadcastGameMessage(Message.TurnStarts);
 
-        yield* villain.Instance.RivalAI(trace.fork());
+        yield* villain.Instance.VillAIn(trace.fork());
     }
 
     async RunEndTurn() {

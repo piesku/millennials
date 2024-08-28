@@ -45,7 +45,7 @@ export abstract class ActorController {
         }
     }
 
-    *RivalAI(trace: Trace) {
+    *VillAIn(trace: Trace) {
         while (true) {
             let playableCards = Array.from(this.Element.querySelectorAll<CardElement>("a-hand a-card")).filter(
                 (card) => card.Instance.CurrentCost <= this.CurrentEnergy,

@@ -13,7 +13,7 @@ export class Batman extends CardController {
     override *OnReveal(trace: Trace) {
         trace.push(this);
 
-        const opponentDeck = this.Rival.Element.querySelector("a-deck");
+        const opponentDeck = this.Opponent.Element.querySelector("a-deck");
         if (opponentDeck && opponentDeck.firstElementChild) {
             const topCard = opponentDeck.firstElementChild as CardElement;
             yield* topCard.Instance.Trash(trace);

@@ -61,7 +61,7 @@ export abstract class CardController {
         }
     }
 
-    get Rival(): ActorController {
+    get Opponent(): ActorController {
         let actor_id = this.Owner.Type === "player" ? "villain" : "player";
         let actor = document.getElementById(actor_id) as ActorElement;
         return actor.Instance;

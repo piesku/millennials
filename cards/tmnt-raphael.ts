@@ -12,7 +12,7 @@ export class Raphael extends CardController {
 
     override *OnReveal(trace: Trace) {
         trace.push(this);
-        const enemy_cards = this.Battle.GetRevealedCards(this.Rival).filter(
+        const enemy_cards = this.Battle.GetRevealedCards(this.Opponent).filter(
             (card) => [1, 2].includes(card.CurrentCost) && card.Location !== this.Location,
         );
 
@@ -21,9 +21,9 @@ export class Raphael extends CardController {
             return;
         }
 
-        const empty_slots = this.Location.GetEmptySlots(this.Rival);
+        const empty_slots = this.Location.GetEmptySlots(this.Opponent);
         if (empty_slots.length === 0) {
-            yield trace.log("No empty slots on Rival's side of this location.");
+            yield trace.log("No empty slots on the opponent's side.");
             return;
         }
 

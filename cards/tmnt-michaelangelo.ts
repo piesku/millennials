@@ -13,7 +13,7 @@ export class MichaelAngelo extends CardController {
         trace.push(this);
         const all_revealed_cards = [
             ...this.Battle.GetRevealedCards(this.Owner),
-            ...this.Battle.GetRevealedCards(this.Rival),
+            ...this.Battle.GetRevealedCards(this.Opponent),
         ];
         for (let card of all_revealed_cards) {
             if (card.CurrentCost === 1) {

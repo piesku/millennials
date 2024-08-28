@@ -6,14 +6,14 @@ export class Faceman extends CardController {
     Name = "B-Team Shitface";
     Cost = 2;
     Power = 3;
-    Text = "Draw a card from your rival's deck";
+    Text = "Draw a card from your opponent's deck";
     Sprite = Sprites.Faceman;
 
     override *OnReveal(trace: Trace) {
         trace.push(this);
 
-        let rival_deck = this.Rival.Element.querySelector("a-deck")!;
-        yield trace.log(`${this.Owner.Name} draws a card from ${this.Rival.Name}'s deck`);
-        yield* this.Owner.DrawCard(trace, rival_deck);
+        let deck = this.Opponent.Element.querySelector("a-deck")!;
+        yield trace.log(`${this.Owner.Name} draws a card from ${this.Opponent.Name}'s deck`);
+        yield* this.Owner.DrawCard(trace, deck);
     }
 }
