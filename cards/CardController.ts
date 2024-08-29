@@ -53,7 +53,7 @@ export abstract class CardController {
         let location_owner = this.Element.closest("location-owner");
         if (location_owner) {
             let actor_id = location_owner.getAttribute("slot")!;
-            let actor = document.getElementById(actor_id) as ActorElement;
+            let actor = this.Battle.querySelector("#" + actor_id) as ActorElement;
             return actor.Instance;
         } else {
             let actor_element = this.Element.closest("a-actor") as ActorElement;

@@ -418,7 +418,7 @@ export class BattleScene extends HTMLElement {
     }
 
     Log(trace: Trace, message: string) {
-        const logDisplay = document.querySelector("a-log") as HTMLElement;
+        const logDisplay = this.querySelector("a-log") as HTMLElement;
         if (logDisplay) {
             if (message.startsWith("---") && message.endsWith("---")) {
                 message = `<h3>${message.slice(3, -3).trim()}</h3>`;

@@ -100,13 +100,24 @@ export class GameContainer extends HTMLElement {
     CurrentView = history.state?.CurrentView ?? "title";
 
     InitBattle() {
-        let battle = this.querySelectorAll<BattleScene>("battle-scene")[this.CurrentOpponent];
-        battle.PrepareBattle();
+        let battle = this.querySelector<BattleScene>(`battle-scene[name="${this.CurrentOpponent}"]`);
+        if (battle) {
+            battle.PrepareBattle();
+        } else if (DEBUG) {
+            throw `<battle-scene name="${this.CurrentOpponent}"> not found`;
+        }
     }
 
     ProgressToNextOpponent() {
+        let previous_battle = this.querySelector<BattleScene>(`battle-scene[name="${this.CurrentOpponent}"]`);
+        if (previous_battle) {
+            previous_battle.remove();
+        }
+
         this.CurrentOpponent++;
-        if (this.CurrentOpponent >= this.querySelectorAll<BattleScene>("battle-scene").length) {
+
+        let next_battle = this.querySelector<BattleScene>(`battle-scene[name="${this.CurrentOpponent}"]`);
+        if (!next_battle) {
             alert("You win the run!");
         }
 
