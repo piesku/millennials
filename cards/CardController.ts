@@ -88,8 +88,27 @@ export abstract class CardController {
         this.Element.ReRender();
     }
 
+    /**
+     * Handles messages targeting other cards, as well as system messages (when
+     * `card` is `undefined`).
+     *
+     * When the message is broadcast, the target card is present in the
+     * container mentioned in the message:
+     *
+     * * `CardLeavesHand` — the card is **still** in the hand.
+     * * `CardEntersHand` — the card is **already** in the hand.
+     */
     *OnMessage(kind: Message, trace: Trace, card?: CardController): Generator<[Trace, string], void> {}
 
+    /**
+     * Handles messages targeting **this card**.
+     *
+     * When the message is broadcast, the card is present in the container
+     * mentioned in the message:
+     *
+     * * `CardLeavesHand` — the card is **still** in the hand.
+     * * `CardEntersHand` — the card is **already** in the hand.
+     */
     *OnMessageSelf(kind: Message, trace: Trace): Generator<[Trace, string], void> {}
 
     *Reveal(trace: Trace) {
@@ -104,6 +123,12 @@ export abstract class CardController {
         yield* this.Battle.BroadcastCardMessage(Message.CardEntersTable, trace.fork(), this);
     }
 
+    /**
+     * Happens **before** the card is revealed.
+     *
+     * The card is already on the table face-up, but `GetRevealedCards` will not
+     * include it.
+     */
     *OnReveal(trace: Trace): Generator<[Trace, string], void> {
         // yield trace.log(`it does nothing special`);
     }
