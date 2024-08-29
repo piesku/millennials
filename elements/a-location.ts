@@ -28,6 +28,26 @@ export class LocationElement extends HTMLElement {
             throw new Error("LocationElement: type attribute is required");
         }
 
+        this.Render();
+
+        this.innerHTML = `
+            <location-owner slot="player">
+                <location-slot label=1></location-slot>
+                <location-slot label=2></location-slot>
+                <location-slot label=3></location-slot>
+                <location-slot label=4></location-slot>
+            </location-owner>
+
+            <location-owner slot="villain" reverse>
+                <location-slot label=1></location-slot>
+                <location-slot label=2></location-slot>
+                <location-slot label=3></location-slot>
+                <location-slot label=4></location-slot>
+            </location-owner>
+        `;
+    }
+
+    Render() {
         this.shadowRoot!.innerHTML = html`
             <style>
                 .location {
@@ -56,32 +76,16 @@ export class LocationElement extends HTMLElement {
             </style>
             <flex-row class="location">
                 <slot name="player"></slot>
-                <div id="player-points" class="points">${0}</div>
+                <div id="player-points" class="points">${this.Instance.GetScore(this.Instance.Battle.Player)}</div>
                 <div class="name-description">
                     <div class="name">${this.Instance.Name}</div>
                     <div class="description">
                         <slot name="description">${this.Instance.Description}</slot>
                     </div>
                 </div>
-                <div id="enemy-points" class="points">${0}</div>
+                <div id="enemy-points" class="points">${this.Instance.GetScore(this.Instance.Battle.Villain)}</div>
                 <slot name="villain"></slot>
             </flex-row>
-        `;
-
-        this.innerHTML = `
-            <location-owner slot="player">
-                <location-slot label=1></location-slot>
-                <location-slot label=2></location-slot>
-                <location-slot label=3></location-slot>
-                <location-slot label=4></location-slot>
-            </location-owner>
-
-            <location-owner slot="villain" reverse>
-                <location-slot label=1></location-slot>
-                <location-slot label=2></location-slot>
-                <location-slot label=3></location-slot>
-                <location-slot label=4></location-slot>
-            </location-owner>
         `;
     }
 }

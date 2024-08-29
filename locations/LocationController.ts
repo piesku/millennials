@@ -2,6 +2,7 @@ import {ActorController} from "../actors/ActorController.js";
 import {CardController} from "../cards/CardController.js";
 import {CardElement} from "../elements/a-card.js";
 import {LocationElement} from "../elements/a-location.js";
+import {BattleScene} from "../elements/battle-scene.js";
 import {LocationSlot} from "../elements/location-slot.js";
 import {Message, Trace} from "../messages.js";
 
@@ -10,6 +11,16 @@ export abstract class LocationController {
     abstract Description: string;
 
     constructor(public Element: LocationElement) {}
+
+    get Battle() {
+        return this.Element.closest<BattleScene>("battle-scene")!;
+    }
+
+    GetScore(actor: ActorController) {
+        return this.GetRevealedCards(actor)
+            .map((card) => card.CurrentPower)
+            .reduce((a, b) => a + b, 0);
+    }
 
     GetRevealedCards(actor?: ActorController) {
         let root = actor ? this.Element.querySelector(`location-owner[slot=${actor.Type}]`)! : this.Element;

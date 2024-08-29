@@ -31,13 +31,27 @@ export class BattleScene extends HTMLElement {
         this.Render();
     }
 
-    Render() {
+    get Player() {
+        let player_element = this.querySelector<ActorElement>("a-actor[type=player]");
+        if (!player_element && DEBUG) {
+            throw "BattleScene must have a player";
+        }
+        return player_element!.Instance;
+    }
+
+    get Villain() {
         let villain_element = this.querySelector<ActorElement>("a-actor:not([type=player])");
         if (!villain_element && DEBUG) {
             throw "BattleScene must have a villain";
         }
-        let villain = villain_element!.Instance;
+        return villain_element!.Instance;
+    }
 
+    get Locations() {
+        return Array.from(this.querySelectorAll<LocationElement>("a-location"), (location) => location.Instance);
+    }
+
+    Render() {
         let location_elements = this.querySelectorAll<LocationElement>("a-location");
         if (location_elements.length === 0 && DEBUG) {
             throw "BattleScene must have locations";
@@ -51,7 +65,7 @@ export class BattleScene extends HTMLElement {
         const sprite_padding = 1;
         const target_size = 240;
         const scale = target_size / sprite_height;
-        const sprite_y = (sprite_height + sprite_padding) * villain.Sprite * scale;
+        const sprite_y = (sprite_height + sprite_padding) * this.Villain.Sprite * scale;
 
         const img_src = document.querySelector("body > img[hidden]")?.getAttribute("src");
         const background_url = `url(${img_src})`;
@@ -115,18 +129,18 @@ export class BattleScene extends HTMLElement {
                         <div style="width:280px">
                             <h2>Next Up</h2>
                             <div style="padding:20px; background:lightblue; border-radius:5px;">
-                                <h3 style="margin-top:0;">${villain.Name}</h3>
+                                <h3 style="margin-top:0;">${this.Villain.Name}</h3>
                                 <div
                                     style="
                                         width: ${target_size}px;
                                         height: ${target_size}px;
-                                        background-color: ${color_from_seed(villain.Name)};
+                                        background-color: ${color_from_seed(this.Villain.Name)};
                                         margin: 0 auto;
                                         border: 1px solid black;
                                         border-radius: 5px;
                             "
                                 ></div>
-                                <p><i>${villain.Description}</i></p>
+                                <p><i>${this.Villain.Description}</i></p>
                                 ${locations.map(
                                     (location) => html`
                                         <h4>${location.Name}</h4>
@@ -268,6 +282,9 @@ export class BattleScene extends HTMLElement {
 
         for (let [trace, message] of this.StartBattle()) {
             this.Log(trace, message);
+            for (let location of this.Locations) {
+                location.Element.Render();
+            }
             await delay(INTERVAL);
         }
     }
@@ -294,20 +311,20 @@ export class BattleScene extends HTMLElement {
 
         yield trace.log(`--- Start Turn ${this.CurrentTurn} ---`);
 
-        const player = this.querySelector("a-actor[type=player]") as ActorElement;
-        yield* player.Instance.StartTurn(this.CurrentTurn, trace.fork());
-
-        const villain = this.querySelector("a-actor:not([type=player])") as ActorElement;
-        yield* villain.Instance.StartTurn(this.CurrentTurn, trace.fork());
+        yield* this.Player.StartTurn(this.CurrentTurn, trace.fork());
+        yield* this.Villain.StartTurn(this.CurrentTurn, trace.fork());
 
         yield* this.BroadcastGameMessage(Message.TurnStarts);
 
-        yield* villain.Instance.VillAIn(trace.fork());
+        yield* this.Villain.VillAIn(trace.fork());
     }
 
     async RunEndTurn() {
         for (let [trace, message] of this.EndTurn()) {
             this.Log(trace, message);
+            for (let location of this.Locations) {
+                location.Element.Render();
+            }
             await delay(INTERVAL);
         }
     }
