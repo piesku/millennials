@@ -103,6 +103,27 @@ export class CardElement extends HTMLElement {
         }
 
         this.ReRender();
+
+        let dialog = this.shadowRoot!.querySelector("dialog")!;
+        let bbox = dialog.getBoundingClientRect();
+
+        dialog.addEventListener("mouseenter", (ev) => {
+            bbox = dialog.getBoundingClientRect();
+        });
+
+        dialog.addEventListener("mousemove", (ev) => {
+            let x = ev.clientX - bbox.left;
+            let y = ev.clientY - bbox.top;
+            let x_percent = x / bbox.width;
+            let y_percent = y / bbox.height;
+            let x_rotation = (x_percent - 0.5) * 20;
+            let y_rotation = (0.5 - y_percent) * 20;
+
+            dialog.style.setProperty("--x-rotation", `${y_rotation}deg`);
+            dialog.style.setProperty("--y-rotation", `${x_rotation}deg`);
+            dialog.style.setProperty("--x", `${x_percent * 100}%`);
+            dialog.style.setProperty("--y", `${y_percent * 100}%`);
+        });
     }
 
     ReRender() {
@@ -201,7 +222,6 @@ export class CardElement extends HTMLElement {
                 }
 
                 .sprite-border {
-                    width: ${target_width}px;
                     height: ${target_height}px;
                     background-color: ${color_from_seed(this.Instance.Name)};
                     overflow: hidden;
@@ -267,6 +287,24 @@ export class CardElement extends HTMLElement {
                     min-height: 180px;
                     scale: 3;
                     overflow: visible;
+                    perspective: 800px;
+                }
+
+                dialog .content {
+                    position: relative;
+                    transform: rotateX(var(--x-rotation)) rotateY(var(--y-rotation));
+                    transition: transform 0.1s;
+                }
+
+                dialog .content:hover {
+                    transform: rotateX(var(--x-rotation)) rotateY(var(--y-rotation)) scale(1.2);
+                }
+
+                dialog .reflection {
+                    position: absolute;
+                    inset: 0;
+                    z-index: 1;
+                    background-image: radial-gradient(circle at var(--x) var(--y), #ffffff99 0%, transparent 65%);
                 }
 
                 dialog::backdrop {
@@ -274,7 +312,6 @@ export class CardElement extends HTMLElement {
                 }
 
                 card-detail {
-                    width: 120px;
                     height: 180px;
                     background: white;
                     border: 1px solid black;
@@ -296,14 +333,17 @@ export class CardElement extends HTMLElement {
             >
 
             <dialog onclick="event.stopPropagation(); this.close()">
-                <flex-col>
-                    <card-detail>
-                        <flex-col start>${card_body}</flex-col>
-                    </card-detail>
-                    <card-modifiers>
-                        <slot></slot>
-                    </card-modifiers>
-                </flex-col>
+                <div class="content">
+                    <div class="reflection"></div>
+                    <flex-col>
+                        <card-detail>
+                            <flex-col start>${card_body}</flex-col>
+                        </card-detail>
+                        <card-modifiers>
+                            <slot></slot>
+                        </card-modifiers>
+                    </flex-col>
+                </div>
             </dialog>
         `;
 
