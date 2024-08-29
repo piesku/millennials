@@ -30,7 +30,7 @@ export class Stormtrooper extends CardController {
 
 export class EmpireController extends ActorController {
     Type = "villain" as const;
-    Name = "Empire";
+    Name = "Varth Dader";
     Sprite = Sprites.DarthVader;
     Description = "The Empire is a powerful force that seeks to control the galaxy";
 

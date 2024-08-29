@@ -1,5 +1,6 @@
 import {ActorController} from "../actors/ActorController.js";
 import {CardController} from "../cards/CardController.js";
+import {color_from_seed} from "../lib/color.js";
 import {html} from "../lib/html.js";
 import {clamp} from "../lib/number.js";
 import {element, set_seed} from "../lib/random.js";
@@ -117,15 +118,12 @@ export class BattleScene extends HTMLElement {
                                 <h3 style="margin-top:0;">${villain.Name}</h3>
                                 <div
                                     style="
-                                width: ${target_size}px;
-                                height: ${target_size}px;
-                                background-image: ${background_url};
-                                background-position: 0 -${sprite_y}px;
-                                background-size: ${target_size}px auto;
-                                image-rendering: pixelated;
-                                margin: 0 auto;
-                                border: 1px solid black;
-                                border-radius: 5px;
+                                        width: ${target_size}px;
+                                        height: ${target_size}px;
+                                        background-color: ${color_from_seed(villain.Name)};
+                                        margin: 0 auto;
+                                        border: 1px solid black;
+                                        border-radius: 5px;
                             "
                                 ></div>
                                 <p><i>${villain.Description}</i></p>
