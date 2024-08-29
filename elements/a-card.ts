@@ -35,21 +35,10 @@ import {Leonardo} from "../cards/tmnt-leonardo.js";
 import {MichaelAngelo} from "../cards/tmnt-michaelangelo.js";
 import {Raphael} from "../cards/tmnt-raphael.js";
 import {Woody} from "../cards/woo-dy.js";
+import {color_from_seed} from "../lib/color.js";
 import {html} from "../lib/html.js";
 import {Sprites} from "../sprites/sprites.js";
 
-function generateColorFromSeed(seed: string): string {
-    let hash = 0;
-    for (let i = 0; i < seed.length; i++) {
-        hash = seed.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    let color = "#";
-    for (let i = 0; i < 3; i++) {
-        const value = (hash >> (i * 8)) & 0xff;
-        color += ("00" + value.toString(16)).substr(-2);
-    }
-    return color;
-}
 export class CardElement extends HTMLElement {
     Instance!: CardController;
 
@@ -120,13 +109,6 @@ export class CardElement extends HTMLElement {
         const target_width = 120;
         const target_height = 140;
 
-        const color = generateColorFromSeed(this.Instance.Name);
-        const nameParts = this.Instance.Name.split(" ");
-        const shortName =
-            nameParts.length === 1
-                ? nameParts[0].substring(0, 2)
-                : nameParts[0][0] + nameParts[nameParts.length - 1][0];
-
         const card_body = html`
             <div class="header">
                 <span
@@ -155,7 +137,7 @@ export class CardElement extends HTMLElement {
                 </span>
             </div>
             <div class="sprite-border">
-                <div class="sprite">${shortName.toUpperCase()}</div>
+                <div class="sprite"></div>
                 </div>
                 <div class="text-container">
                     <div class="name">${this.Instance.Name}</div>
@@ -221,7 +203,7 @@ export class CardElement extends HTMLElement {
                 .sprite-border {
                     width: ${target_width}px;
                     height: ${target_height}px;
-                    background-color: ${color};
+                    background-color: ${color_from_seed(this.Instance.Name)};
                     overflow: hidden;
                 }
 
