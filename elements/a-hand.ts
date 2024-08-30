@@ -41,6 +41,9 @@ export class HandElement extends HTMLElement {
                     transition: scale 0.1s;
                     z-index: var(--z);
                 }
+                :host([reverse]) ::slotted(a-card) {
+                    transform: translateY(calc(var(--y) * -1)) rotate(calc(var(--tilt) * -1));
+                }
                 ::slotted(a-card:hover) {
                     scale: 1.2;
                     z-index: 100;
