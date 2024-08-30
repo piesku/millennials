@@ -10,6 +10,8 @@ export abstract class LocationController {
     abstract Name: string;
     abstract Description: string;
 
+    IsRevealed = false;
+
     constructor(public Element: LocationElement) {}
 
     get Battle() {
@@ -41,6 +43,19 @@ export abstract class LocationController {
             modifier.remove();
         }
     }
+
+    *Reveal(trace: Trace) {
+        if (trace.length === 0) {
+            yield trace.log(`${this.Name} is revealed`);
+        }
+        this.Element.classList.add("frontside");
+        yield* this.OnReveal(trace.fork());
+        this.IsRevealed = true;
+
+        // TODO Broadcast?
+    }
+
+    *OnReveal(trace: Trace) {}
 
     *OnMessage(kind: Message, trace: Trace, card?: CardController): Generator<[Trace, string], void> {}
 

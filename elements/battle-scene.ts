@@ -314,6 +314,11 @@ export class BattleScene extends HTMLElement {
 
         yield trace.log(`--- Turn ${this.CurrentTurn} ---`);
 
+        if (this.CurrentTurn < 4) {
+            let location = this.Locations[this.CurrentTurn - 1];
+            yield* location.Reveal(trace.fork());
+        }
+
         yield* this.Player.StartTurn(this.CurrentTurn, trace.fork());
         yield* this.Villain.StartTurn(this.CurrentTurn, trace.fork());
 
@@ -390,9 +395,10 @@ export class BattleScene extends HTMLElement {
             console.log("%c" + Message[kind], "color: yellow");
         }
 
-        let locations = [...this.querySelectorAll<LocationElement>("a-location")].map((location) => location.Instance);
-        for (let location of locations) {
-            yield* location.OnMessage(kind, new Trace());
+        for (let location of this.Locations) {
+            if (location.IsRevealed) {
+                yield* location.OnMessage(kind, new Trace());
+            }
 
             for (let card of location.GetRevealedCards()) {
                 yield* card.OnMessage(kind, new Trace());
@@ -409,8 +415,10 @@ export class BattleScene extends HTMLElement {
         yield* card.OnMessageSelf(kind, trace.fork());
 
         if (card.Location) {
-            // Then, broadcast the message to the card's location.
-            yield* card.Location.OnMessage(kind, trace.fork(), card);
+            // Then, broadcast the message to the card's location, if it's revealed.
+            if (card.Location.IsRevealed) {
+                yield* card.Location.OnMessage(kind, trace.fork(), card);
+            }
 
             // Then, broadcast the message to other revealed cards in the same location.
             for (let other of card.Location.GetRevealedCards()) {

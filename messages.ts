@@ -7,6 +7,7 @@ export enum Message {
     BattleEnds,
     TurnStarts,
     TurnEnds,
+    LocationReveals,
     CardEntersTable,
     CardLeavesTable,
     CardMovesFromLocation,
