@@ -78,8 +78,12 @@ export class LocationElement extends HTMLElement {
                     font-size: 20px;
                 }
                 .name-description {
+                    opacity: 0.3;
                     text-align: center;
                     width: 30%;
+                }
+                :host(.frontside) .name-description {
+                    opacity: 1;
                 }
             </style>
             <flex-row class="location">
