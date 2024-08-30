@@ -36,7 +36,7 @@ export class LocationElement extends HTMLElement {
                 <location-slot label=4></location-slot>
             </location-owner>
 
-            <location-owner slot="villain" reverse>
+            <location-owner slot="villain">
                 <location-slot label=1></location-slot>
                 <location-slot label=2></location-slot>
                 <location-slot label=3></location-slot>
@@ -52,6 +52,7 @@ export class LocationElement extends HTMLElement {
         this.shadowRoot!.innerHTML = html`
             <style>
                 :host {
+                    flex: 1;
                     padding: 10px;
                     margin: 10px;
                     background-color: bisque;
@@ -65,37 +66,30 @@ export class LocationElement extends HTMLElement {
                 .description {
                     margin: 10px 0;
                 }
-                ::slotted(location-owner) {
-                    width: 35%;
-                }
                 .points {
                     margin: 20px;
-                    display: flex;
-                    flex-direction: column;
-                    justify-content: center;
                     font-size: 20px;
                 }
                 .name-description {
                     opacity: 0.3;
                     text-align: center;
-                    width: 30%;
                 }
                 :host(.frontside) .name-description {
                     opacity: 1;
                 }
             </style>
-            <flex-row>
-                <slot name="player"></slot>
-                <div id="player-points" class="points">${this.Instance.GetScore(this.Instance.Battle.Player)}</div>
+            <flex-col style="height: 100%; align-items: center;">
+                <slot name="villain"></slot>
+                <div id="villain-points" class="points">${this.Instance.GetScore(this.Instance.Battle.Villain)}</div>
                 <div class="name-description">
                     <div class="name">${this.Instance.Name}</div>
                     <div class="description">
                         <slot name="description">${this.Instance.Description}</slot>
                     </div>
                 </div>
-                <div id="enemy-points" class="points">${this.Instance.GetScore(this.Instance.Battle.Villain)}</div>
-                <slot name="villain"></slot>
-            </flex-row>
+                <div id="player-points" class="points">${this.Instance.GetScore(this.Instance.Battle.Player)}</div>
+                <slot name="player"></slot>
+            </flex-col>
         `;
     }
 }

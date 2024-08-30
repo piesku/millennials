@@ -180,13 +180,13 @@ export class BattleScene extends HTMLElement {
                 </main>
                 <main name="playing">
                     <flex-row>
-                        <flex-col style="flex: 1;">
+                        <flex-col style="flex: 1; justify-content: space-evenly;">
                             <flex-row>
                                 <slot name="villain"></slot>
                             </flex-row>
-                            <flex-col style="flex: 1; justify-content: center;">
+                            <flex-row>
                                 <slot name="location"></slot>
-                            </flex-col>
+                            </flex-row>
                             <flex-row>
                                 <slot name="player"></slot>
                                 <flex-col>
