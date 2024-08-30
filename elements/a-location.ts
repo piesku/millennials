@@ -50,11 +50,19 @@ export class LocationElement extends HTMLElement {
     Render() {
         this.shadowRoot!.innerHTML = html`
             <style>
+                :host {
+                    background-color: bisque;
+                }
+                :host(.won) {
+                    background-color: lightgreen;
+                }
+                :host(.lost) {
+                    background-color: lightcoral;
+                }
                 .location {
                     border: 1px solid #000;
                     padding: 10px;
                     margin: 10px;
-                    background-color: bisque;
                 }
                 .description {
                     margin: 10px 0;

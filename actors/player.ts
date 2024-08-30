@@ -6,6 +6,21 @@ import {Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 import {ActorController} from "./ActorController.js";
 
+export const STARTING_DECK = [
+    Sprites.Raphael,
+    Sprites.Raphael,
+    Sprites.Raphael,
+    Sprites.Faceman,
+    Sprites.Faceman,
+    Sprites.Faceman,
+    Sprites.Hannibal,
+    Sprites.Hannibal,
+    Sprites.Hannibal,
+    Sprites.Murdock,
+    Sprites.Murdock,
+    Sprites.Murdock,
+];
+
 export class PlayerController extends ActorController {
     Type = "player" as const;
     Name = "You";

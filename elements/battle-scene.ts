@@ -71,6 +71,8 @@ export class BattleScene extends HTMLElement {
         const background_url = `url(${img_src})`;
 
         let current_view = this.State === "prep" ? "prep" : "playing";
+        let button_text = this.State === "playing" ? "Reveal" : this.State === "won" ? "Next!" : "Play Again";
+
         this.shadowRoot!.innerHTML = html`
             <style>
                 :host {
@@ -160,7 +162,7 @@ export class BattleScene extends HTMLElement {
                             </flex-col>
                             <flex-row>
                                 <slot name="player"></slot>
-                                <button id="end">${this.State === "playing" ? "End Turn" : "Next!"}</button>
+                                <button id="end">${button_text}</button>
                             </flex-row>
                         </flex-col>
                         <slot name="log"></slot>
@@ -191,6 +193,7 @@ export class BattleScene extends HTMLElement {
         });
 
         this.shadowRoot!.addEventListener("click", (e) => {
+            let game = this.closest("game-container") as GameContainer;
             let target = e.target as HTMLElement;
             if (target.id === "end") {
                 switch (this.State) {
@@ -198,10 +201,10 @@ export class BattleScene extends HTMLElement {
                         this.RunEndTurn();
                         break;
                     case "won":
-                        let game = this.closest("game-container") as GameContainer;
                         game.ProgressToNextOpponent();
                         break;
                     case "lost":
+                        game.Reset();
                         break;
                 }
             }
@@ -309,7 +312,7 @@ export class BattleScene extends HTMLElement {
 
         this.CurrentTurn++;
 
-        yield trace.log(`--- Start Turn ${this.CurrentTurn} ---`);
+        yield trace.log(`--- Turn ${this.CurrentTurn} ---`);
 
         yield* this.Player.StartTurn(this.CurrentTurn, trace.fork());
         yield* this.Villain.StartTurn(this.CurrentTurn, trace.fork());
@@ -332,7 +335,7 @@ export class BattleScene extends HTMLElement {
     *EndTurn() {
         let trace = new Trace();
 
-        yield trace.log("--- End Turn ---");
+        yield trace.log("--- Revealing Cards ---");
 
         for (let card of this.querySelectorAll<CardElement>("a-table a-card")) {
             if (!card.Instance.IsRevealed) {
@@ -358,13 +361,28 @@ export class BattleScene extends HTMLElement {
     *GameEnd() {
         let trace = new Trace();
 
-        // TODO Calculate the winner.
+        yield trace.log("--- The Reviews Are In ---");
 
-        yield trace.log("--- You Win ---");
-        yield* this.BroadcastGameMessage(Message.BattleEnds);
+        let locations_won = 0;
+        for (let location of this.Locations) {
+            if (location.GetScore(this.Player) >= location.GetScore(this.Villain)) {
+                locations_won++;
+                location.Element.classList.add("won");
+                yield trace.log(`You win ${location.Name}`);
+            } else {
+                location.Element.classList.add("lost");
+                yield trace.log(`You lose ${location.Name}`);
+            }
+        }
 
-        this.State = "won";
+        if (locations_won >= this.Locations.length / 2) {
+            this.State = "won";
+        } else {
+            this.State = "lost";
+        }
+
         this.Render();
+        yield* this.BroadcastGameMessage(Message.BattleEnds);
     }
 
     *BroadcastGameMessage(kind: Message) {

@@ -1,5 +1,5 @@
+import {STARTING_DECK} from "../actors/player.js";
 import {html} from "../lib/html.js";
-import {Sprites} from "../sprites/sprites.js";
 import {BattleScene} from "./battle-scene.js";
 
 export class GameContainer extends HTMLElement {
@@ -81,23 +81,9 @@ export class GameContainer extends HTMLElement {
         this.ReRender();
     }
 
-    PlayerDeck = history.state?.PlayerDeck ?? [
-        Sprites.Raphael,
-        Sprites.Raphael,
-        Sprites.Raphael,
-        Sprites.Faceman,
-        Sprites.Faceman,
-        Sprites.Faceman,
-        Sprites.Hannibal,
-        Sprites.Hannibal,
-        Sprites.Hannibal,
-        Sprites.Murdock,
-        Sprites.Murdock,
-        Sprites.Murdock,
-    ];
-
-    CurrentOpponent = history.state?.CurrentOpponent ?? -1;
     CurrentView = history.state?.CurrentView ?? "title";
+    CurrentOpponent = history.state?.CurrentOpponent ?? -1;
+    PlayerDeck = history.state?.PlayerDeck ?? [...STARTING_DECK];
 
     InitBattle() {
         let battle = this.querySelector<BattleScene>(`battle-scene[name="${this.CurrentOpponent}"]`);
@@ -125,6 +111,16 @@ export class GameContainer extends HTMLElement {
         this.ReRender();
 
         this.InitBattle();
+    }
+
+    Reset() {
+        this.CurrentView = "title";
+        this.CurrentOpponent = -1;
+        this.PlayerDeck = [...STARTING_DECK];
+        this.PushState();
+
+        // TODO: New seed, regen the battles.
+        history.go();
     }
 
     PushState() {
