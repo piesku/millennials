@@ -10,7 +10,7 @@ export class GameContainer extends HTMLElement {
         this.PushState();
     }
 
-    ReRender() {
+    Render() {
         this.shadowRoot!.innerHTML = html`
             <style>
                 :host {
@@ -42,24 +42,25 @@ export class GameContainer extends HTMLElement {
                 case "title":
                     this.CurrentView = "title";
                     this.PushState();
+                    this.Render();
                     break;
                 case "run":
                     this.CurrentView = "run";
                     this.ProgressToNextOpponent();
+                    this.Render();
                     break;
                 case "collection":
                     this.CurrentView = "collection";
                     this.PushState();
+                    this.Render();
                     break;
             }
-
-            this.ReRender();
         });
 
         window.addEventListener("popstate", (e) => {
             if (e.state) {
                 Object.assign(this, e.state);
-                this.ReRender();
+                this.Render();
             }
         });
 
@@ -79,7 +80,7 @@ export class GameContainer extends HTMLElement {
                 break;
         }
 
-        this.ReRender();
+        this.Render();
     }
 
     CurrentView = history.state?.CurrentView ?? "title";
@@ -114,7 +115,7 @@ export class GameContainer extends HTMLElement {
         }
 
         this.PushState();
-        this.ReRender();
+        this.Render();
 
         this.InitBattle();
     }

@@ -38,7 +38,7 @@ export abstract class ActorController {
         yield* this.DrawCard(trace);
 
         this.CurrentEnergy = this.MaxEnergy = turn;
-        this.Element.ReRender();
+        this.Element.Render();
     }
 
     *DrawCard(trace: Trace, target?: Element) {
@@ -88,7 +88,7 @@ export abstract class ActorController {
             this.Battle.PlayedCardsQueue.push(card.Instance);
 
             this.CurrentEnergy -= card.Instance.CurrentCost;
-            this.Element.ReRender();
+            this.Element.Render();
         }
     }
 }

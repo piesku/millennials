@@ -57,7 +57,7 @@ export class ActorElement extends HTMLElement {
         `;
     }
 
-    ReRender() {
+    Render() {
         this.connectedCallback();
     }
 }

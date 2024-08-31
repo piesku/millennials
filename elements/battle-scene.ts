@@ -197,7 +197,7 @@ export class BattleScene extends HTMLElement {
                 }
 
                 card.Instance.Owner.CurrentEnergy -= card.Instance.CurrentCost;
-                card.Instance.Owner.Element.ReRender();
+                card.Instance.Owner.Element.Render();
 
                 this.PlayedCardsQueue.push(card.Instance);
                 let location = card.closest<LocationElement>("a-location")!.Instance;
@@ -224,7 +224,7 @@ export class BattleScene extends HTMLElement {
                 let card = this.PlayedCardsQueue.pop();
                 if (card && card.Owner === this.Player && !card.IsRevealed) {
                     card.Owner.CurrentEnergy += card.CurrentCost;
-                    card.Owner.Element.ReRender();
+                    card.Owner.Element.Render();
 
                     // TODO This reorders the cards in the hand.
                     this.Player.Hand.append(card.Element);
