@@ -17,7 +17,7 @@ export abstract class ActorController {
     constructor(public Element: ActorElement) {}
 
     toString() {
-        return `<actor-chip>${this.Name}</actor-chip>`;
+        return `<log-chip class="actor">${this.Name}</log-chip>`;
     }
 
     get Battle() {

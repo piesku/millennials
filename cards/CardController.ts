@@ -22,7 +22,7 @@ export abstract class CardController {
     constructor(public Element: CardElement) {}
 
     toString() {
-        return `<card-chip>${this.Name}</card-chip>`;
+        return `<log-chip class="card" for="${this.Id}">${this.Name}</log-chip>`;
     }
 
     get CurrentCost() {

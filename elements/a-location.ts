@@ -48,6 +48,7 @@ export class LocationElement extends HTMLElement {
     }
 
     Render() {
+        this.id = `_${this.Instance.Id}`;
         this.shadowRoot!.innerHTML = html`
             <style>
                 :host {

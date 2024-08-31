@@ -19,24 +19,31 @@
         display: block;
     }
 
-    actor-chip,
-    card-chip,
-    location-chip {
+    log-chip {
         border: 1px solid #aaa;
         border-radius: 3px;
         padding: 0px 2px;
+        cursor: pointer;
     }
 
-    actor-chip {
+    log-chip.actor {
         background-color: #fee;
     }
 
-    card-chip {
+    log-chip.card {
         background-color: #fff;
     }
 
-    location-chip {
+    log-chip.location {
         background-color: #efe;
+    }
+
+    [id] {
+        transition: scale 0.2s;
+    }
+
+    .hilite {
+        scale: 1.2;
     }
 </style>
 

@@ -108,7 +108,7 @@ export class CardElement extends HTMLElement {
     }
 
     Render() {
-        this.id = this.Instance.Id.toString();
+        this.id = `_${this.Instance.Id}`;
 
         const target_width = 120;
         const target_height = 140;
