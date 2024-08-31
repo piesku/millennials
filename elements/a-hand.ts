@@ -42,7 +42,7 @@ export class HandElement extends HTMLElement {
                     z-index: var(--z);
                 }
                 ::slotted(a-card:hover) {
-                    scale: 1.2;
+                    transform: translateY(calc(var(--y) - 30px)) rotate(var(--tilt)) scale(1.2);
                     z-index: 100;
                 }
             </style>
