@@ -24,7 +24,7 @@ export class Hannibal extends CardController {
         switch (kind) {
             case Message.CardEntersTable:
                 if (card.Owner === this.Owner) {
-                    yield trace.log(`it has +1 power from ${this.Name}`);
+                    yield trace.log(`${card.Name} has +1 power from ${this.Name}`);
                     card.AddModifier(this, "addpower", 1);
                 }
                 break;

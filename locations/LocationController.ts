@@ -4,12 +4,14 @@ import {CardElement} from "../elements/a-card.js";
 import {LocationElement} from "../elements/a-location.js";
 import {BattleScene} from "../elements/battle-scene.js";
 import {LocationSlot} from "../elements/location-slot.js";
+import {next_id} from "../lib/id.js";
 import {Message, Trace} from "../messages.js";
 
 export abstract class LocationController {
     abstract Name: string;
     abstract Description: string;
 
+    Id = next_id();
     IsRevealed = false;
 
     constructor(public Element: LocationElement) {}
@@ -59,19 +61,20 @@ export abstract class LocationController {
 
     *OnMessage(kind: Message, trace: Trace, card?: CardController): Generator<[Trace, string], void> {}
 
-    *AddCard(card: CardController, trace: Trace, owner: ActorController, slot_index?: number) {
-        const side = this.Element.querySelector(`location-owner[slot=${owner.Type}]`)!;
+    // TODO Take the slot element instead of the index.
+    *AddCard(card: CardController, trace: Trace, actor: ActorController, slot_index?: number) {
+        const side = this.Element.querySelector(`location-owner[slot="${actor.Type}"]`)!;
         let slot =
             slot_index === undefined
                 ? side.querySelector("location-slot:not(:has(a-card))")
-                : side.querySelector(`location-slot[label=${slot_index + 1}]`);
+                : side.querySelector(`location-slot[label="${slot_index + 1}"]`);
         if (slot) {
             if (card.Element.closest("a-hand")) {
-                yield* owner.Battle.BroadcastCardMessage(Message.CardLeavesHand, trace, card);
+                yield* actor.Battle.BroadcastCardMessage(Message.CardLeavesHand, trace, card);
             } else if (card.Element.closest("a-deck")) {
-                yield* owner.Battle.BroadcastCardMessage(Message.CardLeavesDeck, trace, card);
+                yield* actor.Battle.BroadcastCardMessage(Message.CardLeavesDeck, trace, card);
             } else if (card.Element.closest("a-trash")) {
-                yield* owner.Battle.BroadcastCardMessage(Message.CardLeavesTrash, trace, card);
+                yield* actor.Battle.BroadcastCardMessage(Message.CardLeavesTrash, trace, card);
             }
             slot.appendChild(card.Element);
             yield* card.Reveal(trace);

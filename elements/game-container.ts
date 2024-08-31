@@ -1,5 +1,6 @@
 import {STARTING_DECK} from "../actors/player.js";
 import {html} from "../lib/html.js";
+import {CardElement} from "./a-card.js";
 import {BattleScene} from "./battle-scene.js";
 
 export class GameContainer extends HTMLElement {
@@ -84,6 +85,11 @@ export class GameContainer extends HTMLElement {
     CurrentView = history.state?.CurrentView ?? "title";
     CurrentOpponent = history.state?.CurrentOpponent ?? -1;
     PlayerDeck = history.state?.PlayerDeck ?? [...STARTING_DECK];
+
+    get AllCards() {
+        let card_elements = this.shadowRoot!.querySelectorAll<CardElement>("collection-viewer a-card");
+        return Array.from(card_elements, (card) => card.Instance);
+    }
 
     InitBattle() {
         let battle = this.querySelector<BattleScene>(`battle-scene[name="${this.CurrentOpponent}"]`);

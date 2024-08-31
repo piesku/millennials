@@ -17,9 +17,7 @@ export function float(min = 0, max = 1) {
     return rand() * (max - min) + min;
 }
 
-export function element<T extends Node>(list: NodeListOf<T>): T;
-export function element<T>(list: Array<T>): T;
-export function element(list: Array<any> | NodeList) {
+export function element<T>(list: T extends Node ? NodeListOf<T> | Array<T> : Array<T>) {
     return list[integer(0, list.length - 1)];
 }
 

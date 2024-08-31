@@ -95,6 +95,8 @@ export class CardElement extends HTMLElement {
         this.Instance = new CardElement.Controllers[parseInt(new_value) as Sprites](this);
         this.BaseCost = this.Instance.Cost;
         this.BasePower = this.Instance.Power;
+
+        this.ReRender();
     }
 
     connectedCallback() {

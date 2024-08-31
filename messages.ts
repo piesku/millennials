@@ -21,8 +21,12 @@ export enum Message {
 }
 
 export class Trace extends Array<CardController | LocationController | 1> {
-    fork() {
-        return this.slice() as Trace;
+    fork(indent?: 1) {
+        let trace = this.slice() as Trace;
+        if (indent) {
+            trace.push(indent);
+        }
+        return trace;
     }
 
     log(msg: string): [Trace, string] {

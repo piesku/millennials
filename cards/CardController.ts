@@ -76,7 +76,7 @@ export abstract class CardController {
         return location?.Instance;
     }
 
-    AddModifier(origin: CardController, op: string, value: number) {
+    AddModifier(origin: CardController | LocationController, op: string, value: number) {
         let modifier = document.createElement("a-modifier")!;
         modifier.setAttribute("origin-id", origin.Id.toString());
         modifier.setAttribute("origin-name", origin.Name);
@@ -112,8 +112,11 @@ export abstract class CardController {
     *OnMessageSelf(kind: Message, trace: Trace): Generator<[Trace, string], void> {}
 
     *Reveal(trace: Trace) {
+        DEBUG: if (!this.Location) {
+            throw `${this.Name} must be in a location to be revealed`;
+        }
         if (trace.length === 0) {
-            yield trace.log(`${this.Name} is revealed`);
+            yield trace.log(`${this.Name} is revealed in ${this.Location.Name}`);
         }
         this.Element.classList.add("frontside");
         yield* this.OnReveal(trace.fork());

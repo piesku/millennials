@@ -50,6 +50,6 @@ import "./cards/tmnt-michaelangelo.js";
 import "./cards/tmnt-raphael.js";
 import "./cards/woo-dy.js";
 
-import "./locations/arkham-asylum.js";
-import "./locations/death-star.js";
-import "./locations/future-hill-valley.js";
+import "./locations/StarWars_ANewHope.js";
+import "./locations/StarWars_ReturnOfTheJedi.js";
+import "./locations/StarWars_TheEmpireStrikesBack.js";

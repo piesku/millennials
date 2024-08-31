@@ -1,16 +1,16 @@
 import {html} from "../lib/html.js";
-import {ArkhamAsylum} from "../locations/arkham-asylum.js";
-import {DeathStar} from "../locations/death-star.js";
-import {FutureHillValey} from "../locations/future-hill-valley.js";
 import {LocationController} from "../locations/LocationController.js";
+import {ANewHope} from "../locations/StarWars_ANewHope.js";
+import {ReturnOfTheJedi} from "../locations/StarWars_ReturnOfTheJedi.js";
+import {TheEmpireStrikesBack} from "../locations/StarWars_TheEmpireStrikesBack.js";
 
 export class LocationElement extends HTMLElement {
     Instance!: LocationController;
 
     static Controllers: Record<string, new (el: LocationElement) => LocationController> = {
-        "arkham-asylum": ArkhamAsylum,
-        "death-star": DeathStar,
-        "future-hill-valley": FutureHillValey,
+        "arkham-asylum": TheEmpireStrikesBack,
+        "death-star": ANewHope,
+        "future-hill-valley": ReturnOfTheJedi,
     };
 
     constructor() {
