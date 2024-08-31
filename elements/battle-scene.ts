@@ -98,8 +98,8 @@ export class BattleScene extends HTMLElement {
                 }
 
                 ::slotted(a-log) {
-                    display: flex;
-                    flex-direction: column;
+                    display: block;
+                    resize: horizontal;
                     box-sizing: border-box;
                     width: 400px;
                     height: 100vh;
