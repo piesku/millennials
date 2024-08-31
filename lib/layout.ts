@@ -60,7 +60,6 @@ customElements.define(
             this.shadowRoot!.innerHTML = `
                 <style>
                     :host {
-                        height: 100%;
                         display: flex;
                         flex-direction: column;
                         justify-content: space-between;

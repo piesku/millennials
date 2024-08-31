@@ -164,13 +164,18 @@ export class BattleScene extends HTMLElement {
                 <main name="playing">
                     <flex-row>
                         <flex-col style="flex: 1;">
-                            <slot name="villain"></slot>
+                            <flex-row>
+                                <slot name="villain"></slot>
+                            </flex-row>
                             <flex-col style="flex: 1; justify-content: center;">
                                 <slot name="location"></slot>
                             </flex-col>
                             <flex-row>
                                 <slot name="player"></slot>
-                                <button id="end">${button_text}</button>
+                                <flex-col>
+                                    <button id="end" style="flex:1">${button_text}</button>
+                                    <button id="undo">Undo</button>
+                                </flex-col>
                             </flex-row>
                         </flex-col>
                         <slot name="log"></slot>
@@ -196,7 +201,7 @@ export class BattleScene extends HTMLElement {
 
                 this.PlayedCardsQueue.push(card.Instance);
                 let location = card.closest<LocationElement>("a-location")!.Instance;
-                console.log(`you play ${card.Instance.Name} to ${location.Name}`);
+                this.Log(new Trace(), `You play ${card.Instance.Name} to ${location.Name}`);
             }
         });
 
@@ -214,6 +219,18 @@ export class BattleScene extends HTMLElement {
                     case "lost":
                         game.Reset();
                         break;
+                }
+            } else if (target.id === "undo") {
+                let card = this.PlayedCardsQueue.pop();
+                if (card && card.Owner === this.Player && !card.IsRevealed) {
+                    card.Owner.CurrentEnergy += card.CurrentCost;
+                    card.Owner.Element.ReRender();
+
+                    // TODO This reorders the cards in the hand.
+                    this.Player.Hand.append(card.Element);
+
+                    let log_element = this.querySelector("a-log");
+                    log_element?.lastElementChild?.remove();
                 }
             }
         });

@@ -17,7 +17,19 @@ export abstract class ActorController {
     constructor(public Element: ActorElement) {}
 
     get Battle() {
-        return this.Element.closest<BattleScene>("battle-scene")!;
+        let battle = this.Element.closest<BattleScene>("battle-scene");
+        DEBUG: if (!battle) {
+            throw "Actor must be inside a battle";
+        }
+        return battle;
+    }
+
+    get Hand() {
+        let hand = this.Element.querySelector("a-hand");
+        DEBUG: if (!hand) {
+            throw "Actor must have a hand";
+        }
+        return hand;
     }
 
     abstract StartBattle(trace: Trace): Generator<[Trace, string], void>;
