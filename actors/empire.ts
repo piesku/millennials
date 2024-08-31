@@ -18,8 +18,6 @@ export class Stormtrooper extends CardController {
     Text = `Once: +1 for each revealed ${this.Name}`;
     Sprite = Sprites.Stormtrooper;
     override *OnReveal(trace: Trace) {
-        trace.push(this);
-
         const revealedCards = this.Battle.GetRevealedCards();
         const sameNameCards = revealedCards.filter((card) => card.Name === this.Name);
         const count = sameNameCards.length;

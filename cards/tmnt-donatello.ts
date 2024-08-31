@@ -10,7 +10,6 @@ export class Donatello extends CardController {
     Sprite = Sprites.Donatello;
 
     override *OnMessage(kind: Message, trace: Trace, card?: CardController) {
-        trace.push(this);
         switch (kind) {
             case Message.CardEntersTable:
                 if (card?.Owner === this.Owner && this.Battle.PlayedCardsQueue.includes(card)) {

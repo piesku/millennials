@@ -11,8 +11,6 @@ export class Woody extends CardController {
     Sprite = Sprites.Woody;
 
     override *OnReveal(trace: Trace) {
-        trace.push(this);
-
         let deck = this.Owner.Element.querySelector("a-deck")!;
         let card = deck.firstElementChild as CardElement;
         if (card) {

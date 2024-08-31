@@ -420,13 +420,15 @@ export class BattleScene extends HTMLElement {
             console.log("%c" + Message[kind], "color: orange");
         }
 
+        let trace = new Trace();
+
         for (let location of this.Locations) {
             if (location.IsRevealed) {
-                yield* location.OnMessage(kind, new Trace());
+                yield* location.OnMessage(kind, trace.fork(location));
             }
 
             for (let card of location.GetRevealedCards()) {
-                yield* card.OnMessage(kind, new Trace());
+                yield* card.OnMessage(kind, trace.fork(card));
             }
         }
     }
@@ -439,18 +441,18 @@ export class BattleScene extends HTMLElement {
         );
 
         // First, broadcast the message to the card itself.
-        yield* card.OnMessageSelf(kind, trace.fork());
+        yield* card.OnMessageSelf(kind, trace.fork(card));
 
         if (card.Location) {
             // Then, broadcast the message to the card's location, if it's revealed.
             if (card.Location.IsRevealed && !trace.includes(card.Location)) {
-                yield* card.Location.OnMessage(kind, trace.fork(), card);
+                yield* card.Location.OnMessage(kind, trace.fork(card.Location), card);
             }
 
             // Then, broadcast the message to other revealed cards in the same location.
             for (let other of card.Location.GetRevealedCards()) {
                 if (other.Element !== card.Element && !trace.includes(other)) {
-                    yield* other.OnMessage(kind, trace.fork(), card);
+                    yield* other.OnMessage(kind, trace.fork(other), card);
                 }
             }
 
@@ -458,12 +460,12 @@ export class BattleScene extends HTMLElement {
             let locations = this.Locations.filter((location) => location !== card.Location);
             for (let location of locations) {
                 if (location.IsRevealed && !trace.includes(location)) {
-                    yield* location.OnMessage(kind, trace.fork(), card);
+                    yield* location.OnMessage(kind, trace.fork(location), card);
                 }
 
                 for (let other of location.GetRevealedCards()) {
                     if (!trace.includes(other)) {
-                        yield* other.OnMessage(kind, trace.fork(), card);
+                        yield* other.OnMessage(kind, trace.fork(other), card);
                     }
                 }
             }
@@ -492,7 +494,8 @@ export class BattleScene extends HTMLElement {
     Log(trace: Trace, message: string) {
         const logDisplay = this.querySelector("a-log") as HTMLElement;
         if (logDisplay) {
-            let indent = trace.map((item) => "…").join(" ");
+            let tabs = trace.map((item) => (typeof item === "number" ? item : 1)).reduce((a, b) => a + b, 0);
+            let indent = new Array(tabs).fill("…").join(" ");
             console.log(`%c${indent} ${message}`, "color: green", trace);
 
             if (message.startsWith("---") && message.endsWith("---")) {

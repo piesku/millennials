@@ -10,8 +10,6 @@ export class Robocop extends CardController {
     Sprite = Sprites.Robocop;
 
     override *OnReveal(trace: Trace) {
-        trace.push(this);
-
         let other_revealed_cards = this.Location!.GetRevealedCards(this.Owner);
         for (let card of other_revealed_cards) {
             yield trace.log(`${card.Name} gets +1 power`);

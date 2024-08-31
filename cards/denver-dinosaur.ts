@@ -10,8 +10,6 @@ export class DenverDinosaur extends CardController {
     Sprite = Sprites.Denver;
 
     override *OnMessage(kind: Message, trace: Trace) {
-        trace.push(this);
-
         switch (kind) {
             case Message.TurnEnds:
                 if (this.Owner.CurrentEnergy > 0) {

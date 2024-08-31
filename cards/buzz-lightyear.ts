@@ -10,8 +10,6 @@ export class BuzzLightyear extends CardController {
     Sprite = Sprites.Buzz;
 
     override *OnMessage(kind: Message, trace: Trace) {
-        trace.push(this);
-
         switch (kind) {
             case Message.TurnStarts:
                 if (this.Battle.CurrentTurn === this.TurnPlayed + 1) {

@@ -7,8 +7,6 @@ export class ReturnOfTheJedi extends LocationController {
     Name = "Return of the Jedi";
     Description = "Transform any card played here into another card of the same cost.";
     override *OnMessage(kind: Message, trace: Trace, card: CardController) {
-        trace.push(this);
-
         if (card?.Location === this) {
             switch (kind) {
                 case Message.CardEntersTable:

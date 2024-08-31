@@ -119,11 +119,11 @@ export abstract class CardController {
             yield trace.log(`${this.Name} is revealed in ${this.Location.Name}`);
         }
         this.Element.classList.add("frontside");
-        yield* this.OnReveal(trace.fork());
+        yield* this.OnReveal(trace.fork(this));
         this.IsRevealed = true;
         this.TurnPlayed = this.Battle.CurrentTurn;
 
-        yield* this.Battle.BroadcastCardMessage(Message.CardEntersTable, trace.fork(), this);
+        yield* this.Battle.BroadcastCardMessage(Message.CardEntersTable, trace, this);
     }
 
     /**
@@ -138,11 +138,11 @@ export abstract class CardController {
 
     *Trash(trace: Trace) {
         if (this.Element.closest("a-hand")) {
-            yield* this.Battle.BroadcastCardMessage(Message.CardLeavesHand, trace.fork(), this);
+            yield* this.Battle.BroadcastCardMessage(Message.CardLeavesHand, trace, this);
         } else if (this.Element.closest("a-deck")) {
-            yield* this.Battle.BroadcastCardMessage(Message.CardLeavesDeck, trace.fork(), this);
+            yield* this.Battle.BroadcastCardMessage(Message.CardLeavesDeck, trace, this);
         } else if (this.Element.closest("a-location")) {
-            yield* this.Battle.BroadcastCardMessage(Message.CardLeavesTable, trace.fork(), this);
+            yield* this.Battle.BroadcastCardMessage(Message.CardLeavesTable, trace, this);
         } else if (DEBUG) {
             throw `Card ${this.Name} is not in a valid location to be trashed`;
         }
@@ -151,7 +151,7 @@ export abstract class CardController {
         trash.appendChild(this.Element);
         yield trace.log(`${this.Name} has been trashed`);
 
-        yield* this.Battle.BroadcastCardMessage(Message.CardEntersTrash, trace.fork(), this);
+        yield* this.Battle.BroadcastCardMessage(Message.CardEntersTrash, trace, this);
     }
 
     *Move(trace: Trace, slot: HTMLElement) {
@@ -159,10 +159,10 @@ export abstract class CardController {
 
         const is_slot_taken = !!slot.querySelector("a-card");
         if (!is_slot_taken) {
-            yield* this.Battle.BroadcastCardMessage(Message.CardMovesFromLocation, trace.fork(), this);
+            yield* this.Battle.BroadcastCardMessage(Message.CardMovesFromLocation, trace, this);
             slot.appendChild(this.Element);
             yield trace.log(`${this.Name} moved from ${this.Location!.Name} to ${target_location.Name} `);
-            yield* this.Battle.BroadcastCardMessage(Message.CardMovesToLocation, trace.fork(), this);
+            yield* this.Battle.BroadcastCardMessage(Message.CardMovesToLocation, trace, this);
         } else {
             yield trace.log(
                 `${this.Name} could not move to ${target_location.Name} because the slot nr ${slot} is already taken`,

@@ -10,8 +10,6 @@ export class Baracus extends CardController {
     Sprite = Sprites.BABaracus;
 
     override *OnReveal(trace: Trace) {
-        trace.push(this);
-
         const locations = this.Battle.querySelectorAll("a-location");
         let locationIndex = -1;
 

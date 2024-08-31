@@ -10,10 +10,7 @@ export class Faceman extends CardController {
     Sprite = Sprites.Faceman;
 
     override *OnReveal(trace: Trace) {
-        trace.push(this);
-
         let deck = this.Opponent.Element.querySelector("a-deck")!;
-        yield trace.log(`${this.Owner.Name} draws a card from ${this.Opponent.Name}'s deck`);
         yield* this.Owner.DrawCard(trace, deck);
     }
 }

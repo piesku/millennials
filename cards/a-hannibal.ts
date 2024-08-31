@@ -10,8 +10,6 @@ export class Hannibal extends CardController {
     Sprite = Sprites.Hannibal;
 
     override *OnReveal(trace: Trace) {
-        trace.push(this);
-
         for (let card of this.Battle.GetRevealedCards(this.Owner)) {
             yield trace.log(`${card.Name} has +1 power`);
             card.AddModifier(this, "addpower", 1);
@@ -19,8 +17,6 @@ export class Hannibal extends CardController {
     }
 
     override *OnMessage(kind: Message, trace: Trace, card: CardController) {
-        trace.push(this);
-
         switch (kind) {
             case Message.CardEntersTable:
                 if (card.Owner === this.Owner) {
@@ -32,8 +28,6 @@ export class Hannibal extends CardController {
     }
 
     override *OnMessageSelf(kind: Message, trace: Trace) {
-        trace.push(this);
-
         switch (kind) {
             case Message.CardLeavesTable:
                 this.Battle.CleanUp(this);

@@ -11,8 +11,6 @@ export class Blade extends CardController {
     Sprite = Sprites.Blade;
 
     override *OnReveal(trace: Trace) {
-        trace.push(this);
-
         const deck = this.Owner.Element.querySelector("a-deck");
         if (deck && deck.firstElementChild) {
             const topCard = deck.firstElementChild as CardElement;

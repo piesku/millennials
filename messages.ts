@@ -20,11 +20,13 @@ export enum Message {
     CardLeavesTrash,
 }
 
-export class Trace extends Array<CardController | LocationController | 1> {
-    fork(indent?: 1) {
+type Traceable = CardController | LocationController | 1 | -1;
+
+export class Trace extends Array<Traceable> {
+    fork(traceable?: Traceable) {
         let trace = this.slice() as Trace;
-        if (indent) {
-            trace.push(indent);
+        if (traceable) {
+            trace.push(traceable);
         }
         return trace;
     }

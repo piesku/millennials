@@ -7,8 +7,6 @@ export class AttackOfTheClones extends LocationController {
     Name = "Attack of the Clones";
     Description = "Cards played here fill the location with their copies.";
     override *OnMessage(kind: Message, trace: Trace, card: CardController) {
-        trace.push(this);
-
         if (card?.Location === this) {
             switch (kind) {
                 case Message.CardEntersTable:
