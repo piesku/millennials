@@ -96,39 +96,20 @@ export class CardElement extends HTMLElement {
         this.BaseCost = this.Instance.Cost;
         this.BasePower = this.Instance.Power;
 
-        this.ReRender();
+        this.Render();
     }
 
     connectedCallback() {
-        if (DEBUG && !this.hasAttribute("type")) {
+        DEBUG: if (!this.hasAttribute("type")) {
             throw new Error("CardElement: type attribute is required");
         }
 
-        this.ReRender();
-
-        let dialog = this.shadowRoot!.querySelector("dialog")!;
-        let bbox = dialog.getBoundingClientRect();
-
-        dialog.addEventListener("mouseenter", (ev) => {
-            bbox = dialog.getBoundingClientRect();
-        });
-
-        dialog.addEventListener("mousemove", (ev) => {
-            let x = ev.clientX - bbox.left;
-            let y = ev.clientY - bbox.top;
-            let x_percent = x / bbox.width;
-            let y_percent = y / bbox.height;
-            let x_rotation = (x_percent - 0.5) * 20;
-            let y_rotation = (0.5 - y_percent) * 20;
-
-            dialog.style.setProperty("--x-rotation", `${y_rotation}deg`);
-            dialog.style.setProperty("--y-rotation", `${x_rotation}deg`);
-            dialog.style.setProperty("--x", `${x_percent * 100}%`);
-            dialog.style.setProperty("--y", `${y_percent * 100}%`);
-        });
+        this.Render();
     }
 
-    ReRender() {
+    Render() {
+        this.id = this.Instance.Id.toString();
+
         const target_width = 120;
         const target_height = 140;
 
@@ -247,12 +228,14 @@ export class CardElement extends HTMLElement {
                 #power.decr {
                     color: red;
                     scale: 5;
+                    z-index: 1;
                 }
 
                 #cost.decr,
                 #power.incr {
                     color: green;
                     scale: 5;
+                    z-index: 1;
                 }
 
                 .text-container {
@@ -349,7 +332,26 @@ export class CardElement extends HTMLElement {
             </dialog>
         `;
 
-        this.id = this.Instance.Id.toString();
+        let dialog = this.shadowRoot!.querySelector("dialog")!;
+        let bbox = dialog.getBoundingClientRect();
+
+        dialog.addEventListener("mouseenter", (ev) => {
+            bbox = dialog.getBoundingClientRect();
+        });
+
+        dialog.addEventListener("mousemove", (ev) => {
+            let x = ev.clientX - bbox.left;
+            let y = ev.clientY - bbox.top;
+            let x_percent = x / bbox.width;
+            let y_percent = y / bbox.height;
+            let x_rotation = (x_percent - 0.5) * 20;
+            let y_rotation = (0.5 - y_percent) * 20;
+
+            dialog.style.setProperty("--x-rotation", `${y_rotation}deg`);
+            dialog.style.setProperty("--y-rotation", `${x_rotation}deg`);
+            dialog.style.setProperty("--x", `${x_percent * 100}%`);
+            dialog.style.setProperty("--y", `${y_percent * 100}%`);
+        });
     }
 
     static Compare(a: CardElement, b: CardElement) {

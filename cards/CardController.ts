@@ -85,7 +85,7 @@ export abstract class CardController {
         this.Element.appendChild(modifier);
 
         // TODO Perhaps a MutationObserver would be a better way to handle this?
-        this.Element.ReRender();
+        this.Element.Render();
     }
 
     /**
