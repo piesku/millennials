@@ -10,7 +10,7 @@ export class TheEmpireStrikesBack extends LocationController {
             switch (kind) {
                 case Message.CardEntersTable:
                     card.AddModifier(this, "addpower", 2);
-                    yield trace.log(`${card.Name} gets +2 Power from ${this.Name}`);
+                    yield trace.log(`${card.Name} gets +2 Power from ${this}`);
                     break;
             }
         }

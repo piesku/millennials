@@ -15,7 +15,7 @@ export class Batman extends CardController {
         if (opponentDeck && opponentDeck.firstElementChild) {
             const topCard = opponentDeck.firstElementChild as CardElement;
             yield* topCard.Instance.Trash(trace);
-            yield trace.log(`${topCard.Instance.Name} has been trashed from the top of the opponent's deck`);
+            yield trace.log(`${topCard.Instance} has been trashed from the top of the opponent's deck`);
         } else {
             yield trace.log(`No card found on the top of the opponent's deck to trash`);
         }

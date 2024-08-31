@@ -21,7 +21,7 @@ export class Stormtrooper extends CardController {
         const revealedCards = this.Battle.GetRevealedCards();
         const sameNameCards = revealedCards.filter((card) => card.Name === this.Name);
         const count = sameNameCards.length;
-        yield trace.log(`There are ${count} ${this.Name} cards revealed`);
+        yield trace.log(`There are ${count} ${this} cards revealed`);
         this.AddModifier(this, "addpower", count);
     }
 }

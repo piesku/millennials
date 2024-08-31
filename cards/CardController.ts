@@ -21,6 +21,10 @@ export abstract class CardController {
 
     constructor(public Element: CardElement) {}
 
+    toString() {
+        return `<card-chip>${this.Name}</card-chip>`;
+    }
+
     get CurrentCost() {
         let result = this.Cost;
         for (let modifier of this.Element.querySelectorAll("a-modifier")) {
@@ -113,10 +117,10 @@ export abstract class CardController {
 
     *Reveal(trace: Trace) {
         DEBUG: if (!this.Location) {
-            throw `${this.Name} must be in a location to be revealed`;
+            throw `${this} must be in a location to be revealed`;
         }
         if (trace.length === 0) {
-            yield trace.log(`${this.Name} is revealed in ${this.Location.Name}`);
+            yield trace.log(`${this} is revealed in ${this.Location}`);
         }
         this.Element.classList.add("frontside");
         yield* this.OnReveal(trace.fork(this));
@@ -144,12 +148,12 @@ export abstract class CardController {
         } else if (this.Element.closest("a-location")) {
             yield* this.Battle.BroadcastCardMessage(Message.CardLeavesTable, trace, this);
         } else if (DEBUG) {
-            throw `Card ${this.Name} is not in a valid location to be trashed`;
+            throw `Card ${this} is not in a valid location to be trashed`;
         }
 
         const trash = this.Owner.Element.querySelector("a-trash")!;
         trash.appendChild(this.Element);
-        yield trace.log(`${this.Name} has been trashed`);
+        yield trace.log(`${this} has been trashed`);
 
         yield* this.Battle.BroadcastCardMessage(Message.CardEntersTrash, trace, this);
     }
@@ -161,11 +165,11 @@ export abstract class CardController {
         if (!is_slot_taken) {
             yield* this.Battle.BroadcastCardMessage(Message.CardMovesFromLocation, trace, this);
             slot.appendChild(this.Element);
-            yield trace.log(`${this.Name} moved from ${this.Location!.Name} to ${target_location.Name} `);
+            yield trace.log(`${this} moved from ${this.Location!} to ${target_location} `);
             yield* this.Battle.BroadcastCardMessage(Message.CardMovesToLocation, trace, this);
         } else {
             yield trace.log(
-                `${this.Name} could not move to ${target_location.Name} because the slot nr ${slot} is already taken`,
+                `${this} could not move to ${target_location} because the slot nr ${slot} is already taken`,
             );
         }
     }

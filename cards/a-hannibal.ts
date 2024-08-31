@@ -11,7 +11,7 @@ export class Hannibal extends CardController {
 
     override *OnReveal(trace: Trace) {
         for (let card of this.Battle.GetRevealedCards(this.Owner)) {
-            yield trace.log(`${card.Name} has +1 power`);
+            yield trace.log(`${card} has +1 power`);
             card.AddModifier(this, "addpower", 1);
         }
     }
@@ -20,7 +20,7 @@ export class Hannibal extends CardController {
         switch (kind) {
             case Message.CardEntersTable:
                 if (card.Owner === this.Owner) {
-                    yield trace.log(`${card.Name} has +1 power from ${this.Name}`);
+                    yield trace.log(`${card.Name} has +1 power from ${this}`);
                     card.AddModifier(this, "addpower", 1);
                 }
                 break;

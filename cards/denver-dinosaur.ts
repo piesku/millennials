@@ -13,7 +13,7 @@ export class DenverDinosaur extends CardController {
         switch (kind) {
             case Message.TurnEnds:
                 if (this.Owner.CurrentEnergy > 0) {
-                    yield trace.log(`${this.Name} gains +${this.Owner.CurrentEnergy} power`);
+                    yield trace.log(`${this} gains +${this.Owner.CurrentEnergy} power`);
                     this.AddModifier(this, "addpower", this.Owner.CurrentEnergy);
                 }
                 break;

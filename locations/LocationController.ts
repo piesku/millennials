@@ -16,6 +16,10 @@ export abstract class LocationController {
 
     constructor(public Element: LocationElement) {}
 
+    toString() {
+        return `<location-chip>${this.Name}</location-chip>`;
+    }
+
     get Battle() {
         return this.Element.closest<BattleScene>("battle-scene")!;
     }
@@ -48,7 +52,7 @@ export abstract class LocationController {
 
     *Reveal(trace: Trace) {
         if (trace.length === 0) {
-            yield trace.log(`${this.Name} is revealed`);
+            yield trace.log(`${this} is revealed`);
         }
         this.Element.classList.add("frontside");
         yield* this.OnReveal(trace.fork());

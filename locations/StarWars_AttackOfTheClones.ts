@@ -12,10 +12,10 @@ export class AttackOfTheClones extends LocationController {
                 case Message.CardEntersTable:
                     let empty_slots = this.GetEmptySlots(card.Owner);
                     if (empty_slots.length === 0) {
-                        yield trace.log(`but ${this.Name} is full`);
+                        yield trace.log(`but ${this} is full`);
                         break;
                     }
-                    yield trace.log(`${this.Name} fills with clones of ${card.Name}`);
+                    yield trace.log(`${this.Name} fills with clones of ${card}`);
                     for (let slot of empty_slots) {
                         let clone = document.createElement("a-card") as CardElement;
                         clone.setAttribute("type", card.Element.getAttribute("type")!);

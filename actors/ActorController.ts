@@ -16,6 +16,10 @@ export abstract class ActorController {
 
     constructor(public Element: ActorElement) {}
 
+    toString() {
+        return `<actor-chip>${this.Name}</actor-chip>`;
+    }
+
     get Battle() {
         let battle = this.Element.closest<BattleScene>("battle-scene");
         DEBUG: if (!battle) {
@@ -46,9 +50,9 @@ export abstract class ActorController {
         const deck = target ?? this.Element.querySelector("a-deck")!;
 
         if (this.Type === "player") {
-            yield trace.log(`${this.Name} draw a card`);
+            yield trace.log(`${this} draw a card`);
         } else {
-            yield trace.log(`${this.Name} draws a card`);
+            yield trace.log(`${this} draws a card`);
         }
 
         if (deck.firstElementChild && hand.children.length >= 7) {
@@ -58,7 +62,7 @@ export abstract class ActorController {
             card.setAttribute("draggable", "true");
 
             if (this.Type === "player") {
-                yield trace.fork(1).log(`it's ${card.Instance.Name}`);
+                yield trace.fork(1).log(`it's ${card.Instance}`);
             }
 
             yield* this.Battle.BroadcastCardMessage(Message.CardLeavesDeck, trace, card.Instance);
@@ -85,9 +89,9 @@ export abstract class ActorController {
             let slot = element(empty_slots);
             let location = slot.closest<LocationElement>("a-location")!.Instance;
             if (this.Element.id === "villain") {
-                yield trace.log(`${this.Name} plays a card to ${location.Name}`);
+                yield trace.log(`${this} plays a card to ${location}`);
             } else {
-                yield trace.log(`${this.Name} plays ${card.Instance.Name} to ${location.Name}`);
+                yield trace.log(`${this} plays ${card.Instance} to ${location}`);
             }
             slot.appendChild(card);
             this.Battle.PlayedCardsQueue.push(card.Instance);

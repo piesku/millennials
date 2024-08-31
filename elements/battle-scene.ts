@@ -201,7 +201,7 @@ export class BattleScene extends HTMLElement {
 
                 this.PlayedCardsQueue.push(card.Instance);
                 let location = card.closest<LocationElement>("a-location")!.Instance;
-                this.Log(new Trace(), `You play ${card.Instance.Name} to ${location.Name}`);
+                this.Log(new Trace(), `You play ${card.Instance} to ${location}`);
             }
         });
 
@@ -398,10 +398,10 @@ export class BattleScene extends HTMLElement {
             if (location.GetScore(this.Player) >= location.GetScore(this.Villain)) {
                 locations_won++;
                 location.Element.classList.add("won");
-                yield trace.log(`You win ${location.Name}`);
+                yield trace.log(`You win ${location}`);
             } else {
                 location.Element.classList.add("lost");
-                yield trace.log(`You lose ${location.Name}`);
+                yield trace.log(`You lose ${location}`);
             }
         }
 
