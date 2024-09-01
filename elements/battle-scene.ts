@@ -69,14 +69,16 @@ export class BattleScene extends HTMLElement {
             locations.push(location.Instance);
         }
 
-        const sprite_height = 16;
-        const sprite_padding = 1;
-        const target_size = 240;
-        const scale = target_size / sprite_height;
-        const sprite_y = (sprite_height + sprite_padding) * this.Villain.Sprite * scale;
+        const sprite_height = 10;
+        const target_height = 240;
+        const pixel_size = target_height / sprite_height;
+        const sprite_y = (sprite_height + 1) * this.Villain.Sprite * pixel_size;
 
-        const img_src = document.querySelector("body > img[hidden]")?.getAttribute("src");
-        const background_url = `url(${img_src})`;
+        const spritesheet_src = document.querySelector("img#sheet")?.getAttribute("src");
+        const background_url = `url(${spritesheet_src})`;
+
+        const mask_src = document.querySelector("img#mask")?.getAttribute("src");
+        const mask_url = `url(${mask_src})`;
 
         let current_view = this.State === "prep" ? "prep" : "playing";
         let button_text = this.State === "playing" ? "Reveal" : this.State === "won" ? "Next!" : "Play Again";
@@ -121,6 +123,31 @@ export class BattleScene extends HTMLElement {
                     margin: 10px;
                     width: 100px;
                 }
+
+                .sprite-border {
+                    position: relative;
+                    height: ${target_height}px;
+                    background: ${color_from_seed(this.Villain.Name)};
+                    overflow: hidden;
+                }
+
+                .sprite {
+                    width: ${target_height / 2}px;
+                    height: ${target_height}px;
+                    margin: 0 ${pixel_size * 2}px 0 ${pixel_size * 3}px;
+                    background-image: ${background_url};
+                    background-position: 0 -${sprite_y}px;
+                    background-size: ${target_height / 2}px auto;
+                    image-rendering: pixelated;
+                }
+
+                .mask {
+                    position: absolute;
+                    inset: 0;
+                    background-image: ${mask_url};
+                    background-size: ${target_height}px auto;
+                    image-rendering: pixelated;
+                }
             </style>
             <multi-view current="${current_view}">
                 <main name="prep" style="padding:20px;">
@@ -140,16 +167,10 @@ export class BattleScene extends HTMLElement {
                             <h2>Next Up</h2>
                             <div style="padding:20px; background:lightblue; border-radius:5px;">
                                 <h3 style="margin-top:0;">${this.Villain.Name}</h3>
-                                <div
-                                    style="
-                                        width: ${target_size}px;
-                                        height: ${target_size}px;
-                                        background-color: ${color_from_seed(this.Villain.Name)};
-                                        margin: 0 auto;
-                                        border: 1px solid black;
-                                        border-radius: 5px;
-                            "
-                                ></div>
+                                <div class="sprite-border">
+                                    <div class="sprite"></div>
+                                    <div class="mask"></div>
+                                </div>
                                 <p><i>${this.Villain.Description}</i></p>
                                 ${locations.map(
                                     (location) => html`

@@ -37,6 +37,7 @@ import {Raphael} from "../cards/tmnt-raphael.js";
 import {Woody} from "../cards/woo-dy.js";
 import {color_from_seed} from "../lib/color.js";
 import {html} from "../lib/html.js";
+import {integer} from "../lib/random.js";
 import {Sprites} from "../sprites/sprites.js";
 
 export class CardElement extends HTMLElement {
@@ -110,43 +111,47 @@ export class CardElement extends HTMLElement {
     Render() {
         this.id = `_${this.Instance.Id}`;
 
-        const target_width = 120;
-        const target_height = 140;
+        const target_height = 120;
+        const sprite_height = 10;
+        const pixel_size = target_height / sprite_height;
+        const sprite_y = (sprite_height + 1) * this.Instance.Sprite * pixel_size;
+
+        const spritesheet_src = document.querySelector("img#sheet")?.getAttribute("src");
+        const background_url = `url(${spritesheet_src})`;
+
+        const mask_src = document.querySelector("img#mask")?.getAttribute("src");
+        const mask_url = `url(${mask_src})`;
 
         const card_body = html`
             <div class="header">
                 <span
                     id="cost"
-                    class="${
-                        this.Instance.CurrentCost > this.BaseCost
-                            ? "incr"
-                            : this.Instance.CurrentCost < this.BaseCost
-                              ? "decr"
-                              : ""
-                    }"
+                    class="${this.Instance.CurrentCost > this.BaseCost
+                        ? "incr"
+                        : this.Instance.CurrentCost < this.BaseCost
+                          ? "decr"
+                          : ""}"
                 >
                     ${this.Instance.CurrentCost}
                 </span>
                 <span
                     id="power"
-                    class="${
-                        this.Instance.CurrentPower > this.BasePower
-                            ? "incr"
-                            : this.Instance.CurrentPower < this.BasePower
-                              ? "decr"
-                              : ""
-                    }"
+                    class="${this.Instance.CurrentPower > this.BasePower
+                        ? "incr"
+                        : this.Instance.CurrentPower < this.BasePower
+                          ? "decr"
+                          : ""}"
                 >
                     ${this.Instance.CurrentPower}
                 </span>
             </div>
             <div class="sprite-border">
                 <div class="sprite"></div>
-                </div>
-                <div class="text-container">
-                    <div class="name">${this.Instance.Name}</div>
-                    <div class="description">${this.Instance.Text}</div>
-                </div>
+                <div class="mask"></div>
+            </div>
+            <div class="text-container">
+                <div class="name">${this.Instance.Name}</div>
+                <div class="description">${this.Instance.Text}</div>
             </div>
         `;
 
@@ -190,24 +195,29 @@ export class CardElement extends HTMLElement {
                     opacity: 0.3;
                 }
 
-                .sprite {
-                    width: ${target_width}px;
+                .sprite-border {
+                    position: relative;
                     height: ${target_height}px;
-                    margin: 0 auto;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-size: 100px;
-                    font-family: "Comic Sans MS", "Comic Sans", cursive;
-                    text-shadow: 2px 2px 2px white;
-                    transform: translate(-5px, -15px);
-                    letter-spacing: -5px;
+                    background: ${color_from_seed(this.Instance.Name)};
+                    overflow: hidden;
                 }
 
-                .sprite-border {
+                .sprite {
+                    width: ${target_height / 2}px;
                     height: ${target_height}px;
-                    background-color: ${color_from_seed(this.Instance.Name)};
-                    overflow: hidden;
+                    margin: 0 ${pixel_size * 2}px 0 ${pixel_size * 3}px;
+                    background-image: ${background_url};
+                    background-position: 0 -${sprite_y}px;
+                    background-size: ${target_height / 2}px auto;
+                    image-rendering: pixelated;
+                }
+
+                .mask {
+                    position: absolute;
+                    inset: 0;
+                    background-image: ${mask_url};
+                    background-size: ${target_height}px auto;
+                    image-rendering: pixelated;
                 }
 
                 .header {
@@ -361,6 +371,32 @@ export class CardElement extends HTMLElement {
             return a.Instance.Name.localeCompare(b.Instance.Name);
         }
     }
+}
+
+const colors = [
+    "#000000",
+    "#1D2B53",
+    "#7E2553",
+    "#008751",
+    "#AB5236",
+    "#5F574F",
+    "#C2C3C7",
+    "#FFF1E8",
+    "#FF004D",
+    "#FFA300",
+    "#FFEC27",
+    "#00E436",
+    "#29ADFF",
+    "#83769C",
+    "#FF77A8",
+    "#FFCCAA",
+];
+
+function gradient(spec: number[]) {
+    spec = spec.map((c, i) => integer(0, 15));
+    spec = spec.map((c, i) => (Math.sin(i / 5) + Math.random() > 1 ? spec[i - 1] : c));
+    return `linear-gradient(to bottom, ${spec.map((c, i) => colors[c])})`;
+    return `linear-gradient(to bottom, ${spec.map((c, i) => `${colors[c]} ${i * 10}%, ${colors[c]} ${i * 10 + 10}%`)})`;
 }
 
 customElements.define("a-card", CardElement);
