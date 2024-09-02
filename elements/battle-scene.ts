@@ -217,12 +217,14 @@ export class BattleScene extends HTMLElement {
                     return false;
                 }
 
-                card.Instance.Owner.CurrentEnergy -= card.Instance.CurrentCost;
-                card.Instance.Owner.Element.Render();
+                let location = card.closest<LocationElement>("a-location");
+                if (location) {
+                    card.Instance.Owner.CurrentEnergy -= card.Instance.CurrentCost;
+                    card.Instance.Owner.Element.Render();
 
-                this.PlayedCardsQueue.push(card.Instance);
-                let location = card.closest<LocationElement>("a-location")!.Instance;
-                this.Log(new Trace(), `You play ${card.Instance} to ${location}`);
+                    this.PlayedCardsQueue.push(card.Instance);
+                    this.Log(new Trace(), `You play ${card.Instance} to ${location.Instance}`);
+                }
             }
         });
 

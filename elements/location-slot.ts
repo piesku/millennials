@@ -35,6 +35,7 @@ export class LocationSlot extends HTMLElement {
             e.preventDefault();
             if (this.firstElementChild) {
                 alert("Slot is already occupied");
+                e.stopPropagation();
                 return;
             }
             const data = e.dataTransfer!.getData("text/plain");
