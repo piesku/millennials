@@ -260,6 +260,11 @@ export class BattleScene extends HTMLElement {
     }
 
     PrepareBattle() {
+        if (this.querySelectorAll("a-card").length > 0) {
+            // The shop is already set up, due to browser navigation events.
+            return;
+        }
+
         let all_cards: Array<CardElement> = [];
         for (let card_type in CardElement.Controllers) {
             let card = document.createElement("a-card") as CardElement;

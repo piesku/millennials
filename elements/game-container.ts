@@ -1,5 +1,6 @@
 import {STARTING_DECK} from "../actors/player.js";
 import {html} from "../lib/html.js";
+import {get_game_state, load_game_state, save_game_state} from "../storage.js";
 import {CardElement} from "./a-card.js";
 import {BattleScene} from "./battle-scene.js";
 
@@ -7,10 +8,11 @@ export class GameContainer extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({mode: "open"});
-        this.PushState();
     }
 
     Render() {
+        let saved_state = get_game_state();
+        let has_previous_run = saved_state?.CurrentOpponent > -1;
         this.shadowRoot!.innerHTML = html`
             <style>
                 :host {
@@ -21,6 +23,8 @@ export class GameContainer extends HTMLElement {
                 <main name="title">
                     <flex-col name="title" style="height:100vh; justify-content:center; align-items:center;">
                         <h1><i>The Dirty Dozen</i></h1>
+
+                        ${has_previous_run && html`<button id="continue">Continue Previous Run</button>`}
                         <button id="run">Start a New Run</button>
                         <button id="collection">Collection</button>
                     </flex-col>
@@ -36,6 +40,9 @@ export class GameContainer extends HTMLElement {
     }
 
     connectedCallback() {
+        history.replaceState(this.CurrentView, "");
+        document.title = this.CurrentView.toUpperCase();
+
         this.shadowRoot!.addEventListener("click", (e) => {
             let target = e.target as HTMLElement;
             switch (target.id) {
@@ -44,10 +51,17 @@ export class GameContainer extends HTMLElement {
                     this.PushState();
                     this.Render();
                     break;
+                case "continue":
+                    load_game_state(this);
+                    this.InitBattle();
+                    this.CurrentView = "run";
+                    this.PushState();
+                    this.Render();
+                    break;
                 case "run":
                     this.CurrentView = "run";
+                    this.ResetState();
                     this.ProgressToNextOpponent();
-                    this.Render();
                     break;
                 case "collection":
                     this.CurrentView = "collection";
@@ -59,7 +73,7 @@ export class GameContainer extends HTMLElement {
 
         window.addEventListener("popstate", (e) => {
             if (e.state) {
-                Object.assign(this, e.state);
+                this.CurrentView = e.state as string;
                 this.Render();
             }
         });
@@ -83,9 +97,9 @@ export class GameContainer extends HTMLElement {
         this.Render();
     }
 
-    CurrentView = history.state?.CurrentView ?? "title";
-    CurrentOpponent = history.state?.CurrentOpponent ?? -1;
-    PlayerDeck = history.state?.PlayerDeck ?? [...STARTING_DECK];
+    CurrentView = "title";
+    CurrentOpponent = -1;
+    PlayerDeck = [...STARTING_DECK];
 
     get AllCards() {
         let card_elements = this.shadowRoot!.querySelectorAll<CardElement>("collection-viewer a-card");
@@ -102,11 +116,6 @@ export class GameContainer extends HTMLElement {
     }
 
     ProgressToNextOpponent() {
-        let previous_battle = this.querySelector<BattleScene>(`battle-scene[name="${this.CurrentOpponent}"]`);
-        if (previous_battle) {
-            previous_battle.remove();
-        }
-
         this.CurrentOpponent++;
 
         let next_battle = this.querySelector<BattleScene>(`battle-scene[name="${this.CurrentOpponent}"]`);
@@ -122,22 +131,29 @@ export class GameContainer extends HTMLElement {
 
     Reset() {
         this.CurrentView = "title";
-        this.CurrentOpponent = -1;
-        this.PlayerDeck = [...STARTING_DECK];
+        this.ResetState();
         this.PushState();
+        this.Render();
 
         // TODO: New seed, regen the battles.
-        history.go();
     }
 
-    PushState() {
-        let state = {
-            CurrentView: this.CurrentView,
+    ResetState() {
+        this.CurrentOpponent = -1;
+        this.PlayerDeck = [...STARTING_DECK];
+    }
+
+    GetState() {
+        return {
             CurrentOpponent: this.CurrentOpponent,
             PlayerDeck: this.PlayerDeck,
         };
+    }
 
-        history.pushState(state, this.CurrentView.toUpperCase());
+    PushState() {
+        save_game_state(this);
+        history.pushState(this.CurrentView, "");
+        document.title = this.CurrentView.toUpperCase();
     }
 }
 
