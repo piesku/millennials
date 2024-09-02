@@ -1,6 +1,6 @@
 import {STARTING_DECK} from "../actors/player.js";
 import {html} from "../lib/html.js";
-import {get_game_state, load_game_state, save_game_state} from "../storage.js";
+import {load_game_state, save_game_state} from "../storage.js";
 import {CardElement} from "./a-card.js";
 import {BattleScene} from "./battle-scene.js";
 
@@ -11,8 +11,7 @@ export class GameContainer extends HTMLElement {
     }
 
     Render() {
-        let saved_state = get_game_state();
-        let has_previous_run = saved_state?.CurrentOpponent > -1;
+        let has_previous_run = this.CurrentOpponent > -1;
         this.shadowRoot!.innerHTML = html`
             <style>
                 :host {
@@ -40,6 +39,8 @@ export class GameContainer extends HTMLElement {
     }
 
     connectedCallback() {
+        load_game_state(this);
+
         history.replaceState(this.CurrentView, "");
         document.title = this.CurrentView.toUpperCase();
 
@@ -48,15 +49,12 @@ export class GameContainer extends HTMLElement {
             switch (target.id) {
                 case "title":
                     this.CurrentView = "title";
-                    this.PushState();
-                    this.Render();
+                    this.Commit();
                     break;
                 case "continue":
-                    load_game_state(this);
                     this.InitBattle();
                     this.CurrentView = "run";
-                    this.PushState();
-                    this.Render();
+                    this.Commit();
                     break;
                 case "run":
                     this.CurrentView = "run";
@@ -65,8 +63,7 @@ export class GameContainer extends HTMLElement {
                     break;
                 case "collection":
                     this.CurrentView = "collection";
-                    this.PushState();
-                    this.Render();
+                    this.Commit();
                     break;
             }
         });
@@ -123,17 +120,14 @@ export class GameContainer extends HTMLElement {
             alert("You win the run!");
         }
 
-        this.PushState();
-        this.Render();
-
+        this.Commit();
         this.InitBattle();
     }
 
     Reset() {
         this.CurrentView = "title";
         this.ResetState();
-        this.PushState();
-        this.Render();
+        this.Commit();
 
         // TODO: New seed, regen the battles.
     }
@@ -150,10 +144,11 @@ export class GameContainer extends HTMLElement {
         };
     }
 
-    PushState() {
+    Commit() {
         save_game_state(this);
         history.pushState(this.CurrentView, "");
         document.title = this.CurrentView.toUpperCase();
+        this.Render();
     }
 }
 
