@@ -14,7 +14,8 @@ export class LocationSlot extends HTMLElement {
                 :host {
                     display: grid;
                     place-items: center;
-                    border: 1px solid #000;
+                    border: 4px ridge orange;
+                    border-radius: 5px;
                     width: 60px;
                     height: 90px;
                 }
@@ -23,7 +24,7 @@ export class LocationSlot extends HTMLElement {
                     transform: scale(0.5) translate(-50%, -50%);
                 }
             </style>
-            <slot>${label}</slot>
+            <slot></slot>
         `;
 
         this.addEventListener("dragover", (e) => {

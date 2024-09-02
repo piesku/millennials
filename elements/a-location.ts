@@ -52,6 +52,8 @@ export class LocationElement extends HTMLElement {
         this.shadowRoot!.innerHTML = html`
             <style>
                 :host {
+                    padding: 10px;
+                    margin: 10px;
                     background-color: bisque;
                 }
                 :host(.won) {
@@ -59,11 +61,6 @@ export class LocationElement extends HTMLElement {
                 }
                 :host(.lost) {
                     background-color: lightcoral;
-                }
-                .location {
-                    border: 1px solid #000;
-                    padding: 10px;
-                    margin: 10px;
                 }
                 .description {
                     margin: 10px 0;
@@ -87,7 +84,7 @@ export class LocationElement extends HTMLElement {
                     opacity: 1;
                 }
             </style>
-            <flex-row class="location">
+            <flex-row>
                 <slot name="player"></slot>
                 <div id="player-points" class="points">${this.Instance.GetScore(this.Instance.Battle.Player)}</div>
                 <div class="name-description">
