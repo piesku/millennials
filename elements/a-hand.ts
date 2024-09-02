@@ -37,7 +37,7 @@ export class HandElement extends HTMLElement {
                 }
                 ::slotted(a-card) {
                     transform: translateY(var(--y)) rotate(var(--tilt));
-                    margin: 0 -10px;
+                    margin: 0 -20px;
                     transition: scale 0.1s;
                     z-index: var(--z);
                 }
