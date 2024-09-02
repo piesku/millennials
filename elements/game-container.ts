@@ -137,7 +137,7 @@ export class GameContainer extends HTMLElement {
             PlayerDeck: this.PlayerDeck,
         };
 
-        history.pushState(state, this.CurrentView.toUpperCase(), "#" + this.CurrentView);
+        history.pushState(state, this.CurrentView.toUpperCase());
     }
 }
 
