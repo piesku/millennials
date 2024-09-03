@@ -137,13 +137,6 @@ export class GameContainer extends HTMLElement {
         this.PlayerDeck = [...STARTING_DECK];
     }
 
-    GetState() {
-        return {
-            CurrentOpponent: this.CurrentOpponent,
-            PlayerDeck: this.PlayerDeck,
-        };
-    }
-
     Commit() {
         save_game_state(this);
         history.pushState(this.CurrentView, "");
