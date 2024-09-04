@@ -195,6 +195,22 @@ export class CardElement extends HTMLElement {
                     opacity: 0.3;
                 }
 
+                :host(.unknown.unowned) {
+                    filter: blur(5px) opacity(0.2) grayscale(1);
+                }
+
+                :host(.unowned) {
+                    filter: opacity(0.2) grayscale(1);
+                }
+
+                :host(.unknown.unowned) dialog {
+                    filter: blur(5px) grayscale(1);
+                }
+
+                :host(.unowned) dialog {
+                    filter: grayscale(1);
+                }
+
                 .sprite-border {
                     position: relative;
                     height: ${target_height}px;

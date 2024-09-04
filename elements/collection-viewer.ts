@@ -49,12 +49,6 @@ export class CollectionViewer extends HTMLElement {
                     display: block;
                     padding: 20px;
                 }
-                ::slotted(a-card.unknown.unowned) {
-                    filter: blur(5px) opacity(0.2) grayscale(1);
-                }
-                ::slotted(a-card.unowned) {
-                    filter: opacity(0.2) grayscale(1);
-                }
             </style>
             <h1>
                 Card Collection (total: ${all_cards.length}, seen: ${known_cards_count}, unlocked: ${owned_cards_count})
