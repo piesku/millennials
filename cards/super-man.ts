@@ -1,10 +1,18 @@
+import {Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
 export class Superman extends CardController {
     Name = "Mupersan";
-    Cost = 4;
-    Power = 6;
-    Text = "";
+    Cost = 5;
+    Power = 8;
+    Text = "Once: All enemy cards here get -1 Power";
     Sprite = Sprites.Superman;
+
+    override *OnReveal(trace: Trace) {
+        for (let card of this.Location!.GetRevealedCards(this.Opponent)) {
+            yield trace.log(`${card.Name} loses 1 Power due to ${this.Name}'s effect.`);
+            card.AddModifier(this, "subtractpower", 1);
+        }
+    }
 }
