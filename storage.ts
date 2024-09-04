@@ -7,12 +7,14 @@ const enum Storage {
 }
 
 interface CurrentRunState {
+    seed: number;
     curr: number;
     deck: number[];
 }
 
 export function save_game_state(game: GameContainer) {
     let state: CurrentRunState = {
+        seed: game.Seed,
         curr: game.CurrentOpponent,
         deck: game.PlayerDeck,
     };
@@ -34,6 +36,7 @@ export function get_game_state() {
 export function load_game_state(game: GameContainer) {
     let state = get_game_state();
     if (state) {
+        game.Seed = state.seed;
         game.CurrentOpponent = state.curr;
         game.PlayerDeck = state.deck;
         console.log("%cGame state loaded", "color: red");

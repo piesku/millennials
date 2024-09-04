@@ -1,4 +1,5 @@
 import {html} from "../lib/html.js";
+import {clamp} from "../lib/number.js";
 import {CollectionFlag, get_collection_state} from "../storage.js";
 import {CardElement} from "./a-card.js";
 
@@ -90,6 +91,15 @@ export class CollectionViewer extends HTMLElement {
             </style>
             ${content}
         `;
+    }
+
+    get AllCards() {
+        let card_elements = this.shadowRoot!.querySelectorAll<CardElement>("a-card");
+        return Array.from(card_elements, (card) => card.Instance);
+    }
+
+    AllCardsByCost() {
+        return Object.groupBy(this.AllCards, (card) => clamp(1, 6, card.Cost));
     }
 }
 

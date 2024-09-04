@@ -10,7 +10,7 @@ export class ReturnOfTheJedi extends LocationController {
         if (card?.Location === this) {
             switch (kind) {
                 case Message.CardEntersTable:
-                    let cards_of_same_cost: CardController[] = this.Battle.Game.AllCards.filter(
+                    let cards_of_same_cost: CardController[] = this.Battle.Game.Collection.AllCards.filter(
                         (c) => c.Name !== card.Name && c.CurrentCost === card.CurrentCost,
                     );
 

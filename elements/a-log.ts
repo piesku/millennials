@@ -12,8 +12,6 @@ export class LogElement extends HTMLElement {
 
         if (this.parentElement) {
             this.parentElement.addEventListener("transitionend", (e) => {
-                console.log(e);
-
                 let target = e.target as HTMLElement;
                 target.classList.remove("hilite");
             });

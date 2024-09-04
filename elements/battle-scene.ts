@@ -2,8 +2,7 @@ import {ActorController} from "../actors/ActorController.js";
 import {CardController} from "../cards/CardController.js";
 import {color_from_seed} from "../lib/color.js";
 import {html} from "../lib/html.js";
-import {clamp} from "../lib/number.js";
-import {element, set_seed} from "../lib/random.js";
+import {set_seed} from "../lib/random.js";
 import {delay} from "../lib/timeout.js";
 import {LocationController} from "../locations/LocationController.js";
 import {Message, Trace} from "../messages.js";
@@ -24,12 +23,8 @@ export class BattleScene extends HTMLElement {
     PlayedCardsQueue: Array<CardController> = [];
 
     constructor() {
-        set_seed(Math.random());
-
         super();
         this.attachShadow({mode: "open"});
-
-        this.Render();
     }
 
     get Game() {
@@ -50,10 +45,10 @@ export class BattleScene extends HTMLElement {
 
     get Villain() {
         let villain_element = this.querySelector<ActorElement>("a-actor:not([type=player])");
-        if (!villain_element && DEBUG) {
+        DEBUG: if (!villain_element) {
             throw "BattleScene must have a villain";
         }
-        return villain_element!.Instance;
+        return villain_element.Instance;
     }
 
     get Locations() {
@@ -208,6 +203,8 @@ export class BattleScene extends HTMLElement {
     }
 
     connectedCallback() {
+        this.Render();
+
         this.addEventListener("drop", (e) => {
             const data = e.dataTransfer!.getData("text/plain");
             const card = document.getElementById(data) as CardElement;
@@ -261,25 +258,9 @@ export class BattleScene extends HTMLElement {
     }
 
     PrepareBattle() {
-        if (this.querySelectorAll("a-card").length > 0) {
-            // The shop is already set up, due to browser navigation events.
-            return;
-        }
+        set_seed(this.Game.Seed * (this.Game.CurrentOpponent + 1));
 
-        let all_cards: Array<CardElement> = [];
-        for (let card_type in CardElement.Controllers) {
-            let card = document.createElement("a-card") as CardElement;
-
-            card.setAttribute("type", card_type);
-
-            if (card.Instance.IsVillain) {
-                continue;
-            }
-
-            card.setAttribute("slot", "shop");
-            card.setAttribute("draggable", "true");
-            card.classList.add("frontside");
-
+        for (let card of this.querySelectorAll<CardElement>("a-card")) {
             card.addEventListener("dragstart", (e) => {
                 let card = e.target as CardElement;
                 if (e.dataTransfer) {
@@ -287,7 +268,8 @@ export class BattleScene extends HTMLElement {
                 }
             });
 
-            all_cards.push(card);
+            // Update the collection state for the cards in the shop.
+            save_card_state(card.Instance, CollectionFlag.Seen);
         }
 
         let game = this.closest("game-container") as GameContainer;
@@ -311,12 +293,8 @@ export class BattleScene extends HTMLElement {
                     const new_card = document.getElementById(data) as CardElement;
                     if (new_card) {
                         // Update the deck view.
-                        let offset = player_cards.indexOf(card);
-                        player_cards.splice(offset, 1, new_card);
-                        //deck.replaceChildren(...player_cards);
-
-                        // Update the deck data.
-                        game.PlayerDeck = player_cards.map((card) => card.Instance.Sprite);
+                        let offset = game.PlayerDeck.indexOf(new_card.Instance.Sprite);
+                        game.PlayerDeck.splice(offset, 1, new_card.Instance.Sprite);
 
                         // Update the collection state for the new card in deck.
                         save_card_state(new_card.Instance, CollectionFlag.Owned);
@@ -331,18 +309,6 @@ export class BattleScene extends HTMLElement {
 
             // Update the collection state for the cards in hand.
             save_card_state(card.Instance, CollectionFlag.Seen | CollectionFlag.Owned);
-        }
-
-        let all_cards_by_cost = Object.groupBy(all_cards, (card) => clamp(1, 6, card.Instance.Cost));
-        for (let i = 1; i <= 6; i++) {
-            let cards = all_cards_by_cost[i];
-            DEBUG: if (!cards) {
-                throw `No cards with cost ${i}`;
-            }
-            let card = element(cards);
-            // Update the collection state for the cards in the shop.
-            save_card_state(card.Instance, CollectionFlag.Seen);
-            this.append(card);
         }
 
         player_cards.sort(CardElement.Compare);

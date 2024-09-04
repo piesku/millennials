@@ -1,8 +1,9 @@
 import {STARTING_DECK} from "../actors/player.js";
 import {html} from "../lib/html.js";
+import {element, set_seed} from "../lib/random.js";
 import {load_game_state, save_game_state} from "../storage.js";
-import {CardElement} from "./a-card.js";
 import {BattleScene} from "./battle-scene.js";
+import {CollectionViewer} from "./collection-viewer.js";
 
 export class GameContainer extends HTMLElement {
     constructor() {
@@ -92,15 +93,56 @@ export class GameContainer extends HTMLElement {
         }
 
         this.Render();
+
+        this.Populate();
     }
 
+    Seed = Date.now();
     CurrentView = "title";
     CurrentOpponent = -1;
     PlayerDeck = [...STARTING_DECK];
 
-    get AllCards() {
-        let card_elements = this.shadowRoot!.querySelectorAll<CardElement>("collection-viewer a-card");
-        return Array.from(card_elements, (card) => card.Instance);
+    get Collection() {
+        let collection = this.shadowRoot!.querySelector<CollectionViewer>("collection-viewer");
+        DEBUG: if (!collection) {
+            throw "Collection not found";
+        }
+        return collection;
+    }
+
+    Populate() {
+        set_seed(this.Seed);
+
+        let by_cost = this.Collection.AllCardsByCost();
+        let villains = ["empire", "pirates", "kungfu"];
+        for (let [i, villain] of villains.entries()) {
+            let battle = document.createElement("battle-scene");
+            battle.setAttribute("name", i.toString());
+            battle.innerHTML = html`
+                <a-actor type="${villain}" id="villain" slot="villain">
+                    <a-deck reverse></a-deck>
+                    <a-hand></a-hand>
+                    <a-trash></a-trash>
+                </a-actor>
+                <a-location slot="location" type="death-star"></a-location>
+                <a-location slot="location" type="arkham-asylum"></a-location>
+                <a-location slot="location" type="future-hill-valley"></a-location>
+                <a-actor type="player" id="player" slot="player">
+                    <a-deck></a-deck>
+                    <a-hand></a-hand>
+                    <a-trash></a-trash>
+                </a-actor>
+                <a-log slot="log"></a-log>
+
+                <a-card type="${element(by_cost[1]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
+                <a-card type="${element(by_cost[2]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
+                <a-card type="${element(by_cost[3]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
+                <a-card type="${element(by_cost[4]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
+                <a-card type="${element(by_cost[5]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
+                <a-card type="${element(by_cost[6]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
+            `;
+            this.append(battle);
+        }
     }
 
     InitBattle() {
@@ -133,6 +175,7 @@ export class GameContainer extends HTMLElement {
     }
 
     ResetState() {
+        this.Seed = Date.now();
         this.CurrentOpponent = -1;
         this.PlayerDeck = [...STARTING_DECK];
     }

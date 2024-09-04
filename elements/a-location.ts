@@ -28,8 +28,6 @@ export class LocationElement extends HTMLElement {
             throw new Error("LocationElement: type attribute is required");
         }
 
-        this.Render();
-
         this.innerHTML = `
             <location-owner slot="player">
                 <location-slot label=1></location-slot>
@@ -45,6 +43,8 @@ export class LocationElement extends HTMLElement {
                 <location-slot label=4></location-slot>
             </location-owner>
         `;
+
+        this.Render();
     }
 
     Render() {
