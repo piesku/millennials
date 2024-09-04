@@ -129,7 +129,9 @@ export abstract class CardController {
         this.TurnPlayed = this.Battle.CurrentTurn;
 
         // Update the collection state.
-        save_card_state(this, CollectionFlag.Seen);
+        if (save_card_state(this, CollectionFlag.Seen)) {
+            yield trace.log(`You see ${this} for the first time!`);
+        }
 
         yield* this.Battle.BroadcastCardMessage(Message.CardEntersTable, trace, this);
     }

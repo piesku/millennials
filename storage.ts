@@ -63,6 +63,9 @@ export function get_collection_state() {
 
 export function save_card_state(card: CardController, flags: CollectionFlag) {
     let state = get_collection_state();
+    let already_known = state.cards[card.Name] & CollectionFlag.Seen;
     state.cards[card.Name] |= flags;
     localStorage.setItem(Storage.Collection, JSON.stringify(state));
+    // Return true if this is the first time the card is seen.
+    return !already_known;
 }
