@@ -11,8 +11,6 @@ export class ForrestGump extends CardController {
     Sprite = Sprites.ForrestGump;
 
     override *OnReveal(trace: Trace) {
-        trace.push(this);
-
         const played_cards = this.Battle.PlayedCardsQueue;
         let last_played_card = null;
 
