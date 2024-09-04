@@ -2,6 +2,7 @@ import {html} from "../lib/html.js";
 import {CollectionFlag, get_collection_state} from "../storage.js";
 import {CardElement} from "./a-card.js";
 
+const GROUP_BY_COST = true;
 export class CollectionViewer extends HTMLElement {
     constructor() {
         super();
@@ -11,6 +12,7 @@ export class CollectionViewer extends HTMLElement {
     connectedCallback() {
         let collection = get_collection_state();
         let all_cards: Array<CardElement> = [];
+        let cards_by_cost: {[cost: number]: Array<CardElement>} = {};
 
         let known_cards_count = 0;
         let owned_cards_count = 0;
@@ -20,28 +22,64 @@ export class CollectionViewer extends HTMLElement {
             card.setAttribute("type", card_type);
             card.classList.add("frontside");
 
-            if (card.Instance.IsVillain) {
+            if (card.Instance.IsVillain || card.Instance.Text === "") {
                 continue;
             }
 
             if (collection.cards[card.Instance.Name] & CollectionFlag.Seen) {
                 known_cards_count++;
             } else {
-                card.classList.add("unknown");
+                // card.classList.add("unknown");
             }
 
             if (collection.cards[card.Instance.Name] & CollectionFlag.Owned) {
                 owned_cards_count++;
             } else {
-                card.classList.add("unowned");
+                // card.classList.add("unowned");
             }
 
-            //if (card.Instance.Text) {
             all_cards.push(card);
-            //}
+
+            let cost = card.Instance.CurrentCost;
+            if (!cards_by_cost[cost]) {
+                cards_by_cost[cost] = [];
+            }
+            cards_by_cost[cost].push(card);
         }
 
         all_cards.sort(CardElement.Compare);
+
+        let content;
+        if (GROUP_BY_COST) {
+            let cost_sections = Object.keys(cards_by_cost)
+                .sort((a, b) => parseInt(a) - parseInt(b))
+                .map((cost) => {
+                    let cards = cards_by_cost[cost as unknown as number];
+                    return html`
+                        <h2>${cost}-Cost (${cards.length})</h2>
+                        <flex-row wrap start style="gap: 20px;">
+                            ${cards.map((card) => card.outerHTML).join("")}
+                        </flex-row>
+                    `;
+                })
+                .join("");
+
+            content = html`
+                <h1>
+                    Card Collection (total: ${all_cards.length}, seen: ${known_cards_count}, unlocked:
+                    ${owned_cards_count})
+                </h1>
+                ${cost_sections}
+            `;
+        } else {
+            content = html`
+                <h1>
+                    Card Collection (total: ${all_cards.length}, seen: ${known_cards_count}, unlocked:
+                    ${owned_cards_count})
+                </h1>
+                <flex-row wrap start style="gap: 20px;"> ${all_cards.map((card) => card.outerHTML).join("")} </flex-row>
+            `;
+        }
 
         this.shadowRoot!.innerHTML = html`
             <style>
@@ -50,15 +88,8 @@ export class CollectionViewer extends HTMLElement {
                     padding: 20px;
                 }
             </style>
-            <h1>
-                Card Collection (total: ${all_cards.length}, seen: ${known_cards_count}, unlocked: ${owned_cards_count})
-            </h1>
-            <flex-row wrap start style="gap: 20px;">
-                <slot></slot>
-            </flex-row>
+            ${content}
         `;
-
-        this.append(...all_cards);
     }
 }
 
