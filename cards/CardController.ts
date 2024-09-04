@@ -180,4 +180,8 @@ export abstract class CardController {
             );
         }
     }
+
+    CanBePlayedHere(slot: HTMLElement) {
+        return true;
+    }
 }

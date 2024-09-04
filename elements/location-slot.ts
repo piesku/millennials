@@ -41,8 +41,14 @@ export class LocationSlot extends HTMLElement {
             const data = e.dataTransfer!.getData("text/plain");
             const card = document.getElementById(data) as CardElement;
             if (card) {
-                this.appendChild(card);
-                card.classList.add("frontside");
+                if (!card.Instance.CanBePlayedHere(this)) {
+                    alert("Can't be played here!");
+                    e.stopPropagation();
+                    return;
+                } else {
+                    this.appendChild(card);
+                    card.classList.add("frontside");
+                }
             }
         });
     }
