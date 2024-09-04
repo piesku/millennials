@@ -269,7 +269,13 @@ export class BattleScene extends HTMLElement {
         let all_cards: Array<CardElement> = [];
         for (let card_type in CardElement.Controllers) {
             let card = document.createElement("a-card") as CardElement;
+
             card.setAttribute("type", card_type);
+
+            if (card.Instance.IsVillain) {
+                continue;
+            }
+
             card.setAttribute("slot", "shop");
             card.setAttribute("draggable", "true");
             card.classList.add("frontside");
