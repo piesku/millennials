@@ -24,16 +24,16 @@ export class ForrestGump extends CardController {
         }
 
         if (last_played_card) {
-            const empty_slots = this.Battle.GetEmptySlots(this.Owner, this.Location);
+            const empty_slots = this.Location!.GetEmptySlots(this.Owner);
             if (empty_slots.length === 0) {
-                yield trace.log(`No empty slots available in ${this.Location.Name}`);
+                yield trace.log(`No empty slots available in ${this.Location!.Name}`);
                 return;
             }
             const radom_slot = element(empty_slots);
 
             if (radom_slot) {
                 yield* last_played_card.Move(trace, radom_slot);
-                yield trace.log(`${last_played_card.Name} moves to ${this.Location.Name}`);
+                yield trace.log(`${last_played_card.Name} moves to ${this.Location!.Name}`);
             }
         } else {
             yield trace.log(`No cards were played before ${this.Name}`);

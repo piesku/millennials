@@ -7,9 +7,12 @@ import {Sprites} from "../sprites/sprites.js";
 import {ActorController} from "./ActorController.js";
 
 export const STARTING_DECK = [
-    Sprites.Raphael,
-    Sprites.Raphael,
-    Sprites.Raphael,
+    // Sprites.Raphael,
+    // Sprites.Raphael,
+    // Sprites.Raphael,
+    Sprites.RobinHood,
+    Sprites.RobinHood,
+    Sprites.RobinHood,
     Sprites.Faceman,
     Sprites.Faceman,
     Sprites.Faceman,

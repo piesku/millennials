@@ -1,24 +1,25 @@
+import {CardElement} from "../elements/a-card.js";
+import {Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
 export class HarryPotter extends CardController {
     Name = "Parry Hotter";
     Cost = 2;
-    Power = 2;
-    Text = "If both sides here are full, +6 power";
+    Power = 4;
+    Text = "Once: Set the Power of all cards in your deck to 4";
     Sprite = Sprites.HarryPotter;
 
-    override *OnMessage(kind: Message, trace: Trace) {
-        trace.push(this);
-
-        switch (kind) {
-            case Message.TurnStarts:
-                if (this.Battle.CurrentTurn === this.TurnPlayed + 1) {
-                    yield trace.log(`${this.Owner.Name} gains 1 energy`);
-                    this.Owner.CurrentEnergy += 1;
-                    this.Owner.Element.ReRender();
-                }
-                break;
+    override *OnReveal(trace: Trace): Generator<[Trace, string], void> {
+        const deck = this.Owner.Element.querySelector("a-deck");
+        if (deck) {
+            for (let cardElement of deck.children) {
+                const card = cardElement as CardElement;
+                yield trace.log(`Card power is set to 4 by ${this}`);
+                card.Instance.AddModifier(this, "setpower", 4);
+            }
+        } else {
+            yield trace.log(`No deck found for ${this.Owner}`);
         }
     }
 }
