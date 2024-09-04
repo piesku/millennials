@@ -20,6 +20,10 @@ export class CollectionViewer extends HTMLElement {
             card.setAttribute("type", card_type);
             card.classList.add("frontside");
 
+            if (card.Instance.IsVillain) {
+                continue;
+            }
+
             if (collection.cards[card.Instance.Name] & CollectionFlag.Seen) {
                 known_cards_count++;
             } else {

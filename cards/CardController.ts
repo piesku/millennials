@@ -17,6 +17,7 @@ export abstract class CardController {
     abstract Sprite: Sprites;
 
     Id = next_id();
+    IsVillain = false;
     IsRevealed = false;
     TurnPlayed = 0;
 

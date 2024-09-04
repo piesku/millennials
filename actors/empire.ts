@@ -9,6 +9,7 @@ export class DarthVader extends CardController {
     Power = 8;
     Text = "";
     Sprite = Sprites.DarthVader;
+    override IsVillain = true;
 }
 
 export class Stormtrooper extends CardController {
@@ -17,6 +18,7 @@ export class Stormtrooper extends CardController {
     Power = 1;
     Text = `Once: +1 for each revealed ${this.Name}`;
     Sprite = Sprites.Stormtrooper;
+    override IsVillain = true;
     override *OnReveal(trace: Trace) {
         const revealedCards = this.Battle.GetRevealedCards();
         const sameNameCards = revealedCards.filter((card) => card.Name === this.Name);
