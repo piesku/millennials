@@ -212,12 +212,20 @@ export class CardElement extends HTMLElement {
                     image-rendering: pixelated;
                 }
 
+                :host(.unknown) .sprite {
+                    filter: brightness(0);
+                }
+
                 .mask {
                     position: absolute;
                     inset: 0;
                     background-image: ${mask_url};
                     background-size: ${target_height}px auto;
                     image-rendering: pixelated;
+                }
+
+                :host(.unknown) .mask {
+                    background: none;
                 }
 
                 .header {

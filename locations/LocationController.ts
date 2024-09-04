@@ -6,6 +6,7 @@ import {BattleScene} from "../elements/battle-scene.js";
 import {LocationSlot} from "../elements/location-slot.js";
 import {next_id} from "../lib/id.js";
 import {Message, Trace} from "../messages.js";
+import {CollectionFlag, save_card_state} from "../storage.js";
 
 export abstract class LocationController {
     abstract Name: string;
@@ -80,8 +81,12 @@ export abstract class LocationController {
             } else if (card.Element.closest("a-trash")) {
                 yield* actor.Battle.BroadcastCardMessage(Message.CardLeavesTrash, trace, card);
             }
+
             slot.appendChild(card.Element);
             yield* card.Reveal(trace);
+
+            // Update the collection state.
+            save_card_state(card, CollectionFlag.Seen);
         } else if (slot_index === undefined) {
             yield trace.log("but there are no empty slots");
         } else {

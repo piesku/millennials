@@ -1,24 +1,33 @@
+import {CardController} from "./cards/CardController.js";
 import {GameContainer} from "./elements/game-container.js";
 
-const STORAGE_KEY = "RUNv1";
+const enum Storage {
+    CurrentRun = "RUNv1",
+    Collection = "COLv1",
+}
+
+interface CurrentRunState {
+    curr: number;
+    deck: number[];
+}
 
 export function save_game_state(game: GameContainer) {
-    let state = {
+    let state: CurrentRunState = {
         curr: game.CurrentOpponent,
         deck: game.PlayerDeck,
     };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    localStorage.setItem(Storage.CurrentRun, JSON.stringify(state));
     console.log("%cGame state saved", "color: red");
 }
 
 export function has_game_state() {
-    return localStorage.getItem(STORAGE_KEY) !== null;
+    return localStorage.getItem(Storage.CurrentRun) !== null;
 }
 
 export function get_game_state() {
-    let state = localStorage.getItem(STORAGE_KEY);
+    let state = localStorage.getItem(Storage.CurrentRun);
     if (state) {
-        return JSON.parse(state);
+        return JSON.parse(state) as CurrentRunState;
     }
 }
 
@@ -29,4 +38,31 @@ export function load_game_state(game: GameContainer) {
         game.PlayerDeck = state.deck;
         console.log("%cGame state loaded", "color: red");
     }
+}
+
+export const enum CollectionFlag {
+    None = 0,
+    Seen = 1,
+    Owned = 2,
+}
+
+interface CollectionState {
+    cards: {
+        [name: string]: CollectionFlag;
+    };
+}
+
+export function get_collection_state() {
+    let state = localStorage.getItem(Storage.Collection);
+    if (state) {
+        return JSON.parse(state) as CollectionState;
+    } else {
+        return {cards: {}};
+    }
+}
+
+export function save_card_state(card: CardController, flags: CollectionFlag) {
+    let state = get_collection_state();
+    state.cards[card.Name] |= flags;
+    localStorage.setItem(Storage.Collection, JSON.stringify(state));
 }

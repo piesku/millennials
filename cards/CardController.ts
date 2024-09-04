@@ -7,6 +7,7 @@ import {next_id} from "../lib/id.js";
 import {LocationController} from "../locations/LocationController.js";
 import {Message, Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
+import {CollectionFlag, save_card_state} from "../storage.js";
 
 export abstract class CardController {
     abstract Name: string;
@@ -126,6 +127,9 @@ export abstract class CardController {
         yield* this.OnReveal(trace.fork(this));
         this.IsRevealed = true;
         this.TurnPlayed = this.Battle.CurrentTurn;
+
+        // Update the collection state.
+        save_card_state(this, CollectionFlag.Seen);
 
         yield* this.Battle.BroadcastCardMessage(Message.CardEntersTable, trace, this);
     }

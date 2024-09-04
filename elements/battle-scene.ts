@@ -7,6 +7,7 @@ import {element, set_seed} from "../lib/random.js";
 import {delay} from "../lib/timeout.js";
 import {LocationController} from "../locations/LocationController.js";
 import {Message, Trace} from "../messages.js";
+import {CollectionFlag, save_card_state} from "../storage.js";
 import {ActorElement} from "./a-actor.js";
 import {CardElement} from "./a-card.js";
 import {LocationElement} from "./a-location.js";
@@ -311,6 +312,9 @@ export class BattleScene extends HTMLElement {
                         // Update the deck data.
                         game.PlayerDeck = player_cards.map((card) => card.Instance.Sprite);
 
+                        // Update the collection state for the new card in deck.
+                        save_card_state(new_card.Instance, CollectionFlag.Owned);
+
                         // Start the battle.
                         this.InitBattle();
                     }
@@ -318,15 +322,22 @@ export class BattleScene extends HTMLElement {
             });
 
             player_cards.push(card);
+
+            // Update the collection state for the cards in hand.
+            save_card_state(card.Instance, CollectionFlag.Seen | CollectionFlag.Owned);
         }
 
         let all_cards_by_cost = Object.groupBy(all_cards, (card) => clamp(1, 6, card.Instance.Cost));
-        this.append(element(all_cards_by_cost[1]!));
-        this.append(element(all_cards_by_cost[2]!));
-        this.append(element(all_cards_by_cost[3]!));
-        this.append(element(all_cards_by_cost[4]!));
-        this.append(element(all_cards_by_cost[5]!));
-        this.append(element(all_cards_by_cost[6]!));
+        for (let i = 1; i <= 6; i++) {
+            let cards = all_cards_by_cost[i];
+            DEBUG: if (!cards) {
+                throw `No cards with cost ${i}`;
+            }
+            let card = element(cards);
+            // Update the collection state for the cards in the shop.
+            save_card_state(card.Instance, CollectionFlag.Seen);
+            this.append(card);
+        }
 
         player_cards.sort(CardElement.Compare);
         this.append(...player_cards);
