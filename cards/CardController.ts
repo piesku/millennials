@@ -177,13 +177,14 @@ export abstract class CardController {
     }
 
     *Move(trace: Trace, slot: HTMLElement) {
+        const source_location = this.Location!;
         const target_location = slot.closest<LocationElement>("a-location")!.Instance;
 
         const is_slot_taken = !!slot.querySelector("a-card");
         if (!is_slot_taken) {
             yield* this.Battle.BroadcastCardMessage(Message.CardMovesFromLocation, trace, this);
             slot.appendChild(this.Element);
-            yield trace.log(`${this} moved from ${this.Location!} to ${target_location} `);
+            yield trace.log(`${this} moved from ${source_location} to ${target_location} `);
             yield* this.Battle.BroadcastCardMessage(Message.CardMovesToLocation, trace, this);
         } else {
             yield trace.log(
