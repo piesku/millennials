@@ -170,6 +170,10 @@ export abstract class CardController {
         yield trace.log(`${this} has been trashed`);
 
         yield* this.Battle.BroadcastCardMessage(Message.CardEntersTrash, trace, this);
+
+        if (this.Owner === this.Battle.Player) {
+            this.Battle.Game.Stats.CardsTrashed++;
+        }
     }
 
     *Move(trace: Trace, slot: HTMLElement) {
@@ -185,6 +189,10 @@ export abstract class CardController {
             yield trace.log(
                 `${this} could not move to ${target_location} because the slot nr ${slot} is already taken`,
             );
+        }
+
+        if (this.Owner === this.Battle.Player) {
+            this.Battle.Game.Stats.CardsMoved++;
         }
     }
 

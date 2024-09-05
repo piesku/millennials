@@ -178,6 +178,18 @@ export class GameContainer extends HTMLElement {
         this.Seed = Date.now();
         this.CurrentOpponent = -1;
         this.PlayerDeck = [...STARTING_DECK];
+        this.Stats = {
+            Battles: 0,
+            CardsPlayed: 0,
+            CardsTrashed: 0,
+            CardsMoved: 0,
+            CardsAcquired: 0,
+            LocationsWon: 0,
+            LocationsLost: 0,
+            TotalPower: 0,
+            EnergySpent: 0,
+            DateStarted: Date.now(),
+        };
     }
 
     Commit() {
@@ -186,6 +198,19 @@ export class GameContainer extends HTMLElement {
         document.title = this.CurrentView.toUpperCase();
         this.Render();
     }
+
+    Stats = {
+        Battles: 0,
+        CardsPlayed: 0,
+        CardsTrashed: 0,
+        CardsMoved: 0,
+        CardsAcquired: 0,
+        LocationsWon: 0,
+        LocationsLost: 0,
+        TotalPower: 0,
+        EnergySpent: 0,
+        DateStarted: Date.now(),
+    };
 }
 
 customElements.define("game-container", GameContainer);

@@ -238,6 +238,7 @@ export class BattleScene extends HTMLElement {
                         game.ProgressToNextOpponent();
                         break;
                     case "lost":
+                        console.table(game.Stats);
                         game.Reset();
                         break;
                 }
@@ -298,6 +299,7 @@ export class BattleScene extends HTMLElement {
 
                         // Update the collection state for the new card in deck.
                         save_card_state(new_card.Instance, CollectionFlag.Owned);
+                        this.Game.Stats.CardsAcquired++;
 
                         // Start the battle.
                         this.InitBattle();
@@ -318,6 +320,8 @@ export class BattleScene extends HTMLElement {
     async InitBattle() {
         this.State = "playing";
         this.Render();
+
+        this.Game.Stats.Battles++;
 
         for (let [trace, message] of this.StartBattle()) {
             this.Log(trace, message);
@@ -388,25 +392,31 @@ export class BattleScene extends HTMLElement {
         for (let card of unrevealed_cards) {
             yield* this.BroadcastCardMessage(Message.CardLeavesHand, new Trace(), card);
             yield* card.Reveal(new Trace());
+
+            if (card.Owner === this.Player) {
+                this.Game.Stats.CardsPlayed++;
+                this.Game.Stats.EnergySpent += card.CurrentCost;
+            }
         }
 
         yield* this.BroadcastGameMessage(Message.TurnEnds);
 
         if (this.CurrentTurn >= this.MaxTurns) {
-            yield* this.GameEnd();
+            yield* this.EndBattle();
         } else {
             yield* this.StartTurn();
         }
     }
 
-    *GameEnd() {
+    *EndBattle() {
         let trace = new Trace();
 
         yield trace.log("--- The Reviews Are In ---");
 
         let locations_won = 0;
         for (let location of this.Locations) {
-            if (location.GetScore(this.Player) >= location.GetScore(this.Villain)) {
+            let score = location.GetScore(this.Player);
+            if (score >= location.GetScore(this.Villain)) {
                 locations_won++;
                 location.Element.classList.add("won");
                 yield trace.log(`You win ${location}`);
@@ -414,7 +424,12 @@ export class BattleScene extends HTMLElement {
                 location.Element.classList.add("lost");
                 yield trace.log(`You lose ${location}`);
             }
+
+            this.Game.Stats.TotalPower += score;
         }
+
+        this.Game.Stats.LocationsWon += locations_won;
+        this.Game.Stats.LocationsLost += this.Locations.length - locations_won;
 
         if (locations_won >= this.Locations.length / 2) {
             this.State = "won";
