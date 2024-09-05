@@ -4,6 +4,7 @@ import {KungFuController} from "../actors/kungfu.js";
 import {PiratesController} from "../actors/pirates.js";
 import {PlayerController} from "../actors/player.js";
 import {html} from "../lib/html.js";
+import {CardElement} from "./a-card.js";
 
 export class ActorElement extends HTMLElement {
     Instance!: ActorController;
@@ -59,6 +60,16 @@ export class ActorElement extends HTMLElement {
 
     Render() {
         this.connectedCallback();
+
+        if (this.Instance.Type === "player") {
+            for (let card of this.querySelectorAll<CardElement>("a-hand a-card")) {
+                if (card.Instance.CurrentCost > this.Instance.CurrentEnergy) {
+                    card.classList.add("unplayable");
+                } else {
+                    card.classList.remove("unplayable");
+                }
+            }
+        }
     }
 }
 

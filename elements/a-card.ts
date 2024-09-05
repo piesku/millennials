@@ -179,6 +179,10 @@ export class CardElement extends HTMLElement {
                     );
                 }
 
+                :host(.unplayable) {
+                    filter: contrast(0.3) brightness(1.5);
+                }
+
                 :host-context(#villain) > *,
                 :host > * {
                     visibility: hidden;
