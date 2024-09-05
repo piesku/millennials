@@ -21,6 +21,10 @@ export abstract class CardController {
     IsRevealed = false;
     TurnPlayed = 0;
 
+    HasDynamicCost = false;
+
+    DynamicCost() {}
+
     constructor(public Element: CardElement) {}
 
     toString() {
