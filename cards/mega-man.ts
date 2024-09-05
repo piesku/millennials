@@ -1,10 +1,10 @@
 import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
-export class MacGyver extends CardController {
-    Name = "GacMyver";
-    Cost = 1;
+export class Megaman extends CardController {
+    Name = "Gigaman";
+    Cost = 3;
     Power = 0;
     Text = "";
-    Sprite = Sprites.MacGyver;
+    Sprite = Sprites.Megaman;
 }

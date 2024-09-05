@@ -3,37 +3,49 @@ import {Baracus} from "../cards/a-baracus.js";
 import {Faceman} from "../cards/a-faceman.js";
 import {Hannibal} from "../cards/a-hannibal.js";
 import {Murdock} from "../cards/a-murdock.js";
+import {AceVentura} from "../cards/ace-ventura.js";
+import {Aladdin} from "../cards/al-addin.js";
 import {Batman} from "../cards/bat-man.js";
+import {BillMurray} from "../cards/bill-murray.js";
 import {Blade} from "../cards/bla-de.js";
 import {BuzzLightyear} from "../cards/buzz-lightyear.js";
 import {CardController} from "../cards/CardController.js";
+import {DanAykroyd} from "../cards/dan-aykroyd.js";
 import {DenverDinosaur} from "../cards/denver-dinosaur.js";
 import {ForrestGump} from "../cards/forrest-gump.js";
+import {Genie} from "../cards/ge-nie.js";
 import {HarryPotter} from "../cards/harry-potter.js";
+import {Heman} from "../cards/he-man.js";
 import {Hermione} from "../cards/hermi-one.js";
 import {HomerSimpson} from "../cards/homer-simpson.js";
 import {IndianaJones} from "../cards/indiana-jones.js";
 import {JackSparrow} from "../cards/JackSparrow.js";
 import {JamesBond} from "../cards/james-bond.js";
+import {KevinHomeAlone} from "../cards/kevin-homealone.js";
 import {Krecik} from "../cards/kre-cik.js";
 import {KungFuPanda} from "../cards/KungFuPanda.js";
+import {LuckyLuke} from "../cards/lucky-luke.js";
 import {LukeSkywalker} from "../cards/luke-skywalker.js";
 import {MacGyver} from "../cards/mac-gyver.js";
 import {MartyMcFly} from "../cards/marty-mcfly.js";
+import {Megaman} from "../cards/mega-man.js";
 import {Morty} from "../cards/mor-ty.js";
 import {Mufasa} from "../cards/mufa-sa.js";
 import {Neo} from "../cards/ne-o.js";
 import {ObiWanKenobi} from "../cards/obi-wan-kenobi.js";
+import {OptimusPrime} from "../cards/optimus-prime.js";
 import {RickSanchez} from "../cards/rick-sanchez.js";
 import {RobinHood} from "../cards/robin-hood.js";
 import {Robocop} from "../cards/robo-cop.js";
 import {Ron} from "../cards/ron-wesley.js";
+import {SheRa} from "../cards/she-ra.js";
 import {Simba} from "../cards/sim-ba.js";
 import {Superman} from "../cards/super-man.js";
 import {Donatello} from "../cards/tmnt-donatello.js";
 import {Leonardo} from "../cards/tmnt-leonardo.js";
 import {MichaelAngelo} from "../cards/tmnt-michaelangelo.js";
 import {Raphael} from "../cards/tmnt-raphael.js";
+import {Trinity} from "../cards/trini-ty.js";
 import {Woody} from "../cards/woo-dy.js";
 import {color_from_seed} from "../lib/color.js";
 import {html} from "../lib/html.js";
@@ -81,6 +93,31 @@ export class CardElement extends HTMLElement {
         [Sprites.Blade]: Blade,
         [Sprites.JackSparrow]: JackSparrow,
         [Sprites.KungFuPanda]: KungFuPanda,
+        [Sprites.BillMurray]: BillMurray,
+        [Sprites.DanAykroyd]: DanAykroyd,
+        [Sprites.LuckyLuke]: LuckyLuke,
+        [Sprites.AceVentura]: AceVentura,
+        [Sprites.KevinHomeAlone]: KevinHomeAlone,
+        [Sprites.Aladdin]: Aladdin,
+        [Sprites.Genie]: Genie,
+        [Sprites.Trinity]: Trinity,
+        [Sprites.HeMan]: Heman,
+        [Sprites.SheRa]: SheRa,
+        [Sprites.OptimusPrime]: OptimusPrime,
+        [Sprites.Megaman]: Megaman,
+        // [Sprites.Sonic]: Sonic,
+        // [Sprites.Mario]: Mario,
+        // [Sprites.Luigi]: Luigi,
+        // [Sprites.Link]: Link,
+        // [Sprites.Zelda]: Zelda,
+        // [Sprites.AshKetchum]: AshKetchum,
+        // [Sprites.Pikachu]: Pikachu,
+        // [Sprites.LaraCroft]: LaraCroft,
+        // [Sprites.Buffy]: Buffy,
+        // [Sprites.Mulder]: Mulder,
+        // [Sprites.Scully]: Scully,
+        // [Sprites.Frodo]: Frodo,
+        // [Sprites.Samwise]: Samwise,
     };
 
     BaseCost = NaN;
