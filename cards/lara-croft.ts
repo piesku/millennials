@@ -1,10 +1,10 @@
 import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
-export class KungFuPanda extends CardController {
-    Name = "Karate Racoon";
-    Cost = 6;
+export class LaraCroft extends CardController {
+    Name = "Grave Driver";
+    Cost = 4;
     Power = 0;
     Text = "";
-    Sprite = Sprites.KungFuPanda;
+    Sprite = Sprites.LaraCroft;
 }

@@ -3,7 +3,7 @@ import {CardController} from "./CardController.js";
 
 export class JackSparrow extends CardController {
     Name = "Spack Jarrow";
-    Cost = 0;
+    Cost = 6;
     Power = 0;
     Text = "";
     Sprite = Sprites.JackSparrow;
