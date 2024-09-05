@@ -122,7 +122,7 @@ export class GameContainer extends HTMLElement {
                 <a-actor type="${villain}" id="villain" slot="villain">
                     <a-deck reverse></a-deck>
                     <a-hand></a-hand>
-                    <a-trash></a-trash>
+                    <a-trash hidden></a-trash>
                 </a-actor>
                 <a-location slot="location" type="death-star"></a-location>
                 <a-location slot="location" type="arkham-asylum"></a-location>
@@ -130,7 +130,7 @@ export class GameContainer extends HTMLElement {
                 <a-actor type="player" id="player" slot="player">
                     <a-deck></a-deck>
                     <a-hand></a-hand>
-                    <a-trash></a-trash>
+                    <a-trash hidden></a-trash>
                 </a-actor>
                 <a-log slot="log"></a-log>
 
