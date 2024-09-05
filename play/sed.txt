@@ -6,3 +6,15 @@ s/^[[:blank:]]*//
 
 # Remove double-slash comments
 s/\/\/ .*//
+
+# Custom elements
+s/battle-scene/b-s/g
+s/collection-viewer/c-v/g
+s/location-owner/l-o/g
+s/location-slot/l-s/g
+
+# CSS class names
+s/frontside/f/g
+s/unplayable/u/g
+s/unknown/k/g
+s/unowned/o/g
