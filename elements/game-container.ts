@@ -36,6 +36,10 @@ export class GameContainer extends HTMLElement {
                 </main>
                 <collection-viewer name="collection"></collection-viewer>
             </multi-view>
+            <dialog>
+                <table></table>
+                <button id="reset">Play Again</button>
+            </dialog>
         `;
     }
 
@@ -48,11 +52,8 @@ export class GameContainer extends HTMLElement {
         this.shadowRoot!.addEventListener("click", (e) => {
             let target = e.target as HTMLElement;
             switch (target.id) {
-                case "title":
-                    this.CurrentView = "title";
-                    this.Commit();
-                    break;
                 case "continue":
+                    this.Populate();
                     this.InitBattle();
                     this.CurrentView = "run";
                     this.Commit();
@@ -60,7 +61,11 @@ export class GameContainer extends HTMLElement {
                 case "run":
                     this.CurrentView = "run";
                     this.ResetState();
+                    this.Populate();
                     this.ProgressToNextOpponent();
+                    break;
+                case "reset":
+                    this.Reset();
                     break;
                 case "collection":
                     this.CurrentView = "collection";
@@ -93,8 +98,6 @@ export class GameContainer extends HTMLElement {
         }
 
         this.Render();
-
-        this.Populate();
     }
 
     Seed = Date.now();
@@ -159,6 +162,7 @@ export class GameContainer extends HTMLElement {
 
         let next_battle = this.querySelector<BattleScene>(`battle-scene[name="${this.CurrentOpponent}"]`);
         if (!next_battle) {
+            this.ShowSummary();
             alert("You win the run!");
         }
 
@@ -166,12 +170,79 @@ export class GameContainer extends HTMLElement {
         this.InitBattle();
     }
 
+    ShowSummary() {
+        let dialog = this.shadowRoot!.querySelector("dialog");
+        DEBUG: if (!dialog) {
+            throw "Dialog not found";
+        }
+
+        let table = dialog.querySelector("table");
+        DEBUG: if (!table) {
+            throw "Table not found";
+        }
+
+        let total_battles = this.querySelectorAll<BattleScene>("battle-scene").length;
+        let prcnfmt = new Intl.NumberFormat("en-US", {style: "percent", maximumFractionDigits: 0});
+        let total_minutes = (Date.now() - this.Stats.DateStarted) / 1000 / 60;
+        let unitfmt = new Intl.NumberFormat("en-US", {
+            style: "unit",
+            unit: "minute",
+            unitDisplay: "long",
+            maximumFractionDigits: 0,
+        });
+        let villains_bested = this.Stats.Battles - 1;
+
+        table.innerHTML = html`
+            <tr>
+                <td>Villains Bested</td>
+                <td>${villains_bested} (${prcnfmt.format(villains_bested / total_battles)})</td>
+            </tr>
+            <tr>
+                <td>Cards Played</td>
+                <td>${this.Stats.CardsPlayed}</td>
+            </tr>
+            <tr>
+                <td>Cards Trashed</td>
+                <td>${this.Stats.CardsTrashed}</td>
+            </tr>
+            <tr>
+                <td>Cards Moved</td>
+                <td>${this.Stats.CardsMoved}</td>
+            </tr>
+            <tr>
+                <td>Cards Acquired</td>
+                <td>${this.Stats.CardsAcquired}</td>
+            </tr>
+            <tr>
+                <td>Locations Won</td>
+                <td>${this.Stats.LocationsWon}</td>
+            </tr>
+            <tr>
+                <td>Locations Lost</td>
+                <td>${this.Stats.LocationsLost}</td>
+            </tr>
+            <tr>
+                <td>Total Power</td>
+                <td>${this.Stats.TotalPower}</td>
+            </tr>
+            <tr>
+                <td>Energy Spent</td>
+                <td>${this.Stats.EnergySpent}</td>
+            </tr>
+            <tr>
+                <td>Total Time</td>
+                <td>${unitfmt.format(total_minutes)}</td>
+            </tr>
+        `;
+
+        dialog.showModal();
+    }
+
     Reset() {
         this.CurrentView = "title";
         this.ResetState();
+        this.Populate();
         this.Commit();
-
-        // TODO: New seed, regen the battles.
     }
 
     ResetState() {
@@ -190,6 +261,10 @@ export class GameContainer extends HTMLElement {
             EnergySpent: 0,
             DateStarted: Date.now(),
         };
+
+        for (let battle of this.querySelectorAll<BattleScene>("battle-scene")) {
+            battle.remove();
+        }
     }
 
     Commit() {

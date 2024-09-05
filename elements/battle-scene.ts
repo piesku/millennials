@@ -77,7 +77,7 @@ export class BattleScene extends HTMLElement {
         const mask_url = `url(${mask_src})`;
 
         let current_view = this.State === "prep" ? "prep" : "playing";
-        let button_text = this.State === "playing" ? "Reveal" : this.State === "won" ? "Next!" : "Play Again";
+        let button_text = this.State === "playing" ? "Reveal" : this.State === "won" ? "Next!" : "Summary";
 
         this.shadowRoot!.innerHTML = html`
             <style>
@@ -238,8 +238,7 @@ export class BattleScene extends HTMLElement {
                         game.ProgressToNextOpponent();
                         break;
                     case "lost":
-                        console.table(game.Stats);
-                        game.Reset();
+                        game.ShowSummary();
                         break;
                 }
             } else if (target.id === "undo") {
