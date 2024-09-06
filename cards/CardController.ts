@@ -124,7 +124,7 @@ export abstract class CardController {
      */
     *OnMessageSelf(kind: Message, trace: Trace): Generator<[Trace, string], void> {}
 
-    *Reveal(trace: Trace) {
+    *Reveal(trace: Trace, broadcast = true) {
         DEBUG: if (!this.Location) {
             throw `${this} must be in a location to be revealed`;
         }
@@ -141,7 +141,9 @@ export abstract class CardController {
             yield trace.log(`You see ${this} for the first time!`);
         }
 
-        yield* this.Battle.BroadcastCardMessage(Message.CardEntersTable, trace, this);
+        if (broadcast) {
+            yield* this.Battle.BroadcastCardMessage(Message.CardEntersTable, trace, this);
+        }
     }
 
     /**

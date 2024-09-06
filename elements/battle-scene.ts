@@ -499,7 +499,7 @@ export class BattleScene extends HTMLElement {
                 }
 
                 for (let other of location.GetRevealedCards()) {
-                    if (!trace.includes(other) && !processed.includes(other)) {
+                    if (other.Element !== card.Element && !trace.includes(other) && !processed.includes(other)) {
                         yield* other.OnMessage(kind, trace.fork(other), card);
                         processed.push(other);
                     }

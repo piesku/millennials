@@ -19,7 +19,7 @@ export class ReturnOfTheJedi extends LocationController {
                         yield trace.log(`${card.Name} transforms into ${other_card}`);
                         card.Element.setAttribute("type", other_card.Element.getAttribute("type")!);
                         // Reveal the new card type.
-                        yield* card.Element.Instance.Reveal(trace.fork());
+                        yield* card.Element.Instance.Reveal(trace.fork(), false);
                     } else {
                         yield trace.log(`but there are no other cards of the same cost`);
                     }
