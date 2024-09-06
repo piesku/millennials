@@ -16,8 +16,7 @@ export class ObiWanKenobi extends CardController {
             if (card.TurnPlayed !== lastTurn) {
                 continue;
             }
-            yield trace.log(`${card} gains +3 Power`);
-            card.AddModifier(this, "addpower", 3);
+            yield trace.log(card.AddModifier(this, "addpower", 3));
         }
     }
 }

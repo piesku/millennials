@@ -15,8 +15,7 @@ export class HarryPotter extends CardController {
         if (deck) {
             for (let cardElement of deck.children) {
                 const card = cardElement as CardElement;
-                yield trace.log(`Card power is set to 4 by ${this}`);
-                card.Instance.AddModifier(this, "setpower", 4);
+                yield trace.log(card.Instance.AddModifier(this, "setpower", 4));
             }
         } else {
             yield trace.log(`No deck found for ${this.Owner}`);

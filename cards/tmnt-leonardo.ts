@@ -17,7 +17,6 @@ export class Leonardo extends CardController {
             }
         }
 
-        this.AddModifier(this, "addpower", points * 2);
-        yield trace.log(`${this} gains ${points * 2} power for revealing ${points} cards this turn`);
+        yield trace.log(this.AddModifier(this, "addpower", points * 2));
     }
 }

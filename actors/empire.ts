@@ -16,8 +16,7 @@ export class DarthVader extends CardController {
     override *OnReveal(trace: Trace) {
         const opponent_cards = this.Location?.GetRevealedCards(this.Opponent) || [];
         for (let card of opponent_cards) {
-            yield trace.log(`${this.Name} reduces ${card.Name}'s power by 1`);
-            card.AddModifier(this, "subtractpower", 1);
+            yield trace.log(card.AddModifier(this, "addpower", -1));
         }
     }
 }
@@ -35,8 +34,7 @@ export class Dalek extends CardController {
         const card = element(opponent_cards);
 
         if (card) {
-            yield trace.log(`${this.Name} gives ${card.Name} -1 Power`);
-            card.AddModifier(this, "subtractpower", 1);
+            yield trace.log(card.AddModifier(this, "addpower", -1));
         }
     }
 }
@@ -72,8 +70,7 @@ export class Borg extends CardController {
     override *OnReveal(trace: Trace) {
         const hand = this.Opponent.Element.querySelector("a-hand")!;
         for (let card of hand.querySelectorAll<CardElement>("a-card")) {
-            yield trace.log(`${card.Instance} gets +1 cost from ${this}`);
-            card.Instance.AddModifier(this, "addcost", 1);
+            yield trace.log(card.Instance.AddModifier(this, "addcost", 1));
         }
     }
 }
@@ -89,8 +86,7 @@ export class Stormtrooper extends CardController {
         const revealedCards = this.Battle.GetRevealedCards();
         const sameNameCards = revealedCards.filter((card) => card.Name === this.Name);
         const count = sameNameCards.length;
-        yield trace.log(`There are ${count} ${this} cards revealed`);
-        this.AddModifier(this, "addpower", count);
+        yield trace.log(this.AddModifier(this, "addpower", count));
     }
 }
 

@@ -54,9 +54,6 @@ export abstract class CardController {
                 case "addpower":
                     result += value;
                     break;
-                case "subtractpower":
-                    result -= value;
-                    break;
             }
         }
         return result;
@@ -99,6 +96,20 @@ export abstract class CardController {
 
         // TODO Perhaps a MutationObserver would be a better way to handle this?
         this.Element.Render();
+
+        switch (op) {
+            case "addpower":
+            case "addcost": {
+                let amount = value > 0 ? "+" + value : value;
+                return `${this} gains ${amount} ${op.slice(3)}${origin === this ? "" : ` from ${origin}`}`;
+            }
+            case "setpower":
+            case "setcost": {
+                return `${this} has ${value} ${op.slice(3)}${origin === this ? "" : ` from ${origin}`}`;
+            }
+            default:
+                return `${this} gains a modifier from ${origin}`;
+        }
     }
 
     /**

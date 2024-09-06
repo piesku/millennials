@@ -11,8 +11,7 @@ export class Superman extends CardController {
 
     override *OnReveal(trace: Trace) {
         for (let card of this.Location!.GetRevealedCards(this.Opponent)) {
-            yield trace.log(`${card.Name} loses 1 Power due to ${this.Name}'s effect.`);
-            card.AddModifier(this, "subtractpower", 1);
+            yield trace.log(card.AddModifier(this, "addpower", -1));
         }
     }
 }

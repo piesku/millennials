@@ -13,8 +13,7 @@ export class Donatello extends CardController {
         switch (kind) {
             case Message.CardEntersTable:
                 if (card?.Owner === this.Owner && this.Battle.PlayedCardsQueue.includes(card)) {
-                    yield trace.log(`${this} gets +1 power`);
-                    this.AddModifier(card!, "addpower", 1);
+                    yield trace.log(this.AddModifier(card!, "addpower", 1));
                 }
                 break;
         }

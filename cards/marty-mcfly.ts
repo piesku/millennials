@@ -15,10 +15,7 @@ export class MartyMcFly extends CardController {
             const current_turn = this.Battle.CurrentTurn;
             const opponent_cards_played_this_turn = opponent_cards.filter((card) => card.TurnPlayed === current_turn);
             if (opponent_cards_played_this_turn.length === 0) {
-                yield trace.log(
-                    `${this.Name} gains 2 Power because the opponent didn't play a card to the ${this.Location.Name}`,
-                );
-                this.AddModifier(this, "addpower", 2);
+                yield trace.log(this.AddModifier(this, "addpower", 2));
             }
         }
     }

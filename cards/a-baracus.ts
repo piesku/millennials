@@ -21,10 +21,7 @@ export class Baracus extends CardController {
         }
 
         if (locationIndex === 1) {
-            yield trace.log(`${this} gains +3 power for being in the middle location`);
-            this.AddModifier(this, "addpower", 3);
-        } else {
-            yield trace.log(`${this} does not gain any additional power`);
+            yield trace.log(this.AddModifier(this, "addpower", 3));
         }
     }
 }

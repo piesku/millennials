@@ -14,8 +14,7 @@ export class Blade extends CardController {
         const deck = this.Owner.Element.querySelector("a-deck");
         if (deck && deck.firstElementChild) {
             const topCard = deck.firstElementChild as CardElement;
-            yield trace.log(`${topCard.Instance.Name} gets +2 power from ${this}`);
-            topCard.Instance.AddModifier(this, "addpower", 2);
+            yield trace.log(topCard.Instance.AddModifier(this, "addpower", 2));
         }
     }
 }

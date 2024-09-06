@@ -13,8 +13,7 @@ export class Hermione extends CardController {
         switch (kind) {
             case Message.CardEntersTable:
                 if (card?.Location === this.Location && card?.Owner === this.Owner) {
-                    this.AddModifier(this, "addpower", 2);
-                    yield trace.log(`${this.Name} gains +2 Power due to ${card.Name} being played.`);
+                    yield trace.log(this.AddModifier(this, "addpower", 2));
                 }
                 break;
         }
