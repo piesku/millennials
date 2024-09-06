@@ -445,15 +445,20 @@ export class BattleScene extends HTMLElement {
             console.log("%c" + Message[kind], "color: orange");
         }
 
+        let processed: Array<LocationController | CardController> = [];
         let trace = new Trace();
 
         for (let location of this.Locations) {
-            if (location.IsRevealed) {
+            if (location.IsRevealed && !trace.includes(location) && !processed.includes(location)) {
                 yield* location.OnMessage(kind, trace.fork(location));
+                processed.push(location);
             }
 
             for (let card of location.GetRevealedCards()) {
-                yield* card.OnMessage(kind, trace.fork(card));
+                if (!trace.includes(card) && !processed.includes(card)) {
+                    yield* card.OnMessage(kind, trace.fork(card));
+                    processed.push(card);
+                }
             }
         }
     }
@@ -465,32 +470,38 @@ export class BattleScene extends HTMLElement {
             trace.map((value) => (typeof value === "number" ? value : value.Name)),
         );
 
+        let processed: Array<LocationController | CardController> = [];
+
         // First, broadcast the message to the card itself.
         yield* card.OnMessageSelf(kind, trace.fork(card));
 
         if (card.Location) {
             // Then, broadcast the message to the card's location, if it's revealed.
-            if (card.Location.IsRevealed && !trace.includes(card.Location)) {
+            if (card.Location.IsRevealed && !trace.includes(card.Location) && !processed.includes(card.Location)) {
                 yield* card.Location.OnMessage(kind, trace.fork(card.Location), card);
+                processed.push(card.Location);
             }
 
             // Then, broadcast the message to other revealed cards in the same location.
             for (let other of card.Location.GetRevealedCards()) {
-                if (other.Element !== card.Element && !trace.includes(other)) {
+                if (other.Element !== card.Element && !trace.includes(other) && !processed.includes(other)) {
                     yield* other.OnMessage(kind, trace.fork(other), card);
+                    processed.push(other);
                 }
             }
 
             // Finally, broadcast the message to other locations and their revealed cards.
             let locations = this.Locations.filter((location) => location !== card.Location);
             for (let location of locations) {
-                if (location.IsRevealed && !trace.includes(location)) {
+                if (location.IsRevealed && !trace.includes(location) && !processed.includes(location)) {
                     yield* location.OnMessage(kind, trace.fork(location), card);
+                    processed.push(location);
                 }
 
                 for (let other of location.GetRevealedCards()) {
-                    if (!trace.includes(other)) {
+                    if (!trace.includes(other) && !processed.includes(other)) {
                         yield* other.OnMessage(kind, trace.fork(other), card);
+                        processed.push(other);
                     }
                 }
             }
