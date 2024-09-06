@@ -49,11 +49,7 @@ export abstract class ActorController {
         const hand = this.Element.querySelector("a-hand")!;
         const deck = target ?? this.Element.querySelector("a-deck")!;
 
-        if (this.Type === "player") {
-            yield trace.log(`${this} draw a card`);
-        } else {
-            yield trace.log(`${this} draws a card`);
-        }
+        yield trace.log(`${this} draw a card`);
 
         if (deck.firstElementChild && hand.children.length >= 7) {
             yield trace.fork(1).log("but the hand is full");
@@ -88,11 +84,7 @@ export abstract class ActorController {
             let empty_slots = this.Battle.GetEmptySlots(this);
             let slot = element(empty_slots);
             let location = slot.closest<LocationElement>("a-location")!.Instance;
-            if (this.Element.id === "villain") {
-                yield trace.log(`${this} plays a card to ${location}`);
-            } else {
-                yield trace.log(`${this} plays ${card.Instance} to ${location}`);
-            }
+            yield trace.log(`${this} play a card to ${location}`);
             slot.appendChild(card);
             this.Battle.PlayedCardsQueue.push(card.Instance);
 

@@ -129,7 +129,7 @@ export abstract class CardController {
             throw `${this} must be in a location to be revealed`;
         }
         if (trace.length === 0) {
-            yield trace.log(`${this} is revealed in ${this.Location}`);
+            yield trace.log(`${this.Owner} reveal ${this} in ${this.Location}`);
         }
         this.Element.classList.add("frontside");
         yield* this.OnReveal(trace.fork(this));
@@ -138,7 +138,7 @@ export abstract class CardController {
 
         // Update the collection state.
         if (save_card_state(this, CollectionFlag.Seen)) {
-            yield trace.log(`You see ${this} for the first time!`);
+            yield trace.fork(1).log(`you see ${this} for the first time!`);
         }
 
         if (broadcast) {
