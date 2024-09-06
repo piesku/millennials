@@ -46,12 +46,10 @@ export const enum Sprites {
     Aladdin,
     Genie,
     Trinity,
-
     HeMan,
     SheRa,
     OptimusPrime,
     Megaman,
-
     Pikachu,
     Frodo,
     Samwise,
@@ -65,4 +63,8 @@ export const enum Sprites {
     Tarzan,
     RedPowerRanger,
     BluePowerRanger,
+
+    Dalek,
+    Borg,
+    Alien,
 }
