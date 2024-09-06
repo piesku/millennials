@@ -16,7 +16,7 @@ game.esbuild.js: $(SOURCES)
 	> $@
 
 game.sed.js: game.esbuild.js sed.txt
-	sed -f sed.txt  $< > $@
+	sed -f sed.txt $< | tr '\n' ' ' | sed -f sed.txt > $@
 
 game.terser.js: game.sed.js terser_compress.txt | node_modules
 	npx --quiet terser $< \
