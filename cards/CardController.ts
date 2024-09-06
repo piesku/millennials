@@ -186,7 +186,7 @@ export abstract class CardController {
         if (!is_slot_taken) {
             yield* this.Battle.BroadcastCardMessage(Message.CardMovesFromLocation, trace, this);
             slot.appendChild(this.Element);
-            yield trace.log(`${this} moved from ${source_location} to ${target_location} `);
+            yield trace.log(`${this} moves from ${source_location} to ${target_location} `);
             yield* this.Battle.BroadcastCardMessage(Message.CardMovesToLocation, trace, this);
         } else {
             yield trace.log(

@@ -14,11 +14,11 @@ export class LukeSkywalker extends CardController {
         if (kind === Message.TurnEnds && this.Location) {
             const empty_slots = this.Battle.GetEmptySlots(this.Owner);
             if (empty_slots.length === 0) {
-                yield trace.log(`${this.Name} has no place to move`);
+                yield trace.log(`${this} has no place to move`);
                 return;
             }
             const random_slot = element(empty_slots);
-            yield* this.Move(trace, random_slot);
+            yield* this.Move(trace.fork(-1), random_slot);
         }
     }
 }
