@@ -24,8 +24,8 @@ export class DarthVader extends CardController {
 export class Dalek extends CardController {
     Name = "Kalek";
     Cost = 1;
-    Power = 2;
-    Text = "Once: Give a random opponent cart in this location -1 Power. EXTERMINATE!";
+    Power = 10;
+    Text = "Once: Give a random opponent card in this location -1 Power. EXTERMINATE!";
     Sprite = Sprites.Dalek;
     override IsVillain = true;
 

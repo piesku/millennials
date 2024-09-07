@@ -6,7 +6,7 @@ export class Leonardo extends CardController {
     Name = "Young Tortoise Beksiński";
     Cost = 3;
     Power = 3;
-    Text = "Gain +2 Power for each card you revealed this turn";
+    Text = "Once: Gain +2 Power for each card you revealed this turn";
     Sprite = Sprites.Leonardo;
 
     override *OnReveal(trace: Trace) {

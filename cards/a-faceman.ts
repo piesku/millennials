@@ -6,7 +6,7 @@ export class Faceman extends CardController {
     Name = "B-Team Shitface";
     Cost = 2;
     Power = 3;
-    Text = "Draw a card from your opponent's deck";
+    Text = "Once: Draw a card from your opponent's deck";
     Sprite = Sprites.Faceman;
 
     override *OnReveal(trace: Trace) {

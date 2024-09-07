@@ -6,7 +6,7 @@ export class ObiWanKenobi extends CardController {
     Name = "Kobi-Two Nierobi";
     Cost = 6;
     Power = 6;
-    Text = "Each card you played last turn gains +3 Power";
+    Text = "Once: Each card you played last turn gains +3 Power";
     Sprite = Sprites.ObiWanKenobi;
 
     override *OnReveal(trace: Trace) {

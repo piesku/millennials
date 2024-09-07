@@ -7,7 +7,7 @@ export class Woody extends CardController {
     Name = "Toy Cowboy";
     Cost = 3;
     Power = 4;
-    Text = "Add the top card of your deck here.";
+    Text = "Once: Add the top card of your deck here.";
     Sprite = Sprites.Woody;
 
     override *OnReveal(trace: Trace) {
