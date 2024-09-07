@@ -20,12 +20,13 @@ export const STARTING_DECK = [
     // Sprites.Hermione,
     // Sprites.Faceman,
     Sprites.Goku,
-    Sprites.Faceman,
-    Sprites.Hannibal,
-    Sprites.LuckyLuke,
-    Sprites.ObiWanKenobi,
-    Sprites.Murdock,
-    Sprites.Murdock,
+
+    Sprites.Beavis,
+    Sprites.Beavis,
+    Sprites.Beavis,
+    Sprites.Butthead,
+    Sprites.Butthead,
+    Sprites.Butthead,
 ];
 
 export class PlayerController extends ActorController {
