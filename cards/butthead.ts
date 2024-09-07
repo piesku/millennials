@@ -11,7 +11,7 @@ export class Butthead extends CardController {
     Sprite = Sprites.Butthead;
 
     override *OnReveal(trace: Trace) {
-        const deck = this.Owner.Element.querySelector("a-deck");
+        const deck = this.Opponent.Element.querySelector("a-deck");
         if (deck && deck.firstElementChild) {
             let cheapest = deck.firstElementChild as CardElement;
 
