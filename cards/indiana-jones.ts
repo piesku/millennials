@@ -11,6 +11,11 @@ export class IndianaJones extends CardController {
 
     override CanBePlayedHere(slot: HTMLElement): boolean {
         const location = slot.closest<LocationElement>("a-location");
-        return !!location && location.Instance.GetScore(this.Owner) > location.Instance.GetScore(this.Opponent);
+
+        DEBUG: if (!location) {
+            throw "Slot must be in a location";
+        }
+
+        return location.Instance.GetScore(this.Owner) > location.Instance.GetScore(this.Opponent);
     }
 }

@@ -11,11 +11,11 @@ export class Pikachu extends CardController {
 
     override *OnReveal(trace: Trace) {
         const enemyCardsWithMoreThan10Power = this.Location!.GetRevealedCards(this.Opponent).filter(
-            (card) => card.Power >= 10,
+            (card) => card.CurrentPower >= 10,
         );
 
         for (const card of enemyCardsWithMoreThan10Power) {
-            yield trace.log(`Trashing ${card} because it has ${card.Power} Power`);
+            yield trace.log(`Trashing ${card} because it has ${card.CurrentPower} Power`);
             yield* card.Trash(trace);
         }
     }
