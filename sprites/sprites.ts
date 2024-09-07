@@ -17,7 +17,7 @@ export const enum Sprites {
     DarthVader,
     Stormtrooper,
 
-    Morty,
+    Kirilin,
     Simba,
     Woody,
     Krecik,
@@ -31,7 +31,7 @@ export const enum Sprites {
     JamesBond,
     Hermione,
     Ron,
-    RickSanchez,
+    Goku,
     Homer,
     Buzz,
     Denver,

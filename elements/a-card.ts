@@ -17,6 +17,7 @@ import {ForrestGump} from "../cards/forrest-gump.js";
 import {Frodo} from "../cards/frodo-baggins.js";
 import {Gandalf} from "../cards/gan-dalf.js";
 import {Genie} from "../cards/ge-nie.js";
+import {Goku} from "../cards/goku.js";
 import {HarryPotter} from "../cards/harry-potter.js";
 import {Heman} from "../cards/he-man.js";
 import {Hermione} from "../cards/hermi-one.js";
@@ -28,6 +29,7 @@ import {JamesBond} from "../cards/james-bond.js";
 import {JohnMcClane} from "../cards/john-mcclane.js";
 import {JohnRambo} from "../cards/john-rambo.js";
 import {KevinHomeAlone} from "../cards/kevin-homealone.js";
+import {Kirilin} from "../cards/kirilan.js";
 import {Krecik} from "../cards/kre-cik.js";
 import {KungFuPanda} from "../cards/KungFuPanda.js";
 import {LaraCroft} from "../cards/lara-croft.js";
@@ -37,14 +39,12 @@ import {MacGyver} from "../cards/mac-gyver.js";
 import {MartyMcFly} from "../cards/marty-mcfly.js";
 import {Maximus} from "../cards/maximus.js";
 import {Megaman} from "../cards/mega-man.js";
-import {Morty} from "../cards/mor-ty.js";
 import {Mufasa} from "../cards/mufa-sa.js";
 import {Neo} from "../cards/ne-o.js";
 import {ObiWanKenobi} from "../cards/obi-wan-kenobi.js";
 import {OptimusPrime} from "../cards/optimus-prime.js";
 import {Pikachu} from "../cards/pikachu.js";
 import {RedPowerRanger} from "../cards/red-powerranger.js";
-import {RickSanchez} from "../cards/rick-sanchez.js";
 import {RobinHood} from "../cards/robin-hood.js";
 import {Robocop} from "../cards/robo-cop.js";
 import {Ron} from "../cards/ron-wesley.js";
@@ -84,7 +84,7 @@ export class CardElement extends HTMLElement {
         [Sprites.MichaelAngelo]: MichaelAngelo,
         [Sprites.DarthVader]: DarthVader,
         [Sprites.Stormtrooper]: Stormtrooper,
-        [Sprites.Morty]: Morty,
+        [Sprites.Kirilin]: Kirilin,
         [Sprites.Simba]: Simba,
         [Sprites.Woody]: Woody,
         [Sprites.Krecik]: Krecik,
@@ -98,7 +98,7 @@ export class CardElement extends HTMLElement {
         [Sprites.JamesBond]: JamesBond,
         [Sprites.Hermione]: Hermione,
         [Sprites.Ron]: Ron,
-        [Sprites.RickSanchez]: RickSanchez,
+        [Sprites.Goku]: Goku,
         [Sprites.Homer]: HomerSimpson,
         [Sprites.Buzz]: BuzzLightyear,
         [Sprites.Denver]: DenverDinosaur,

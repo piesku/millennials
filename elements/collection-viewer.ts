@@ -6,6 +6,7 @@ import {CardElement} from "./a-card.js";
 export class CollectionViewer extends HTMLElement {
     private groupByCost: boolean = true;
     private showWipCards: boolean = true;
+    private showVillains: boolean = true;
 
     constructor() {
         super();
@@ -24,6 +25,9 @@ export class CollectionViewer extends HTMLElement {
                 case "toggle-show-wip-cards":
                     this.toggleShowWipCards();
                     break;
+                case "toggle-show-villain-cards":
+                    this.toggleShowVillainCards();
+                    break;
             }
         });
     }
@@ -35,6 +39,11 @@ export class CollectionViewer extends HTMLElement {
 
     toggleShowWipCards() {
         this.showWipCards = !this.showWipCards;
+        this.render();
+    }
+
+    toggleShowVillainCards() {
+        this.showVillains = !this.showVillains;
         this.render();
     }
 
@@ -51,7 +60,9 @@ export class CollectionViewer extends HTMLElement {
             card.setAttribute("type", card_type);
             card.classList.add("frontside");
 
-            if (card.Instance.IsVillain) {
+            if (this.showVillains && !card.Instance.IsVillain) {
+                continue;
+            } else if (!this.showVillains && card.Instance.IsVillain) {
                 continue;
             }
 
@@ -105,6 +116,9 @@ export class CollectionViewer extends HTMLElement {
                     <button id="toggle-show-wip-cards">
                         ${this.showWipCards ? "Hide WIP Cards" : "Show WIP Cards"}
                     </button>
+                    <button id="toggle-show-villain-cards">
+                        ${this.showVillains ? "Hide Villains" : "Show Villains"}
+                    </button>
                 </h1>
                 ${cost_sections}
             `;
@@ -116,6 +130,9 @@ export class CollectionViewer extends HTMLElement {
                     <button id="toggle-group-by-cost">${this.groupByCost ? "Ungroup by Cost" : "Group by Cost"}</button>
                     <button id="toggle-show-wip-cards">
                         ${this.showWipCards ? "Hide WIP Cards" : "Show WIP Cards"}
+                    </button>
+                    <button id="toggle-show-villain-cards">
+                        ${this.showVillains ? "Hide Villains" : "Show Villains"}
                     </button>
                 </h1>
                 <flex-row wrap start style="gap: 20px;"> ${all_cards.map((card) => card.outerHTML).join("")} </flex-row>

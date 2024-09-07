@@ -3,12 +3,12 @@ import {Message, Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
-export class RickSanchez extends CardController {
-    Name = "Sick Ranchez";
+export class Goku extends CardController {
+    Name = "Carrotku";
     Cost = 6;
     Power = 0;
     Text = "Always: Has the combined Power of all trashed cards";
-    Sprite = Sprites.RickSanchez;
+    Sprite = Sprites.Goku;
 
     override *OnReveal(trace: Trace) {
         const trashedCards = this.Battle.querySelectorAll<CardElement>("a-trash a-card");
