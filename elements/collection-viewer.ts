@@ -6,7 +6,7 @@ import {CardElement} from "./a-card.js";
 export class CollectionViewer extends HTMLElement {
     private groupByCost: boolean = true;
     private showWipCards: boolean = true;
-    private showVillains: boolean = true;
+    private showVillains: boolean = false;
 
     constructor() {
         super();
