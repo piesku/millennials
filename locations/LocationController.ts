@@ -1,5 +1,5 @@
 import {ActorController} from "../actors/ActorController.js";
-import {CardController} from "../cards/CardController.js";
+import {CardController, Operator} from "../cards/CardController.js";
 import {CardElement} from "../elements/a-card.js";
 import {LocationElement} from "../elements/a-location.js";
 import {BattleScene} from "../elements/battle-scene.js";
@@ -30,10 +30,15 @@ export abstract class LocationController {
         if (this.Element.previousElementSibling instanceof LocationElement) {
             input = this.Element.previousElementSibling.Instance.GetScore(actor);
         }
-
-        return this.GetRevealedCards(actor)
-            .map((card) => card.CurrentPower)
-            .reduce((a, b) => a + b, input);
+        let result = input;
+        for (let card of this.GetRevealedCards(actor)) {
+            if (card.Operator === Operator.ADD) {
+                result += card.CurrentPower;
+            } else if (card.Operator === Operator.MULTIPLY) {
+                result *= card.CurrentPower;
+            }
+        }
+        return result;
     }
 
     GetRevealedCards(actor?: ActorController) {

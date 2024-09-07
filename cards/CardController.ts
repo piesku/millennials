@@ -9,12 +9,19 @@ import {Message, Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 import {CollectionFlag, save_card_state} from "../storage.js";
 
+export const enum Operator {
+    ADD = 1,
+    MULTIPLY,
+}
+
 export abstract class CardController {
     abstract Name: string;
     abstract Cost: number;
     abstract Power: number;
     abstract Text: string;
     abstract Sprite: Sprites;
+
+    Operator = Operator.ADD;
 
     Id = next_id();
     IsVillain = false;
