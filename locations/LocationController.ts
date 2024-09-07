@@ -67,7 +67,7 @@ export abstract class LocationController {
     *OnMessage(kind: Message, trace: Trace, card?: CardController): Generator<[Trace, string], void> {}
 
     // TODO Take the slot element instead of the index.
-    *AddCard(card: CardController, trace: Trace, actor: ActorController, slot_index?: number) {
+    *AddCard(card: CardController, trace: Trace, actor: ActorController, slot_index?: number, skip_reveal?: boolean) {
         const side = this.Element.querySelector(`location-owner[slot="${actor.Type}"]`)!;
         let slot =
             slot_index === undefined
@@ -83,7 +83,9 @@ export abstract class LocationController {
             }
 
             slot.appendChild(card.Element);
-            yield* card.Reveal(trace);
+            if (!skip_reveal) {
+                yield* card.Reveal(trace);
+            }
 
             // Update the collection state.
             save_card_state(card, CollectionFlag.Seen);
