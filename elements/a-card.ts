@@ -62,7 +62,6 @@ import {Trinity} from "../cards/trini-ty.js";
 import {Woody} from "../cards/woo-dy.js";
 import {color_from_seed} from "../lib/color.js";
 import {html} from "../lib/html.js";
-import {integer} from "../lib/random.js";
 import {Sprites} from "../sprites/sprites.js";
 
 export class CardElement extends HTMLElement {
@@ -272,7 +271,7 @@ export class CardElement extends HTMLElement {
                 .sprite-border {
                     position: relative;
                     height: ${target_height}px;
-                    background: ${color_from_seed(this.Instance.Name)};
+                    background: ${color_from_seed(this.Instance.Sprite)};
                     overflow: hidden;
                 }
 
@@ -453,32 +452,6 @@ export class CardElement extends HTMLElement {
             return a.Instance.Name.localeCompare(b.Instance.Name);
         }
     }
-}
-
-const colors = [
-    "#000000",
-    "#1D2B53",
-    "#7E2553",
-    "#008751",
-    "#AB5236",
-    "#5F574F",
-    "#C2C3C7",
-    "#FFF1E8",
-    "#FF004D",
-    "#FFA300",
-    "#FFEC27",
-    "#00E436",
-    "#29ADFF",
-    "#83769C",
-    "#FF77A8",
-    "#FFCCAA",
-];
-
-function gradient(spec: number[]) {
-    spec = spec.map((c, i) => integer(0, 15));
-    spec = spec.map((c, i) => (Math.sin(i / 5) + Math.random() > 1 ? spec[i - 1] : c));
-    return `linear-gradient(to bottom, ${spec.map((c, i) => colors[c])})`;
-    return `linear-gradient(to bottom, ${spec.map((c, i) => `${colors[c]} ${i * 10}%, ${colors[c]} ${i * 10 + 10}%`)})`;
 }
 
 customElements.define("a-card", CardElement);

@@ -123,7 +123,7 @@ export class BattleScene extends HTMLElement {
                 .sprite-border {
                     position: relative;
                     height: ${target_height}px;
-                    background: ${color_from_seed(this.Villain.Name)};
+                    background: ${color_from_seed(this.Villain.Sprite)};
                     overflow: hidden;
                 }
 
