@@ -24,10 +24,8 @@ export class RobinHood extends CardController {
             yield trace.log(`No empty slots available in ${this.Location!.Name}`);
             return;
         }
-        const random_slot = element(empty_slots);
-        const random_trashed_card = element(trashed_cards);
 
-        yield trace.log(`${random_trashed_card.Instance.Name} is brought back to ${this.Location!.Name}`);
-        random_slot.appendChild(random_trashed_card);
+        const random_trashed_card = element(trashed_cards);
+        this.Location!.AddCard(random_trashed_card.Instance, trace, this.Owner);
     }
 }

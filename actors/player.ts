@@ -12,7 +12,7 @@ export const STARTING_DECK = [
     // Sprites.Raphael,
     Sprites.Genie,
     Sprites.Genie,
-    Sprites.LuckyLuke,
+    Sprites.RobinHood,
     Sprites.LuckyLuke,
     Sprites.Goku,
     // Sprites.Superman,
