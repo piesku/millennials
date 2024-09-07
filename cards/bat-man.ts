@@ -11,13 +11,10 @@ export class Batman extends CardController {
     Sprite = Sprites.Batman;
 
     override *OnReveal(trace: Trace) {
-        const opponentDeck = this.Opponent.Element.querySelector("a-deck");
-        if (opponentDeck && opponentDeck.firstElementChild) {
-            const topCard = opponentDeck.firstElementChild as CardElement;
+        const deck = this.Opponent.Element.querySelector("a-deck");
+        if (deck && deck.firstElementChild) {
+            const topCard = deck.firstElementChild as CardElement;
             yield* topCard.Instance.Trash(trace);
-            yield trace.log(`${topCard.Instance} has been trashed from the top of the opponent's deck`);
-        } else {
-            yield trace.log(`No card found on the top of the opponent's deck to trash`);
         }
     }
 }

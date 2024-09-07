@@ -6,9 +6,10 @@ import {Murdock} from "../cards/a-murdock.js";
 import {AceVentura} from "../cards/ace-ventura.js";
 import {Aladdin} from "../cards/al-addin.js";
 import {Batman} from "../cards/bat-man.js";
+import {Beavis} from "../cards/beavis.js";
 import {BillMurray} from "../cards/bill-murray.js";
-import {Blade} from "../cards/bla-de.js";
 import {BluePowerRanger} from "../cards/blue-powerranger.js";
+import {Butthead} from "../cards/butthead.js";
 import {BuzzLightyear} from "../cards/buzz-lightyear.js";
 import {CardController} from "../cards/CardController.js";
 import {DanAykroyd} from "../cards/dan-aykroyd.js";
@@ -24,7 +25,6 @@ import {Hermione} from "../cards/hermi-one.js";
 import {HomerSimpson} from "../cards/homer-simpson.js";
 import {IndianaJones} from "../cards/indiana-jones.js";
 import {InspectorGadget} from "../cards/inspector-gadget.js";
-import {JackSparrow} from "../cards/JackSparrow.js";
 import {JamesBond} from "../cards/james-bond.js";
 import {JohnMcClane} from "../cards/john-mcclane.js";
 import {JohnRambo} from "../cards/john-rambo.js";
@@ -102,8 +102,8 @@ export class CardElement extends HTMLElement {
         [Sprites.Homer]: HomerSimpson,
         [Sprites.Buzz]: BuzzLightyear,
         [Sprites.Denver]: DenverDinosaur,
-        [Sprites.Blade]: Blade,
-        [Sprites.JackSparrow]: JackSparrow,
+        [Sprites.Beavis]: Beavis,
+        [Sprites.Butthead]: Butthead,
         [Sprites.KungFuPanda]: KungFuPanda,
         [Sprites.BillMurray]: BillMurray,
         [Sprites.DanAykroyd]: DanAykroyd,

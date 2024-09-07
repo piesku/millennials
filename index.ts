@@ -21,7 +21,7 @@ import "./cards/a-faceman.js";
 import "./cards/a-hannibal.js";
 import "./cards/a-murdock.js";
 import "./cards/bat-man.js";
-import "./cards/bla-de.js";
+import "./cards/beavis.js";
 import "./cards/buzz-lightyear.js";
 import "./cards/denver-dinosaur.js";
 import "./cards/forrest-gump.js";

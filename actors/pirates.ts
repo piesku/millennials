@@ -5,7 +5,7 @@ import {ActorController} from "./ActorController.js";
 export class PiratesController extends ActorController {
     Type = "villain" as const;
     Name = "Javy Dones";
-    Sprite = Sprites.JackSparrow;
+    Sprite = Sprites.Butthead;
     Description = "Argh";
 
     *StartBattle(trace: Trace) {
