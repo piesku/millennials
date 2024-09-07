@@ -18,15 +18,23 @@ export class GameContainer extends HTMLElement {
                 :host {
                     display: block;
                 }
+                button {
+                    width: 200px;
+                    padding: 20px;
+                }
             </style>
             <multi-view current="${this.CurrentView}">
                 <main name="title">
-                    <flex-col name="title" style="height:100vh; justify-content:center; align-items:center;">
-                        <h1><i>The Dirty Dozen</i></h1>
+                    <flex-col center name="title" style="height:90vh;">
+                        <h1 style="font-size:18vw; color:#f60;">
+                            <i>Millennials</i>
+                        </h1>
 
-                        ${has_previous_run && html`<button id="continue">Continue Previous Run</button>`}
-                        <button id="run">Start a New Run</button>
-                        <button id="collection">Collection</button>
+                        <flex-row gap center>
+                            ${has_previous_run && html`<button id="continue">Continue Run</button>`}
+                            <button id="run">Start a New Run</button>
+                            <button id="collection">Collection</button>
+                        </flex-row>
                     </flex-col>
                 </main>
                 <main name="run">
@@ -47,7 +55,6 @@ export class GameContainer extends HTMLElement {
         load_game_state(this);
 
         history.replaceState(this.CurrentView, "");
-        document.title = this.CurrentView.toUpperCase();
 
         this.shadowRoot!.addEventListener("click", (e) => {
             let target = e.target as HTMLElement;
@@ -270,7 +277,6 @@ export class GameContainer extends HTMLElement {
     Commit() {
         save_game_state(this);
         history.pushState(this.CurrentView, "");
-        document.title = this.CurrentView.toUpperCase();
         this.Render();
     }
 
