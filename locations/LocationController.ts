@@ -26,9 +26,14 @@ export abstract class LocationController {
     }
 
     GetScore(actor: ActorController) {
+        let input = 0;
+        if (this.Element.previousElementSibling instanceof LocationElement) {
+            input = this.Element.previousElementSibling.Instance.GetScore(actor);
+        }
+
         return this.GetRevealedCards(actor)
             .map((card) => card.CurrentPower)
-            .reduce((a, b) => a + b, 0);
+            .reduce((a, b) => a + b, input);
     }
 
     GetRevealedCards(actor?: ActorController) {
