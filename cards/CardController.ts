@@ -112,6 +112,13 @@ export abstract class CardController {
         }
     }
 
+    RemoveModifiers(origin: CardController | LocationController) {
+        const modifiers = this.Element.querySelectorAll(`a-modifier[origin-id="${origin.Id}"]`);
+        for (let modifier of modifiers) {
+            this.Element.removeChild(modifier);
+        }
+        this.Element.Render();
+    }
     /**
      * Handles messages targeting other cards, as well as system messages (when
      * `card` is `undefined`).
@@ -212,5 +219,13 @@ export abstract class CardController {
 
     CanBePlayedHere(slot: HTMLElement) {
         return true;
+    }
+
+    Clone() {
+        let card = this.Element.cloneNode(true) as CardElement;
+        card.Instance.Id = next_id();
+        card.setAttribute("type", this.Element.getAttribute("type") || "");
+        card.classList.add("frontside");
+        return card;
     }
 }

@@ -12,7 +12,7 @@ export class OptimusPrime extends CardController {
     override *OnReveal(trace: Trace) {
         const enemyCards = this.Location!.GetRevealedCards(this.Opponent);
         if (enemyCards.length === 0) {
-            yield trace.log(`No enemy cards found at ${location}`);
+            yield trace.log(`No enemy cards found at ${this.Location}`);
             return;
         }
 

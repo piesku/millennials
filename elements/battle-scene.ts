@@ -489,20 +489,21 @@ export class BattleScene extends HTMLElement {
                     processed.push(other);
                 }
             }
+        }
 
-            // Finally, broadcast the message to other locations and their revealed cards.
-            let locations = this.Locations.filter((location) => location !== card.Location);
-            for (let location of locations) {
-                if (location.IsRevealed && !trace.includes(location) && !processed.includes(location)) {
-                    yield* location.OnMessage(kind, trace.fork(location), card);
-                    processed.push(location);
-                }
+        // Finally, broadcast the message to other locations and their revealed cards.
+        // We don't need card.Location here, this breaks the Trash events
+        let locations = this.Locations.filter((location) => location !== card.Location);
+        for (let location of locations) {
+            if (location.IsRevealed && !trace.includes(location) && !processed.includes(location)) {
+                yield* location.OnMessage(kind, trace.fork(location), card);
+                processed.push(location);
+            }
 
-                for (let other of location.GetRevealedCards()) {
-                    if (other.Element !== card.Element && !trace.includes(other) && !processed.includes(other)) {
-                        yield* other.OnMessage(kind, trace.fork(other), card);
-                        processed.push(other);
-                    }
+            for (let other of location.GetRevealedCards()) {
+                if (other.Element !== card.Element && !trace.includes(other) && !processed.includes(other)) {
+                    yield* other.OnMessage(kind, trace.fork(other), card);
+                    processed.push(other);
                 }
             }
         }
