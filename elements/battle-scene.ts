@@ -430,7 +430,7 @@ export class BattleScene extends HTMLElement {
         this.Game.Stats.LocationsWon += locations_won;
         this.Game.Stats.LocationsLost += this.Locations.length - locations_won;
 
-        if (locations_won >= this.Locations.length / 2) {
+        if (this.Player.GetScore() >= this.Villain.GetScore()) {
             this.State = "won";
         } else {
             this.State = "lost";
