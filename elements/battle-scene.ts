@@ -150,7 +150,7 @@ export class BattleScene extends HTMLElement {
                     <h1>Prepare For the Next Battle</h1>
                     <flex-row gap start>
                         <div>
-                            <h2>Shop (Pick 1)</h2>
+                            <h2>Shop — Pick ${this.Game.CardsInShop}</h2>
                             <div class="grid" style="background:darksalmon;">
                                 <slot name="shop"></slot>
                             </div>
@@ -307,6 +307,7 @@ export class BattleScene extends HTMLElement {
 
                         if (this.Game.CardsInShop > 1) {
                             this.Game.CardsInShop--;
+                            this.Render();
                         } else {
                             this.InitBattle();
                         }
