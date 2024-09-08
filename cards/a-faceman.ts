@@ -3,7 +3,7 @@ import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
 export class Faceman extends CardController {
-    Name = "B-Team Shitface";
+    Name = "B. Shitface";
     Cost = 2;
     Power = 4;
     Text = "Once: Add 1 power to your other cards here";

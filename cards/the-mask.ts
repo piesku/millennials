@@ -2,7 +2,7 @@ import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
 export class TheMask extends CardController {
-    Name = "The Face Disguise";
+    Name = "The Skam";
     Cost = 6;
     Power = 0;
     Text = "";

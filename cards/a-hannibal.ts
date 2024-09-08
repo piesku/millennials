@@ -3,7 +3,7 @@ import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
 export class Hannibal extends CardController {
-    Name = "B-Team Cannibal";
+    Name = "B. Cannibal";
     Cost = 5;
     Power = 3;
     Text = "Your other cards have +1 power.";

@@ -3,7 +3,7 @@ import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
 export class Baracus extends CardController {
-    Name = "B-Team C.D. Bacarus";
+    Name = "B.D. Bacarus";
     Cost = 2;
     Power = 2;
     Text = "Once: +3 power if revealed in the middle location";

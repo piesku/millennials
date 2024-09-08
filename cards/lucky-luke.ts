@@ -4,7 +4,7 @@ import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
 export class LuckyLuke extends CardController {
-    Name = "Fortunate Lucas";
+    Name = "Fortune Lucas";
     Cost = 5;
     Power = 7;
     Text = "Once: Trash the card that costs the least from your opponent's hand";

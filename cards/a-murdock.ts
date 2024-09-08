@@ -4,7 +4,7 @@ import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
 export class Murdock extends CardController {
-    Name = "B-Team Pilot";
+    Name = "B. Pilot";
     Cost = 1;
     Power = 3;
     Text = "Once: Give all cards in your hand +1 Power";

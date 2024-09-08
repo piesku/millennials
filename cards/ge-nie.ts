@@ -4,7 +4,7 @@ import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
 export class Genie extends CardController {
-    Name = "Ghost of Persia";
+    Name = "Djin";
     Cost = 6;
     Power = 0;
     Text = "Once: Trash one of your other cards here to copy it at the other locations.";

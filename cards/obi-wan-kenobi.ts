@@ -3,7 +3,7 @@ import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
 export class ObiWanKenobi extends CardController {
-    Name = "Kobi-Two Nierobi";
+    Name = "Kobi 2 Nierobi";
     Cost = 6;
     Power = 6;
     Text = "Once: Each card you played last turn gains +3 Power";

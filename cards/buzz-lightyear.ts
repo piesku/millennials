@@ -3,7 +3,7 @@ import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
 export class BuzzLightyear extends CardController {
-    Name = "Buzzer Astronaut";
+    Name = "Toy Astronaut";
     Cost = 1;
     Power = 2;
     Text = "+2 energy next turn";

@@ -3,7 +3,7 @@ import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
 export class DenverDinosaur extends CardController {
-    Name = "Vender Dinosaur";
+    Name = "Vender Dino";
     Cost = 1;
     Power = 0;
     Text = "After each turn, gain 1 Power for each unspent Energy.";
