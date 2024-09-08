@@ -196,20 +196,16 @@ export abstract class CardController {
         }
     }
 
-    *Move(trace: Trace, slot: HTMLElement) {
+    *Move(trace: Trace, target_location: LocationController, actor: ActorController) {
         const source_location = this.Location!;
-        const target_location = slot.closest<LocationElement>("a-location")!.Instance;
 
-        const is_slot_taken = !!slot.querySelector("a-card");
-        if (!is_slot_taken) {
-            yield* this.Battle.BroadcastCardMessage(Message.CardMovesFromLocation, trace, this);
-            slot.appendChild(this.Element);
-            yield trace.log(`${this} moves from ${source_location} to ${target_location} `);
-            yield* this.Battle.BroadcastCardMessage(Message.CardMovesToLocation, trace, this);
+        yield trace.log(`${this} moves from ${source_location} to ${target_location} `);
+        if (target_location.IsFull(actor)) {
+            yield trace.fork(1).log(`but ${target_location} is full`);
         } else {
-            yield trace.log(
-                `${this} could not move to ${target_location} because the slot nr ${slot} is already taken`,
-            );
+            yield* this.Battle.BroadcastCardMessage(Message.CardMovesFromLocation, trace, this);
+            target_location.GetSide(actor).appendChild(this.Element);
+            yield* this.Battle.BroadcastCardMessage(Message.CardMovesToLocation, trace, this);
         }
 
         if (this.Owner === this.Battle.Player) {

@@ -1,6 +1,5 @@
 import {ActorElement} from "../elements/a-actor.js";
 import {CardElement} from "../elements/a-card.js";
-import {LocationElement} from "../elements/a-location.js";
 import {BattleScene} from "../elements/battle-scene.js";
 import {element} from "../lib/random.js";
 import {Message, Trace} from "../messages.js";
@@ -87,21 +86,22 @@ export abstract class ActorController {
 
     *VillAIn(trace: Trace) {
         while (true) {
-            let playableCards = Array.from(this.Element.querySelectorAll<CardElement>("a-hand a-card")).filter(
+            let playable_cards = Array.from(this.Element.querySelectorAll<CardElement>("a-hand a-card")).filter(
                 (card) => card.Instance.CurrentCost <= this.CurrentEnergy,
             );
 
-            if (playableCards.length === 0) {
+            if (playable_cards.length === 0) {
                 break;
             }
 
-            let card = element(playableCards);
+            let card = element(playable_cards);
 
-            let empty_slots = this.Battle.GetEmptySlots(this);
-            let slot = element(empty_slots);
-            let location = slot.closest<LocationElement>("a-location")!.Instance;
+            let empty_locations = this.Battle.Locations.filter((location) => !location.IsFull(this));
+            let location = element(empty_locations);
+
             yield trace.log(`${this} play a card to ${location}`);
-            slot.appendChild(card);
+
+            location.GetSide(this).appendChild(card);
             this.Battle.PlayedCardsQueue.push(card.Instance);
 
             this.CurrentEnergy -= card.Instance.CurrentCost;

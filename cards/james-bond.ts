@@ -10,11 +10,6 @@ export class JamesBond extends CardController {
     Sprite = Sprites.JamesBond;
 
     override *OnReveal(trace: Trace) {
-        const currentLocation = this.Location!;
-        const opponent = this.Opponent;
-
-        yield trace.log(`${this.Name} is switching sides`);
-
-        yield* currentLocation.AddCard(this, trace, opponent, undefined, true);
+        yield* this.Move(trace, this.Location!, this.Opponent);
     }
 }

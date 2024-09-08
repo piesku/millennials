@@ -1,4 +1,5 @@
 import {html} from "../lib/html.js";
+import {CardElement} from "./a-card.js";
 
 export class LocationOwner extends HTMLElement {
     constructor() {
@@ -8,10 +9,44 @@ export class LocationOwner extends HTMLElement {
 
     connectedCallback() {
         this.shadowRoot!.innerHTML = html`
-            <flex-row wrap style="justify-content: space-between; align-content: center;">
+            <style>
+                :host {
+                    width: 240px;
+                    height: 90px;
+                    border: 4px ridge orange;
+                    border-radius: 5px;
+                    padding: 10px;
+                }
+            </style>
+            <flex-row wrap start>
                 <slot></slot>
             </flex-row>
         `;
+
+        this.addEventListener("dragover", (e) => {
+            e.preventDefault();
+        });
+
+        this.addEventListener("drop", (e) => {
+            e.preventDefault();
+            if (this.childElementCount >= 4) {
+                alert("Location is full");
+                e.stopPropagation();
+                return;
+            }
+            const data = e.dataTransfer!.getData("text/plain");
+            const card = document.getElementById(data) as CardElement;
+            if (card) {
+                if (!card.Instance.CanBePlayedHere(this)) {
+                    alert("Can't be played here!");
+                    e.stopPropagation();
+                    return;
+                } else {
+                    this.appendChild(card);
+                    card.classList.add("frontside");
+                }
+            }
+        });
     }
 }
 customElements.define("location-owner", LocationOwner);

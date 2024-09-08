@@ -11,7 +11,6 @@ import "./elements/battle-scene.js";
 import "./elements/collection-viewer.js";
 import "./elements/game-container.js";
 import "./elements/location-owner.js";
-import "./elements/location-slot.js";
 
 import "./actors/empire.js";
 import "./actors/player.js";

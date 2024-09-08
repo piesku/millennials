@@ -12,13 +12,12 @@ export class LukeSkywalker extends CardController {
 
     override *OnMessage(kind: Message, trace: Trace, card?: CardController): Generator<[Trace, string], void> {
         if (kind === Message.TurnEnds && this.Location) {
-            const empty_slots = this.Battle.GetEmptySlots(this.Owner);
-            if (empty_slots.length === 0) {
-                yield trace.log(`${this} has no place to move`);
-                return;
+            let other_locations = this.Battle.Locations.filter(
+                (location) => location !== this.Location && !location.IsFull(this.Owner),
+            );
+            if (other_locations.length > 0) {
+                yield* this.Move(trace.fork(-1), element(other_locations), this.Owner);
             }
-            const random_slot = element(empty_slots);
-            yield* this.Move(trace.fork(-1), random_slot);
         }
     }
 }

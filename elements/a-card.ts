@@ -222,6 +222,33 @@ export class CardElement extends HTMLElement {
                     position: relative;
                 }
 
+                :host-context(location-owner) {
+                    width: 60px;
+                    height: 90px;
+                    border-radius: 3px;
+
+                    .header {
+                        font-size: 0.4em;
+                        margin: 0 3px;
+                    }
+
+                    .header span {
+                        font-size: 8px;
+                    }
+
+                    .sprite-border {
+                        transform: scale(0.5) translate(-50%, -50%);
+                    }
+
+                    .name {
+                        font-size: 0.5em;
+                    }
+
+                    .description {
+                        display: none;
+                    }
+                }
+
                 :host(:not(.frontside)) {
                     background: #f6d365;
                     background-image: repeating-linear-gradient(
@@ -404,7 +431,7 @@ export class CardElement extends HTMLElement {
                 }
             </style>
 
-            <flex-col start onclick="event.stopPropagation(); this.nextElementSibling.showModal();"
+            <flex-col class="body" start onclick="event.stopPropagation(); this.nextElementSibling.showModal();"
                 >${card_body}</flex-col
             >
 

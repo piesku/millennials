@@ -13,19 +13,12 @@ export class RobinHood extends CardController {
 
     override *OnReveal(trace: Trace) {
         let trash = this.Owner.Element.querySelector("a-trash")!;
-        const trashed_cards = Array.from(trash.querySelectorAll("a-card")) as CardElement[];
-        if (trashed_cards.length === 0) {
-            yield trace.log(`No cards in the trash to bring back`);
-            return;
+        let trashed_cards = Array.from(trash.querySelectorAll("a-card")) as CardElement[];
+        let trashed_card = element(trashed_cards);
+        if (!trashed_card) {
+            yield trace.log(`no cards in the trash to bring back`);
+        } else {
+            yield* this.Location!.AddCard(trashed_card.Instance, trace, this.Owner);
         }
-
-        const empty_slots = this.Location!.GetEmptySlots(this.Owner);
-        if (empty_slots.length === 0) {
-            yield trace.log(`No empty slots available in ${this.Location!.Name}`);
-            return;
-        }
-
-        const random_trashed_card = element(trashed_cards);
-        this.Location!.AddCard(random_trashed_card.Instance, trace, this.Owner);
     }
 }

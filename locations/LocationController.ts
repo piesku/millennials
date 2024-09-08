@@ -3,7 +3,6 @@ import {CardController} from "../cards/CardController.js";
 import {CardElement} from "../elements/a-card.js";
 import {LocationElement} from "../elements/a-location.js";
 import {BattleScene} from "../elements/battle-scene.js";
-import {LocationSlot} from "../elements/location-slot.js";
 import {next_id} from "../lib/id.js";
 import {Message, Trace} from "../messages.js";
 import {CollectionFlag, save_card_state} from "../storage.js";
@@ -25,6 +24,14 @@ export abstract class LocationController {
         return this.Element.closest<BattleScene>("battle-scene")!;
     }
 
+    GetSide(actor: ActorController) {
+        let side = this.Element.querySelector(`location-owner[slot=${actor.Type}]`);
+        DEBUG: if (!side) {
+            throw "Location must have a side for the " + actor.Type;
+        }
+        return side;
+    }
+
     GetScore(actor: ActorController) {
         return this.GetRevealedCards(actor)
             .map((card) => card.CurrentPower)
@@ -41,10 +48,8 @@ export abstract class LocationController {
             .filter((card) => card.IsRevealed);
     }
 
-    GetEmptySlots(actor: ActorController) {
-        return this.Element.querySelectorAll<LocationSlot>(
-            `location-owner[slot=${actor.Type}] location-slot:not(:has(a-card))`,
-        );
+    IsFull(actor: ActorController) {
+        return this.Element.querySelectorAll<CardElement>(`location-owner[slot=${actor.Type}] a-card`).length === 4;
     }
 
     CleanUp(card: CardController) {
@@ -69,14 +74,10 @@ export abstract class LocationController {
 
     *OnMessage(kind: Message, trace: Trace, card?: CardController): Generator<[Trace, string], void> {}
 
-    // TODO Take the slot element instead of the index.
-    *AddCard(card: CardController, trace: Trace, actor: ActorController, slot_index?: number, skip_reveal?: boolean) {
-        const side = this.Element.querySelector(`location-owner[slot="${actor.Type}"]`)!;
-        let slot =
-            slot_index === undefined
-                ? side.querySelector("location-slot:not(:has(a-card))")
-                : side.querySelector(`location-slot[label="${slot_index + 1}"]`);
-        if (slot) {
+    *AddCard(card: CardController, trace: Trace, actor: ActorController, skip_reveal?: boolean) {
+        if (this.IsFull(actor)) {
+            yield trace.log(`but ${this} is full`);
+        } else {
             if (card.Element.closest("a-hand")) {
                 yield* actor.Battle.BroadcastCardMessage(Message.CardLeavesHand, trace, card);
             } else if (card.Element.closest("a-deck")) {
@@ -85,17 +86,15 @@ export abstract class LocationController {
                 yield* actor.Battle.BroadcastCardMessage(Message.CardLeavesTrash, trace, card);
             }
 
-            slot.appendChild(card.Element);
+            let side = this.GetSide(actor);
+            side.appendChild(card.Element);
+
             if (!skip_reveal) {
                 yield* card.Reveal(trace);
             }
 
             // Update the collection state.
             save_card_state(card, CollectionFlag.Seen);
-        } else if (slot_index === undefined) {
-            yield trace.log("but there are no empty slots");
-        } else {
-            yield trace.log("but the slot is already occupied");
         }
     }
 }

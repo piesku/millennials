@@ -15,20 +15,9 @@ export class Raphael extends CardController {
             (card) => [1, 2].includes(card.CurrentCost) && card.Location !== this.Location,
         );
 
-        if (enemy_cards.length === 0) {
-            yield trace.log("but there are no cards to move");
-            return;
+        let card_to_move = element(enemy_cards);
+        if (card_to_move) {
+            yield* card_to_move.Move(trace, this.Location!, this.Owner);
         }
-
-        const empty_slots = this.Location!.GetEmptySlots(this.Opponent);
-        if (empty_slots.length === 0) {
-            yield trace.log("but there are no empty slots");
-            return;
-        }
-
-        const card_to_move = element(enemy_cards);
-        const radom_slot = element(empty_slots);
-
-        yield* card_to_move.Move(trace, radom_slot);
     }
 }

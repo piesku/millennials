@@ -29,19 +29,8 @@ export class LocationElement extends HTMLElement {
         }
 
         this.innerHTML = `
-            <location-owner slot="player">
-                <location-slot label=1></location-slot>
-                <location-slot label=2></location-slot>
-                <location-slot label=3></location-slot>
-                <location-slot label=4></location-slot>
-            </location-owner>
-
-            <location-owner slot="villain">
-                <location-slot label=1></location-slot>
-                <location-slot label=2></location-slot>
-                <location-slot label=3></location-slot>
-                <location-slot label=4></location-slot>
-            </location-owner>
+            <location-owner slot="player"></location-owner>
+            <location-owner slot="villain"></location-owner>
         `;
 
         this.Render();

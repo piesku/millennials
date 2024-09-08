@@ -11,7 +11,6 @@ import {ActorElement} from "./a-actor.js";
 import {CardElement} from "./a-card.js";
 import {LocationElement} from "./a-location.js";
 import {GameContainer} from "./game-container.js";
-import {LocationSlot} from "./location-slot.js";
 
 const INTERVAL = 100;
 
@@ -527,12 +526,6 @@ export class BattleScene extends HTMLElement {
     GetRevealedCards(actor?: ActorController) {
         return [...this.querySelectorAll<LocationElement>("a-location")].flatMap((location) =>
             location.Instance.GetRevealedCards(actor),
-        );
-    }
-
-    GetEmptySlots(actor: ActorController) {
-        return this.querySelectorAll<LocationSlot>(
-            `location-owner[slot=${actor.Type}] location-slot:not(:has(a-card))`,
         );
     }
 
