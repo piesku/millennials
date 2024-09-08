@@ -213,7 +213,7 @@ export abstract class CardController {
         }
     }
 
-    CanBePlayedHere(slot: HTMLElement) {
+    CanBePlayedHere(location: LocationController) {
         return true;
     }
 

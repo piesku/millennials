@@ -1,4 +1,4 @@
-import {LocationElement} from "../elements/a-location.js";
+import {LocationController} from "../locations/LocationController.js";
 import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
@@ -9,13 +9,7 @@ export class IndianaJones extends CardController {
     Text = "You can only play this at locations where you are winning.";
     Sprite = Sprites.IndianaJones;
 
-    override CanBePlayedHere(slot: HTMLElement): boolean {
-        const location = slot.closest<LocationElement>("a-location");
-
-        DEBUG: if (!location) {
-            throw "Slot must be in a location";
-        }
-
-        return location.Instance.GetScore(this.Owner) > location.Instance.GetScore(this.Opponent);
+    override CanBePlayedHere(location: LocationController): boolean {
+        return location.GetScore(this.Owner) > location.GetScore(this.Opponent);
     }
 }
