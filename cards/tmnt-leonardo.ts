@@ -3,7 +3,7 @@ import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
 export class Leonardo extends CardController {
-    Name = "Young Tortoise Beksiński";
+    Name = "Beksiński";
     Cost = 3;
     Power = 3;
     Text = "Once: Gain +2 Power for each card you revealed this turn";

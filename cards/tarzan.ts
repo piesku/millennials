@@ -3,8 +3,8 @@ import {CardController} from "./CardController.js";
 
 export class Tarzan extends CardController {
     Name = "Jungle Kid";
-    Cost = 5;
-    Power = 0;
-    Text = "";
+    Cost = 4;
+    Power = 6;
+    Text = "<i>Aaah-aaah-aaah! Ooo-eee-ooo!</i>";
     Sprite = Sprites.Tarzan;
 }

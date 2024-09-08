@@ -7,26 +7,29 @@ import {Sprites} from "../sprites/sprites.js";
 import {ActorController} from "./ActorController.js";
 
 export const STARTING_DECK = [
-    // Sprites.Raphael,
-    // Sprites.Raphael,
-    // Sprites.Raphael,
-    Sprites.Genie,
-    Sprites.Genie,
-    Sprites.RobinHood,
-    Sprites.LuckyLuke,
-    Sprites.Goku,
-    // Sprites.Superman,
-    // Sprites.Superman,
-    // Sprites.Hermione,
-    // Sprites.Faceman,
-    Sprites.Goku,
+    // 1
+    Sprites.RedPowerRanger,
+    Sprites.RedPowerRanger,
+    Sprites.Beavis,
 
-    Sprites.Beavis,
-    Sprites.Beavis,
-    Sprites.Beavis,
-    Sprites.Butthead,
-    Sprites.Butthead,
-    Sprites.Butthead,
+    // 2
+    Sprites.BillMurray,
+    Sprites.Robocop,
+    Sprites.Robocop,
+
+    // 3,
+    Sprites.Homer,
+    Sprites.Homer,
+
+    // 4
+    Sprites.Tarzan,
+    Sprites.Woody,
+
+    // 5
+    Sprites.Hannibal,
+
+    // 6
+    Sprites.Krecik,
 ];
 
 export class PlayerController extends ActorController {

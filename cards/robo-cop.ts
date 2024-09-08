@@ -5,14 +5,12 @@ import {CardController} from "./CardController.js";
 export class Robocop extends CardController {
     Name = "Coprobo";
     Cost = 2;
-    Power = 4;
-    Text = "Once: Add 1 power to your other cards here";
+    Power = 3;
+    Text = "Once: Draw a card from your opponent's deck";
     Sprite = Sprites.Robocop;
 
     override *OnReveal(trace: Trace) {
-        let other_revealed_cards = this.Location!.GetRevealedCards(this.Owner);
-        for (let card of other_revealed_cards) {
-            yield trace.log(card.AddModifier(this, "addpower", 1));
-        }
+        let deck = this.Opponent.Element.querySelector("a-deck")!;
+        yield* this.Owner.DrawCard(trace, deck);
     }
 }

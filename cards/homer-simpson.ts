@@ -5,6 +5,6 @@ export class HomerSimpson extends CardController {
     Name = "Somer Himpson";
     Cost = 3;
     Power = 5;
-    Text = "";
+    Text = "<i>D'oh!</i>";
     Sprite = Sprites.Homer;
 }

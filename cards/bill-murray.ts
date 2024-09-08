@@ -4,7 +4,7 @@ import {CardController} from "./CardController.js";
 export class BillMurray extends CardController {
     Name = "Spiritcatcher Bill";
     Cost = 2;
-    Power = 2;
-    Text = "";
+    Power = 3;
+    Text = "<i>There is only Ciul!</i>";
     Sprite = Sprites.BillMurray;
 }

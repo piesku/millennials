@@ -3,7 +3,7 @@ import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
 export class MichaelAngelo extends CardController {
-    Name = "Young Tortoise Van Gogh";
+    Name = "Van Gogh";
     Cost = 3;
     Power = 3;
     Text = "Once: Destroy all cards costing 1";

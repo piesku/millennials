@@ -5,6 +5,6 @@ export class Krecik extends CardController {
     Name = "Moleck";
     Cost = 6;
     Power = 12;
-    Text = "";
+    Text = "<i>Ahoj!</i>";
     Sprite = Sprites.Krecik;
 }

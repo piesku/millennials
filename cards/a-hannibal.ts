@@ -4,8 +4,8 @@ import {CardController} from "./CardController.js";
 
 export class Hannibal extends CardController {
     Name = "B-Team Cannibal";
-    Cost = 4;
-    Power = 6;
+    Cost = 5;
+    Power = 3;
     Text = "Your other cards have +1 power.";
     Sprite = Sprites.Hannibal;
 

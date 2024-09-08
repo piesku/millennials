@@ -5,8 +5,8 @@ import {CardController} from "./CardController.js";
 
 export class Woody extends CardController {
     Name = "Toy Cowboy";
-    Cost = 3;
-    Power = 4;
+    Cost = 4;
+    Power = 1;
     Text = "Once: Add the top card of your deck here.";
     Sprite = Sprites.Woody;
 

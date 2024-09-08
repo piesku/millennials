@@ -3,7 +3,7 @@ import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
 export class Donatello extends CardController {
-    Name = "Young Tortoise Picasso";
+    Name = "Picasso";
     Cost = 3;
     Power = 1;
     Text = "After you play a card, this gains +1 Power";
