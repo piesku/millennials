@@ -7,6 +7,23 @@ import {next_id} from "../lib/id.js";
 import {Message, Trace} from "../messages.js";
 import {CollectionFlag, save_card_state} from "../storage.js";
 
+export const enum LocationType {
+    StarWars_ANewHope = 1,
+    StarWars_TheEmpireStrikesBack,
+    StarWars_ReturnOfTheJedi,
+    StarWars_AttackOfTheClones,
+    GainOneEnergy,
+    GainOneEnergyEmpty,
+    GiveCostHand,
+    LoseOnePower,
+    OnceDontWork,
+    OneTwoThree,
+    TrashFourthTurn,
+    TrashFromHand,
+    TurnSeven,
+    WinnerDrawsTwo,
+}
+
 export abstract class LocationController {
     abstract Name: string;
     abstract Description: string;
@@ -72,7 +89,7 @@ export abstract class LocationController {
             yield trace.log(`${this} is revealed`);
         }
         this.Element.classList.add("frontside");
-        yield* this.OnReveal(trace.fork());
+        yield* this.OnReveal(trace.fork(this));
         this.IsRevealed = true;
 
         // TODO Broadcast?

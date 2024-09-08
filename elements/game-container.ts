@@ -1,6 +1,6 @@
 import {STARTING_DECK} from "../actors/player.js";
 import {html} from "../lib/html.js";
-import {element, set_seed} from "../lib/random.js";
+import {element, integer, set_seed} from "../lib/random.js";
 import {load_game_state, save_game_state} from "../storage.js";
 import {BattleScene} from "./battle-scene.js";
 import {CollectionViewer} from "./collection-viewer.js";
@@ -135,9 +135,9 @@ export class GameContainer extends HTMLElement {
                     <a-hand></a-hand>
                     <a-trash hidden></a-trash>
                 </a-actor>
-                <a-location slot="location" type="death-star"></a-location>
-                <a-location slot="location" type="arkham-asylum"></a-location>
-                <a-location slot="location" type="future-hill-valley"></a-location>
+                <a-location slot="location" type="${integer(1, 14)}"></a-location>
+                <a-location slot="location" type="${integer(1, 14)}"></a-location>
+                <a-location slot="location" type="${integer(1, 14)}"></a-location>
                 <a-actor type="player" id="player" slot="player">
                     <a-deck></a-deck>
                     <a-hand></a-hand>

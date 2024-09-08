@@ -1,16 +1,38 @@
 import {html} from "../lib/html.js";
-import {LocationController} from "../locations/LocationController.js";
+import {GainOneEnergy} from "../locations/gain_one_energy.js";
+import {GainOneEnergyEmpty} from "../locations/gain_one_energy_empty.js";
+import {GiveCostHand} from "../locations/give_cost_hand.js";
+import {LocationController, LocationType} from "../locations/LocationController.js";
+import {LoseOnePower} from "../locations/lose_one_power.js";
+import {OnceDontWork} from "../locations/once_dont_work.js";
+import {OneTwoThree} from "../locations/one_two_three.js";
 import {ANewHope} from "../locations/StarWars_ANewHope.js";
+import {AttackOfTheClones} from "../locations/StarWars_AttackOfTheClones.js";
 import {ReturnOfTheJedi} from "../locations/StarWars_ReturnOfTheJedi.js";
 import {TheEmpireStrikesBack} from "../locations/StarWars_TheEmpireStrikesBack.js";
+import {TrashFourthTurn} from "../locations/trash_fourth_turn.js";
+import {TrashFromHand} from "../locations/trash_from_hand.js";
+import {TurnSeven} from "../locations/turn_seven.js";
+import {WinnerDrawsTwo} from "../locations/winner_draws_two.js";
 
 export class LocationElement extends HTMLElement {
     Instance!: LocationController;
 
-    static Controllers: Record<string, new (el: LocationElement) => LocationController> = {
-        "arkham-asylum": TheEmpireStrikesBack,
-        "death-star": ANewHope,
-        "future-hill-valley": ReturnOfTheJedi,
+    static Controllers: Record<LocationType, new (el: LocationElement) => LocationController> = {
+        [LocationType.StarWars_ANewHope]: TheEmpireStrikesBack,
+        [LocationType.StarWars_TheEmpireStrikesBack]: ANewHope,
+        [LocationType.StarWars_ReturnOfTheJedi]: ReturnOfTheJedi,
+        [LocationType.StarWars_AttackOfTheClones]: AttackOfTheClones,
+        [LocationType.GainOneEnergy]: GainOneEnergy,
+        [LocationType.GainOneEnergyEmpty]: GainOneEnergyEmpty,
+        [LocationType.GiveCostHand]: GiveCostHand,
+        [LocationType.LoseOnePower]: LoseOnePower,
+        [LocationType.OnceDontWork]: OnceDontWork,
+        [LocationType.OneTwoThree]: OneTwoThree,
+        [LocationType.TrashFourthTurn]: TrashFourthTurn,
+        [LocationType.TrashFromHand]: TrashFromHand,
+        [LocationType.TurnSeven]: TurnSeven,
+        [LocationType.WinnerDrawsTwo]: WinnerDrawsTwo,
     };
 
     constructor() {
@@ -20,7 +42,7 @@ export class LocationElement extends HTMLElement {
 
     static observedAttributes = ["type"];
     attributeChangedCallback(name: string, old_value: string, new_value: string) {
-        this.Instance = new LocationElement.Controllers[new_value](this);
+        this.Instance = new LocationElement.Controllers[parseInt(new_value) as LocationType](this);
     }
 
     connectedCallback() {
