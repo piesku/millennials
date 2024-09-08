@@ -223,12 +223,11 @@ export class CardElement extends HTMLElement {
                     background-color: white;
                     cursor: move;
                     position: relative;
+                    border-radius: 3px;
                     background: ${color_from_seed(this.Instance.Sprite)};
                 }
 
                 :host-context(location-owner) {
-                    border-radius: 3px;
-
                     .body {
                         width: 60px;
                         height: 90px;
@@ -291,7 +290,6 @@ export class CardElement extends HTMLElement {
                 :host-context(a-hand) > *,
                 :host(.frontside) > * {
                     visibility: visible;
-                    border-radius: 5px;
                 }
 
                 :host(.dragging) {
@@ -348,13 +346,8 @@ export class CardElement extends HTMLElement {
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
-                    font-size: 0.8em;
-                    font-family: Arial, sans-serif;
                     margin: 0 3px;
                     z-index: 1;
-                }
-
-                .header span {
                     color: #fff;
                     font-weight: bold;
                     font-size: 16px;
