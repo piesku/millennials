@@ -292,6 +292,11 @@ export class BattleScene extends HTMLElement {
                     const data = e.dataTransfer.getData("text/plain");
                     const new_card = document.getElementById(data) as CardElement;
                     if (new_card) {
+                        let backcard = new_card.cloneNode(true) as CardElement;
+                        backcard.setAttribute("draggable", "false");
+                        backcard.classList.remove("frontside");
+                        new_card.replaceWith(backcard);
+
                         // Update the deck data.
                         let offset = game.PlayerDeck.indexOf(new_card.Instance.Sprite);
                         game.PlayerDeck.splice(offset, 1, new_card.Instance.Sprite);
