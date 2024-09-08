@@ -3,7 +3,7 @@ import {CardController} from "./CardController.js";
 
 export class BluePowerRanger extends CardController {
     Name = "Blue Forceguardian";
-    Cost = 0;
+    Cost = 3;
     Power = 0;
     Text = "";
     Sprite = Sprites.BluePowerRanger;

@@ -3,7 +3,7 @@ import {CardController} from "./CardController.js";
 
 export class MacGyver extends CardController {
     Name = "GacMyver";
-    Cost = 1;
+    Cost = 6;
     Power = 0;
     Text = "";
     Sprite = Sprites.MacGyver;
