@@ -63,6 +63,10 @@ export abstract class LocationController {
         return true;
     }
 
+    CanOnRevealHere(card: CardController) {
+        return true;
+    }
+
     *Reveal(trace: Trace) {
         if (trace.length === 0) {
             yield trace.log(`${this} is revealed`);

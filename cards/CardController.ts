@@ -150,7 +150,9 @@ export abstract class CardController {
             yield trace.log(`${this.Owner} reveal ${this} in ${this.Location}`);
         }
         this.Element.classList.add("frontside");
-        yield* this.OnReveal(trace.fork(this));
+        if (this.Location.CanOnRevealHere(this)) {
+            yield* this.OnReveal(trace.fork(this));
+        }
         this.IsRevealed = true;
         this.TurnPlayed = this.Battle.CurrentTurn;
 
