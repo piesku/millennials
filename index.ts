@@ -41,12 +41,12 @@ import "./cards/obi-wan-kenobi.js";
 import "./cards/robin-hood.js";
 import "./cards/robo-cop.js";
 import "./cards/ron-wesley.js";
-import "./cards/sim-ba.js";
 import "./cards/super-man.js";
 import "./cards/tmnt-donatello.js";
 import "./cards/tmnt-leonardo.js";
 import "./cards/tmnt-michaelangelo.js";
 import "./cards/tmnt-raphael.js";
+import "./cards/tsubasa.js";
 import "./cards/woo-dy.js";
 
 import "./locations/StarWars_ANewHope.js";

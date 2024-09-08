@@ -50,7 +50,6 @@ import {Robocop} from "../cards/robo-cop.js";
 import {Ron} from "../cards/ron-wesley.js";
 import {Samwise} from "../cards/sam-wise.js";
 import {SheRa} from "../cards/she-ra.js";
-import {Simba} from "../cards/sim-ba.js";
 import {Superman} from "../cards/super-man.js";
 import {Tarzan} from "../cards/tarzan.js";
 import {TheMask} from "../cards/the-mask.js";
@@ -59,6 +58,7 @@ import {Leonardo} from "../cards/tmnt-leonardo.js";
 import {MichaelAngelo} from "../cards/tmnt-michaelangelo.js";
 import {Raphael} from "../cards/tmnt-raphael.js";
 import {Trinity} from "../cards/trini-ty.js";
+import {Tsubasa} from "../cards/tsubasa.js";
 import {Woody} from "../cards/woo-dy.js";
 import {color_from_seed} from "../lib/color.js";
 import {html} from "../lib/html.js";
@@ -85,7 +85,7 @@ export class CardElement extends HTMLElement {
         [Sprites.DarthVader]: DarthVader,
         [Sprites.Stormtrooper]: Stormtrooper,
         [Sprites.Kirilin]: Kirilin,
-        [Sprites.Simba]: Simba,
+        [Sprites.Tsubasa]: Tsubasa,
         [Sprites.Woody]: Woody,
         [Sprites.Krecik]: Krecik,
         [Sprites.MacGyver]: MacGyver,

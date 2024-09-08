@@ -18,7 +18,7 @@ export const enum Sprites {
     Stormtrooper,
 
     Kirilin,
-    Simba,
+    Tsubasa,
     Woody,
     Krecik,
     MacGyver,
