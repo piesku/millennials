@@ -78,7 +78,7 @@ export abstract class LocationController {
         // TODO Broadcast?
     }
 
-    *OnReveal(trace: Trace) {}
+    *OnReveal(trace: Trace): Generator<[Trace, string], void> {}
 
     *OnMessage(kind: Message, trace: Trace, card?: CardController): Generator<[Trace, string], void> {}
 
