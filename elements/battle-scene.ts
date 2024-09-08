@@ -65,7 +65,7 @@ export class BattleScene extends HTMLElement {
         }
 
         const sprite_height = 10;
-        const target_height = 240;
+        const target_height = 480;
         const pixel_size = target_height / sprite_height;
         const sprite_y = (sprite_height + 1) * this.Villain.Sprite * pixel_size;
 
@@ -146,7 +146,6 @@ export class BattleScene extends HTMLElement {
             </style>
             <multi-view current="${current_view}">
                 <main name="prep" style="padding:20px;">
-                    <h1>Prepare For the Next Battle</h1>
                     <flex-row gap start>
                         <div>
                             <h2>Shop — Pick ${this.Game.CardsInShop}</h2>
@@ -158,7 +157,7 @@ export class BattleScene extends HTMLElement {
                                 <slot name="deck"></slot>
                             </div>
                         </div>
-                        <div style="width:280px">
+                        <div style="width:520px">
                             <h2>Next Up</h2>
                             <div style="padding:20px; background:lightblue; border-radius:5px;">
                                 <h3 style="margin-top:0;">${this.Villain.Name}</h3>
