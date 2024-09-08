@@ -185,7 +185,7 @@ export class CardElement extends HTMLElement {
                           ? "decr"
                           : ""}"
                 >
-                    ${this.Instance.CurrentCost}
+                    $${this.Instance.CurrentCost}
                 </span>
                 <span
                     id="power"
@@ -348,15 +348,21 @@ export class CardElement extends HTMLElement {
                 }
 
                 .header {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    right: 0;
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
                     font-size: 0.8em;
                     font-family: Arial, sans-serif;
                     margin: 0 3px;
+                    z-index: 1;
                 }
 
                 .header span {
+                    color: #fff;
                     font-weight: bold;
                     font-size: 16px;
                 }
@@ -365,22 +371,21 @@ export class CardElement extends HTMLElement {
                 #power.decr {
                     color: red;
                     scale: 5;
-                    z-index: 1;
                 }
 
                 #cost.decr,
                 #power.incr {
                     color: green;
                     scale: 5;
-                    z-index: 1;
                 }
 
                 .text-container {
                     box-sizing: border-box;
                     position: absolute;
                     bottom: 0;
-                    width: 100%;
-                    min-height: 40px;
+                    left: 0;
+                    right: 0;
+                    min-height: 60px;
                     padding: 1px;
                     align-content: center;
                     background-color: white;
