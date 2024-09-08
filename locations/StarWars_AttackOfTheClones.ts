@@ -14,7 +14,7 @@ export class AttackOfTheClones extends LocationController {
                     while (!this.IsFull(card.Owner)) {
                         let clone = document.createElement("a-card") as CardElement;
                         clone.setAttribute("type", card.Element.getAttribute("type")!);
-                        yield* this.AddCard(clone.Instance, trace.fork(1), card.Owner);
+                        yield* this.AddCard(clone.Instance, trace.fork(), card.Owner);
                     }
                     break;
             }
