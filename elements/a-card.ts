@@ -211,41 +211,60 @@ export class CardElement extends HTMLElement {
         this.shadowRoot!.innerHTML = html`
             <style>
                 :host {
+                    user-select: none;
+                    border: 1px solid black;
+                    border-radius: 5px;
+                }
+
+                :host .body {
                     display: block;
                     width: 120px;
                     height: 180px;
                     background-color: white;
-                    border: 1px solid black;
-                    border-radius: 5px;
                     cursor: move;
-                    user-select: none;
                     position: relative;
                 }
 
                 :host-context(location-owner) {
-                    width: 60px;
-                    height: 90px;
                     border-radius: 3px;
 
-                    .header {
-                        font-size: 0.4em;
-                        margin: 0 3px;
-                    }
+                    .body {
+                        width: 60px;
+                        height: 90px;
 
-                    .header span {
-                        font-size: 8px;
-                    }
+                        .header {
+                            font-size: 0.4em;
+                            margin: 0 3px;
+                        }
 
-                    .sprite-border {
-                        transform: scale(0.5) translate(-50%, -50%);
-                    }
+                        .header span {
+                            font-size: 8px;
+                        }
 
-                    .name {
-                        font-size: 0.5em;
-                    }
+                        .sprite-border {
+                            height: ${target_height / 2}px;
+                        }
 
-                    .description {
-                        display: none;
+                        .sprite {
+                            width: ${target_height / 4}px;
+                            height: ${target_height / 2}px;
+                            margin: 0 ${pixel_size}px 0 ${pixel_size * 1.5}px;
+                            background-position: 0 -${sprite_y / 2}px;
+                            background-size: ${target_height / 4}px auto;
+                        }
+
+                        .text-container {
+                            min-height: 20px;
+                        }
+
+                        .name {
+                            font-size: 0.5em;
+                            padding: 0 1px;
+                        }
+
+                        .description {
+                            display: none;
+                        }
                     }
                 }
 
@@ -306,9 +325,9 @@ export class CardElement extends HTMLElement {
                     width: ${target_height / 2}px;
                     height: ${target_height}px;
                     margin: 0 ${pixel_size * 2}px 0 ${pixel_size * 3}px;
-                    background-image: ${background_url};
                     background-position: 0 -${sprite_y}px;
                     background-size: ${target_height / 2}px auto;
+                    background-image: ${background_url};
                     image-rendering: pixelated;
                 }
 

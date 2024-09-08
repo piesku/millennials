@@ -11,14 +11,14 @@ export class LocationOwner extends HTMLElement {
         this.shadowRoot!.innerHTML = html`
             <style>
                 :host {
-                    width: 240px;
+                    width: 278px;
                     height: 90px;
                     border: 4px ridge orange;
                     border-radius: 5px;
                     padding: 10px;
                 }
             </style>
-            <flex-row wrap start>
+            <flex-row wrap start style="gap:10px;">
                 <slot></slot>
             </flex-row>
         `;
