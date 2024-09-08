@@ -1,10 +1,10 @@
 import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
-export class Mufasa extends CardController {
-    Name = "The King";
+export class CaptainPlaner extends CardController {
+    Name = "Inspector Earth";
     Cost = 4;
     Power = 7;
     Text = "";
-    Sprite = Sprites.Mufasa;
+    Sprite = Sprites.CaptainPlanet;
 }

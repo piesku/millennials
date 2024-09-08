@@ -11,6 +11,7 @@ import {BillMurray} from "../cards/bill-murray.js";
 import {BluePowerRanger} from "../cards/blue-powerranger.js";
 import {Butthead} from "../cards/butthead.js";
 import {BuzzLightyear} from "../cards/buzz-lightyear.js";
+import {CaptainPlaner} from "../cards/captain-planet.js";
 import {CardController} from "../cards/CardController.js";
 import {DanAykroyd} from "../cards/dan-aykroyd.js";
 import {DenverDinosaur} from "../cards/denver-dinosaur.js";
@@ -28,6 +29,7 @@ import {InspectorGadget} from "../cards/inspector-gadget.js";
 import {JamesBond} from "../cards/james-bond.js";
 import {JohnMcClane} from "../cards/john-mcclane.js";
 import {JohnRambo} from "../cards/john-rambo.js";
+import {JohnyBravo} from "../cards/johny-bravo.js";
 import {KevinHomeAlone} from "../cards/kevin-homealone.js";
 import {Kirilin} from "../cards/kirilan.js";
 import {Krecik} from "../cards/kre-cik.js";
@@ -39,7 +41,6 @@ import {MacGyver} from "../cards/mac-gyver.js";
 import {MartyMcFly} from "../cards/marty-mcfly.js";
 import {Maximus} from "../cards/maximus.js";
 import {Megaman} from "../cards/mega-man.js";
-import {Mufasa} from "../cards/mufa-sa.js";
 import {Neo} from "../cards/ne-o.js";
 import {ObiWanKenobi} from "../cards/obi-wan-kenobi.js";
 import {OptimusPrime} from "../cards/optimus-prime.js";
@@ -49,7 +50,6 @@ import {RobinHood} from "../cards/robin-hood.js";
 import {Robocop} from "../cards/robo-cop.js";
 import {Ron} from "../cards/ron-wesley.js";
 import {Samwise} from "../cards/sam-wise.js";
-import {SheRa} from "../cards/she-ra.js";
 import {Superman} from "../cards/super-man.js";
 import {Tarzan} from "../cards/tarzan.js";
 import {TheMask} from "../cards/the-mask.js";
@@ -93,7 +93,7 @@ export class CardElement extends HTMLElement {
         [Sprites.Faceman]: Faceman,
         [Sprites.Murdock]: Murdock,
         [Sprites.BABaracus]: Baracus,
-        [Sprites.Mufasa]: Mufasa,
+        [Sprites.CaptainPlanet]: CaptainPlaner,
         [Sprites.IndianaJones]: IndianaJones,
         [Sprites.JamesBond]: JamesBond,
         [Sprites.Hermione]: Hermione,
@@ -114,7 +114,7 @@ export class CardElement extends HTMLElement {
         [Sprites.Genie]: Genie,
         [Sprites.Trinity]: Trinity,
         [Sprites.HeMan]: Heman,
-        [Sprites.SheRa]: SheRa,
+        [Sprites.JohnyBravo]: JohnyBravo,
         [Sprites.OptimusPrime]: OptimusPrime,
         [Sprites.Megaman]: Megaman,
         [Sprites.Pikachu]: Pikachu,
