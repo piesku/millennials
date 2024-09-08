@@ -292,16 +292,24 @@ export class BattleScene extends HTMLElement {
                     const data = e.dataTransfer.getData("text/plain");
                     const new_card = document.getElementById(data) as CardElement;
                     if (new_card) {
-                        // Update the deck view.
+                        // Update the deck data.
                         let offset = game.PlayerDeck.indexOf(new_card.Instance.Sprite);
                         game.PlayerDeck.splice(offset, 1, new_card.Instance.Sprite);
+
+                        // Update the deck UI.
+                        new_card.setAttribute("slot", "deck");
+                        new_card.setAttribute("draggable", "false");
+                        card.replaceWith(new_card);
 
                         // Update the collection state for the new card in deck.
                         save_card_state(new_card.Instance, CollectionFlag.Owned);
                         this.Game.Stats.CardsAcquired++;
 
-                        // Start the battle.
-                        this.InitBattle();
+                        if (this.Game.CardsInShop > 1) {
+                            this.Game.CardsInShop--;
+                        } else {
+                            this.InitBattle();
+                        }
                     }
                 }
             });
@@ -427,6 +435,7 @@ export class BattleScene extends HTMLElement {
             this.Game.Stats.TotalPower += score;
         }
 
+        this.Game.CardsInShop = locations_won;
         this.Game.Stats.LocationsWon += locations_won;
         this.Game.Stats.LocationsLost += this.Locations.length - locations_won;
 

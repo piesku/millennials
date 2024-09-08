@@ -28,6 +28,14 @@ export abstract class ActorController {
         return battle;
     }
 
+    get Deck() {
+        let deck = this.Element.querySelector("a-deck");
+        DEBUG: if (!deck) {
+            throw "Actor must have a deck";
+        }
+        return deck;
+    }
+
     get Hand() {
         let hand = this.Element.querySelector("a-hand");
         DEBUG: if (!hand) {

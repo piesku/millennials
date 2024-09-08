@@ -110,6 +110,7 @@ export class GameContainer extends HTMLElement {
     Seed = Date.now();
     CurrentView = "title";
     CurrentOpponent = -1;
+    CardsInShop = 1;
     PlayerDeck = [...STARTING_DECK];
 
     get Collection() {
@@ -143,6 +144,13 @@ export class GameContainer extends HTMLElement {
                     <a-trash hidden></a-trash>
                 </a-actor>
                 <a-log slot="log"></a-log>
+
+                <a-card type="${element(by_cost[1]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
+                <a-card type="${element(by_cost[2]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
+                <a-card type="${element(by_cost[3]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
+                <a-card type="${element(by_cost[4]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
+                <a-card type="${element(by_cost[5]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
+                <a-card type="${element(by_cost[6]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
 
                 <a-card type="${element(by_cost[1]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
                 <a-card type="${element(by_cost[2]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
@@ -255,6 +263,7 @@ export class GameContainer extends HTMLElement {
     ResetState() {
         this.Seed = Date.now();
         this.CurrentOpponent = -1;
+        this.CardsInShop = 1;
         this.PlayerDeck = [...STARTING_DECK];
         this.Stats = {
             Battles: 0,
