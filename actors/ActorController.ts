@@ -36,6 +36,14 @@ export abstract class ActorController {
         return hand;
     }
 
+    GetScore() {
+        let score = 0;
+        for (const location of this.Battle.Locations) {
+            score += location.GetScore(this);
+        }
+        return score;
+    }
+
     abstract StartBattle(trace: Trace): Generator<[Trace, string], void>;
 
     *StartTurn(turn: number, trace: Trace) {

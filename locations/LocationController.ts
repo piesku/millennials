@@ -26,11 +26,7 @@ export abstract class LocationController {
     }
 
     GetScore(actor: ActorController) {
-        let input = 0;
-        if (this.Element.previousElementSibling instanceof LocationElement) {
-            input = this.Element.previousElementSibling.Instance.GetScore(actor);
-        }
-        let result = input;
+        let result = 0;
         for (let card of this.GetRevealedCards(actor)) {
             if (card.Operator === Operator.ADD) {
                 result += card.CurrentPower;
@@ -43,6 +39,9 @@ export abstract class LocationController {
 
     GetRevealedCards(actor?: ActorController) {
         let root = actor ? this.Element.querySelector(`location-owner[slot=${actor.Type}]`)! : this.Element;
+        if (!root) {
+            return [];
+        }
         return Array.from(root.querySelectorAll<CardElement>("a-card"))
             .map((card) => card.Instance)
             .filter((card) => card.IsRevealed);

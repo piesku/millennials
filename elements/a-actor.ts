@@ -50,10 +50,11 @@ export class ActorElement extends HTMLElement {
             </style>
             <flex-row ${this.Instance.Type === "villain" && "reverse"}>
                 <slot></slot>
-                <flex-col>
+                <div>
                     <h2>${this.Instance.Name}</h2>
                     <div>Energy: ${this.Instance.CurrentEnergy}/${this.Instance.MaxEnergy}</div>
-                </flex-col>
+                    <div>Total Score: ${this.Instance.GetScore()}</div>
+                </div>
             </flex-row>
         `;
     }
