@@ -223,6 +223,7 @@ export class CardElement extends HTMLElement {
                     background-color: white;
                     cursor: move;
                     position: relative;
+                    background: ${color_from_seed(this.Instance.Sprite)};
                 }
 
                 :host-context(location-owner) {
@@ -290,7 +291,6 @@ export class CardElement extends HTMLElement {
                 :host-context(a-hand) > *,
                 :host(.frontside) > * {
                     visibility: visible;
-                    background: white;
                     border-radius: 5px;
                 }
 
@@ -312,13 +312,6 @@ export class CardElement extends HTMLElement {
 
                 :host(.unowned) dialog {
                     filter: grayscale(1);
-                }
-
-                .sprite-border {
-                    position: relative;
-                    height: ${target_height}px;
-                    background: ${color_from_seed(this.Instance.Sprite)};
-                    overflow: hidden;
                 }
 
                 .sprite {
@@ -388,9 +381,10 @@ export class CardElement extends HTMLElement {
                     min-height: 60px;
                     padding: 1px;
                     align-content: center;
-                    background-color: white;
                     text-align: center;
                     font-family: Arial, sans-serif;
+                    background: rgba(0, 0, 0, 0.4);
+                    color: #fff;
                 }
 
                 .name {
@@ -445,6 +439,7 @@ export class CardElement extends HTMLElement {
                     padding: 0;
                     user-select: none;
                     position: relative;
+                    background: ${color_from_seed(this.Instance.Sprite)};
                 }
 
                 card-modifiers {
