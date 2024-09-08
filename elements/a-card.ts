@@ -11,7 +11,7 @@ import {BillMurray} from "../cards/bill-murray.js";
 import {BluePowerRanger} from "../cards/blue-powerranger.js";
 import {Butthead} from "../cards/butthead.js";
 import {BuzzLightyear} from "../cards/buzz-lightyear.js";
-import {CardController, Operator} from "../cards/CardController.js";
+import {CardController} from "../cards/CardController.js";
 import {DanAykroyd} from "../cards/dan-aykroyd.js";
 import {DenverDinosaur} from "../cards/denver-dinosaur.js";
 import {ForrestGump} from "../cards/forrest-gump.js";
@@ -175,12 +175,6 @@ export class CardElement extends HTMLElement {
         const mask_src = document.querySelector("img#mask")?.getAttribute("src");
         const mask_url = `url(${mask_src})`;
 
-        const operator = this.Instance.Operator === Operator.MULTIPLY ? "x" : "";
-        const power =
-            this.Instance.Operator === Operator.MULTIPLY && this.Instance.CurrentPower < 0
-                ? `(${this.Instance.CurrentPower})`
-                : this.Instance.CurrentPower;
-
         const card_body = html`
             <div class="header">
                 <span
@@ -201,7 +195,7 @@ export class CardElement extends HTMLElement {
                           ? "decr"
                           : ""}"
                 >
-                    ${operator}${power}
+                    ${this.Instance.CurrentPower}
                 </span>
             </div>
             <div class="sprite-border">

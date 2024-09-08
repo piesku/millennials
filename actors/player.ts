@@ -22,10 +22,10 @@ export const STARTING_DECK = [
     Sprites.Goku,
 
     Sprites.Beavis,
-    Sprites.Krecik,
+    Sprites.Beavis,
     Sprites.Beavis,
     Sprites.Butthead,
-    Sprites.Krecik,
+    Sprites.Butthead,
     Sprites.Butthead,
 ];
 

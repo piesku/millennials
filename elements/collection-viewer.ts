@@ -1,4 +1,3 @@
-import {Operator} from "../cards/CardController.js";
 import {html} from "../lib/html.js";
 import {clamp} from "../lib/number.js";
 import {CollectionFlag, get_collection_state} from "../storage.js";
@@ -67,7 +66,7 @@ export class CollectionViewer extends HTMLElement {
                 continue;
             }
 
-            if (!this.showWipCards && card.Instance.Text === "" && card.Instance.Operator === Operator.ADD) {
+            if (!this.showWipCards && card.Instance.Text === "") {
                 continue;
             }
 
