@@ -1,4 +1,5 @@
-import {Alien, Borg, Dalek, DarthVader, Stormtrooper} from "../actors/empire.js";
+import {DaltonBro, Joker, MojoJojo, Skeletor} from "../actors/cartoon.js";
+import {Alien, Borg, Dalek, DarthVader, Stormtrooper} from "../actors/space.js";
 import {Baracus} from "../cards/a-baracus.js";
 import {Faceman} from "../cards/a-faceman.js";
 import {Hannibal} from "../cards/a-hannibal.js";
@@ -137,6 +138,11 @@ export class CardElement extends HTMLElement {
         [Sprites.Borg]: Borg,
 
         [Sprites.Marble]: Marble,
+
+        [Sprites.Joker]: Joker,
+        [Sprites.MojoJojo]: MojoJojo,
+        [Sprites.DaltonBro]: DaltonBro,
+        [Sprites.Skeletor]: Skeletor,
     };
 
     BaseCost = NaN;

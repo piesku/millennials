@@ -95,7 +95,12 @@ export abstract class ActorController {
                 break;
             }
 
-            let card = element(playable_cards);
+            let card = playable_cards[0];
+            for (let i = 1; i < playable_cards.length; i++) {
+                if (playable_cards[i].Instance.CurrentCost > card.Instance.CurrentCost) {
+                    card = playable_cards[i];
+                }
+            }
 
             let empty_locations = this.Battle.Locations.filter((location) => !location.IsFull(this));
             let location = element(empty_locations);

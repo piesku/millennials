@@ -88,7 +88,7 @@ export class Stormtrooper extends CardController {
     }
 }
 
-export class EmpireController extends ActorController {
+export class SpaceVillainsController extends ActorController {
     Type = "villain" as const;
     Name = "Space Villains";
     Sprite = Sprites.DarthVader;

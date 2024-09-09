@@ -13,8 +13,8 @@ import "./elements/collection-viewer.js";
 import "./elements/game-container.js";
 import "./elements/location-owner.js";
 
-import "./actors/empire.js";
 import "./actors/player.js";
+import "./actors/space.js";
 
 import "./cards/a-baracus.js";
 import "./cards/a-faceman.js";

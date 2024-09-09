@@ -1,8 +1,8 @@
 import {ActorController} from "../actors/ActorController.js";
-import {EmpireController} from "../actors/empire.js";
-import {KungFuController} from "../actors/kungfu.js";
+import {CartoonVillainsController} from "../actors/cartoon.js";
 import {PiratesController} from "../actors/pirates.js";
 import {PlayerController} from "../actors/player.js";
+import {SpaceVillainsController} from "../actors/space.js";
 import {html} from "../lib/html.js";
 import {CardElement} from "./a-card.js";
 
@@ -11,9 +11,9 @@ export class ActorElement extends HTMLElement {
 
     static Controllers: Record<string, new (el: ActorElement) => ActorController> = {
         player: PlayerController,
-        empire: EmpireController,
+        space: SpaceVillainsController,
         pirates: PiratesController,
-        kungfu: KungFuController,
+        cartoon: CartoonVillainsController,
     };
 
     constructor() {

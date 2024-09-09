@@ -69,4 +69,9 @@ export const enum Sprites {
     Alien,
 
     Marble,
+
+    DaltonBro,
+    MojoJojo,
+    Joker,
+    Skeletor,
 }

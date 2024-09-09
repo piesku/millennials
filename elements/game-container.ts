@@ -1,7 +1,7 @@
 import {STARTING_DECK} from "../actors/player.js";
 import {html} from "../lib/html.js";
 import {format_percent, format_time} from "../lib/number.js";
-import {element, integer, set_seed} from "../lib/random.js";
+import {element, integer, set_seed, shuffle} from "../lib/random.js";
 import {load_game_state, save_game_state} from "../storage.js";
 import {BattleScene} from "./battle-scene.js";
 import {CollectionViewer} from "./collection-viewer.js";
@@ -118,7 +118,7 @@ export class GameContainer extends HTMLElement {
         set_seed(this.Seed);
 
         let by_cost = this.Collection.AllCardsByCost();
-        let villains = ["empire", "pirates", "kungfu"];
+        let villains = shuffle(["space", "pirates", "cartoon"]);
         for (let [i, villain] of villains.entries()) {
             let battle = document.createElement("battle-scene");
             battle.setAttribute("name", i.toString());
