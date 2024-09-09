@@ -1,5 +1,6 @@
 import {STARTING_DECK} from "../actors/player.js";
 import {html} from "../lib/html.js";
+import {format_percent} from "../lib/number.js";
 import {element, integer, set_seed} from "../lib/random.js";
 import {load_game_state, save_game_state} from "../storage.js";
 import {BattleScene} from "./battle-scene.js";
@@ -190,7 +191,6 @@ export class GameContainer extends HTMLElement {
         }
 
         let total_battles = this.querySelectorAll<BattleScene>("battle-scene").length;
-        let prcnfmt = new Intl.NumberFormat("en-US", {style: "percent", maximumFractionDigits: 0});
         let total_minutes = (Date.now() - this.Stats.DateStarted) / 1000 / 60;
         let unitfmt = new Intl.NumberFormat("en-US", {
             style: "unit",
@@ -203,7 +203,7 @@ export class GameContainer extends HTMLElement {
         table.innerHTML = html`
             <tr>
                 <td>Villains Bested</td>
-                <td>${villains_bested} (${prcnfmt.format(villains_bested / total_battles)})</td>
+                <td>${villains_bested} (${format_percent(villains_bested / total_battles)})</td>
             </tr>
             <tr>
                 <td>Cards Played</td>

@@ -1,5 +1,5 @@
 import {html} from "../lib/html.js";
-import {clamp} from "../lib/number.js";
+import {clamp, format_percent} from "../lib/number.js";
 import {CollectionFlag, get_collection_state} from "../storage.js";
 import {CardElement} from "./a-card.js";
 
@@ -85,11 +85,11 @@ export class CollectionTitle extends HTMLElement {
                 </flex-col>
                 <flex-col center style="grid-area:4/1;">
                     <div>${known_cards_count}</div>
-                    Seen
+                    ${format_percent(known_cards_count / all_cards.length)} seen
                 </flex-col>
                 <flex-col center style="grid-area:4/4;">
                     <div>${owned_cards_count}</div>
-                    Unlocked
+                    ${format_percent(owned_cards_count / all_cards.length)} unlocked
                 </flex-col>
             </main>
         `;
