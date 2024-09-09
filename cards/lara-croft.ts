@@ -10,16 +10,17 @@ export class LaraCroft extends CardController {
     Sprite = Sprites.LaraCroft;
 
     override *OnReveal(trace: Trace) {
-        const cardsToRepeat = this.Location?.GetRevealedCards(this.Owner) || [];
-        for (const card of cardsToRepeat) {
+        DEBUG: if (!this.Location) {
+            throw "LaraCroft has no location";
+        }
+
+        for (const card of this.Location.GetRevealedCards(this.Owner)) {
             if (!card.Text.startsWith("Once")) {
                 continue;
             }
 
-            yield trace.log(`Repeating Once ability of ${card.Name}`);
-            const _trace = trace.fork();
-            _trace.push(card);
-            yield* card.OnReveal(_trace);
+            yield trace.log(`repeating ${card}'s ability`);
+            yield* card.OnReveal(trace.fork(card));
             yield* card.Trash(trace);
         }
     }

@@ -11,26 +11,20 @@ export class Genie extends CardController {
     Sprite = Sprites.Genie;
 
     override *OnReveal(trace: Trace) {
-        const cardsHere = this.Location?.GetRevealedCards(this.Owner) || [];
-        const filteredCardsHere = cardsHere.filter((card) => card !== this);
-
-        if (filteredCardsHere.length === 0) {
-            yield trace.log(`No other cards here to trash`);
-            return;
+        DEBUG: if (!this.Location) {
+            throw "Genie has no location";
         }
 
-        const cardToTrash = element(cardsHere);
-        yield* cardToTrash.Trash(trace);
+        let cards_here = this.Location.GetRevealedCards(this.Owner);
+        let card = element(cards_here);
+        if (card) {
+            yield* card.Trash(trace);
 
-        for (let otherLocation of this.Battle.Locations) {
-            if (otherLocation !== this.Location) {
-                const card = cardToTrash.Clone();
-
-                const _trace = trace.fork();
-                _trace.push(card.Instance);
-
-                yield trace.log(`${cardToTrash.Name} has been copied to ${otherLocation.Name}`);
-                yield* otherLocation.AddCard(card.Instance, _trace, this.Owner);
+            for (let other_location of this.Battle.Locations) {
+                if (other_location !== this.Location) {
+                    let clone = card.Clone();
+                    yield* other_location.AddCard(clone.Instance, trace.fork(1), this.Owner);
+                }
             }
         }
     }

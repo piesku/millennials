@@ -10,11 +10,7 @@ export class MichaelAngelo extends CardController {
     Sprite = Sprites.MichaelAngelo;
 
     override *OnReveal(trace: Trace) {
-        const all_revealed_cards = [
-            ...this.Battle.GetRevealedCards(this.Owner),
-            ...this.Battle.GetRevealedCards(this.Opponent),
-        ];
-        for (let card of all_revealed_cards) {
+        for (let card of this.Battle.GetRevealedCards()) {
             if (card.CurrentCost === 1) {
                 yield* card.Trash(trace.fork());
             }

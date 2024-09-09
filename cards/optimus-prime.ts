@@ -10,13 +10,11 @@ export class OptimusPrime extends CardController {
     Sprite = Sprites.OptimusPrime;
 
     override *OnReveal(trace: Trace) {
-        const enemyCards = this.Location!.GetRevealedCards(this.Opponent);
-        if (enemyCards.length === 0) {
-            yield trace.log(`No enemy cards found at ${this.Location}`);
-            return;
+        DEBUG: if (!this.Location) {
+            throw "OptimusPrime has no location";
         }
 
-        for (let card of enemyCards) {
+        for (let card of this.Location.GetRevealedCards(this.Opponent)) {
             yield trace.log(card.AddModifier(this, "addpower", 2));
         }
     }

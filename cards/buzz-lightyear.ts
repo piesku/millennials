@@ -13,9 +13,9 @@ export class BuzzLightyear extends CardController {
         switch (kind) {
             case Message.TurnStarts:
                 if (this.Battle.CurrentTurn === this.TurnPlayed + 1) {
-                    yield trace.fork(-1).log(`${this.Owner} gain 2 energy from ${this}`);
                     this.Owner.CurrentEnergy += 2;
                     this.Owner.Element.Render();
+                    yield trace.fork(-1).log(`${this.Owner} gain 2 energy from ${this}`);
                 }
                 break;
         }

@@ -15,7 +15,6 @@ export class Pikachu extends CardController {
         );
 
         for (const card of enemyCardsWithMoreThan10Power) {
-            yield trace.log(`Trashing ${card} because it has ${card.CurrentPower} Power`);
             yield* card.Trash(trace);
         }
     }

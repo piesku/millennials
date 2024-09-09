@@ -10,17 +10,11 @@ export class Baracus extends CardController {
     Sprite = Sprites.BABaracus;
 
     override *OnReveal(trace: Trace) {
-        const locations = this.Battle.querySelectorAll("a-location");
-        let locationIndex = -1;
-
-        for (let index = 0; index < locations.length; index++) {
-            if (locations[index].contains(this.Element)) {
-                locationIndex = index;
-                break;
-            }
+        DEBUG: if (!this.Location) {
+            throw "Baracus has no location";
         }
-
-        if (locationIndex === 1) {
+        let index = this.Battle.Locations.indexOf(this.Location);
+        if (index === 1) {
             yield trace.log(this.AddModifier(this, "addpower", 3));
         }
     }

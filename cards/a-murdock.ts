@@ -11,8 +11,7 @@ export class Murdock extends CardController {
     Sprite = Sprites.Murdock;
 
     override *OnReveal(trace: Trace) {
-        const hand = this.Owner.Element.querySelector("a-hand")!;
-        for (let card of hand.querySelectorAll<CardElement>("a-card")) {
+        for (let card of this.Owner.Hand.querySelectorAll<CardElement>("a-card")) {
             yield trace.log(card.Instance.AddModifier(this, "addpower", 1));
         }
     }

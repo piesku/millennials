@@ -11,14 +11,9 @@ export class HarryPotter extends CardController {
     Sprite = Sprites.HarryPotter;
 
     override *OnReveal(trace: Trace): Generator<[Trace, string], void> {
-        const deck = this.Owner.Element.querySelector("a-deck");
-        if (deck) {
-            for (let cardElement of deck.children) {
-                const card = cardElement as CardElement;
-                yield trace.log(card.Instance.AddModifier(this, "setpower", 4));
-            }
-        } else {
-            yield trace.log(`No deck found for ${this.Owner}`);
+        const deck = this.Owner.Deck;
+        for (let card of deck.querySelectorAll<CardElement>("a-card")) {
+            yield trace.log(card.Instance.AddModifier(this, "setpower", 4));
         }
     }
 }
