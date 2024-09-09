@@ -3,9 +3,9 @@ import {LocationController} from "./LocationController.js";
 
 export class TurnSeven extends LocationController {
     Name = "TurnSeven";
-    Description = "There is turn 7 in this battle.";
+    Description = "This battle has an extra turn.";
     override *OnReveal(trace: Trace) {
-        yield trace.log("there is turn 7 in this battle.");
-        this.Battle.MaxTurns = 7;
+        this.Battle.MaxTurns++;
+        yield trace.log(`this battle has ${this.Battle.MaxTurns} turns`);
     }
 }
