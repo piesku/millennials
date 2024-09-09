@@ -10,6 +10,8 @@ import {NoOp} from "../locations/no_op.js";
 import {OnceDontWork} from "../locations/once_dont_work.js";
 import {OneTwoThree} from "../locations/one_two_three.js";
 import {ReturnToOwnerHand} from "../locations/return_to_owner_hand.js";
+import {Roulette} from "../locations/roulette.js";
+import {ShuffleMarbles} from "../locations/shuffle_marbles.js";
 import {ANewHope} from "../locations/StarWars_ANewHope.js";
 import {AttackOfTheClones} from "../locations/StarWars_AttackOfTheClones.js";
 import {ReturnOfTheJedi} from "../locations/StarWars_ReturnOfTheJedi.js";
@@ -41,6 +43,8 @@ export class LocationElement extends HTMLElement {
         [LocationType.CopyToOwnerHand]: CopyToOwnerHand,
         [LocationType.CopyToOpponentHand]: CopyToOpponentHand,
         [LocationType.ReturnToOwnerHand]: ReturnToOwnerHand,
+        [LocationType.Roulette]: Roulette,
+        [LocationType.ShuffleMarbles]: ShuffleMarbles,
     };
 
     constructor() {

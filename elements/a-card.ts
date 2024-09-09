@@ -38,6 +38,7 @@ import {LaraCroft} from "../cards/lara-croft.js";
 import {LuckyLuke} from "../cards/lucky-luke.js";
 import {LukeSkywalker} from "../cards/luke-skywalker.js";
 import {MacGyver} from "../cards/mac-gyver.js";
+import {Marble} from "../cards/marble.js";
 import {MartyMcFly} from "../cards/marty-mcfly.js";
 import {Maximus} from "../cards/maximus.js";
 import {Megaman} from "../cards/mega-man.js";
@@ -134,6 +135,8 @@ export class CardElement extends HTMLElement {
         [Sprites.Dalek]: Dalek,
         [Sprites.Alien]: Alien,
         [Sprites.Borg]: Borg,
+
+        [Sprites.Marble]: Marble,
     };
 
     BaseCost = NaN;

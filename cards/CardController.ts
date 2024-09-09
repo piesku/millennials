@@ -4,6 +4,7 @@ import {CardElement} from "../elements/a-card.js";
 import {LocationElement} from "../elements/a-location.js";
 import {BattleScene} from "../elements/battle-scene.js";
 import {next_id} from "../lib/id.js";
+import {element} from "../lib/random.js";
 import {LocationController} from "../locations/LocationController.js";
 import {Message, Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
@@ -215,8 +216,18 @@ export abstract class CardController {
         }
     }
 
+    *AddToDeck(actor: ActorController, trace: Trace) {
+        yield trace.log(`${actor} shuffle ${this} to deck`);
+        this.IsRevealed = false;
+        this.TurnPlayed = 0;
+        this.Element.classList.remove("frontside");
+        let random_child = element(actor.Deck.querySelectorAll("a-card")) ?? null;
+        actor.Deck.insertBefore(this.Element, random_child);
+        yield* this.Battle.BroadcastCardMessage(Message.CardEntersDeck, trace, this);
+    }
+
     *AddToHand(actor: ActorController, trace: Trace) {
-        yield trace.log(`${actor} adds ${this} to hand`);
+        yield trace.log(`${actor} add ${this} to hand`);
         if (actor.Hand.children.length >= 7) {
             yield trace.fork(1).log("but the hand is full");
         } else {

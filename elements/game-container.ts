@@ -123,9 +123,9 @@ export class GameContainer extends HTMLElement {
                     <a-hand></a-hand>
                     <a-trash hidden></a-trash>
                 </a-actor>
-                <a-location slot="location" type="${integer(0, 17)}"></a-location>
-                <a-location slot="location" type="${integer(0, 17)}"></a-location>
-                <a-location slot="location" type="${integer(0, 17)}"></a-location>
+                <a-location slot="location" type="${integer(0, 19)}"></a-location>
+                <a-location slot="location" type="${integer(0, 19)}"></a-location>
+                <a-location slot="location" type="${integer(0, 19)}"></a-location>
                 <a-actor type="player" id="player" slot="player">
                     <a-deck></a-deck>
                     <a-hand></a-hand>

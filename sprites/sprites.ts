@@ -67,4 +67,6 @@ export const enum Sprites {
     Dalek,
     Borg,
     Alien,
+
+    Marble,
 }

@@ -26,6 +26,8 @@ export const enum LocationType {
     CopyToOwnerHand,
     CopyToOpponentHand,
     ReturnToOwnerHand,
+    Roulette,
+    ShuffleMarbles,
 }
 
 export abstract class LocationController {
