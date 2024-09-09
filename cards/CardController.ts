@@ -215,13 +215,40 @@ export abstract class CardController {
         }
     }
 
+    *AddToHand(actor: ActorController, trace: Trace) {
+        yield trace.log(`${actor} adds ${this} to hand`);
+        if (actor.Hand.children.length >= 7) {
+            yield trace.fork(1).log("but the hand is full");
+        } else {
+            this.IsRevealed = false;
+            this.TurnPlayed = 0;
+            this.Element.classList.remove("frontside");
+            actor.Hand.appendChild(this.Element);
+            yield* this.Battle.BroadcastCardMessage(Message.CardEntersHand, trace, this);
+        }
+    }
+
+    *ReturnToOwnerHand(trace: Trace) {
+        yield trace.log(`${this} returns to the owner's hand`);
+        if (this.Owner.Hand.children.length >= 7) {
+            yield trace.fork(1).log("but the hand is full");
+        } else {
+            yield* this.Battle.BroadcastCardMessage(Message.CardLeavesTable, trace, this);
+            this.IsRevealed = false;
+            this.TurnPlayed = 0;
+            this.Element.classList.remove("frontside");
+            this.Owner.Hand.appendChild(this.Element);
+            this.Battle.PlayedCardsQueue.splice(this.Battle.PlayedCardsQueue.indexOf(this), 1);
+            yield* this.Battle.BroadcastCardMessage(Message.CardEntersHand, trace, this);
+        }
+    }
+
     CanBePlayedHere(location: LocationController) {
         return true;
     }
 
     Clone() {
         let card = this.Element.cloneNode(true) as CardElement;
-        card.Instance.Id = next_id();
         card.setAttribute("type", this.Element.getAttribute("type") || "");
         card.classList.add("frontside");
         return card;

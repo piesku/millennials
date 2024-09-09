@@ -60,25 +60,24 @@ export abstract class ActorController {
         this.Element.Render();
     }
 
-    *DrawCard(trace: Trace, target?: Element) {
-        const hand = this.Element.querySelector("a-hand")!;
-        const deck = target ?? this.Element.querySelector("a-deck")!;
+    *DrawCard(trace: Trace, from?: Element) {
+        const deck = from ?? this.Deck;
 
-        if (deck.firstElementChild && hand.children.length >= 7) {
+        if (deck.firstElementChild && this.Hand.children.length >= 7) {
             yield trace.log(`${this} draw a card`);
             yield trace.fork(1).log("but the hand is full");
         } else if (deck.firstElementChild) {
             let card = deck.firstElementChild! as CardElement;
-            card.setAttribute("draggable", "true");
 
             if (this.Type === "player") {
+                card.setAttribute("draggable", "true");
                 yield trace.log(`${this} draw ${card.Instance}`);
             } else {
                 yield trace.log(`${this} draw a card`);
             }
 
             yield* this.Battle.BroadcastCardMessage(Message.CardLeavesDeck, trace, card.Instance);
-            hand.appendChild(card);
+            this.Hand.appendChild(card);
             yield* this.Battle.BroadcastCardMessage(Message.CardEntersHand, trace, card.Instance);
         } else {
             yield trace.log(`${this} draw a card`);

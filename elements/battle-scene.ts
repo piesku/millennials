@@ -488,15 +488,16 @@ export class BattleScene extends HTMLElement {
         // First, broadcast the message to the card itself.
         yield* card.OnMessageSelf(kind, trace.fork(card));
 
-        if (card.Location) {
+        let card_location = card.Location;
+        if (card_location) {
             // Then, broadcast the message to the card's location, if it's revealed.
-            if (card.Location.IsRevealed && !trace.includes(card.Location) && !processed.includes(card.Location)) {
-                yield* card.Location.OnMessage(kind, trace.fork(card.Location), card);
-                processed.push(card.Location);
+            if (card_location.IsRevealed && !trace.includes(card_location) && !processed.includes(card_location)) {
+                yield* card_location.OnMessage(kind, trace.fork(card_location), card);
+                processed.push(card_location);
             }
 
             // Then, broadcast the message to other revealed cards in the same location.
-            for (let other of card.Location.GetRevealedCards()) {
+            for (let other of card_location.GetRevealedCards()) {
                 if (other.Element !== card.Element && !trace.includes(other) && !processed.includes(other)) {
                     yield* other.OnMessage(kind, trace.fork(other), card);
                     processed.push(other);
@@ -506,17 +507,21 @@ export class BattleScene extends HTMLElement {
 
         // Finally, broadcast the message to other locations and their revealed cards.
         // We don't need card.Location here, this breaks the Trash events
-        let locations = this.Locations.filter((location) => location !== card.Location);
-        for (let location of locations) {
-            if (location.IsRevealed && !trace.includes(location) && !processed.includes(location)) {
-                yield* location.OnMessage(kind, trace.fork(location), card);
-                processed.push(location);
+        let other_locations = this.Locations.filter((location) => location !== card_location);
+        for (let other_location of other_locations) {
+            if (other_location.IsRevealed && !trace.includes(other_location) && !processed.includes(other_location)) {
+                yield* other_location.OnMessage(kind, trace.fork(other_location), card);
+                processed.push(other_location);
             }
 
-            for (let other of location.GetRevealedCards()) {
-                if (other.Element !== card.Element && !trace.includes(other) && !processed.includes(other)) {
-                    yield* other.OnMessage(kind, trace.fork(other), card);
-                    processed.push(other);
+            for (let other_card of other_location.GetRevealedCards()) {
+                if (
+                    other_card.Element !== card.Element &&
+                    !trace.includes(other_card) &&
+                    !processed.includes(other_card)
+                ) {
+                    yield* other_card.OnMessage(kind, trace.fork(other_card), card);
+                    processed.push(other_card);
                 }
             }
         }

@@ -52,10 +52,7 @@ export class Alien extends CardController {
         const card = element(opponent_cards);
 
         if (card) {
-            yield trace.log(`${this.Name} returns ${card.Name} to opponent's hand`);
-            card.TurnPlayed = 0;
-            card.Element.classList.remove("frontside");
-            this.Opponent.Hand.appendChild(card.Element);
+            yield* card.ReturnToOwnerHand(trace);
         }
     }
 }

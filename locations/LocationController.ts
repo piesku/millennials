@@ -8,7 +8,7 @@ import {Message, Trace} from "../messages.js";
 import {CollectionFlag, save_card_state} from "../storage.js";
 
 export const enum LocationType {
-    StarWars_ANewHope = 1,
+    StarWars_ANewHope,
     StarWars_TheEmpireStrikesBack,
     StarWars_ReturnOfTheJedi,
     StarWars_AttackOfTheClones,
@@ -22,6 +22,10 @@ export const enum LocationType {
     TrashFromHand,
     TurnSeven,
     WinnerDrawsTwo,
+    NoOp,
+    CopyToOwnerHand,
+    CopyToOpponentHand,
+    ReturnToOwnerHand,
 }
 
 export abstract class LocationController {

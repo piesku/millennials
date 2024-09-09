@@ -1,11 +1,15 @@
 import {html} from "../lib/html.js";
+import {CopyToOpponentHand} from "../locations/copy_to_opponent_hand.js";
+import {CopyToOwnerHand} from "../locations/copy_to_owner_hand.js";
 import {GainOneEnergy} from "../locations/gain_one_energy.js";
 import {GainOneEnergyEmpty} from "../locations/gain_one_energy_empty.js";
 import {GiveCostHand} from "../locations/give_cost_hand.js";
 import {LocationController, LocationType} from "../locations/LocationController.js";
 import {LoseOnePower} from "../locations/lose_one_power.js";
+import {NoOp} from "../locations/no_op.js";
 import {OnceDontWork} from "../locations/once_dont_work.js";
 import {OneTwoThree} from "../locations/one_two_three.js";
+import {ReturnToOwnerHand} from "../locations/return_to_owner_hand.js";
 import {ANewHope} from "../locations/StarWars_ANewHope.js";
 import {AttackOfTheClones} from "../locations/StarWars_AttackOfTheClones.js";
 import {ReturnOfTheJedi} from "../locations/StarWars_ReturnOfTheJedi.js";
@@ -33,6 +37,10 @@ export class LocationElement extends HTMLElement {
         [LocationType.TrashFromHand]: TrashFromHand,
         [LocationType.TurnSeven]: TurnSeven,
         [LocationType.WinnerDrawsTwo]: WinnerDrawsTwo,
+        [LocationType.NoOp]: NoOp,
+        [LocationType.CopyToOwnerHand]: CopyToOwnerHand,
+        [LocationType.CopyToOpponentHand]: CopyToOpponentHand,
+        [LocationType.ReturnToOwnerHand]: ReturnToOwnerHand,
     };
 
     constructor() {
