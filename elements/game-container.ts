@@ -22,7 +22,8 @@ export class GameContainer extends HTMLElement {
             <multi-view current="${this.CurrentView}">
                 <collection-title name="title">
                     ${has_previous_run && html`<button id="continue">Continue Run</button>`}
-                    <button id="run">Start a New Run</button>
+                    <button id="run">New Run</button>
+                    <button id="daily">Daily Challenge</button>
                     <button id="collection">Collection</button>
                 </collection-title>
                 <main name="run">
@@ -50,12 +51,15 @@ export class GameContainer extends HTMLElement {
                 case "continue":
                     this.Populate();
                     this.InitBattle();
-                    this.CurrentView = "run";
                     this.Commit();
                     break;
                 case "run":
-                    this.CurrentView = "run";
                     this.ResetState();
+                    this.Populate();
+                    this.ProgressToNextOpponent();
+                    break;
+                case "daily":
+                    this.ResetState(Math.floor(Date.now() / (24 * 60 * 60 * 1000)));
                     this.Populate();
                     this.ProgressToNextOpponent();
                     break;
@@ -152,6 +156,7 @@ export class GameContainer extends HTMLElement {
     }
 
     InitBattle() {
+        this.CurrentView = "run";
         let battle = this.querySelector<BattleScene>(`battle-scene[name="${this.CurrentOpponent}"]`);
         if (battle) {
             battle.PrepareBattle();
@@ -169,8 +174,8 @@ export class GameContainer extends HTMLElement {
             alert("You win the run!");
         }
 
-        this.Commit();
         this.InitBattle();
+        this.Commit();
     }
 
     ShowSummary() {
@@ -248,8 +253,8 @@ export class GameContainer extends HTMLElement {
         this.Commit();
     }
 
-    ResetState() {
-        this.Seed = Date.now();
+    ResetState(seed = Date.now()) {
+        this.Seed = seed;
         this.CurrentOpponent = -1;
         this.CardsInShop = 1;
         this.PlayerDeck = [...STARTING_DECK];
