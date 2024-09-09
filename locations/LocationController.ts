@@ -62,7 +62,7 @@ export abstract class LocationController {
     }
 
     GetRevealedCards(actor?: ActorController) {
-        let root = actor ? this.Element.querySelector(`location-owner[slot=${actor.Type}]`)! : this.Element;
+        let root = actor ? this.Element.querySelector(`location-owner[slot="${actor.Type}"]`)! : this.Element;
         if (!root) {
             return [];
         }
