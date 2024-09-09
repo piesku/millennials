@@ -54,23 +54,43 @@ export class CollectionTitle extends HTMLElement {
                     grid-auto-flow: dense;
                     padding: 20px;
                     gap: 20px;
+
+                    font-style: italic;
+                    font-weight: bold;
+                    color: #f60;
                 }
                 ::slotted(button) {
                     flex: 1;
                     margin: 10px;
+
+                    font-style: italic;
+                    font-weight: bold;
+                    color: #f60;
+                }
+                h1 {
+                    height: 182px;
+                    grid-area: 2/2/3/8;
+                    font-size: 160px;
+                    margin: 0;
+                }
+                div {
+                    font-size: 100px;
                 }
             </style>
             <main>
                 ${all_cards.map((card) => card.outerHTML).join("")}
-                <div style="grid-row: 2; grid-column: 2 / span 6;">
-                    <h1 style="font-size:160px; color:#f60; margin:0;">
-                        <i>Millennials</i>
-                    </h1>
-                </div>
+                <h1>Millennials</h1>
                 <flex-col style="grid-row: 3; grid-column: 5 / span 2; ">
                     <slot></slot>
                 </flex-col>
-                <div>total: ${all_cards.length}, seen: ${known_cards_count}, unlocked: ${owned_cards_count}</div>
+                <flex-col center style="grid-area:4/1;">
+                    <div>${known_cards_count}</div>
+                    Seen
+                </flex-col>
+                <flex-col center style="grid-area:4/4;">
+                    <div>${owned_cards_count}</div>
+                    Unlocked
+                </flex-col>
             </main>
         `;
     }
