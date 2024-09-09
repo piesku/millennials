@@ -1,5 +1,4 @@
 import {CardController} from "../cards/CardController.js";
-import {CardElement} from "../elements/a-card.js";
 import {Message, Trace} from "../messages.js";
 import {LocationController} from "./LocationController.js";
 
@@ -12,8 +11,7 @@ export class AttackOfTheClones extends LocationController {
                 case Message.CardEntersTable:
                     yield trace.log(`${this.Name} fills with clones of ${card}`);
                     while (!this.IsFull(card.Owner)) {
-                        let clone = document.createElement("a-card") as CardElement;
-                        clone.setAttribute("type", card.Element.getAttribute("type")!);
+                        let clone = card.Clone();
                         yield* this.AddCard(clone.Instance, trace.fork(), card.Owner);
                     }
                     break;
