@@ -436,6 +436,8 @@ export class CardElement extends HTMLElement {
                     user-select: none;
                     position: relative;
                     background: ${color_from_seed(this.Instance.Sprite)};
+
+                    box-shadow: 0 20px 10px -5px #00000088;
                 }
 
                 card-modifiers {
