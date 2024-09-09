@@ -13,3 +13,9 @@ export function map_range(value: number, old_min: number, old_max: number, new_m
 export function format_percent(value: number) {
     return `${Math.round(value * 100)}%`;
 }
+
+export function format_time(seconds: number) {
+    console.log(seconds);
+    let minutes = Math.floor(seconds / 60);
+    return `${minutes}:${(seconds % 60).toFixed(0).padStart(2, "0")}`;
+}
