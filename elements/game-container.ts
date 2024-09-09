@@ -18,25 +18,13 @@ export class GameContainer extends HTMLElement {
                 :host {
                     display: block;
                 }
-                button {
-                    width: 200px;
-                    padding: 20px;
-                }
             </style>
             <multi-view current="${this.CurrentView}">
-                <main name="title">
-                    <flex-col center name="title" style="height:90vh;">
-                        <h1 style="font-size:18vw; color:#f60;">
-                            <i>Millennials</i>
-                        </h1>
-
-                        <flex-row gap center>
-                            ${has_previous_run && html`<button id="continue">Continue Run</button>`}
-                            <button id="run">Start a New Run</button>
-                            <button id="collection">Collection</button>
-                        </flex-row>
-                    </flex-col>
-                </main>
+                <collection-title name="title">
+                    ${has_previous_run && html`<button id="continue">Continue Run</button>`}
+                    <button id="run">Start a New Run</button>
+                    <button id="collection">Collection</button>
+                </collection-title>
                 <main name="run">
                     <multi-view current="${this.CurrentOpponent}">
                         <slot></slot>
