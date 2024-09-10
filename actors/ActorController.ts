@@ -103,6 +103,12 @@ export abstract class ActorController {
             }
 
             let empty_locations = this.Battle.Locations.filter((location) => !location.IsFull(this));
+            let possible_locations = empty_locations.filter((location) => location.CanBePlayedHere(card.Instance));
+
+            if (!possible_locations) {
+                break;
+            }
+
             let location = element(empty_locations);
 
             yield trace.log(`${this} play a card to ${location}`);
