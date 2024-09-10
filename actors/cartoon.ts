@@ -55,7 +55,7 @@ export class Joker extends CardController {
 
     override *OnReveal(trace: Trace) {
         for (const card of this.Battle.GetRevealedCards(this.Owner)) {
-            if (!card.Text.startsWith("Once")) {
+            if (!card.Text.startsWith("Once") || trace.includes(card)) {
                 continue;
             }
 
