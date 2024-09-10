@@ -8,6 +8,7 @@ all: spritesheet.png.webp mask.png.webp
 
 spritesheet.png: $(SPRITES)
 	node spritesmith.cjs $^ $@
+#	magick $@ -colors 16 -depth 4 $@
 
 %.png.webp: %.png
 	cwebp -short -z 9 $< -o $@
