@@ -3,7 +3,7 @@ import {LocationController} from "./LocationController.js";
 
 export class OnceDontWork extends LocationController {
     Name = "OnceDontWork";
-    Description = "Once abilities don't work here.";
+    Description = "Once abilities don't trigger here.";
     override CanOnRevealHere(card: CardController) {
         return false;
     }

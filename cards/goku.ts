@@ -10,30 +10,34 @@ export class Goku extends CardController {
     Text = "Always: Has the combined Power of all trashed cards";
     Sprite = Sprites.Goku;
 
-    override *OnReveal(trace: Trace) {
-        const trashedCards = this.Battle.querySelectorAll<CardElement>("a-trash a-card");
-
-        let combinedPower = 0;
-        for (let i = 0; i < trashedCards.length; i++) {
-            combinedPower += trashedCards[i].Instance.Power;
+    override *OnMessageSelf(kind: Message, trace: Trace) {
+        switch (kind) {
+            case Message.CardEntersTable:
+                this.RemoveModifiers(this);
+                let combined_power = 0;
+                let trashed_cards = this.Battle.querySelectorAll<CardElement>("a-trash a-card");
+                for (let card of trashed_cards) {
+                    combined_power += card.Instance.Power;
+                }
+                yield trace.log(this.AddModifier(this, "setpower", combined_power));
+                break;
+            case Message.CardLeavesTable:
+                this.RemoveModifiers(this);
+                break;
         }
-        yield trace.log(this.AddModifier(this, "addpower", combinedPower));
     }
 
-    override *OnMessage(kind: Message, trace: Trace, card?: CardController): Generator<[Trace, string], void> {
+    override *OnMessage(kind: Message, trace: Trace, card?: CardController) {
         switch (kind) {
             case Message.CardEntersTrash:
             case Message.CardLeavesTrash:
-                const trashedCards = this.Battle.querySelectorAll<CardElement>("a-trash a-card");
-                let combinedPower = 0;
-                for (let i = 0; i < trashedCards.length; i++) {
-                    combinedPower += trashedCards[i].Instance.Power;
-                }
-
                 this.RemoveModifiers(this);
-
-                yield trace.log(this.AddModifier(this, "addpower", combinedPower));
-                break;
+                let combined_power = 0;
+                let trashed_cards = this.Battle.querySelectorAll<CardElement>("a-trash a-card");
+                for (let card of trashed_cards) {
+                    combined_power += card.Instance.Power;
+                }
+                yield trace.log(this.AddModifier(this, "setpower", combined_power));
         }
     }
 }
