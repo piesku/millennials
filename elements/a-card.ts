@@ -230,10 +230,10 @@ export class CardElement extends HTMLElement {
                     width: 120px;
                     height: 180px;
                     background-color: white;
-                    cursor: move;
                     position: relative;
                     border-radius: 3px;
                     background: ${color_from_seed(this.Instance.Sprite)};
+                    cursor: move;
                 }
 
                 :host-context(location-owner) {
@@ -287,8 +287,9 @@ export class CardElement extends HTMLElement {
                     );
                 }
 
-                :host(.unplayable) {
+                :host(.unplayable) .body {
                     filter: contrast(0.3) brightness(1.5);
+                    cursor: not-allowed;
                 }
 
                 :host-context(#villain) > *,

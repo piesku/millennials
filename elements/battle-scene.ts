@@ -11,6 +11,7 @@ import {ActorElement} from "./a-actor.js";
 import {CardElement} from "./a-card.js";
 import {LocationElement} from "./a-location.js";
 import {GameContainer} from "./game-container.js";
+import {LocationOwner} from "./location-owner.js";
 
 const INTERVAL = 100;
 
@@ -205,23 +206,15 @@ export class BattleScene extends HTMLElement {
         this.Render();
 
         this.addEventListener("drop", (e) => {
-            const data = e.dataTransfer!.getData("text/plain");
-            const card = document.getElementById(data) as CardElement;
+            let side = e.target as LocationOwner;
+            let data = e.dataTransfer!.getData("text/plain");
+            let card = document.getElementById(data) as CardElement;
             if (card) {
-                const energy_left = card.Instance.Owner.CurrentEnergy;
-                const card_cost = card.Instance.CurrentCost;
-                if (card_cost > energy_left) {
-                    return false;
-                }
+                card.Instance.Owner.CurrentEnergy -= card.Instance.CurrentCost;
+                card.Instance.Owner.Element.Render();
 
-                let location = card.closest<LocationElement>("a-location");
-                if (location) {
-                    card.Instance.Owner.CurrentEnergy -= card.Instance.CurrentCost;
-                    card.Instance.Owner.Element.Render();
-
-                    this.PlayedCardsQueue.push(card.Instance);
-                    this.Log(new Trace(), `You play ${card.Instance} to ${location.Instance}`);
-                }
+                this.PlayedCardsQueue.push(card.Instance);
+                this.Log(new Trace(), `You play ${card.Instance} to ${side.Location}`);
             }
         });
 

@@ -32,29 +32,31 @@ export class LocationOwner extends HTMLElement {
             </flex-row>
         `;
 
-        this.addEventListener("dragover", (e) => {
-            e.preventDefault();
-        });
+        if (this.slot === "player") {
+            this.addEventListener("dragover", (e) => {
+                e.preventDefault();
+            });
 
-        this.addEventListener("drop", (e) => {
-            e.preventDefault();
-            if (this.childElementCount >= 4) {
-                alert("Location is full");
-                e.stopPropagation();
-                return;
-            }
-            const data = e.dataTransfer!.getData("text/plain");
-            const card = document.getElementById(data) as CardElement;
-            if (card) {
-                if (this.Location.CanBePlayedHere(card.Instance) && card.Instance.CanBePlayedHere(this.Location)) {
-                    this.appendChild(card);
-                    card.classList.add("frontside");
-                } else {
-                    alert("Can't be played here!");
+            this.addEventListener("drop", (e) => {
+                e.preventDefault();
+                if (this.childElementCount >= 4) {
+                    alert("Location is full");
                     e.stopPropagation();
+                    return;
                 }
-            }
-        });
+                const data = e.dataTransfer!.getData("text/plain");
+                const card = document.getElementById(data) as CardElement;
+                if (card) {
+                    if (this.Location.CanBePlayedHere(card.Instance) && card.Instance.CanBePlayedHere(this.Location)) {
+                        this.appendChild(card);
+                        card.classList.add("frontside");
+                    } else {
+                        alert("Can't be played here!");
+                        e.stopPropagation();
+                    }
+                }
+            });
+        }
     }
 }
 customElements.define("location-owner", LocationOwner);
