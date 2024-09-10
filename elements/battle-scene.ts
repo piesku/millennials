@@ -117,6 +117,7 @@ export class BattleScene extends HTMLElement {
                 button {
                     margin: 10px;
                     width: 100px;
+                    font-size: 100%;
                 }
 
                 .sprite-border {
@@ -148,7 +149,7 @@ export class BattleScene extends HTMLElement {
                 <main name="prep" style="padding:20px;">
                     <flex-row gap start>
                         <div>
-                            <h2>Shop — Pick ${this.Game.CardsInShop}</h2>
+                            <h2>Shop — Pick ${this.Game.CardsInShop} or <button id="skip">Skip</button></h2>
                             <div class="grid" style="background:darksalmon;">
                                 <slot name="shop"></slot>
                             </div>
@@ -251,6 +252,8 @@ export class BattleScene extends HTMLElement {
                     let log_element = this.querySelector("a-log");
                     log_element?.lastElementChild?.remove();
                 }
+            } else if (target.id === "skip") {
+                this.InitBattle();
             }
         });
     }
