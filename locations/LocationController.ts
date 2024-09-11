@@ -94,7 +94,7 @@ export abstract class LocationController {
         if (trace.length === 0) {
             yield trace.log(`${this} is revealed`);
         }
-        this.Element.classList.add("frontside");
+        this.Element.classList.add("frontside", "hilite");
         yield* this.OnReveal(trace.fork(this));
         this.IsRevealed = true;
 

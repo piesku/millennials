@@ -251,6 +251,15 @@ export class BattleScene extends HTMLElement {
         });
     }
 
+    RenderChildren() {
+        this.Player.Element.Render();
+        this.Villain.Element.Render();
+
+        for (let location of this.Locations) {
+            location.Element.Render();
+        }
+    }
+
     PrepareBattle() {
         set_seed(this.Game.Seed * (this.Game.CurrentOpponent + 1));
 
@@ -332,9 +341,7 @@ export class BattleScene extends HTMLElement {
 
         for (let [trace, message] of this.StartBattle()) {
             this.Log(trace, message);
-            for (let location of this.Locations) {
-                location.Element.Render();
-            }
+            this.RenderChildren();
             await delay(INTERVAL);
         }
     }
@@ -377,9 +384,7 @@ export class BattleScene extends HTMLElement {
     async RunEndTurn() {
         for (let [trace, message] of this.EndTurn()) {
             this.Log(trace, message);
-            for (let location of this.Locations) {
-                location.Element.Render();
-            }
+            this.RenderChildren();
             await delay(INTERVAL);
         }
     }
