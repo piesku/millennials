@@ -74,4 +74,8 @@ export const enum Sprites {
     MojoJojo,
     Joker,
     Skeletor,
+
+    Orc,
+    Goblin,
+    Sauron,
 }

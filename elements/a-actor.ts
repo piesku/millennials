@@ -1,6 +1,6 @@
 import {ActorController} from "../actors/ActorController.js";
 import {CartoonVillainsController} from "../actors/cartoon.js";
-import {PiratesController} from "../actors/pirates.js";
+import {FantasyController} from "../actors/fantasy.js";
 import {PlayerController} from "../actors/player.js";
 import {SpaceVillainsController} from "../actors/space.js";
 import {html} from "../lib/html.js";
@@ -12,7 +12,7 @@ export class ActorElement extends HTMLElement {
     static Controllers: Record<string, new (el: ActorElement) => ActorController> = {
         player: PlayerController,
         space: SpaceVillainsController,
-        pirates: PiratesController,
+        pirates: FantasyController,
         cartoon: CartoonVillainsController,
     };
 

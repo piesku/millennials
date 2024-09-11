@@ -1,4 +1,5 @@
 import {DaltonBro, Joker, MojoJojo, Skeletor} from "../actors/cartoon.js";
+import {Goblin, Orc, Sauron} from "../actors/fantasy.js";
 import {Alien, Borg, Dalek, DarthVader, Stormtrooper} from "../actors/space.js";
 import {Baracus} from "../cards/a-baracus.js";
 import {Faceman} from "../cards/a-faceman.js";
@@ -143,6 +144,10 @@ export class CardElement extends HTMLElement {
         [Sprites.MojoJojo]: MojoJojo,
         [Sprites.DaltonBro]: DaltonBro,
         [Sprites.Skeletor]: Skeletor,
+
+        [Sprites.Orc]: Orc,
+        [Sprites.Goblin]: Goblin,
+        [Sprites.Sauron]: Sauron,
     };
 
     BaseCost = NaN;
