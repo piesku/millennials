@@ -51,6 +51,14 @@ export class BattleScene extends HTMLElement {
         return villain_element.Instance;
     }
 
+    get TheButton() {
+        let button_element = this.shadowRoot!.querySelector<HTMLButtonElement>("#end");
+        DEBUG: if (!button_element) {
+            throw "BattleScene must have the end turn button";
+        }
+        return button_element;
+    }
+
     get Locations() {
         return Array.from(this.querySelectorAll<LocationElement>("a-location"), (location) => location.Instance);
     }
@@ -75,9 +83,6 @@ export class BattleScene extends HTMLElement {
 
         const mask_src = document.querySelector("img#mask")?.getAttribute("src");
         const mask_url = `url(${mask_src})`;
-
-        let current_view = this.State === "prep" ? "prep" : "playing";
-        let button_text = this.State === "playing" ? "Reveal" : this.State === "won" ? "Next!" : "Summary";
 
         this.shadowRoot!.innerHTML = html`
             <style>
@@ -146,7 +151,7 @@ export class BattleScene extends HTMLElement {
                     image-rendering: pixelated;
                 }
             </style>
-            <multi-view current="${current_view}">
+            <multi-view current="${this.State}">
                 <main name="prep" style="padding:20px;">
                     <flex-row gap start>
                         <div>
@@ -190,7 +195,7 @@ export class BattleScene extends HTMLElement {
                             <flex-row>
                                 <slot name="player"></slot>
                                 <flex-col>
-                                    <button id="end" style="flex:1">${button_text}</button>
+                                    <button id="end" disabled style="flex:1">End Turn</button>
                                     <button id="undo">Undo</button>
                                 </flex-col>
                             </flex-row>
@@ -349,8 +354,6 @@ export class BattleScene extends HTMLElement {
     *StartBattle() {
         let trace = new Trace();
 
-        yield trace.log("--- Lights… camera… action! ---");
-
         const villain = this.querySelector("a-actor:not([type=player])") as ActorElement;
         yield* villain.Instance.StartBattle(trace.fork());
 
@@ -365,6 +368,7 @@ export class BattleScene extends HTMLElement {
         let trace = new Trace();
 
         this.CurrentTurn++;
+        this.TheButton.textContent = `End Turn ${this.CurrentTurn}`;
 
         yield trace.log(`--- Turn ${this.CurrentTurn} ---`);
 
@@ -379,6 +383,9 @@ export class BattleScene extends HTMLElement {
         yield* this.BroadcastGameMessage(Message.TurnStarts);
 
         yield* this.Villain.VillAIn(trace.fork());
+
+        yield trace.log("<hr>");
+        this.TheButton.disabled = false;
     }
 
     async RunEndTurn() {
@@ -390,9 +397,7 @@ export class BattleScene extends HTMLElement {
     }
 
     *EndTurn() {
-        let trace = new Trace();
-
-        yield trace.log("--- Revealing Cards ---");
+        this.TheButton.disabled = true;
 
         for (let card of this.querySelectorAll<CardElement>("a-table a-card")) {
             if (!card.Instance.IsRevealed) {
@@ -423,18 +428,14 @@ export class BattleScene extends HTMLElement {
     *EndBattle() {
         let trace = new Trace();
 
-        yield trace.log("--- The Reviews Are In ---");
-
         let locations_won = 0;
         for (let location of this.Locations) {
             let score = location.GetScore(this.Player);
             if (score >= location.GetScore(this.Villain)) {
                 locations_won++;
                 location.Element.classList.add("won");
-                yield trace.log(`You win ${location}`);
             } else {
                 location.Element.classList.add("lost");
-                yield trace.log(`You lose ${location}`);
             }
 
             this.Game.Stats.TotalPower += score;
@@ -444,13 +445,21 @@ export class BattleScene extends HTMLElement {
         this.Game.Stats.LocationsWon += locations_won;
         this.Game.Stats.LocationsLost += this.Locations.length - locations_won;
 
-        if (this.Player.GetScore() >= this.Villain.GetScore()) {
+        let player_score = this.Player.GetScore();
+        let villain_score = this.Villain.GetScore();
+
+        if (player_score > villain_score) {
             this.State = "won";
+            this.TheButton.textContent = "Next!";
+            yield trace.log(`<h3>You win ${player_score} — ${villain_score}!</h3>`);
         } else {
             this.State = "lost";
+            this.TheButton.textContent = "Summary";
+            yield trace.log(`<h3>You lose ${player_score} — ${villain_score}!</h3>`);
         }
 
-        this.Render();
+        this.TheButton.disabled = false;
+
         yield* this.BroadcastGameMessage(Message.BattleEnds);
     }
 
