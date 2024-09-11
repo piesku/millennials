@@ -6,6 +6,7 @@ import {Hannibal} from "../cards/a-hannibal.js";
 import {Murdock} from "../cards/a-murdock.js";
 import {AceVentura} from "../cards/ace-ventura.js";
 import {Aladdin} from "../cards/al-addin.js";
+import {Asterix} from "../cards/asterix.js";
 import {Batman} from "../cards/bat-man.js";
 import {Beavis} from "../cards/beavis.js";
 import {BillMurray} from "../cards/bill-murray.js";
@@ -26,7 +27,6 @@ import {Heman} from "../cards/he-man.js";
 import {Hermione} from "../cards/hermi-one.js";
 import {HomerSimpson} from "../cards/homer-simpson.js";
 import {IndianaJones} from "../cards/indiana-jones.js";
-import {InspectorGadget} from "../cards/inspector-gadget.js";
 import {JamesBond} from "../cards/james-bond.js";
 import {JohnMcClane} from "../cards/john-mcclane.js";
 import {JohnRambo} from "../cards/john-rambo.js";
@@ -34,26 +34,26 @@ import {JohnyBravo} from "../cards/johny-bravo.js";
 import {KevinHomeAlone} from "../cards/kevin-homealone.js";
 import {Kirilin} from "../cards/kirilan.js";
 import {Krecik} from "../cards/kre-cik.js";
-import {KungFuPanda} from "../cards/KungFuPanda.js";
 import {LaraCroft} from "../cards/lara-croft.js";
 import {LuckyLuke} from "../cards/lucky-luke.js";
 import {LukeSkywalker} from "../cards/luke-skywalker.js";
 import {MacGyver} from "../cards/mac-gyver.js";
 import {Marble} from "../cards/marble.js";
 import {MartyMcFly} from "../cards/marty-mcfly.js";
-import {Maximus} from "../cards/maximus.js";
 import {Megaman} from "../cards/mega-man.js";
 import {Neo} from "../cards/ne-o.js";
+import {Obelix} from "../cards/obelix.js";
 import {ObiWanKenobi} from "../cards/obi-wan-kenobi.js";
 import {OptimusPrime} from "../cards/optimus-prime.js";
 import {Pikachu} from "../cards/pikachu.js";
+import {PowerpuffBubbles} from "../cards/powerpuff-bubbles.js";
 import {RedPowerRanger} from "../cards/red-powerranger.js";
 import {RobinHood} from "../cards/robin-hood.js";
 import {Robocop} from "../cards/robo-cop.js";
 import {Ron} from "../cards/ron-wesley.js";
-import {Samwise} from "../cards/sam-wise.js";
 import {Superman} from "../cards/super-man.js";
 import {Tarzan} from "../cards/tarzan.js";
+import {TetrisBlock} from "../cards/tetris-block.js";
 import {TheMask} from "../cards/the-mask.js";
 import {Donatello} from "../cards/tmnt-donatello.js";
 import {Leonardo} from "../cards/tmnt-leonardo.js";
@@ -106,7 +106,7 @@ export class CardElement extends HTMLElement {
         [Sprites.Denver]: DenverDinosaur,
         [Sprites.Beavis]: Beavis,
         [Sprites.Butthead]: Butthead,
-        [Sprites.KungFuPanda]: KungFuPanda,
+        [Sprites.Obelix]: Obelix,
         [Sprites.BillMurray]: BillMurray,
         [Sprites.DanAykroyd]: DanAykroyd,
         [Sprites.LuckyLuke]: LuckyLuke,
@@ -121,13 +121,13 @@ export class CardElement extends HTMLElement {
         [Sprites.Megaman]: Megaman,
         [Sprites.Pikachu]: Pikachu,
         [Sprites.Frodo]: Frodo,
-        [Sprites.Samwise]: Samwise,
+        [Sprites.TetrisBlock]: TetrisBlock,
         [Sprites.Gandalf]: Gandalf,
         [Sprites.JohnMcClane]: JohnMcClane,
         [Sprites.LaraCroft]: LaraCroft,
         [Sprites.TheMask]: TheMask,
-        [Sprites.InspectorGadget]: InspectorGadget,
-        [Sprites.Maximus]: Maximus,
+        [Sprites.Asterix]: Asterix,
+        [Sprites.PowerpuffBubbles]: PowerpuffBubbles,
         [Sprites.JohnRambo]: JohnRambo,
         [Sprites.Tarzan]: Tarzan,
         [Sprites.RedPowerRanger]: RedPowerRanger,
