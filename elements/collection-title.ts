@@ -54,24 +54,22 @@ export class CollectionTitle extends HTMLElement {
                     grid-auto-flow: dense;
                     padding: 20px;
                     gap: 20px;
-
-                    font-style: italic;
-                    font-weight: bold;
-                    color: #f60;
                 }
                 ::slotted(button) {
                     flex: 1;
                     margin: 10px;
-
-                    font-style: italic;
-                    font-weight: bold;
-                    color: #f60;
                 }
                 h1 {
                     height: 182px;
                     grid-area: 2/2/3/8;
                     font-size: 160px;
                     margin: 0;
+                }
+                h1,
+                [center] {
+                    font-style: italic;
+                    font-weight: bold;
+                    color: #f60;
                 }
                 div {
                     font-size: 100px;
