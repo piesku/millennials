@@ -93,7 +93,7 @@ export abstract class CardController {
         modifier.setAttribute("origin-name", origin.Name);
         modifier.setAttribute("op", op);
         modifier.setAttribute("value", value.toString());
-        this.Element.appendChild(modifier);
+        this.Element.append(modifier);
 
         // TODO Perhaps a MutationObserver would be a better way to handle this?
         this.Element.Render();
@@ -189,7 +189,7 @@ export abstract class CardController {
         }
 
         const trash = this.Owner.Element.querySelector("a-trash")!;
-        trash.appendChild(this.Element);
+        trash.append(this.Element);
         yield trace.log(`${this} has been trashed`);
 
         yield* this.Battle.BroadcastCardMessage(Message.CardEntersTrash, trace, this);
@@ -207,7 +207,7 @@ export abstract class CardController {
             yield trace.fork(1).log(`but ${target_location} is full`);
         } else {
             yield* this.Battle.BroadcastCardMessage(Message.CardMovesFromLocation, trace, this);
-            target_location.GetSide(actor).appendChild(this.Element);
+            target_location.GetSide(actor).append(this.Element);
             yield* this.Battle.BroadcastCardMessage(Message.CardMovesToLocation, trace, this);
         }
 
@@ -234,7 +234,7 @@ export abstract class CardController {
             this.IsRevealed = false;
             this.TurnPlayed = 0;
             this.Element.classList.remove("frontside");
-            actor.Hand.appendChild(this.Element);
+            actor.Hand.append(this.Element);
             yield* this.Battle.BroadcastCardMessage(Message.CardEntersHand, trace, this);
         }
     }
@@ -248,7 +248,7 @@ export abstract class CardController {
             this.IsRevealed = false;
             this.TurnPlayed = 0;
             this.Element.classList.remove("frontside");
-            this.Owner.Hand.appendChild(this.Element);
+            this.Owner.Hand.append(this.Element);
             this.Battle.PlayedCardsQueue.splice(this.Battle.PlayedCardsQueue.indexOf(this), 1);
             yield* this.Battle.BroadcastCardMessage(Message.CardEntersHand, trace, this);
         }

@@ -93,7 +93,7 @@ export class CartoonVillainsController extends ActorController {
             for (let i = 0; i < count; i++) {
                 let card = document.createElement("a-card");
                 card.setAttribute("type", sprite);
-                deck.appendChild(card);
+                deck.append(card);
             }
         }
 

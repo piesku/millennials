@@ -77,7 +77,7 @@ export abstract class ActorController {
             }
 
             yield* this.Battle.BroadcastCardMessage(Message.CardLeavesDeck, trace, card.Instance);
-            this.Hand.appendChild(card);
+            this.Hand.append(card);
             yield* this.Battle.BroadcastCardMessage(Message.CardEntersHand, trace, card.Instance);
         } else {
             yield trace.log(`${this} draw a card`);
@@ -116,7 +116,7 @@ export abstract class ActorController {
 
             yield trace.log(`${this} play a card to ${location}`);
 
-            location.GetSide(this).appendChild(highest_cost_card);
+            location.GetSide(this).append(highest_cost_card);
             this.Battle.PlayedCardsQueue.push(highest_cost_card.Instance);
 
             this.CurrentEnergy -= highest_cost_card.Instance.CurrentCost;

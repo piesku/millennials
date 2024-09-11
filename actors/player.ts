@@ -64,7 +64,7 @@ export class PlayerController extends ActorController {
             let card = document.createElement("a-card") as CardElement;
             card.setAttribute("type", card_type.toString());
             card.setAttribute("draggable", "true");
-            deck.appendChild(card);
+            deck.append(card);
         }
 
         for (let i = 0; i < 3; i++) {

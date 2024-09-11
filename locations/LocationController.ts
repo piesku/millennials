@@ -118,7 +118,7 @@ export abstract class LocationController {
             }
 
             let side = this.GetSide(actor);
-            side.appendChild(card.Element);
+            side.append(card.Element);
 
             if (!skip_reveal) {
                 yield* card.Reveal(trace);
