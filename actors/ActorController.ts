@@ -95,28 +95,31 @@ export abstract class ActorController {
                 break;
             }
 
-            let card = playable_cards[0];
-            for (let i = 1; i < playable_cards.length; i++) {
-                if (playable_cards[i].Instance.CurrentCost > card.Instance.CurrentCost) {
-                    card = playable_cards[i];
+            let highest_cost_card = playable_cards[0];
+            for (let card of playable_cards) {
+                if (card.Instance.CurrentCost > highest_cost_card.Instance.CurrentCost) {
+                    highest_cost_card = card;
                 }
             }
 
-            let empty_locations = this.Battle.Locations.filter((location) => !location.IsFull(this));
-            let possible_locations = empty_locations.filter((location) => location.CanBePlayedHere(card.Instance));
+            let possible_locations = this.Battle.Locations.filter(
+                (location) =>
+                    !location.IsFull(this) &&
+                    !(location.IsRevealed && !location.CanBePlayedHere(highest_cost_card.Instance)),
+            );
 
-            if (!possible_locations) {
+            if (possible_locations.length === 0) {
                 break;
             }
 
-            let location = element(empty_locations);
+            let location = element(possible_locations);
 
             yield trace.log(`${this} play a card to ${location}`);
 
-            location.GetSide(this).appendChild(card);
-            this.Battle.PlayedCardsQueue.push(card.Instance);
+            location.GetSide(this).appendChild(highest_cost_card);
+            this.Battle.PlayedCardsQueue.push(highest_cost_card.Instance);
 
-            this.CurrentEnergy -= card.Instance.CurrentCost;
+            this.CurrentEnergy -= highest_cost_card.Instance.CurrentCost;
             this.Element.Render();
         }
     }
