@@ -37,7 +37,7 @@ export class BattleScene extends HTMLElement {
 
     get Player() {
         let player_element = this.querySelector<ActorElement>("a-actor[type=player]");
-        if (!player_element && DEBUG) {
+        DEBUG: if (!player_element) {
             throw "BattleScene must have a player";
         }
         return player_element!.Instance;
