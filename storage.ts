@@ -2,8 +2,8 @@ import {CardController} from "./cards/CardController.js";
 import {GameContainer} from "./elements/game-container.js";
 
 const enum Storage {
-    CurrentRun = "RUNv1",
-    Collection = "COLv1",
+    Collection = "com.piesku.millennials.1",
+    CurrentRun = "com.piesku.millennials.2",
 }
 
 interface CurrentRunState {
