@@ -78,13 +78,13 @@ export class LocationElement extends HTMLElement {
                     flex: 1;
                     padding: 10px;
                     margin: 10px;
-                    background-color: bisque;
+                    background: bisque;
                 }
                 :host(.won) {
-                    background-color: lightgreen;
+                    background: lightgreen;
                 }
                 :host(.lost) {
-                    background-color: lightcoral;
+                    background: lightcoral;
                 }
                 .description {
                     margin: 10px 0;

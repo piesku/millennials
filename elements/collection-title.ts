@@ -50,7 +50,7 @@ export class CollectionTitle extends HTMLElement {
             <style>
                 main {
                     display: grid;
-                    grid-template-columns: repeat(auto-fill, 122px);
+                    grid-template-columns: repeat(auto-fill, 120px);
                     grid-auto-flow: dense;
                     padding: 20px;
                     gap: 20px;

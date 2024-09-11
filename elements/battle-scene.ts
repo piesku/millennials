@@ -110,7 +110,7 @@ export class BattleScene extends HTMLElement {
                     width: 40vw;
                     height: 100vh;
                     overflow-y: auto;
-                    background-color: rgba(255, 255, 255, 0.8);
+                    background: rgba(255, 255, 255, 0.8);
                     padding: 10px 10px 100px;
                     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
                 }

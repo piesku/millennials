@@ -221,17 +221,13 @@ export class CardElement extends HTMLElement {
             <style>
                 :host {
                     user-select: none;
-                    border: 1px solid black;
                     border-radius: 5px;
                 }
 
                 :host .body {
-                    display: block;
-                    width: 120px;
                     height: 180px;
-                    background-color: white;
                     position: relative;
-                    border-radius: 3px;
+                    border-radius: 5px;
                     background: ${color_from_seed(this.Instance.Sprite)};
                     cursor: pointer;
                 }
@@ -278,13 +274,7 @@ export class CardElement extends HTMLElement {
                 }
 
                 :host(:not(.frontside)) {
-                    background: #f6d365;
-                    background-image: repeating-linear-gradient(
-                        45deg,
-                        rgba(255, 255, 255, 0.2) 0px,
-                        #f6d365 10px,
-                        #fda085 20px
-                    );
+                    background-image: repeating-linear-gradient(45deg, #fe7 0px, #fd6 10px, #fa8 20px);
                 }
 
                 :host(.unplayable) .body {
@@ -339,6 +329,7 @@ export class CardElement extends HTMLElement {
                 .mask {
                     position: absolute;
                     inset: 0;
+                    border-radius: 5px;
                     background-image: ${mask_url};
                     background-size: ${target_height}px auto;
                     image-rendering: pixelated;
@@ -350,13 +341,10 @@ export class CardElement extends HTMLElement {
 
                 .header {
                     position: absolute;
-                    top: 0;
-                    left: 0;
-                    right: 0;
+                    inset: 2px 3px auto;
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
-                    margin: 0 3px;
                     z-index: 1;
                     color: #fff;
                     font-weight: bold;
@@ -376,25 +364,19 @@ export class CardElement extends HTMLElement {
                 }
 
                 .text-container {
-                    box-sizing: border-box;
                     position: absolute;
-                    bottom: 0;
-                    left: 0;
-                    right: 0;
-                    min-height: 60px;
+                    inset: auto 0 0;
+                    height: 58px;
                     padding: 1px;
+                    border-radius: 0 0 5px 5px;
+                    background: #00000066;
                     align-content: center;
                     text-align: center;
-                    font-family: Arial, sans-serif;
-                    background: rgba(0, 0, 0, 0.4);
                     color: #fff;
                 }
 
                 .name {
                     font-size: 1em;
-                    white-space: normal;
-                    word-wrap: break-word;
-                    padding: 0 2px;
                     font-weight: bold;
                 }
 
@@ -431,6 +413,7 @@ export class CardElement extends HTMLElement {
                     position: absolute;
                     inset: 0;
                     z-index: 1;
+                    border-radius: 5px;
                     background-image: radial-gradient(circle at var(--x) var(--y), #ffffff99 0%, transparent 65%);
                 }
 
@@ -440,10 +423,8 @@ export class CardElement extends HTMLElement {
 
                 card-detail {
                     height: 180px;
-                    background: white;
-                    border: 1px solid black;
+                    border-radius: 5px;
                     padding: 0;
-                    user-select: none;
                     position: relative;
                     background: ${color_from_seed(this.Instance.Sprite)};
 
@@ -464,9 +445,9 @@ export class CardElement extends HTMLElement {
 
             <dialog onclick="event.stopPropagation(); this.close()">
                 <div class="content">
-                    <div class="reflection"></div>
                     <flex-col>
                         <card-detail>
+                            <div class="reflection"></div>
                             <flex-col start>${card_body}</flex-col>
                         </card-detail>
                         <card-modifiers>
