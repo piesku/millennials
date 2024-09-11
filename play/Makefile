@@ -1,6 +1,6 @@
 SEVEN_ZIP ?= 7zz
 ROADROLLER_FLAGS ?= -O1
-SOURCES := $(shell find . -type f -name "*.ts")
+SOURCES := $(shell find .. -type d -name node_modules -prune -o -type f -name "*.ts" )
 
 all: index.html
 
