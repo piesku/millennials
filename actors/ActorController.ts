@@ -103,7 +103,9 @@ export abstract class ActorController {
             }
 
             let possible_locations = this.Battle.Locations.filter(
-                (location) => !location.IsFull(this) && location.CanBePlayedHere(highest_cost_card.Instance),
+                (location) =>
+                    !location.IsFull(this) &&
+                    (!location.IsRevealed || location.CanBePlayedHere(highest_cost_card.Instance)),
             );
 
             if (possible_locations.length === 0) {

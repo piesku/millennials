@@ -47,7 +47,10 @@ export class LocationOwner extends HTMLElement {
                 const data = e.dataTransfer!.getData("text/plain");
                 const card = document.getElementById(data) as CardElement;
                 if (card) {
-                    if (this.Location.CanBePlayedHere(card.Instance) && card.Instance.CanBePlayedHere(this.Location)) {
+                    if (
+                        (!this.Location.IsRevealed || this.Location.CanBePlayedHere(card.Instance)) &&
+                        card.Instance.CanBePlayedHere(this.Location)
+                    ) {
                         this.append(card);
                         card.classList.add("frontside");
                     } else {
