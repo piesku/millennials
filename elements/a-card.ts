@@ -259,7 +259,7 @@ export class CardElement extends HTMLElement {
                         }
 
                         .text-container {
-                            min-height: 28px;
+                            height: 28px;
                         }
 
                         .name {
