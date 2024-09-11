@@ -151,7 +151,7 @@ export abstract class CardController {
             yield trace.log(`${this.Owner} reveal ${this} in ${this.Location}`);
         }
         this.Element.classList.add("frontside");
-        if (this.Location.CanOnRevealHere(this)) {
+        if (!this.Location.IsRevealed || this.Location.CanOnRevealHere(this)) {
             yield* this.OnReveal(trace.fork(this));
         }
         this.IsRevealed = true;
