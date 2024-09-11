@@ -233,7 +233,7 @@ export class CardElement extends HTMLElement {
                     position: relative;
                     border-radius: 3px;
                     background: ${color_from_seed(this.Instance.Sprite)};
-                    cursor: move;
+                    cursor: pointer;
                 }
 
                 :host-context(location-owner) {
@@ -412,6 +412,9 @@ export class CardElement extends HTMLElement {
                     scale: 3;
                     overflow: visible;
                     perspective: 800px;
+
+                    --x: 50%;
+                    --y: 50%;
                 }
 
                 dialog .content {
