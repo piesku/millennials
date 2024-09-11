@@ -52,7 +52,7 @@ export class ActorElement extends HTMLElement {
                 <slot></slot>
                 <div>
                     <h2>${this.Instance.Name}</h2>
-                    <div>Energy: ${this.Instance.CurrentEnergy}/${this.Instance.MaxEnergy}</div>
+                    <div>Energy: $${this.Instance.CurrentEnergy}</div>
                     <div>Total Score: ${this.Instance.GetScore()}</div>
                 </div>
             </flex-row>

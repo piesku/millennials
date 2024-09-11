@@ -10,7 +10,6 @@ export abstract class ActorController {
     abstract Name: string;
     abstract Sprite: Sprites;
     abstract Description: string;
-    MaxEnergy = 0;
     CurrentEnergy = 0;
 
     constructor(public Element: ActorElement) {}
@@ -56,7 +55,7 @@ export abstract class ActorController {
     *StartTurn(turn: number, trace: Trace) {
         yield* this.DrawCard(trace);
 
-        this.CurrentEnergy = this.MaxEnergy = turn;
+        this.CurrentEnergy = turn;
         this.Element.Render();
     }
 
