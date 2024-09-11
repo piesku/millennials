@@ -1,6 +1,7 @@
 import {CardController} from "../cards/CardController.js";
 import {CardElement} from "../elements/a-card.js";
-import {element} from "../lib/random.js";
+import {element, shuffle} from "../lib/random.js";
+import {LocationType} from "../locations/LocationController.js";
 import {Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 import {ActorController} from "./ActorController.js";
@@ -8,8 +9,8 @@ import {ActorController} from "./ActorController.js";
 export class DaltonBro extends CardController {
     Name = "Palton Brother";
     Cost = 1;
-    Power = 3;
-    Text = `Once: Give all the other revealed ${this.Name}s +1 Power`;
+    Power = 2;
+    Text = `Once: Give up to 3 random ${this.Name}s +1 Power`;
     Sprite = Sprites.DaltonBro;
     override IsVillain = true;
 
@@ -18,7 +19,10 @@ export class DaltonBro extends CardController {
             ...this.Battle.GetRevealedCards(this.Owner),
             ...this.Battle.GetRevealedCards(this.Opponent),
         ].filter((card) => card.Name === this.Name);
-        for (const card of other_dalton_cards) {
+
+        const shuffled = shuffle(other_dalton_cards);
+
+        for (const card of shuffled.slice(0, 3)) {
             yield trace.log(card.AddModifier(this, "addpower", 1));
         }
     }
@@ -48,7 +52,7 @@ export class MojoJojo extends CardController {
 export class Joker extends CardController {
     Name = "Poker";
     Cost = 4;
-    Power = 7;
+    Power = 0;
     Text = "Once: Repeat the Once abilities of all your revealed cards.";
     Sprite = Sprites.Joker;
     override IsVillain = true;
@@ -67,11 +71,18 @@ export class Joker extends CardController {
 
 export class Skeletor extends CardController {
     Name = "Telescore";
-    Cost = 5;
-    Power = 5;
-    Text = "";
+    Cost = 4;
+    Power = 0;
+    Text = "Once: Change this location to Castle Bonehead";
     Sprite = Sprites.Skeletor;
     override IsVillain = true;
+
+    override *OnReveal(trace: Trace) {
+        const location = this.Location!;
+        const location_name = location.Name;
+        location.Element.setAttribute("type", LocationType.CantPlayHere.toString());
+        yield trace.log(`${location_name} is now ${this.Location}`);
+    }
 }
 
 export class CartoonVillainsController extends ActorController {
@@ -85,7 +96,7 @@ export class CartoonVillainsController extends ActorController {
         const cardDistribution = {
             [Sprites.DaltonBro]: 5,
             [Sprites.MojoJojo]: 3,
-            [Sprites.Joker]: 3,
+            [Sprites.Joker]: 2,
             [Sprites.Skeletor]: 1,
         };
 

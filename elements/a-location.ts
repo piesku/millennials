@@ -1,4 +1,5 @@
 import {html} from "../lib/html.js";
+import {CastleBonehead} from "../locations/cant_play_here.js";
 import {CopyToOpponentHand} from "../locations/copy_to_opponent_hand.js";
 import {CopyToOwnerHand} from "../locations/copy_to_owner_hand.js";
 import {GainOneEnergy} from "../locations/gain_one_energy.js";
@@ -45,6 +46,7 @@ export class LocationElement extends HTMLElement {
         [LocationType.ReturnToOwnerHand]: ReturnToOwnerHand,
         [LocationType.Roulette]: Roulette,
         [LocationType.ShuffleMarbles]: ShuffleMarbles,
+        [LocationType.CantPlayHere]: CastleBonehead,
     };
 
     constructor() {
@@ -54,6 +56,7 @@ export class LocationElement extends HTMLElement {
 
     static observedAttributes = ["type"];
     attributeChangedCallback(name: string, old_value: string, new_value: string) {
+        console.log("YES", new_value);
         this.Instance = new LocationElement.Controllers[parseInt(new_value) as LocationType](this);
         this.Render();
     }

@@ -28,6 +28,7 @@ export const enum LocationType {
     ReturnToOwnerHand,
     Roulette,
     ShuffleMarbles,
+    CantPlayHere,
 }
 
 export abstract class LocationController {
