@@ -259,7 +259,7 @@ export class CardElement extends HTMLElement {
                         }
 
                         .text-container {
-                            min-height: 20px;
+                            min-height: 28px;
                         }
 
                         .name {
@@ -275,6 +275,7 @@ export class CardElement extends HTMLElement {
 
                 :host(:not(.frontside)) {
                     background-image: repeating-linear-gradient(45deg, #fe7 0px, #fd6 10px, #fa8 20px);
+                    box-shadow: inset 0 0 0 1px #00000066;
                 }
 
                 :host(.unplayable) .body {
