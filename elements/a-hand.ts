@@ -20,7 +20,7 @@ export class HandElement extends HTMLElement {
                     "style",
                     `
                         --tilt: ${tilt * 5}deg;
-                        --y: ${(1 - Math.cos(x)) * 30}px;
+                        --y: ${-Math.cos(x) * 30}px;
                         --z: ${index};
                     `,
                 );
