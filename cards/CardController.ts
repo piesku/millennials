@@ -55,6 +55,9 @@ export abstract class CardController {
                 case "addpower":
                     result += value;
                     break;
+                case "setpower":
+                    result = value;
+                    break;
             }
         }
         return result;
