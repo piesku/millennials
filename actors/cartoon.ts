@@ -10,7 +10,7 @@ export class DaltonBro extends CardController {
     Name = "Palton Brother";
     Cost = 1;
     Power = 2;
-    Text = `Once: Give up to 3 random ${this.Name}s +1 Power`;
+    Text = `Once: Give up to 2 random ${this.Name}s +1 Power`;
     Sprite = Sprites.DaltonBro;
     override IsVillain = true;
 
@@ -22,7 +22,7 @@ export class DaltonBro extends CardController {
 
         const shuffled = shuffle(other_dalton_cards);
 
-        for (const card of shuffled.slice(0, 3)) {
+        for (const card of shuffled.slice(0, 2)) {
             yield trace.log(card.AddModifier(this, "addpower", 1));
         }
     }
@@ -51,7 +51,7 @@ export class MojoJojo extends CardController {
 
 export class Joker extends CardController {
     Name = "Poker";
-    Cost = 4;
+    Cost = 5;
     Power = 0;
     Text = "Once: Repeat the Once abilities of all your revealed cards.";
     Sprite = Sprites.Joker;
@@ -96,8 +96,8 @@ export class CartoonVillainsController extends ActorController {
         const cardDistribution = {
             [Sprites.DaltonBro]: 5,
             [Sprites.MojoJojo]: 3,
-            [Sprites.Joker]: 2,
-            [Sprites.Skeletor]: 1,
+            [Sprites.Skeletor]: 2,
+            [Sprites.Joker]: 1,
         };
 
         for (const [sprite, count] of Object.entries(cardDistribution)) {
