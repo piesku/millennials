@@ -123,6 +123,11 @@ export abstract class CardController {
         }
         this.Element.Render();
     }
+
+    HasModifiers(origin: CardController | LocationController): boolean {
+        const modifiers = this.Element.querySelectorAll(`a-modifier[origin-id="${origin.Id}"]`);
+        return modifiers.length > 0;
+    }
     /**
      * Handles messages targeting other cards, as well as system messages (when
      * `card` is `undefined`).

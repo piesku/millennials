@@ -56,7 +56,6 @@ export class LocationElement extends HTMLElement {
 
     static observedAttributes = ["type"];
     attributeChangedCallback(name: string, old_value: string, new_value: string) {
-        console.log("YES", new_value);
         this.Instance = new LocationElement.Controllers[parseInt(new_value) as LocationType](this);
         this.Render();
     }

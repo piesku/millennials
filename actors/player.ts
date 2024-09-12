@@ -12,17 +12,24 @@ export const STARTING_DECK = [
     Sprites.RedPowerRanger,
     Sprites.Beavis,
 
-    // 2
-    Sprites.BillMurray,
-    Sprites.Robocop,
-    Sprites.Robocop,
-
+    // // 2
+    // Sprites.BillMurray,
+    // Sprites.Robocop,
+    // Sprites.Robocop,
+    Sprites.CaptainPlanet,
+    Sprites.CaptainPlanet,
+    Sprites.CaptainPlanet,
+    Sprites.CaptainPlanet,
+    Sprites.Obelix,
+    Sprites.Obelix,
+    Sprites.Obelix,
+    Sprites.Obelix,
     // 3,
-    Sprites.Homer,
-    Sprites.Homer,
+    // Sprites.Homer,
+    // Sprites.Homer,
 
-    // 4
-    Sprites.Tarzan,
+    // // 4
+    // Sprites.Tarzan,
     Sprites.Woody,
 
     // 5
