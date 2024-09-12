@@ -40,7 +40,10 @@ export const STARTING_DECK: Array<Sprites> = [
     Sprites.RedPowerRanger,
     Sprites.ForrestGump,
     Sprites.ForrestGump,
-    Sprites.ForrestGump,
+    Sprites.JohnRambo,
+    Sprites.JohnRambo,
+    Sprites.JohnRambo,
+    Sprites.JohnRambo,
 ];
 
 export class PlayerController extends ActorController {

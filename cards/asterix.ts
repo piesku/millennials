@@ -3,7 +3,7 @@ import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
 export class Asterix extends CardController {
-    Name = "Starix";
+    Name = "Asterisk";
     Cost = 6;
     Power = 4;
     Text = "Once: Clone the highest Power enemy cards played this turn";
@@ -28,7 +28,6 @@ export class Asterix extends CardController {
 
         for (let card of highest_power_cards) {
             let new_card = card.Clone();
-            yield trace.log(`Copying ${new_card.Instance} to your side`);
             yield* card.Location!.AddCard(new_card.Instance, trace, this.Owner);
         }
     }

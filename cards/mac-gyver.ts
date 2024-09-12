@@ -6,7 +6,7 @@ export class MacGyver extends CardController {
     Name = "GacMyver";
     Cost = 6;
     Power = 8;
-    Text = "Once: Repeat the Once abilities of all your revealed cards.";
+    Text = "Once: Repeat the Once abilities of all your revealed cards";
     Sprite = Sprites.MacGyver;
 
     override *OnReveal(trace: Trace) {
@@ -15,7 +15,7 @@ export class MacGyver extends CardController {
                 continue;
             }
 
-            yield trace.log(`repeating ${card}'s ability`);
+            yield trace.log(`${this} repeats ${card}'s ability`);
             yield* card.OnReveal(trace.fork(card));
         }
     }
