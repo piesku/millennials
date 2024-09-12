@@ -266,6 +266,8 @@ export class BattleScene extends HTMLElement {
     }
 
     PrepareBattle() {
+        this.Render();
+
         set_seed(this.Game.Seed * (this.Game.CurrentOpponent + 1));
 
         for (let card of this.querySelectorAll<CardElement>("a-card")) {
@@ -428,11 +430,11 @@ export class BattleScene extends HTMLElement {
     *EndBattle() {
         let trace = new Trace();
 
-        let locations_won = 0;
+        let locations_won: Array<LocationController> = [];
         for (let location of this.Locations) {
             let score = location.GetScore(this.Player);
             if (score >= location.GetScore(this.Villain)) {
-                locations_won++;
+                locations_won.push(location);
                 location.Element.classList.add("won");
             } else {
                 location.Element.classList.add("lost");
@@ -441,17 +443,19 @@ export class BattleScene extends HTMLElement {
             this.Game.Stats.TotalPower += score;
         }
 
-        this.Game.CardsInShop = locations_won;
-        this.Game.Stats.LocationsWon += locations_won;
-        this.Game.Stats.LocationsLost += this.Locations.length - locations_won;
+        this.Game.CardsInShop = locations_won.length;
+        this.Game.Stats.LocationsWon += locations_won.length;
+        this.Game.Stats.LocationsLost += this.Locations.length - locations_won.length;
 
         let player_score = this.Player.GetScore();
         let villain_score = this.Villain.GetScore();
 
-        if (player_score > villain_score) {
+        if (true || player_score > villain_score) {
             this.State = "won";
             this.TheButton.textContent = "Next!";
             yield trace.log(`<h3>You win ${player_score} — ${villain_score}!</h3>`);
+            yield trace.log(`You win ${locations_won.join(", ")}.`);
+            yield trace.log(`Choose ${locations_won.length} card(s) in the shop.`);
         } else {
             this.State = "lost";
             this.TheButton.textContent = "Summary";

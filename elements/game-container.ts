@@ -214,7 +214,6 @@ export class GameContainer extends HTMLElement {
             throw "Dialog not found";
         }
 
-        let total_battles = this.querySelectorAll<BattleScene>("battle-scene").length;
         let total_seconds = (Date.now() - this.Stats.DateStarted) / 1000;
         let villains_bested = this.Stats.Battles - Number(!won);
 
