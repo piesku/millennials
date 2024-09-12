@@ -4,7 +4,7 @@ import {format_time} from "../lib/number.js";
 import {element, integer, set_seed, shuffle} from "../lib/random.js";
 import {load_game_state, save_game_state} from "../storage.js";
 import {BattleScene} from "./battle-scene.js";
-import {CollectionViewer} from "./collection-viewer.js";
+import {CollectionTitle} from "./collection-title.js";
 
 const VILLAINS_COUNT = 3;
 
@@ -46,14 +46,12 @@ export class GameContainer extends HTMLElement {
                     ${has_previous_run && html`<button id="continue">Continue Run</button>`}
                     <button id="run">New Run</button>
                     <button id="daily">Daily Challenge</button>
-                    <button id="collection">Collection</button>
                 </collection-title>
                 <main name="run">
                     <multi-view current="${this.CurrentOpponent}">
                         <slot></slot>
                     </multi-view>
                 </main>
-                <collection-viewer name="collection"></collection-viewer>
             </multi-view>
             <dialog></dialog>
         `;
@@ -123,7 +121,7 @@ export class GameContainer extends HTMLElement {
     PlayerDeck = [...STARTING_DECK];
 
     get Collection() {
-        let collection = this.shadowRoot!.querySelector<CollectionViewer>("collection-viewer");
+        let collection = this.shadowRoot!.querySelector<CollectionTitle>("collection-title");
         DEBUG: if (!collection) {
             throw "Collection not found";
         }

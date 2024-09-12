@@ -8,7 +8,6 @@ import "./elements/a-location.js";
 import "./elements/a-log.js";
 import "./elements/battle-scene.js";
 import "./elements/collection-title.js";
-import "./elements/collection-viewer.js";
 import "./elements/game-container.js";
 import "./elements/location-owner.js";
 
