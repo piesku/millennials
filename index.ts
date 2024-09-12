@@ -6,7 +6,6 @@ import "./elements/a-deck.js";
 import "./elements/a-hand.js";
 import "./elements/a-location.js";
 import "./elements/a-log.js";
-import "./elements/a-modifier.js";
 import "./elements/battle-scene.js";
 import "./elements/collection-title.js";
 import "./elements/collection-viewer.js";

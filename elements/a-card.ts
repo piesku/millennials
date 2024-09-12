@@ -399,23 +399,34 @@ export class CardElement extends HTMLElement {
                     background: transparent !important;
                     outline: none;
                     border: none;
-                    width: 120px;
-                    min-height: 180px;
+                    width: 30%;
                     scale: 3;
                     overflow: visible;
                     perspective: 800px;
+                    position: relative;
 
                     --x: 50%;
                     --y: 50%;
                 }
 
-                dialog .content {
+                dialog card-detail {
+                    display: block;
+                    width: 120px;
+                    height: 180px;
+
+                    margin: auto;
+                    padding: 0;
+
                     position: relative;
                     transform: rotateX(var(--x-rotation)) rotateY(var(--y-rotation));
                     transition: transform 0.1s;
+
+                    border-radius: 5px;
+                    background: ${color_from_seed(this.Instance.Sprite)};
+                    box-shadow: 0 20px 10px -5px #00000088;
                 }
 
-                dialog .content:hover {
+                dialog card-detail:hover {
                     transform: rotateX(var(--x-rotation)) rotateY(var(--y-rotation)) scale(1.2);
                 }
 
@@ -431,21 +442,17 @@ export class CardElement extends HTMLElement {
                     background: radial-gradient(#f69d3caa, #3f87a6aa);
                 }
 
-                card-detail {
-                    height: 180px;
-                    border-radius: 5px;
-                    padding: 0;
-                    position: relative;
-                    background: ${color_from_seed(this.Instance.Sprite)};
-
-                    box-shadow: 0 20px 10px -5px #00000088;
-                }
-
                 card-modifiers {
-                    font-size: 30%;
-                    margin: 0 10px;
-                    width: 100px;
-                    background: white;
+                    display: block;
+
+                    position: absolute;
+                    inset: 0 70% auto 0;
+                    padding: 10px;
+
+                    font-size: 8px;
+                    background: rgba(255, 255, 255, 0.8);
+                    box-shadow: 0 20px 10px -5px #00000088;
+                    border-radius: 5px;
                 }
             </style>
 
@@ -454,25 +461,21 @@ export class CardElement extends HTMLElement {
             >
 
             <dialog onclick="event.stopPropagation(); this.close()">
-                <div class="content">
-                    <flex-col>
-                        <card-detail>
-                            <div class="reflection"></div>
-                            <flex-col start>${card_body}</flex-col>
-                        </card-detail>
-                        <card-modifiers>
-                            <slot></slot>
-                        </card-modifiers>
-                    </flex-col>
-                </div>
+                <card-detail>
+                    <div class="reflection"></div>
+                    <flex-col start>${card_body}</flex-col>
+                </card-detail>
+                <card-modifiers>
+                    <slot></slot>
+                </card-modifiers>
             </dialog>
         `;
 
         let dialog = this.shadowRoot!.querySelector("dialog")!;
-        let bbox = dialog.getBoundingClientRect();
+        let bbox = dialog.firstElementChild!.getBoundingClientRect();
 
         dialog.addEventListener("mouseenter", (ev) => {
-            bbox = dialog.getBoundingClientRect();
+            bbox = dialog.firstElementChild!.getBoundingClientRect();
         });
 
         dialog.addEventListener("mousemove", (ev) => {

@@ -101,19 +101,22 @@ export abstract class CardController {
         // TODO Perhaps a MutationObserver would be a better way to handle this?
         this.Element.Render();
 
+        let text = "";
         switch (op) {
             case "addpower":
             case "addcost": {
                 let amount = value > 0 ? "+" + value : value;
-                return `${this} gains ${amount} ${op.slice(3)}${origin === this ? "" : ` from ${origin}`}`;
+                text = `${this} gains ${amount} ${op.slice(3)}${origin === this ? "" : ` from ${origin}`}`;
+                break;
             }
             case "setpower":
             case "setcost": {
-                return `${this} has ${value} ${op.slice(3)}${origin === this ? "" : ` from ${origin}`}`;
+                text = `${this} has ${value} ${op.slice(3)}${origin === this ? "" : ` from ${origin}`}`;
+                break;
             }
-            default:
-                return `${this} gains a modifier from ${origin}`;
         }
+
+        return (modifier.innerHTML = text);
     }
 
     RemoveModifiers(origin: CardController | LocationController) {
