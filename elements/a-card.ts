@@ -253,10 +253,10 @@ export class CardElement extends HTMLElement {
                         height: 180px;
                         width: 120px;
                         scale: 0.5;
-                    }
 
-                    .description {
-                        display: none;
+                        .description {
+                            display: none;
+                        }
                     }
                 }
 
@@ -425,10 +425,14 @@ export class CardElement extends HTMLElement {
                     inset: 0 70% auto 0;
                     padding: 10px;
 
-                    font-size: 8px;
+                    font-size: 6px;
                     background: rgba(255, 255, 255, 0.8);
                     box-shadow: 0 20px 10px -5px #00000088;
                     border-radius: 5px;
+                }
+
+                ::slotted(a-modifier) {
+                    display: block;
                 }
             </style>
 
