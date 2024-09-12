@@ -93,27 +93,18 @@ export class SpaceVillainsController extends ActorController {
     Name = "Space Villains";
     Sprite = Sprites.DarthVader;
     Description = "Space Villains seek to control the galaxy";
-
-    *StartBattle(trace: Trace) {
-        const deck = this.Element.querySelector("a-deck")!;
-        const cardDistribution = {
-            [Sprites.Stormtrooper]: 4,
-            [Sprites.Dalek]: 3,
-            [Sprites.Alien]: 2,
-            [Sprites.Borg]: 2,
-            [Sprites.DarthVader]: 1,
-        };
-
-        for (const [sprite, count] of Object.entries(cardDistribution)) {
-            for (let i = 0; i < count; i++) {
-                let card = document.createElement("a-card");
-                card.setAttribute("type", sprite);
-                deck.append(card);
-            }
-        }
-
-        for (let i = 0; i < 3; i++) {
-            yield* this.DrawCard(trace);
-        }
-    }
+    StartingDeck = [
+        Sprites.Stormtrooper,
+        Sprites.Stormtrooper,
+        Sprites.Stormtrooper,
+        Sprites.Stormtrooper,
+        Sprites.Dalek,
+        Sprites.Dalek,
+        Sprites.Dalek,
+        Sprites.Alien,
+        Sprites.Alien,
+        Sprites.Borg,
+        Sprites.Borg,
+        Sprites.DarthVader,
+    ];
 }

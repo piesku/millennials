@@ -10,6 +10,8 @@ export abstract class ActorController {
     abstract Name: string;
     abstract Sprite: Sprites;
     abstract Description: string;
+    abstract StartingDeck: Array<Sprites>;
+
     CurrentEnergy = 0;
 
     constructor(public Element: ActorElement) {}
@@ -50,7 +52,17 @@ export abstract class ActorController {
         return score;
     }
 
-    abstract StartBattle(trace: Trace): Generator<[Trace, string], void>;
+    *StartBattle(trace: Trace) {
+        for (const sprite of this.StartingDeck) {
+            let card = document.createElement("a-card");
+            card.setAttribute("type", sprite.toString());
+            this.Deck.append(card);
+        }
+
+        for (let i = 0; i < 3; i++) {
+            yield* this.DrawCard(trace);
+        }
+    }
 
     *StartTurn(turn: number, trace: Trace) {
         yield* this.DrawCard(trace);

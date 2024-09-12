@@ -37,8 +37,9 @@ export class PlayerController extends ActorController {
     Name = "You";
     Sprite = Sprites.Murdock;
     Description = "The Good Guys";
+    StartingDeck = STARTING_DECK;
 
-    *StartBattle(trace: Trace) {
+    override *StartBattle(trace: Trace) {
         let game = this.Element.closest("game-container") as GameContainer;
         let cards = [...game.PlayerDeck];
 

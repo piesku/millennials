@@ -91,26 +91,17 @@ export class CartoonVillainsController extends ActorController {
     Name = "Cartoon Villains";
     Sprite = Sprites.Joker;
     Description = "We may be drawn, but we are dangerous!";
-
-    *StartBattle(trace: Trace) {
-        const deck = this.Element.querySelector("a-deck")!;
-        const cardDistribution = {
-            [Sprites.DaltonBro]: 5,
-            [Sprites.MojoJojo]: 3,
-            [Sprites.Skeletor]: 2,
-            [Sprites.Joker]: 1,
-        };
-
-        for (const [sprite, count] of Object.entries(cardDistribution)) {
-            for (let i = 0; i < count; i++) {
-                let card = document.createElement("a-card");
-                card.setAttribute("type", sprite);
-                deck.append(card);
-            }
-        }
-
-        for (let i = 0; i < 3; i++) {
-            yield* this.DrawCard(trace);
-        }
-    }
+    StartingDeck = [
+        Sprites.DaltonBro,
+        Sprites.DaltonBro,
+        Sprites.DaltonBro,
+        Sprites.DaltonBro,
+        Sprites.DaltonBro,
+        Sprites.MojoJojo,
+        Sprites.MojoJojo,
+        Sprites.MojoJojo,
+        Sprites.Skeletor,
+        Sprites.Skeletor,
+        Sprites.Joker,
+    ];
 }

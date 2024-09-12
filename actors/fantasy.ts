@@ -69,25 +69,18 @@ export class FantasyController extends ActorController {
     Name = "Fantasy Villains";
     Sprite = Sprites.Orc;
     Description = "One to rule them all";
-
-    *StartBattle(trace: Trace) {
-        const deck = this.Element.querySelector("a-deck")!;
-        const cardDistribution = {
-            [Sprites.Orc]: 6,
-            [Sprites.Goblin]: 5,
-            [Sprites.Sauron]: 1,
-        };
-
-        for (const [sprite, count] of Object.entries(cardDistribution)) {
-            for (let i = 0; i < count; i++) {
-                let card = document.createElement("a-card");
-                card.setAttribute("type", sprite);
-                deck.append(card);
-            }
-        }
-
-        for (let i = 0; i < 3; i++) {
-            yield* this.DrawCard(trace);
-        }
-    }
+    StartingDeck = [
+        Sprites.Orc,
+        Sprites.Orc,
+        Sprites.Orc,
+        Sprites.Orc,
+        Sprites.Orc,
+        Sprites.Orc,
+        Sprites.Goblin,
+        Sprites.Goblin,
+        Sprites.Goblin,
+        Sprites.Goblin,
+        Sprites.Goblin,
+        Sprites.Sauron,
+    ];
 }
