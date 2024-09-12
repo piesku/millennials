@@ -131,6 +131,8 @@ export class GameContainer extends HTMLElement {
     }
 
     Populate(endless = false) {
+        set_seed(this.Seed * this.CurrentOpponent);
+
         let villains = shuffle(["space", "pirates", "cartoon"]);
         let offset = 1;
 
@@ -138,8 +140,6 @@ export class GameContainer extends HTMLElement {
             villains = ["endless"];
             offset = this.CurrentOpponent;
         }
-
-        set_seed(this.Seed * this.CurrentOpponent);
 
         let by_cost = this.Collection.AllCardsByCost();
         for (let [i, villain] of villains.entries()) {
