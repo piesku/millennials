@@ -46,11 +46,12 @@ export class LocationOwner extends HTMLElement {
                 }
                 const data = e.dataTransfer!.getData("text/plain");
                 const card = document.getElementById(data) as CardElement;
+                const location_in_possible_locations = this.Location.Battle.GetPossibleLocations(
+                    card.Instance,
+                ).includes(this.Location);
+
                 if (card) {
-                    if (
-                        (!this.Location.IsRevealed || this.Location.CanBePlayedHere(card.Instance)) &&
-                        card.Instance.CanBePlayedHere(this.Location)
-                    ) {
+                    if (location_in_possible_locations) {
                         this.append(card);
                         card.classList.add("frontside");
                     } else {

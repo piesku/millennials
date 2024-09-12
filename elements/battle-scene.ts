@@ -544,6 +544,15 @@ export class BattleScene extends HTMLElement {
         );
     }
 
+    GetPossibleLocations(card: CardController) {
+        return this.Locations.filter(
+            (location) =>
+                !location.IsFull(card.Owner) &&
+                (!location.IsRevealed || location.CanBePlayedHere(card)) &&
+                card.CanBePlayedHere(location),
+        );
+    }
+
     CleanUp(card: CardController) {
         let modifiers = this.querySelectorAll(`a-modifier[origin-id="${card.Id}"]`);
         for (let modifier of modifiers) {
