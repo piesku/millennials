@@ -83,12 +83,6 @@ export class LocationElement extends HTMLElement {
                     margin: 10px;
                     background: bisque;
                 }
-                :host(.won) {
-                    background: lightgreen;
-                }
-                :host(.lost) {
-                    background: lightcoral;
-                }
                 .description {
                     margin: 10px 0;
                 }

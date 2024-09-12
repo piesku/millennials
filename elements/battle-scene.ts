@@ -435,9 +435,6 @@ export class BattleScene extends HTMLElement {
             let score = location.GetScore(this.Player);
             if (score >= location.GetScore(this.Villain)) {
                 locations_won.push(location);
-                location.Element.classList.add("won");
-            } else {
-                location.Element.classList.add("lost");
             }
 
             this.Game.Stats.TotalPower += score;
