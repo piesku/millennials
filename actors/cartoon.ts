@@ -82,6 +82,8 @@ export class Skeletor extends CardController {
         const location_name = location.Name;
         location.Element.setAttribute("type", LocationType.CantPlayHere.toString());
         yield trace.log(`${location_name} is now ${this.Location}`);
+        // Reveal the new location.
+        yield* location.Element.Instance.Reveal(trace);
     }
 }
 

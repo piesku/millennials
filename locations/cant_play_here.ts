@@ -3,7 +3,8 @@ import {LocationController} from "./LocationController.js";
 
 export class CastleBonehead extends LocationController {
     Name = "Castle Bonehead 💀";
-    Description = "Card can't be played here";
+    // TODO All cards, or just player cards?
+    Description = "Cards can't be played here.";
     override CanBePlayedHere(card: CardController): boolean {
         return false;
     }
