@@ -43,7 +43,7 @@ export class Alien extends CardController {
     Name = "Foreign";
     Cost = 3;
     Power = 6;
-    Text = "Once: Return a random opponent's card from this location back to his hand";
+    Text = "Once: Trash a random opponent's card from here";
     Sprite = Sprites.Alien;
     override IsVillain = true;
 
@@ -52,7 +52,7 @@ export class Alien extends CardController {
         const card = element(opponent_cards);
 
         if (card) {
-            yield* card.ReturnToOwnerHand(trace);
+            yield* card.Trash(trace);
         }
     }
 }

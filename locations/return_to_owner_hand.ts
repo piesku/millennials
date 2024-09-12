@@ -4,10 +4,10 @@ import {LocationController} from "./LocationController.js";
 
 export class ReturnToOwnerHand extends LocationController {
     Name = "ReturnToOwnerHand";
-    Description = "When you play a card here, return it to your hand.";
+    Description = "When you play a card here, trash it.";
     override *OnMessage(kind: Message, trace: Trace, card?: CardController) {
         if (card?.Location === this && kind === Message.CardEntersTable) {
-            yield* card.ReturnToOwnerHand(trace);
+            yield* card.Trash(trace);
         }
     }
 }
