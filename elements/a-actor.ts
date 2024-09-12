@@ -54,8 +54,9 @@ export class ActorElement extends HTMLElement {
                 <slot></slot>
                 <div>
                     <h2>${this.Instance.Name}</h2>
-                    <div>Energy: $${this.Instance.CurrentEnergy}</div>
-                    <div>Total Score: ${this.Instance.GetScore()}</div>
+                    <div>Mana: $${this.Instance.CurrentEnergy}</div>
+                    <div>Trash: ${this.querySelectorAll("a-trash a-card").length}</div>
+                    <b style="font-size:100px;">${this.Instance.GetScore()}</b>
                 </div>
             </flex-row>
         `;

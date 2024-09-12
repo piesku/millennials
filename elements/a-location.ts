@@ -83,31 +83,27 @@ export class LocationElement extends HTMLElement {
                     margin: 10px;
                     background: bisque;
                 }
-                .description {
+                p {
                     margin: 10px 0;
                 }
-                .points {
-                    margin: 20px;
-                    font-size: 20px;
-                }
-                .name-description {
+                div {
                     opacity: 0.3;
                     text-align: center;
                 }
-                :host(.frontside) .name-description {
+                :host(.frontside) div {
                     opacity: 1;
                 }
             </style>
             <flex-col style="height: 100%; align-items: center;">
                 <slot name="villain"></slot>
-                <div id="villain-points" class="points">${this.Instance.GetScore(this.Instance.Battle.Villain)}</div>
-                <div class="name-description">
-                    <div class="name">${this.Instance.Name}</div>
-                    <div class="description">
+                <b>${this.Instance.GetScore(this.Instance.Battle.Villain)}</b>
+                <div>
+                    <h3>${this.Instance.Name}</h3>
+                    <p>
                         <slot name="description">${this.Instance.Description}</slot>
-                    </div>
+                    </p>
                 </div>
-                <div id="player-points" class="points">${this.Instance.GetScore(this.Instance.Battle.Player)}</div>
+                <b>${this.Instance.GetScore(this.Instance.Battle.Player)}</b>
                 <slot name="player"></slot>
             </flex-col>
         `;
