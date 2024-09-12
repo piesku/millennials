@@ -20,10 +20,11 @@ export class PowerpuffBubbles extends CardController {
         if (target_location) {
             let card = document.createElement("a-card") as CardElement;
             card.setAttribute("type", Sprites.Marble.toString());
-            card.Instance.Text = "Saving the world before bedtime!";
+            card.Instance.Text = "<i>Saving the world before bedtime!</i>";
             card.Instance.Sprite = this.Sprite;
             card.Instance.Name = "Atomic Girl";
-            card.Instance.AddModifier(this, "setpower", 8);
+            card.Instance.Power = card.BasePower = 8;
+            card.Instance.SpriteOffset = 5;
             yield* target_location.AddCard(card.Instance, trace, this.Owner);
         }
     }
