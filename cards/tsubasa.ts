@@ -6,16 +6,15 @@ export class Tsubasa extends CardController {
     Name = "Captain Japan";
     Cost = 2;
     Power = 3;
-    Text = "If your side of the location is full, +8 Power";
+    Text = "Always: +8 Power if your side here is full";
     Sprite = Sprites.Tsubasa;
 
     override *OnMessageSelf(kind: Message, trace: Trace) {
         switch (kind) {
             case Message.CardEntersTable:
             case Message.CardMovesToLocation:
-                if (this.Location?.IsFull(this.Owner)) {
-                    this.AddModifier(this, "addpower", 8);
-                    yield trace.log(`it has +8 Power`);
+                if (this.Location?.IsFull(this.Owner) && !this.HasModifiers(this)) {
+                    yield trace.log(this.AddModifier(this, "addpower", 8));
                 }
                 break;
             case Message.CardLeavesTable:
@@ -36,17 +35,13 @@ export class Tsubasa extends CardController {
         switch (kind) {
             case Message.CardEntersTable:
             case Message.CardMovesToLocation:
-                if (this.Location?.IsFull(this.Owner)) {
-                    this.AddModifier(this, "addpower", 8);
-                    yield trace.log(`${this} has +8 Power`);
+                if (this.Location?.IsFull(this.Owner) && !this.HasModifiers(this)) {
+                    yield trace.log(this.AddModifier(this, "addpower", 8));
                 }
                 break;
             case Message.CardLeavesTable:
             case Message.CardMovesFromLocation:
-                if (!this.HasModifiers(this)) {
-                    return;
-                }
-                if (!this.Location?.IsFull(this.Owner)) {
+                if (this.Location?.IsFull(this.Owner)) {
                     this.RemoveModifiers(this);
                     yield trace.log(`${this} no longer has +8 Power`);
                 }

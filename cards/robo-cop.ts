@@ -10,7 +10,6 @@ export class Robocop extends CardController {
     Sprite = Sprites.Robocop;
 
     override *OnReveal(trace: Trace) {
-        let deck = this.Opponent.Element.querySelector("a-deck")!;
-        yield* this.Owner.DrawCard(trace, deck);
+        yield* this.Owner.DrawCard(trace, this.Opponent.Deck);
     }
 }

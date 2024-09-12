@@ -7,13 +7,13 @@ export class Batman extends CardController {
     Name = "Matban";
     Cost = 1;
     Power = 1;
-    Text = "Once: Trash top card from the opponent's deck";
+    Text = "Once: +2 Power to the top card of your deck";
     Sprite = Sprites.Batman;
 
     override *OnReveal(trace: Trace) {
-        if (this.Opponent.Deck.firstElementChild) {
-            const top_card = this.Opponent.Deck.firstElementChild as CardElement;
-            yield* top_card.Instance.Trash(trace);
+        if (this.Owner.Deck.firstElementChild) {
+            const topCard = this.Owner.Deck.firstElementChild as CardElement;
+            yield trace.log(topCard.Instance.AddModifier(this, "addpower", 2));
         }
     }
 }
