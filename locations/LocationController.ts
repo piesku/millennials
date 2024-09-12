@@ -113,7 +113,7 @@ export abstract class LocationController {
             if (card.Element.closest("a-hand")) {
                 yield* actor.Battle.BroadcastCardMessage(Message.CardLeavesHand, trace, card);
             } else if (card.Element.closest("a-deck")) {
-                yield* actor.Battle.BroadcastCardMessage(Message.CardLeavesDeck, trace, card);
+                // yield* actor.Battle.BroadcastCardMessage(Message.CardLeavesDeck, trace, card);
             } else if (card.Element.closest("a-trash")) {
                 yield* actor.Battle.BroadcastCardMessage(Message.CardLeavesTrash, trace, card);
             }

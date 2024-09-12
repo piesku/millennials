@@ -3,19 +3,19 @@ import {LocationController} from "./locations/LocationController.js";
 
 // TODO Use const enum.
 export enum Message {
-    BattleStarts = 1,
-    BattleEnds,
+    // BattleStarts = 1,
+    // BattleEnds,
     TurnStarts,
     TurnEnds,
-    LocationReveals,
+    // LocationReveals,
     CardEntersTable,
     CardLeavesTable,
     CardMovesFromLocation,
     CardMovesToLocation,
     CardEntersHand,
     CardLeavesHand,
-    CardEntersDeck,
-    CardLeavesDeck,
+    // CardEntersDeck,
+    // CardLeavesDeck,
     CardEntersTrash,
     CardLeavesTrash,
 }

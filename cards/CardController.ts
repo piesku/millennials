@@ -196,7 +196,7 @@ export abstract class CardController {
         if (this.Element.closest("a-hand")) {
             yield* this.Battle.BroadcastCardMessage(Message.CardLeavesHand, trace, this);
         } else if (this.Element.closest("a-deck")) {
-            yield* this.Battle.BroadcastCardMessage(Message.CardLeavesDeck, trace, this);
+            // yield* this.Battle.BroadcastCardMessage(Message.CardLeavesDeck, trace, this);
         } else if (this.Element.closest("a-location")) {
             yield* this.Battle.BroadcastCardMessage(Message.CardLeavesTable, trace, this);
         } else if (DEBUG) {
@@ -238,7 +238,7 @@ export abstract class CardController {
         this.Element.classList.remove("frontside");
         let random_child = element(actor.Deck.querySelectorAll("a-card")) ?? null;
         actor.Deck.insertBefore(this.Element, random_child);
-        yield* this.Battle.BroadcastCardMessage(Message.CardEntersDeck, trace, this);
+        // yield* this.Battle.BroadcastCardMessage(Message.CardEntersDeck, trace, this);
     }
 
     *AddToHand(actor: ActorController, trace: Trace) {

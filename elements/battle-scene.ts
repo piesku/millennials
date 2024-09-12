@@ -361,7 +361,7 @@ export class BattleScene extends HTMLElement {
         const player = this.querySelector("a-actor[type=player]") as ActorElement;
         yield* player.Instance.StartBattle(trace.fork());
 
-        yield* this.BroadcastGameMessage(Message.BattleStarts);
+        // yield* this.BroadcastGameMessage(Message.BattleStarts);
         yield* this.StartTurn();
     }
 
@@ -463,7 +463,7 @@ export class BattleScene extends HTMLElement {
 
         this.TheButton.disabled = false;
 
-        yield* this.BroadcastGameMessage(Message.BattleEnds);
+        // yield* this.BroadcastGameMessage(Message.BattleEnds);
     }
 
     *BroadcastGameMessage(kind: Message) {

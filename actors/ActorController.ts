@@ -88,7 +88,7 @@ export abstract class ActorController {
                 yield trace.log(`${this} draw a card`);
             }
 
-            yield* this.Battle.BroadcastCardMessage(Message.CardLeavesDeck, trace, card.Instance);
+            // yield* this.Battle.BroadcastCardMessage(Message.CardLeavesDeck, trace, card.Instance);
             this.Hand.append(card);
             yield* this.Battle.BroadcastCardMessage(Message.CardEntersHand, trace, card.Instance);
         } else {
