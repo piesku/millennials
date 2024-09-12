@@ -371,7 +371,7 @@ export class BattleScene extends HTMLElement {
         this.CurrentTurn++;
         this.TheButton.textContent = `End Turn ${this.CurrentTurn}`;
 
-        yield trace.log(`<h3>Turn ${this.CurrentTurn}</h3>`);
+        yield trace.log(`<h3>Turn ${this.CurrentTurn} of ${this.MaxTurns}</h3>`);
 
         if (this.CurrentTurn < 4) {
             let location = this.Locations[this.CurrentTurn - 1];
@@ -398,6 +398,9 @@ export class BattleScene extends HTMLElement {
     }
 
     *EndTurn() {
+        let trace = new Trace();
+        yield trace.log("<hr>");
+
         this.TheButton.disabled = true;
 
         for (let card of this.querySelectorAll<CardElement>("a-table a-card")) {
@@ -408,8 +411,8 @@ export class BattleScene extends HTMLElement {
 
         let unrevealed_cards = this.PlayedCardsQueue.filter((card) => !card.IsRevealed);
         for (let card of unrevealed_cards) {
-            yield* this.BroadcastCardMessage(Message.CardLeavesHand, new Trace(), card);
-            yield* card.Reveal(new Trace());
+            yield* this.BroadcastCardMessage(Message.CardLeavesHand, trace.fork(), card);
+            yield* card.Reveal(trace.fork());
 
             if (card.Owner === this.Player) {
                 this.Game.Stats.CardsPlayed++;
