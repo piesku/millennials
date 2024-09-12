@@ -9,6 +9,7 @@ export class Kirilin extends CardController {
     Power = 3;
     Text = "When trashed, +2 Power and add to a random location";
     Sprite = Sprites.Kirilin;
+    override SpriteOffset = 18;
 
     override *OnMessageSelf(kind: Message, trace: Trace): Generator<[Trace, string], void> {
         switch (kind) {

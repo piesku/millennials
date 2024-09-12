@@ -237,7 +237,7 @@ export class CardElement extends HTMLElement {
                     height: 180px;
                     position: relative;
                     border-radius: 5px;
-                    background: ${color_from_seed(this.Instance.Sprite)};
+                    background: ${color_from_seed(this.Instance.Sprite + this.Instance.SpriteOffset)};
                     cursor: pointer;
                 }
 
@@ -422,7 +422,7 @@ export class CardElement extends HTMLElement {
                     transition: transform 0.1s;
 
                     border-radius: 5px;
-                    background: ${color_from_seed(this.Instance.Sprite)};
+                    background: ${color_from_seed(this.Instance.Sprite + this.Instance.SpriteOffset)};
                     box-shadow: 0 20px 10px -5px #00000088;
                 }
 

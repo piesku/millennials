@@ -8,7 +8,7 @@ export class DenverDinosaur extends CardController {
     Power = 0;
     Text = "After each turn, gain 1 Power for each unspent Energy.";
     Sprite = Sprites.Denver;
-
+    override SpriteOffset: number = 10;
     override *OnMessage(kind: Message, trace: Trace) {
         switch (kind) {
             case Message.TurnEnds:

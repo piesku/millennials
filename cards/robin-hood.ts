@@ -10,7 +10,7 @@ export class RobinHood extends CardController {
     Power = 3;
     Text = "Once: Bring back one of your trashed cards to this location.";
     Sprite = Sprites.RobinHood;
-
+    override SpriteOffset: number = 2;
     override *OnReveal(trace: Trace) {
         let trash = this.Owner.Element.querySelector("a-trash")!;
         let trashed_cards = Array.from(trash.querySelectorAll("a-card")) as CardElement[];

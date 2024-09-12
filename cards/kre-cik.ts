@@ -7,4 +7,5 @@ export class Krecik extends CardController {
     Power = 12;
     Text = "<i>Ahoj!</i>";
     Sprite = Sprites.Krecik;
+    override SpriteOffset: number = 1;
 }

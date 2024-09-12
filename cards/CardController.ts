@@ -21,10 +21,7 @@ export abstract class CardController {
     IsVillain = false;
     IsRevealed = false;
     TurnPlayed = 0;
-
-    HasDynamicCost = false;
-
-    DynamicCost() {}
+    SpriteOffset = 0;
 
     constructor(public Element: CardElement) {}
 
