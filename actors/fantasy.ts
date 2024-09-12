@@ -15,6 +15,7 @@ export class Orc extends CardController {
     Text = `<i>Where there's a whip, there's a way</i>`;
     Sprite = Sprites.Orc;
     override IsVillain = true;
+    override SpriteOffset = 1;
 }
 
 export class Goblin extends CardController {

@@ -75,6 +75,7 @@ export class Skeletor extends CardController {
     Text = "Once: Change this location to Castle Bonehead";
     Sprite = Sprites.Skeletor;
     override IsVillain = true;
+    override SpriteOffset = 1;
 
     override *OnReveal(trace: Trace) {
         const location = this.Location!;
