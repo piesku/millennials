@@ -6,7 +6,7 @@ import {Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 import {ActorController} from "./ActorController.js";
 
-export const STARTING_DECK = [
+export const STARTING_DECK: Array<Sprites> = [
     // 1
     Sprites.RedPowerRanger,
     Sprites.RedPowerRanger,
@@ -17,11 +17,11 @@ export const STARTING_DECK = [
     Sprites.Robocop,
     Sprites.Robocop,
 
-    3,
+    // 3,
     Sprites.Homer,
     Sprites.Homer,
 
-    // // 4
+    // 4
     Sprites.Tarzan,
     Sprites.Woody,
 
