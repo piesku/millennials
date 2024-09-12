@@ -38,13 +38,11 @@ export class MojoJojo extends CardController {
 
     override *OnReveal(trace: Trace) {
         let opponent_hand = this.Opponent.Hand.querySelectorAll<CardElement>("a-card");
-        if (opponent_hand.length > 0) {
-            const card_to_transform = element(opponent_hand);
-            const old_card_name = card_to_transform.Instance.Name;
+        let card_to_transform = element(opponent_hand);
+        if (card_to_transform) {
+            let old_card_instance = card_to_transform.Instance;
             card_to_transform.setAttribute("type", Sprites.Marble.toString());
-            yield trace.log(`Transformed ${old_card_name} into a ${card_to_transform.Instance}`);
-        } else {
-            yield trace.log("Opponent has no cards in hand to transform");
+            yield trace.log(`${old_card_instance} is now a ${card_to_transform.Instance}!`);
         }
     }
 }
@@ -53,6 +51,7 @@ export class Joker extends CardController {
     Name = "Poker";
     Cost = 5;
     Power = 0;
+    // TODO All cards, or just the cards here?
     Text = "Once: Repeat the Once abilities of all your revealed cards.";
     Sprite = Sprites.Joker;
     override IsVillain = true;
