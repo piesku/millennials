@@ -7,7 +7,7 @@ export class Murdock extends CardController {
     Name = "B. Pilot";
     Cost = 1;
     Power = 3;
-    Text = "Once: Give all cards in your hand +1 Power";
+    Text = "Once: All cards in your hand +1 Power";
     Sprite = Sprites.Murdock;
 
     override *OnReveal(trace: Trace) {
