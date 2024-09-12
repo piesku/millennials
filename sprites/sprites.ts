@@ -64,7 +64,6 @@ export const enum Sprites {
     RedPowerRanger,
     BluePowerRanger,
 
-    Dalek,
     Borg,
     Alien,
 

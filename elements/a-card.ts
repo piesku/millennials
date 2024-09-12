@@ -1,6 +1,6 @@
 import {DaltonBro, Joker, MojoJojo, Skeletor} from "../actors/cartoon.js";
 import {Goblin, Orc, Sauron} from "../actors/fantasy.js";
-import {Alien, Borg, Dalek, DarthVader, Stormtrooper} from "../actors/space.js";
+import {Alien, Borg, DarthVader, Stormtrooper} from "../actors/space.js";
 import {Baracus} from "../cards/a-baracus.js";
 import {Faceman} from "../cards/a-faceman.js";
 import {Hannibal} from "../cards/a-hannibal.js";
@@ -135,7 +135,6 @@ export class CardElement extends HTMLElement {
         [Sprites.RedPowerRanger]: RedPowerRanger,
         [Sprites.BluePowerRanger]: BluePowerRanger,
 
-        [Sprites.Dalek]: Dalek,
         [Sprites.Alien]: Alien,
         [Sprites.Borg]: Borg,
 

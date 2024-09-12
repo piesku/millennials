@@ -8,42 +8,28 @@ import {ActorController} from "./ActorController.js";
 
 export const STARTING_DECK: Array<Sprites> = [
     // 1
-    // Sprites.RedPowerRanger,
-    // Sprites.RedPowerRanger,
-    // Sprites.Beavis,
-
-    // // 2
-    // Sprites.BillMurray,
-    // Sprites.Robocop,
-    // Sprites.Robocop,
-
-    // // 3,
-    // Sprites.Homer,
-    // Sprites.Homer,
-
-    // // 4
-    // Sprites.Tarzan,
-    // Sprites.Woody,
-
-    // // 5
-    // Sprites.Hannibal,
-
-    // // 6
-    // Sprites.Krecik,
-    Sprites.PowerpuffBubbles,
-    Sprites.PowerpuffBubbles,
-    Sprites.PowerpuffBubbles,
-    Sprites.PowerpuffBubbles,
     Sprites.RedPowerRanger,
     Sprites.RedPowerRanger,
-    Sprites.RedPowerRanger,
-    Sprites.RedPowerRanger,
-    Sprites.ForrestGump,
-    Sprites.ForrestGump,
-    Sprites.JohnRambo,
-    Sprites.JohnRambo,
-    Sprites.JohnRambo,
-    Sprites.JohnRambo,
+    Sprites.Beavis,
+
+    // 2
+    Sprites.BillMurray,
+    Sprites.Robocop,
+    Sprites.Robocop,
+
+    // 3,
+    Sprites.Homer,
+    Sprites.Homer,
+
+    // 4
+    Sprites.Tarzan,
+    Sprites.Woody,
+
+    // 5
+    Sprites.Hannibal,
+
+    // 6
+    Sprites.Krecik,
 ];
 
 export class PlayerController extends ActorController {
