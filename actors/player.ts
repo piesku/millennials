@@ -12,15 +12,22 @@ export const STARTING_DECK: Array<Sprites> = [
     Sprites.RedPowerRanger,
     Sprites.Beavis,
 
-    // 2
-    Sprites.BillMurray,
-    Sprites.Robocop,
-    Sprites.Robocop,
+    // // 2
+    // Sprites.BillMurray,
+    // Sprites.Robocop,
+    // Sprites.Robocop,
 
-    // 3,
-    Sprites.Homer,
-    Sprites.Homer,
+    // // 3,
+    // Sprites.Homer,
+    // Sprites.Homer,
 
+    Sprites.Kirilin,
+    Sprites.Kirilin,
+    Sprites.Kirilin,
+    Sprites.Kirilin,
+    Sprites.TetrisBlock,
+    Sprites.TetrisBlock,
+    Sprites.TetrisBlock,
     // 4
     Sprites.Tarzan,
     Sprites.Woody,
