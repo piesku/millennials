@@ -187,6 +187,12 @@ export abstract class CardController {
     }
 
     *Trash(trace: Trace) {
+        const revealed_cards = this.Location?.GetRevealedCards();
+        const armor_card = revealed_cards?.find((card) => card.Name === "Magic Ginger");
+        if (armor_card) {
+            yield trace.log("Magic Ginger is here, trashing forbidden");
+            return;
+        }
         if (this.Element.closest("a-hand")) {
             yield* this.Battle.BroadcastCardMessage(Message.CardLeavesHand, trace, this);
         } else if (this.Element.closest("a-deck")) {
