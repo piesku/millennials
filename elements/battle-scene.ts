@@ -300,8 +300,9 @@ export class BattleScene extends HTMLElement {
                     const data = e.dataTransfer.getData("text/plain");
                     const new_card = document.getElementById(data) as CardElement;
                     if (new_card) {
+                        new_card.setAttribute("draggable", "false");
+
                         let backcard = new_card.cloneNode(true) as CardElement;
-                        backcard.setAttribute("draggable", "false");
                         backcard.classList.remove("frontside");
                         new_card.replaceWith(backcard);
 
@@ -311,7 +312,6 @@ export class BattleScene extends HTMLElement {
 
                         // Update the deck UI.
                         new_card.setAttribute("slot", "deck");
-                        new_card.setAttribute("draggable", "false");
                         card.replaceWith(new_card);
 
                         // Update the collection state for the new card in deck.

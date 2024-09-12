@@ -242,6 +242,7 @@ export abstract class CardController {
             this.IsRevealed = false;
             this.TurnPlayed = 0;
             this.Element.classList.remove("frontside");
+            this.Element.draggable = actor.Type === "player";
             actor.Hand.append(this.Element);
             yield* this.Battle.BroadcastCardMessage(Message.CardEntersHand, trace, this);
         }
@@ -256,6 +257,7 @@ export abstract class CardController {
             this.IsRevealed = false;
             this.TurnPlayed = 0;
             this.Element.classList.remove("frontside");
+            this.Element.draggable = this.Owner.Type === "player";
             this.Owner.Hand.append(this.Element);
             this.Battle.PlayedCardsQueue.splice(this.Battle.PlayedCardsQueue.indexOf(this), 1);
             yield* this.Battle.BroadcastCardMessage(Message.CardEntersHand, trace, this);

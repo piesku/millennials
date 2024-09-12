@@ -63,7 +63,6 @@ export class PlayerController extends ActorController {
         for (let card_type of shuffle(cards)) {
             let card = document.createElement("a-card") as CardElement;
             card.setAttribute("type", card_type.toString());
-            card.setAttribute("draggable", "true");
             deck.append(card);
         }
 
