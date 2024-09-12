@@ -23,6 +23,7 @@ export class Placki extends CardController {
     Power = 0;
     Text = "Once: Give Johny Alpha +6 Power.";
     Sprite = Sprites.Placki;
+    override IsVillain = true;
 
     override *OnReveal(trace: Trace) {
         const revealed_cards = this.Battle.GetRevealedCards();
