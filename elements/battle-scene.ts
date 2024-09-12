@@ -523,10 +523,11 @@ export class BattleScene extends HTMLElement {
         // We don't need card.Location here, this breaks the Trash events
         let other_locations = this.Locations.filter((location) => location !== card_location);
         for (let other_location of other_locations) {
-            if (other_location.IsRevealed && !trace.includes(other_location) && !processed.includes(other_location)) {
-                yield* other_location.OnMessage(kind, trace.fork(other_location), card);
-                processed.push(other_location);
-            }
+            // We don't have locations using this mechanic.
+            // if (other_location.IsRevealed && !trace.includes(other_location) && !processed.includes(other_location)) {
+            //     yield* other_location.OnMessage(kind, trace.fork(other_location), card);
+            //     processed.push(other_location);
+            // }
 
             for (let other_card of other_location.GetRevealedCards()) {
                 if (
