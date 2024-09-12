@@ -8,8 +8,8 @@ import {ActorController} from "./ActorController.js";
 
 export const STARTING_DECK: Array<Sprites> = [
     // 1
-    Sprites.RedPowerRanger,
-    Sprites.RedPowerRanger,
+    Sprites.AceVentura,
+    Sprites.AceVentura,
     Sprites.Beavis,
 
     // // 2
@@ -25,18 +25,18 @@ export const STARTING_DECK: Array<Sprites> = [
     Sprites.Kirilin,
     Sprites.Kirilin,
     Sprites.Kirilin,
-    Sprites.TetrisBlock,
-    Sprites.TetrisBlock,
-    Sprites.TetrisBlock,
+    Sprites.HeMan,
+    Sprites.HeMan,
+    Sprites.HeMan,
     // 4
     Sprites.Tarzan,
-    Sprites.Woody,
+    Sprites.AceVentura,
 
     // 5
     Sprites.Hannibal,
 
     // 6
-    Sprites.Krecik,
+    Sprites.Kirilin,
 ];
 
 export class PlayerController extends ActorController {

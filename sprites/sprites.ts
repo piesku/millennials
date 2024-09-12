@@ -78,4 +78,6 @@ export const enum Sprites {
     Orc,
     Goblin,
     Sauron,
+
+    Rhino,
 }

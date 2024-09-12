@@ -159,6 +159,7 @@ export abstract class CardController {
             yield trace.log(`${this.Owner} reveal ${this} in ${this.Location}`);
         }
         this.Element.classList.add("frontside");
+        this.Element.classList.remove("unplayable");
         if (!this.Location.IsRevealed || this.Location.CanOnRevealHere(this)) {
             yield* this.OnReveal(trace.fork(this));
         }

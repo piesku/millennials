@@ -49,6 +49,7 @@ import {OptimusPrime} from "../cards/optimus-prime.js";
 import {Pikachu} from "../cards/pikachu.js";
 import {PowerpuffBubbles} from "../cards/powerpuff-bubbles.js";
 import {RedPowerRanger} from "../cards/red-powerranger.js";
+import {Rhino} from "../cards/rhino.js";
 import {RobinHood} from "../cards/robin-hood.js";
 import {Robocop} from "../cards/robo-cop.js";
 import {Ron} from "../cards/ron-wesley.js";
@@ -148,6 +149,8 @@ export class CardElement extends HTMLElement {
         [Sprites.Orc]: Orc,
         [Sprites.Goblin]: Goblin,
         [Sprites.Sauron]: Sauron,
+
+        [Sprites.Rhino]: Rhino,
     };
 
     BaseCost = NaN;

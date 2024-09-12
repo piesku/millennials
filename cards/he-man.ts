@@ -14,7 +14,7 @@ export class Heman extends CardController {
         let totalPower = 0;
 
         for (let card of otherCards) {
-            totalPower += card.Power;
+            totalPower += card.CurrentPower;
             yield* card.Trash(trace);
         }
 
