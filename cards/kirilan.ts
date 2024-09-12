@@ -13,11 +13,12 @@ export class Kirilin extends CardController {
     override *OnMessageSelf(kind: Message, trace: Trace): Generator<[Trace, string], void> {
         switch (kind) {
             case Message.CardEntersTrash:
+                // TODO Get empty locations.
                 const random_location = element(this.Battle.GetPossibleLocations(this));
                 if (random_location) {
-                    yield* random_location.AddCard(this, trace, this.Owner);
-                    this.AddModifier(this, "addpower", 2);
                     yield trace.log(`${this} respawns in ${random_location}`);
+                    this.AddModifier(this, "addpower", 2);
+                    yield* random_location.AddCard(this, trace, this.Owner);
                 }
                 break;
         }
