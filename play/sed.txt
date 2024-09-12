@@ -31,5 +31,5 @@ s/unknown/k/g
 s/unowned/o/g
 
 # JS
-s/\.\.toString\(\)//g
+s/\.\.toString()//g
 

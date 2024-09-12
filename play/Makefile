@@ -25,7 +25,7 @@ game.terser.js: game.sed.js terser_compress.txt | node_modules
 		--mangle toplevel \
 		--mangle-props keep_quoted,regex=/^[A-Z]/ \
 		--compress $(shell paste -sd, play/terser_compress.txt) \
-	> $@
+	| sed -f sed.txt > $@
 
 game.roadroller.js: game.terser.js | node_modules
 	npx --quiet roadroller $(ROADROLLER_FLAGS) --dirty $< -o $@
