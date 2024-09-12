@@ -21,13 +21,13 @@ export const STARTING_DECK: Array<Sprites> = [
     // Sprites.Homer,
     // Sprites.Homer,
 
-    Sprites.MartyMcFly,
+    Sprites.Frodo,
     Sprites.MartyMcFly,
     Sprites.MartyMcFly,
     Sprites.MartyMcFly,
     Sprites.HeMan,
-    Sprites.HeMan,
-    Sprites.HeMan,
+    Sprites.Frodo,
+    Sprites.Frodo,
     // 4
     Sprites.Tarzan,
     Sprites.AceVentura,
