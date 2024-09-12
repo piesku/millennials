@@ -6,11 +6,11 @@ export class Faceman extends CardController {
     Name = "B. Shitface";
     Cost = 2;
     Power = 4;
-    Text = "Once: +1 Power to your other cards here";
+    Description = "Once: +1 Power to your other cards here";
     Sprite = Sprites.Faceman;
 
     override *OnReveal(trace: Trace) {
-        let other_revealed_cards = this.Location!.GetRevealedCards(this.Owner);
+        let other_revealed_cards = this.Field!.GetRevealedCards(this.Owner);
         for (let card of other_revealed_cards) {
             yield trace.log(card.AddModifier(this, "addpower", 1));
         }

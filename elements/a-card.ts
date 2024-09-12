@@ -69,7 +69,7 @@ import {html} from "../lib/html.js";
 import {Sprites} from "../sprites/sprites.js";
 
 export class CardElement extends HTMLElement {
-    Instance!: CardController;
+    Controller!: CardController;
 
     static Controllers: Record<Sprites, new (el: CardElement) => CardController> = {
         [Sprites.RobinHood]: RobinHood,
@@ -163,9 +163,9 @@ export class CardElement extends HTMLElement {
 
     static observedAttributes = ["type"];
     attributeChangedCallback(name: string, old_value: string, new_value: string) {
-        this.Instance = new CardElement.Controllers[parseInt(new_value) as Sprites](this);
-        this.BaseCost = this.Instance.Cost;
-        this.BasePower = this.Instance.Power;
+        this.Controller = new CardElement.Controllers[parseInt(new_value) as Sprites](this);
+        this.BaseCost = this.Controller.Cost;
+        this.BasePower = this.Controller.Power;
 
         this.Render();
     }
@@ -179,12 +179,12 @@ export class CardElement extends HTMLElement {
     }
 
     Render() {
-        this.id = `_${this.Instance.Id}`;
+        this.id = `_${this.Controller.Id}`;
 
         const target_height = 120;
         const sprite_height = 10;
         const pixel_size = target_height / sprite_height;
-        const sprite_y = (sprite_height + 1) * this.Instance.Sprite * pixel_size;
+        const sprite_y = (sprite_height + 1) * this.Controller.Sprite * pixel_size;
 
         const spritesheet_src = document.querySelector("img#sheet")?.getAttribute("src");
         const background_url = `url(${spritesheet_src})`;
@@ -196,23 +196,23 @@ export class CardElement extends HTMLElement {
             <div class="header">
                 <span
                     id="cost"
-                    class="${this.Instance.CurrentCost > this.BaseCost
+                    class="${this.Controller.CurrentCost > this.BaseCost
                         ? "incr"
-                        : this.Instance.CurrentCost < this.BaseCost
+                        : this.Controller.CurrentCost < this.BaseCost
                           ? "decr"
                           : ""}"
                 >
-                    $${this.Instance.CurrentCost}
+                    $${this.Controller.CurrentCost}
                 </span>
                 <span
                     id="power"
-                    class="${this.Instance.CurrentPower > this.BasePower
+                    class="${this.Controller.CurrentPower > this.BasePower
                         ? "incr"
-                        : this.Instance.CurrentPower < this.BasePower
+                        : this.Controller.CurrentPower < this.BasePower
                           ? "decr"
                           : ""}"
                 >
-                    ${this.Instance.CurrentPower}
+                    ${this.Controller.CurrentPower}
                 </span>
             </div>
             <div class="sprite-border">
@@ -220,8 +220,8 @@ export class CardElement extends HTMLElement {
                 <div class="mask"></div>
             </div>
             <div class="text-container">
-                <div class="name">${this.Instance.Name}</div>
-                <div class="description">${this.Instance.Text}</div>
+                <div class="name">${this.Controller.Name}</div>
+                <div class="description">${this.Controller.Description}</div>
             </div>
         `;
 
@@ -239,7 +239,7 @@ export class CardElement extends HTMLElement {
                     position: absolute;
                     inset: 0;
                     border-radius: 5px;
-                    background: ${color_from_seed(this.Instance.Sprite + this.Instance.SpriteOffset)};
+                    background: ${color_from_seed(this.Controller.Sprite + this.Controller.SpriteOffset)};
                     cursor: pointer;
                 }
 
@@ -397,7 +397,7 @@ export class CardElement extends HTMLElement {
                     transition: transform 0.1s;
 
                     border-radius: 5px;
-                    background: ${color_from_seed(this.Instance.Sprite + this.Instance.SpriteOffset)};
+                    background: ${color_from_seed(this.Controller.Sprite + this.Controller.SpriteOffset)};
                     box-shadow: 0 20px 10px -5px #00000088;
                 }
 
@@ -473,10 +473,10 @@ export class CardElement extends HTMLElement {
     }
 
     static Compare(a: CardElement, b: CardElement) {
-        if (a.Instance.Cost !== b.Instance.Cost) {
-            return a.Instance.Cost - b.Instance.Cost;
+        if (a.Controller.Cost !== b.Controller.Cost) {
+            return a.Controller.Cost - b.Controller.Cost;
         } else {
-            return a.Instance.Name.localeCompare(b.Instance.Name);
+            return a.Controller.Name.localeCompare(b.Controller.Name);
         }
     }
 }

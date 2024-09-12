@@ -6,7 +6,7 @@ export class TheEmpireStrikesBack extends LocationController {
     Name = "The Empire Strikes Back";
     Description = "Cards played here get get +2 Power.";
     override *OnMessage(kind: Message, trace: Trace, card: CardController) {
-        if (card?.Location === this) {
+        if (card?.Field === this) {
             switch (kind) {
                 case Message.CardEntersTable:
                     yield trace.log(card.AddModifier(this, "addpower", 2));

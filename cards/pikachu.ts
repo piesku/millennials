@@ -6,11 +6,11 @@ export class Pikachu extends CardController {
     Name = "Electric Mouse";
     Cost = 4;
     Power = 3;
-    Text = "Once: Trash all opponent 10+ Power cards here";
+    Description = "Once: Trash all opponent 10+ Power cards here";
     Sprite = Sprites.Pikachu;
 
     override *OnReveal(trace: Trace) {
-        const enemyCardsWithMoreThan10Power = this.Location!.GetRevealedCards(this.Opponent).filter(
+        const enemyCardsWithMoreThan10Power = this.Field!.GetRevealedCards(this.Opponent).filter(
             (card) => card.CurrentPower >= 10,
         );
 

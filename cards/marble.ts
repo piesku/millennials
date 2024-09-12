@@ -5,7 +5,7 @@ export class Marble extends CardController {
     Name = "Marble";
     Cost = 1;
     Power = 0;
-    Text = "<i>Clink!</i>";
+    Description = "<i>Clink!</i>";
     Sprite = Sprites.Marble;
     override IsVillain = true;
     override SpriteOffset: number = 1;

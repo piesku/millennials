@@ -10,12 +10,12 @@ export class ShuffleMarbles extends LocationController {
         for (let i = 0; i < 5; i++) {
             let card = document.createElement("a-card") as CardElement;
             card.setAttribute("type", Sprites.Marble.toString());
-            yield* card.Instance.AddToDeck(this.Battle.Villain, trace);
+            yield* card.Controller.AddToDeck(this.Battle.Villain, trace);
         }
         for (let i = 0; i < 5; i++) {
             let card = document.createElement("a-card") as CardElement;
             card.setAttribute("type", Sprites.Marble.toString());
-            yield* card.Instance.AddToDeck(this.Battle.Player, trace);
+            yield* card.Controller.AddToDeck(this.Battle.Player, trace);
         }
     }
 }

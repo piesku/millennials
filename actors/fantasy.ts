@@ -12,7 +12,7 @@ export class Orc extends CardController {
     Name = orc_name;
     Cost = 1;
     Power = 2;
-    Text = `<i>Where there's a whip, there's a way</i>`;
+    Description = `<i>Where there's a whip, there's a way</i>`;
     Sprite = Sprites.Orc;
     override IsVillain = true;
     override SpriteOffset = 2;
@@ -22,7 +22,7 @@ export class Goblin extends CardController {
     Name = goblin_name;
     Cost = 2;
     Power = 4;
-    Text = `Once: Draw ${sauron_name} or another card`;
+    Description = `Once: Draw ${sauron_name} or another card`;
     Sprite = Sprites.Goblin;
     override IsVillain = true;
     override SpriteOffset = 2;
@@ -32,8 +32,8 @@ export class Goblin extends CardController {
         let found = false;
 
         for (const card of cards) {
-            if (card.Instance.Name === sauron_name) {
-                yield* card.Instance.AddToHand(this.Owner, trace);
+            if (card.Controller.Name === sauron_name) {
+                yield* card.Controller.AddToHand(this.Owner, trace);
                 found = true;
                 break;
             }
@@ -49,7 +49,7 @@ export class Sauron extends CardController {
     Name = sauron_name;
     Cost = 6;
     Power = 1;
-    Text = `Once: Add +2 Power to each ${orc_name} and ${goblin_name}`;
+    Description = `Once: Add +2 Power to each ${orc_name} and ${goblin_name}`;
     Sprite = Sprites.Sauron;
     override IsVillain = true;
 

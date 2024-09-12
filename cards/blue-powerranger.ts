@@ -6,11 +6,11 @@ export class BluePowerRanger extends CardController {
     Name = "Blue Guardian";
     Cost = 2;
     Power = 3;
-    Text = "Once: Clone this into your hand";
+    Description = "Once: Clone this into your hand";
     Sprite = Sprites.BluePowerRanger;
 
     override *OnReveal(trace: Trace) {
         const clone = this.Clone();
-        yield* clone.Instance.AddToHand(this.Owner, trace);
+        yield* clone.Controller.AddToHand(this.Owner, trace);
     }
 }

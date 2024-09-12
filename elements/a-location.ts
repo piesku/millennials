@@ -23,7 +23,7 @@ import {TurnSeven} from "../locations/turn_seven.js";
 import {WinnerDrawsTwo} from "../locations/winner_draws_two.js";
 
 export class LocationElement extends HTMLElement {
-    Instance!: LocationController;
+    Controller!: LocationController;
 
     static Controllers: Record<LocationType, new (el: LocationElement) => LocationController> = {
         [LocationType.StarWars_ANewHope]: TheEmpireStrikesBack,
@@ -56,7 +56,7 @@ export class LocationElement extends HTMLElement {
 
     static observedAttributes = ["type"];
     attributeChangedCallback(name: string, old_value: string, new_value: string) {
-        this.Instance = new LocationElement.Controllers[parseInt(new_value) as LocationType](this);
+        this.Controller = new LocationElement.Controllers[parseInt(new_value) as LocationType](this);
         this.Render();
     }
 
@@ -74,7 +74,7 @@ export class LocationElement extends HTMLElement {
     }
 
     Render() {
-        this.id = `_${this.Instance.Id}`;
+        this.id = `_${this.Controller.Id}`;
         this.shadowRoot!.innerHTML = html`
             <style>
                 :host {
@@ -96,14 +96,14 @@ export class LocationElement extends HTMLElement {
             </style>
             <flex-col style="height: 100%; align-items: center;">
                 <slot name="villain"></slot>
-                <b>${this.Instance.GetScore(this.Instance.Battle.Villain)}</b>
+                <b>${this.Controller.GetScore(this.Controller.Battle.Villain)}</b>
                 <div>
-                    <h3>${this.Instance.Name}</h3>
+                    <h3>${this.Controller.Name}</h3>
                     <p>
-                        <slot name="description">${this.Instance.Description}</slot>
+                        <slot name="description">${this.Controller.Description}</slot>
                     </p>
                 </div>
-                <b>${this.Instance.GetScore(this.Instance.Battle.Player)}</b>
+                <b>${this.Controller.GetScore(this.Controller.Battle.Player)}</b>
                 <slot name="player"></slot>
             </flex-col>
         `;

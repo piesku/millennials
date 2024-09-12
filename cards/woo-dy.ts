@@ -7,14 +7,14 @@ export class Woody extends CardController {
     Name = "Choody";
     Cost = 4;
     Power = 1;
-    Text = "Once: Play the top card of your deck here.";
+    Description = "Once: Play the top card of your deck here.";
     Sprite = Sprites.Woody;
 
     override *OnReveal(trace: Trace) {
         let card = this.Owner.Deck.firstElementChild as CardElement;
         if (card) {
-            yield trace.log(`${this} plays ${card.Instance} to ${this.Location}`);
-            yield* this.Location!.AddCard(card.Instance, trace.fork(1), this.Owner);
+            yield trace.log(`${this} plays ${card.Controller} to ${this.Field}`);
+            yield* this.Field!.AddCard(card.Controller, trace.fork(1), this.Owner);
         }
     }
 }

@@ -7,13 +7,13 @@ export class JohnyBravo extends CardController {
     Name = "Johny Alpha";
     Cost = 3;
     Power = 6;
-    Text = "Once: Shuffle Placki into your deck.";
+    Description = "Once: Shuffle Placki into your deck.";
     Sprite = Sprites.JohnyBravo;
 
     override *OnReveal(trace: Trace) {
         let card = document.createElement("a-card") as CardElement;
         card.setAttribute("type", Sprites.Placki.toString());
-        yield* card.Instance.AddToDeck(this.Owner, trace);
+        yield* card.Controller.AddToDeck(this.Owner, trace);
     }
 }
 
@@ -21,7 +21,7 @@ export class Placki extends CardController {
     Name = "Placki";
     Cost = 0;
     Power = 0;
-    Text = "Once: Give Johny Alpha +6 Power.";
+    Description = "Once: Give Johny Alpha +6 Power.";
     Sprite = Sprites.Placki;
     override IsVillain = true;
 

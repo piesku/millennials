@@ -7,7 +7,7 @@ export class Goku extends CardController {
     Name = "Carrotku";
     Cost = 6;
     Power = 0;
-    Text = "Always: Has the combined Power of all trashed cards";
+    Description = "Always: Has the combined Power of all trashed cards";
     Sprite = Sprites.Goku;
 
     override *OnMessageSelf(kind: Message, trace: Trace) {
@@ -17,7 +17,7 @@ export class Goku extends CardController {
                 let combined_power = 0;
                 let trashed_cards = this.Battle.querySelectorAll<CardElement>("a-trash a-card");
                 for (let card of trashed_cards) {
-                    combined_power += card.Instance.CurrentPower;
+                    combined_power += card.Controller.CurrentPower;
                 }
                 yield trace.log(this.AddModifier(this, "setpower", combined_power));
                 break;
@@ -35,7 +35,7 @@ export class Goku extends CardController {
                 let combined_power = 0;
                 let trashed_cards = this.Battle.querySelectorAll<CardElement>("a-trash a-card");
                 for (let card of trashed_cards) {
-                    combined_power += card.Instance.CurrentPower;
+                    combined_power += card.Controller.CurrentPower;
                 }
                 yield trace.log(this.AddModifier(this, "setpower", combined_power));
         }

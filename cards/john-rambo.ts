@@ -6,14 +6,14 @@ export class JohnRambo extends CardController {
     Name = "Ron Jambo";
     Cost = 5;
     Power = 0;
-    Text = "Always: Has a power equal to the sum of your other cards here";
+    Description = "Always: Has a power equal to the sum of your other cards here";
     Sprite = Sprites.JohnRambo;
 
     override *OnMessageSelf(kind: Message, trace: Trace) {
         switch (kind) {
             case Message.CardEntersTable:
                 let total_power = 0;
-                let cards_here = this.Location?.GetRevealedCards(this.Owner) || [];
+                let cards_here = this.Field?.GetRevealedCards(this.Owner) || [];
                 for (let card of cards_here) {
                     if (card !== this) {
                         total_power += card.CurrentPower;
@@ -27,7 +27,7 @@ export class JohnRambo extends CardController {
     }
 
     override *OnMessage(kind: Message, trace: Trace, card?: CardController) {
-        if (card?.Location !== this.Location) {
+        if (card?.Field !== this.Field) {
             return;
         }
 
@@ -41,7 +41,7 @@ export class JohnRambo extends CardController {
             case Message.CardMovesToLocation:
             case Message.CardMovesFromLocation:
                 let total_power = 0;
-                let cards_here = this.Location!.GetRevealedCards(this.Owner);
+                let cards_here = this.Field!.GetRevealedCards(this.Owner);
                 for (let card of cards_here) {
                     if (card !== this) {
                         total_power += card.CurrentPower;

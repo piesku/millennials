@@ -11,7 +11,7 @@ export class DaltonBro extends CardController {
     Name = "Palton Brother";
     Cost = 1;
     Power = 2;
-    Text = `Once: Give another ${this.Name} +1 Power`;
+    Description = `Once: Give another ${this.Name} +1 Power`;
     Sprite = Sprites.DaltonBro;
     override IsVillain = true;
 
@@ -29,7 +29,7 @@ export class MojoJojo extends CardController {
     Name = "DojoBojo";
     Cost = 3;
     Power = 6;
-    Text = "Once: Turn a card in the opponent's into a Marble";
+    Description = "Once: Turn a card in the opponent's into a Marble";
     Sprite = Sprites.MojoJojo;
     override IsVillain = true;
 
@@ -37,9 +37,9 @@ export class MojoJojo extends CardController {
         let opponent_hand = this.Opponent.Hand.querySelectorAll<CardElement>("a-card");
         let card_to_transform = element(opponent_hand);
         if (card_to_transform) {
-            let old_card_instance = card_to_transform.Instance;
+            let old_card_instance = card_to_transform.Controller;
             card_to_transform.setAttribute("type", Sprites.Marble.toString());
-            yield trace.log(`${old_card_instance} is now a ${card_to_transform.Instance}!`);
+            yield trace.log(`${old_card_instance} is now a ${card_to_transform.Controller}!`);
         }
     }
 }
@@ -48,7 +48,7 @@ export class Joker extends MacGyver {
     override Name = "Poker";
     override Cost = 5;
     override Power = 0;
-    override Text = "Once: Repeat the Once abilities of all your revealed cards.";
+    override Description = "Once: Repeat the Once abilities of all your revealed cards.";
     override Sprite = Sprites.Joker;
     override IsVillain = true;
 }
@@ -57,18 +57,18 @@ export class Skeletor extends CardController {
     Name = "Telescore";
     Cost = 4;
     Power = 0;
-    Text = "Once: Change this location to Castle Bonehead";
+    Description = "Once: Change this location to Castle Bonehead";
     Sprite = Sprites.Skeletor;
     override IsVillain = true;
     override SpriteOffset = 1;
 
     override *OnReveal(trace: Trace) {
-        const location = this.Location!;
+        const location = this.Field!;
         const location_name = location.Name;
         location.Element.setAttribute("type", LocationType.CantPlayHere.toString());
-        yield trace.log(`${location_name} is now ${this.Location}`);
+        yield trace.log(`${location_name} is now ${this.Field}`);
         // Reveal the new location.
-        yield* location.Element.Instance.Reveal(trace);
+        yield* location.Element.Controller.Reveal(trace);
     }
 }
 

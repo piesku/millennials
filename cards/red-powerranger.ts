@@ -5,6 +5,6 @@ export class RedPowerRanger extends CardController {
     Name = "Red Guardian";
     Cost = 1;
     Power = 2;
-    Text = "<i>Go Go!</i>";
+    Description = "<i>Go Go!</i>";
     Sprite = Sprites.RedPowerRanger;
 }

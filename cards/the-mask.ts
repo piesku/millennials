@@ -8,7 +8,7 @@ export class TheMask extends CardController {
     Name = "The Skam";
     Cost = 6;
     Power = 6;
-    Text = "Once: Resurrect all your trashed cards to random locations";
+    Description = "Once: Resurrect all your trashed cards to random locations";
     Sprite = Sprites.TheMask;
 
     override *OnReveal(trace: Trace) {
@@ -22,8 +22,8 @@ export class TheMask extends CardController {
                 continue;
             }
 
-            yield trace.log(`Resurrecting ${card.Instance} to ${random_location}`);
-            yield* random_location.AddCard(card.Instance, trace, this.Owner);
+            yield trace.log(`Resurrecting ${card.Controller} to ${random_location}`);
+            yield* random_location.AddCard(card.Controller, trace, this.Owner);
         }
     }
 }

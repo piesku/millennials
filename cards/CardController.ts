@@ -14,7 +14,7 @@ export abstract class CardController {
     abstract Name: string;
     abstract Cost: number;
     abstract Power: number;
-    abstract Text: string;
+    abstract Description: string;
     abstract Sprite: Sprites;
 
     Id = next_id();
@@ -65,26 +65,26 @@ export abstract class CardController {
         if (location_owner) {
             let actor_id = location_owner.getAttribute("slot")!;
             let actor = this.Battle.querySelector("#" + actor_id) as ActorElement;
-            return actor.Instance;
+            return actor.Controller;
         } else {
             let actor_element = this.Element.closest("a-actor") as ActorElement;
-            return actor_element.Instance;
+            return actor_element.Controller;
         }
     }
 
     get Opponent(): ActorController {
         let actor_id = this.Owner.Type === "player" ? "villain" : "player";
         let actor = this.Battle.querySelector("#" + actor_id) as ActorElement;
-        return actor.Instance;
+        return actor.Controller;
     }
 
     get Battle(): BattleScene {
         return this.Element.closest<BattleScene>("battle-scene")!;
     }
 
-    get Location(): LocationController | undefined {
+    get Field(): LocationController | undefined {
         let location = this.Element.closest<LocationElement>("a-location");
-        return location?.Instance;
+        return location?.Controller;
     }
 
     AddModifier(origin: CardController | LocationController, op: string, value: number) {
@@ -152,15 +152,15 @@ export abstract class CardController {
     *OnMessageSelf(kind: Message, trace: Trace): Generator<[Trace, string], void> {}
 
     *Reveal(trace: Trace, broadcast = true) {
-        DEBUG: if (!this.Location) {
+        DEBUG: if (!this.Field) {
             throw `${this} must be in a location to be revealed`;
         }
         if (trace.length === 0) {
-            yield trace.log(`${this.Owner} reveal ${this} in ${this.Location}`);
+            yield trace.log(`${this.Owner} reveal ${this} in ${this.Field}`);
         }
         this.Element.classList.add("frontside");
         this.Element.classList.remove("unplayable");
-        if (!this.Location.IsRevealed || this.Location.CanOnRevealHere(this)) {
+        if (!this.Field.IsRevealed || this.Field.CanOnRevealHere(this)) {
             yield* this.OnReveal(trace.fork(this));
         }
         this.IsRevealed = true;
@@ -187,7 +187,7 @@ export abstract class CardController {
     }
 
     *Trash(trace: Trace) {
-        const revealed_cards = this.Location?.GetRevealedCards();
+        const revealed_cards = this.Field?.GetRevealedCards();
         const armor_card = revealed_cards?.find((card) => card.Name === "Magic Ginger");
         if (armor_card) {
             yield trace.log(`but ${armor_card} is here`);
@@ -215,7 +215,7 @@ export abstract class CardController {
     }
 
     *Move(trace: Trace, target_location: LocationController, actor: ActorController) {
-        const source_location = this.Location!;
+        const source_location = this.Field!;
 
         yield trace.log(`${this} moves from ${source_location} to ${target_location} `);
         if (target_location.IsFull(actor)) {

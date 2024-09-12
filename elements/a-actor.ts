@@ -8,7 +8,7 @@ import {html} from "../lib/html.js";
 import {CardElement} from "./a-card.js";
 
 export class ActorElement extends HTMLElement {
-    Instance!: ActorController;
+    Controller!: ActorController;
 
     static Controllers: Record<string, new (el: ActorElement) => ActorController> = {
         player: PlayerController,
@@ -25,7 +25,7 @@ export class ActorElement extends HTMLElement {
 
     static observedAttributes = ["type"];
     attributeChangedCallback(name: string, old_value: string, new_value: string) {
-        this.Instance = new ActorElement.Controllers[new_value](this);
+        this.Controller = new ActorElement.Controllers[new_value](this);
     }
 
     connectedCallback() {
@@ -50,13 +50,13 @@ export class ActorElement extends HTMLElement {
                     flex: 3;
                 }
             </style>
-            <flex-row ${this.Instance.Type === "villain" && "reverse"}>
+            <flex-row ${this.Controller.Type === "villain" && "reverse"}>
                 <slot></slot>
                 <div>
-                    <h2>${this.Instance.Name}</h2>
-                    <div>Mana: $${this.Instance.CurrentEnergy}</div>
+                    <h2>${this.Controller.Name}</h2>
+                    <div>Mana: $${this.Controller.CurrentEnergy}</div>
                     <div>Trash: ${this.querySelectorAll("a-trash a-card").length}</div>
-                    <b style="font-size:100px;">${this.Instance.GetScore()}</b>
+                    <b style="font-size:100px;">${this.Controller.GetScore()}</b>
                 </div>
             </flex-row>
         `;
@@ -65,9 +65,9 @@ export class ActorElement extends HTMLElement {
     Render() {
         this.connectedCallback();
 
-        if (this.Instance.Type === "player") {
+        if (this.Controller.Type === "player") {
             for (let card of this.querySelectorAll<CardElement>("a-hand a-card")) {
-                if (card.Instance.CurrentCost > this.Instance.CurrentEnergy) {
+                if (card.Controller.CurrentCost > this.Controller.CurrentEnergy) {
                     card.classList.add("unplayable");
                 } else {
                     card.classList.remove("unplayable");

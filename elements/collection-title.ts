@@ -25,17 +25,17 @@ export class CollectionTitle extends HTMLElement {
             card.setAttribute("type", card_type);
             card.classList.add("frontside");
 
-            if (card.Instance.IsVillain) {
+            if (card.Controller.IsVillain) {
                 continue;
             }
 
-            if (collection.cards[card.Instance.Name] & CollectionFlag.Seen) {
+            if (collection.cards[card.Controller.Name] & CollectionFlag.Seen) {
                 known_cards_count++;
             } else {
                 card.classList.add("unknown");
             }
 
-            if (collection.cards[card.Instance.Name] & CollectionFlag.Owned) {
+            if (collection.cards[card.Controller.Name] & CollectionFlag.Owned) {
                 owned_cards_count++;
             } else {
                 card.classList.add("unowned");
@@ -95,7 +95,7 @@ export class CollectionTitle extends HTMLElement {
 
     get AllCards() {
         let card_elements = this.shadowRoot!.querySelectorAll<CardElement>("a-card");
-        return Array.from(card_elements, (card) => card.Instance);
+        return Array.from(card_elements, (card) => card.Controller);
     }
 
     AllCardsByCost() {

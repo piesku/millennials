@@ -6,7 +6,7 @@ export class ForrestGump extends CardController {
     Name = "Gorrest Fump";
     Cost = 1;
     Power = 2;
-    Text = "Once: The last card you played moves here";
+    Description = "Once: The last card you played moves here";
     Sprite = Sprites.ForrestGump;
 
     override *OnReveal(trace: Trace) {
@@ -20,12 +20,12 @@ export class ForrestGump extends CardController {
             }
         }
 
-        DEBUG: if (!this.Location) {
+        DEBUG: if (!this.Field) {
             throw "Card must be in a location";
         }
 
         if (last_played_card) {
-            yield* last_played_card.Move(trace, this.Location, this.Owner);
+            yield* last_played_card.Move(trace, this.Field, this.Owner);
         }
     }
 }

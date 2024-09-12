@@ -6,7 +6,7 @@ export class Megaman extends CardController {
     Name = "Gigaman";
     Cost = 6;
     Power = 20;
-    Text = "If you played a card last turn, you can't play this";
+    Description = "If you played a card last turn, you can't play this";
     Sprite = Sprites.Megaman;
 
     override CanBePlayedHere(location: LocationController): boolean {

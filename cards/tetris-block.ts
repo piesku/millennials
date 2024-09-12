@@ -6,15 +6,15 @@ export class TetrisBlock extends CardController {
     Name = "Tetra Block";
     Cost = 4;
     Power = 8;
-    Text = "Always: Trash all cards here if location is full";
+    Description = "Always: Trash all cards here if location is full";
     Sprite = Sprites.TetrisBlock;
 
     override *OnMessageSelf(kind: Message, trace: Trace) {
         switch (kind) {
             case Message.CardEntersTable:
             case Message.CardMovesToLocation:
-                if (this.Location?.IsFull(this.Owner)) {
-                    for (let card of this.Location.GetRevealedCards(this.Owner)) {
+                if (this.Field?.IsFull(this.Owner)) {
+                    for (let card of this.Field.GetRevealedCards(this.Owner)) {
                         yield* card.Trash(trace);
                     }
                 }
@@ -23,14 +23,14 @@ export class TetrisBlock extends CardController {
     }
 
     override *OnMessage(kind: Message, trace: Trace, card?: CardController) {
-        if (card?.Location !== this.Location) {
+        if (card?.Field !== this.Field) {
             return;
         }
         switch (kind) {
             case Message.CardEntersTable:
             case Message.CardMovesToLocation:
-                if (this.Location?.IsFull(this.Owner)) {
-                    for (let card of this.Location.GetRevealedCards(this.Owner)) {
+                if (this.Field?.IsFull(this.Owner)) {
+                    for (let card of this.Field.GetRevealedCards(this.Owner)) {
                         yield* card.Trash(trace);
                     }
                 }

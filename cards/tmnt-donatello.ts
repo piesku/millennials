@@ -6,7 +6,7 @@ export class Donatello extends CardController {
     Name = "Bardi";
     Cost = 3;
     Power = 2;
-    Text = "After you play a card, +1 Power";
+    Description = "After you play a card, +1 Power";
     Sprite = Sprites.Donatello;
 
     override *OnMessage(kind: Message, trace: Trace, card?: CardController) {

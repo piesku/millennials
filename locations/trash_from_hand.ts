@@ -10,13 +10,13 @@ export class TrashFromHand extends LocationController {
         {
             let random_card = element(this.Battle.Player.Hand.querySelectorAll<CardElement>("a-card"));
             if (random_card) {
-                yield* random_card.Instance.Trash(trace);
+                yield* random_card.Controller.Trash(trace);
             }
         }
         {
             let random_card = element(this.Battle.Villain.Hand.querySelectorAll<CardElement>("a-card"));
             if (random_card) {
-                yield* random_card.Instance.Trash(trace);
+                yield* random_card.Controller.Trash(trace);
             }
         }
     }

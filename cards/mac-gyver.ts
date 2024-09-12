@@ -6,12 +6,12 @@ export class MacGyver extends CardController {
     Name = "GacMyver";
     Cost = 6;
     Power = 8;
-    Text = "Once: Repeat the Once abilities of all your revealed cards";
+    Description = "Once: Repeat the Once abilities of all your revealed cards";
     Sprite = Sprites.MacGyver;
 
     override *OnReveal(trace: Trace) {
         for (const card of this.Battle.GetRevealedCards(this.Owner)) {
-            if (!card.Text.startsWith("Once") || trace.includes(card)) {
+            if (!card.Description.startsWith("Once") || trace.includes(card)) {
                 continue;
             }
 

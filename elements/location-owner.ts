@@ -13,7 +13,7 @@ export class LocationOwner extends HTMLElement {
         DEBUG: if (!location) {
             throw "Location side must be in a location";
         }
-        return location.Instance;
+        return location.Controller;
     }
 
     connectedCallback() {
@@ -47,7 +47,7 @@ export class LocationOwner extends HTMLElement {
                 const data = e.dataTransfer!.getData("text/plain");
                 const card = document.getElementById(data) as CardElement;
                 const location_in_possible_locations = this.Location.Battle.GetPossibleLocations(
-                    card.Instance,
+                    card.Controller,
                 ).includes(this.Location);
 
                 if (card) {

@@ -5,6 +5,6 @@ export class BillMurray extends CardController {
     Name = "Bill";
     Cost = 2;
     Power = 3;
-    Text = "<i>There is only Ciul!</i>";
+    Description = "<i>There is only Ciul!</i>";
     Sprite = Sprites.BillMurray;
 }

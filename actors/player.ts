@@ -47,8 +47,8 @@ export class PlayerController extends ActorController {
         hand.addEventListener("dragstart", (e) => {
             let card = e.target as CardElement;
 
-            const energy_left = card.Instance.Owner.CurrentEnergy;
-            const card_cost = card.Instance.CurrentCost;
+            const energy_left = card.Controller.Owner.CurrentEnergy;
+            const card_cost = card.Controller.CurrentCost;
             if (card_cost > energy_left) {
                 e.stopPropagation();
                 e.preventDefault();

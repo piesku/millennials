@@ -5,6 +5,6 @@ export class Trinity extends CardController {
     Name = "Quintinity";
     Cost = 5;
     Power = 9;
-    Text = "<i>Dodge this!</i>";
+    Description = "<i>Dodge this!</i>";
     Sprite = Sprites.Trinity;
 }

@@ -6,7 +6,7 @@ export class Robocop extends CardController {
     Name = "Coprobo";
     Cost = 2;
     Power = 3;
-    Text = "Once: Draw a card from your opponent's deck";
+    Description = "Once: Draw a card from your opponent's deck";
     Sprite = Sprites.Robocop;
 
     override *OnReveal(trace: Trace) {

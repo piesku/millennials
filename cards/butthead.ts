@@ -7,7 +7,7 @@ export class Butthead extends CardController {
     Name = "Ironbutt";
     Cost = 1;
     Power = 2;
-    Text = "Once: Trash the cheapest card in the opponent's deck";
+    Description = "Once: Trash the cheapest card in the opponent's deck";
     Sprite = Sprites.Butthead;
 
     override *OnReveal(trace: Trace) {
@@ -16,12 +16,12 @@ export class Butthead extends CardController {
             let cheapest = deck.firstElementChild as CardElement;
 
             for (let card of deck.querySelectorAll<CardElement>("a-card")) {
-                if (card.Instance.CurrentCost < cheapest.Instance.CurrentCost) {
+                if (card.Controller.CurrentCost < cheapest.Controller.CurrentCost) {
                     cheapest = card;
                 }
             }
 
-            yield* cheapest.Instance.Trash(trace);
+            yield* cheapest.Controller.Trash(trace);
         }
     }
 }

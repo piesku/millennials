@@ -6,7 +6,7 @@ export class Asterix extends CardController {
     Name = "Asterisk";
     Cost = 6;
     Power = 4;
-    Text = "Once: Clone the highest Power enemy cards played this turn";
+    Description = "Once: Clone the highest Power enemy cards played this turn";
     Sprite = Sprites.Asterix;
 
     override *OnReveal(trace: Trace) {
@@ -28,7 +28,7 @@ export class Asterix extends CardController {
 
         for (let card of highest_power_cards) {
             let new_card = card.Clone();
-            yield* card.Location!.AddCard(new_card.Instance, trace, this.Owner);
+            yield* card.Field!.AddCard(new_card.Controller, trace, this.Owner);
         }
     }
 }

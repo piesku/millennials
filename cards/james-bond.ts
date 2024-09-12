@@ -6,10 +6,10 @@ export class JamesBond extends CardController {
     Name = "Bames Jond";
     Cost = 5;
     Power = -8;
-    Text = "Once: Switch sides";
+    Description = "Once: Switch sides";
     Sprite = Sprites.JamesBond;
 
     override *OnReveal(trace: Trace) {
-        yield* this.Move(trace, this.Location!, this.Opponent);
+        yield* this.Move(trace, this.Field!, this.Opponent);
     }
 }

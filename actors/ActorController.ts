@@ -83,14 +83,14 @@ export abstract class ActorController {
             if (this.Type === "player") {
                 card.setAttribute("draggable", "true");
                 card.classList.add("frontside");
-                yield trace.log(`${this} draw ${card.Instance}`);
+                yield trace.log(`${this} draw ${card.Controller}`);
             } else {
                 yield trace.log(`${this} draw a card`);
             }
 
             // yield* this.Battle.BroadcastCardMessage(Message.CardLeavesDeck, trace, card.Instance);
             this.Hand.append(card);
-            yield* this.Battle.BroadcastCardMessage(Message.CardEntersHand, trace, card.Instance);
+            yield* this.Battle.BroadcastCardMessage(Message.CardEntersHand, trace, card.Controller);
         } else {
             yield trace.log(`${this} draw a card`);
             yield trace.fork(1).log("but the deck is empty");
@@ -100,7 +100,7 @@ export abstract class ActorController {
     *VillAIn(trace: Trace) {
         while (true) {
             let playable_cards = Array.from(this.Element.querySelectorAll<CardElement>("a-hand a-card")).filter(
-                (card) => card.Instance.CurrentCost <= this.CurrentEnergy,
+                (card) => card.Controller.CurrentCost <= this.CurrentEnergy,
             );
 
             if (playable_cards.length === 0) {
@@ -109,12 +109,12 @@ export abstract class ActorController {
 
             let highest_cost_card = playable_cards[0];
             for (let card of playable_cards) {
-                if (card.Instance.CurrentCost > highest_cost_card.Instance.CurrentCost) {
+                if (card.Controller.CurrentCost > highest_cost_card.Controller.CurrentCost) {
                     highest_cost_card = card;
                 }
             }
 
-            let possible_locations = this.Battle.GetPossibleLocations(highest_cost_card.Instance);
+            let possible_locations = this.Battle.GetPossibleLocations(highest_cost_card.Controller);
 
             if (possible_locations.length === 0) {
                 break;
@@ -125,9 +125,9 @@ export abstract class ActorController {
             yield trace.log(`${this} play a card to ${location}`);
 
             location.GetSide(this).append(highest_cost_card);
-            this.Battle.PlayedCardsQueue.push(highest_cost_card.Instance);
+            this.Battle.PlayedCardsQueue.push(highest_cost_card.Controller);
 
-            this.CurrentEnergy -= highest_cost_card.Instance.CurrentCost;
+            this.CurrentEnergy -= highest_cost_card.Controller.CurrentCost;
             this.Element.Render();
         }
     }

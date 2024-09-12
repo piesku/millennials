@@ -6,7 +6,7 @@ export class AttackOfTheClones extends LocationController {
     Name = "Attack of the Clones";
     Description = "Cards played here fill the location with their copies.";
     override *OnMessage(kind: Message, trace: Trace, card: CardController) {
-        if (card?.Location === this) {
+        if (card?.Field === this) {
             switch (kind) {
                 case Message.CardEntersTable:
                     yield trace.log(`${this.Name} fills with clones of ${card}`);
@@ -14,11 +14,11 @@ export class AttackOfTheClones extends LocationController {
                     while (!this.IsFull(card.Owner)) {
                         let clone = card.Clone();
                         cards.push(clone);
-                        yield* this.AddCard(clone.Instance, trace.fork(), card.Owner, true);
+                        yield* this.AddCard(clone.Controller, trace.fork(), card.Owner, true);
                     }
 
                     for (let card of cards) {
-                        yield* card.Instance.Reveal(trace.fork(card.Instance));
+                        yield* card.Controller.Reveal(trace.fork(card.Controller));
                     }
                     break;
             }

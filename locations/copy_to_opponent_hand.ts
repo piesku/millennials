@@ -6,9 +6,9 @@ export class CopyToOpponentHand extends LocationController {
     Name = "CopyToOpponentHand";
     Description = "When you play a card here, add a copy to opponent's hand";
     override *OnMessage(kind: Message, trace: Trace, card?: CardController) {
-        if (card?.Location === this && kind === Message.CardEntersTable) {
+        if (card?.Field === this && kind === Message.CardEntersTable) {
             let clone = card.Clone();
-            yield* clone.Instance.AddToHand(card.Opponent, trace);
+            yield* clone.Controller.AddToHand(card.Opponent, trace);
         }
     }
 }

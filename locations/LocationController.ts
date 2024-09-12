@@ -68,7 +68,7 @@ export abstract class LocationController {
             return [];
         }
         return Array.from(root.querySelectorAll<CardElement>("a-card"))
-            .map((card) => card.Instance)
+            .map((card) => card.Controller)
             .filter((card) => card.IsRevealed);
     }
 

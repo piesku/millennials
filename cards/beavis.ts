@@ -7,13 +7,13 @@ export class Beavis extends CardController {
     Name = "Bobby";
     Cost = 1;
     Power = 2;
-    Text = "Once: Trash the top card from the opponent's deck";
+    Description = "Once: Trash the top card from the opponent's deck";
     Sprite = Sprites.Beavis;
 
     override *OnReveal(trace: Trace) {
         if (this.Opponent.Deck.firstElementChild) {
             const top_card = this.Opponent.Deck.firstElementChild as CardElement;
-            yield* top_card.Instance.Trash(trace);
+            yield* top_card.Controller.Trash(trace);
         }
     }
 }

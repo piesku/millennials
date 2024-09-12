@@ -7,13 +7,13 @@ export class CaptainPlaner extends CardController {
     Name = "Captain Planer";
     Cost = 4;
     Power = 4;
-    Text = "Once: Duplicate your hand";
+    Description = "Once: Duplicate your hand";
     Sprite = Sprites.CaptainPlanet;
 
     override *OnReveal(trace: Trace) {
         for (const card of this.Owner.Hand.querySelectorAll<CardElement>("a-card")) {
-            let clone = card.Instance.Clone();
-            yield* clone.Instance.AddToHand(card.Instance.Owner, trace);
+            let clone = card.Controller.Clone();
+            yield* clone.Controller.AddToHand(card.Controller.Owner, trace);
         }
     }
 }

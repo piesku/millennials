@@ -7,7 +7,7 @@ export class LuckyLuke extends CardController {
     Name = "Fortune Lucas";
     Cost = 5;
     Power = 7;
-    Text = "Once: Trash the cheapest card from opponent's hand";
+    Description = "Once: Trash the cheapest card from opponent's hand";
     Sprite = Sprites.LuckyLuke;
 
     override *OnReveal(trace: Trace) {
@@ -17,12 +17,12 @@ export class LuckyLuke extends CardController {
             let cheapest = hand.firstElementChild as CardElement;
 
             for (let card of hand.querySelectorAll<CardElement>("a-card")) {
-                if (card.Instance.CurrentCost < cheapest.Instance.CurrentCost) {
+                if (card.Controller.CurrentCost < cheapest.Controller.CurrentCost) {
                     cheapest = card;
                 }
             }
 
-            yield* cheapest.Instance.Trash(trace);
+            yield* cheapest.Controller.Trash(trace);
         }
     }
 }

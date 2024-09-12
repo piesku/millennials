@@ -6,16 +6,16 @@ export class LaraCroft extends CardController {
     Name = "Grave Digger";
     Cost = 4;
     Power = 7;
-    Text = "Once: Repeat and trash other Once cards here";
+    Description = "Once: Repeat and trash other Once cards here";
     Sprite = Sprites.LaraCroft;
 
     override *OnReveal(trace: Trace) {
-        DEBUG: if (!this.Location) {
+        DEBUG: if (!this.Field) {
             throw "LaraCroft has no location";
         }
 
-        for (const card of this.Location.GetRevealedCards(this.Owner)) {
-            if (!card.Text.startsWith("Once") || trace.includes(card)) {
+        for (const card of this.Field.GetRevealedCards(this.Owner)) {
+            if (!card.Description.startsWith("Once") || trace.includes(card)) {
                 continue;
             }
 

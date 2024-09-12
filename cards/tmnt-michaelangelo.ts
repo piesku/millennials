@@ -6,7 +6,7 @@ export class MichaelAngelo extends CardController {
     Name = "Buonarroti";
     Cost = 3;
     Power = 3;
-    Text = "Once: Trash all cards costing 1";
+    Description = "Once: Trash all cards costing 1";
     Sprite = Sprites.MichaelAngelo;
 
     override *OnReveal(trace: Trace) {

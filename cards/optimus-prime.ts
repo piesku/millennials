@@ -6,15 +6,15 @@ export class OptimusPrime extends CardController {
     Name = "Pessimus";
     Cost = 5;
     Power = 14;
-    Text = "Once: Opponent cards here +2 Power.";
+    Description = "Once: Opponent cards here +2 Power.";
     Sprite = Sprites.OptimusPrime;
 
     override *OnReveal(trace: Trace) {
-        DEBUG: if (!this.Location) {
+        DEBUG: if (!this.Field) {
             throw "OptimusPrime has no location";
         }
 
-        for (let card of this.Location.GetRevealedCards(this.Opponent)) {
+        for (let card of this.Field.GetRevealedCards(this.Opponent)) {
             yield trace.log(card.AddModifier(this, "addpower", 2));
         }
     }

@@ -6,7 +6,7 @@ export class BuzzLightyear extends CardController {
     Name = "Toy Astronaut";
     Cost = 1;
     Power = 2;
-    Text = "+2 Energy next turn";
+    Description = "+2 Energy next turn";
     Sprite = Sprites.Buzz;
 
     override *OnMessage(kind: Message, trace: Trace) {

@@ -9,7 +9,7 @@ export class DarthVader extends CardController {
     Name = "Varth Dader";
     Cost = 5;
     Power = 8;
-    Text = "Once: -1 Power to all opponent's cards";
+    Description = "Once: -1 Power to all opponent's cards";
     Sprite = Sprites.DarthVader;
     override IsVillain = true;
 
@@ -25,12 +25,12 @@ export class Alien extends CardController {
     Name = "Foreign";
     Cost = 3;
     Power = 6;
-    Text = "Once: Trash an opponent's card from here";
+    Description = "Once: Trash an opponent's card from here";
     Sprite = Sprites.Alien;
     override IsVillain = true;
 
     override *OnReveal(trace: Trace) {
-        const opponent_cards = this.Location!.GetRevealedCards(this.Opponent);
+        const opponent_cards = this.Field!.GetRevealedCards(this.Opponent);
         const card = element(opponent_cards);
 
         if (card) {
@@ -43,13 +43,13 @@ export class Borg extends CardController {
     Name = "Brog";
     Cost = 4;
     Power = 0;
-    Text = "Once: +1 Cost to all cards in opponent's hand";
+    Description = "Once: +1 Cost to all cards in opponent's hand";
     Sprite = Sprites.Borg;
     override IsVillain = true;
 
     override *OnReveal(trace: Trace) {
         for (let card of this.Opponent.Hand.querySelectorAll<CardElement>("a-card")) {
-            yield trace.log(card.Instance.AddModifier(this, "addcost", 1));
+            yield trace.log(card.Controller.AddModifier(this, "addcost", 1));
         }
     }
 }
@@ -58,7 +58,7 @@ export class Stormtrooper extends CardController {
     Name = "Raintrooper";
     Cost = 2;
     Power = 1;
-    Text = `Once: +1 for each revealed ${this.Name}`;
+    Description = `Once: +1 for each revealed ${this.Name}`;
     Sprite = Sprites.Stormtrooper;
     override IsVillain = true;
     override *OnReveal(trace: Trace) {

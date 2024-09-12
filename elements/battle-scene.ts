@@ -40,7 +40,7 @@ export class BattleScene extends HTMLElement {
         DEBUG: if (!player_element) {
             throw "BattleScene must have a player";
         }
-        return player_element!.Instance;
+        return player_element!.Controller;
     }
 
     get Villain() {
@@ -48,7 +48,7 @@ export class BattleScene extends HTMLElement {
         DEBUG: if (!villain_element) {
             throw "BattleScene must have a villain";
         }
-        return villain_element.Instance;
+        return villain_element.Controller;
     }
 
     get TheButton() {
@@ -60,7 +60,7 @@ export class BattleScene extends HTMLElement {
     }
 
     get Locations() {
-        return Array.from(this.querySelectorAll<LocationElement>("a-location"), (location) => location.Instance);
+        return Array.from(this.querySelectorAll<LocationElement>("a-location"), (location) => location.Controller);
     }
 
     Render() {
@@ -70,7 +70,7 @@ export class BattleScene extends HTMLElement {
         }
         let locations: Array<LocationController> = [];
         for (let location of location_elements) {
-            locations.push(location.Instance);
+            locations.push(location.Controller);
         }
 
         const sprite_height = 10;
@@ -214,11 +214,11 @@ export class BattleScene extends HTMLElement {
             let data = e.dataTransfer!.getData("text/plain");
             let card = document.getElementById(data) as CardElement;
             if (card) {
-                card.Instance.Owner.CurrentEnergy -= card.Instance.CurrentCost;
-                card.Instance.Owner.Element.Render();
+                card.Controller.Owner.CurrentEnergy -= card.Controller.CurrentCost;
+                card.Controller.Owner.Element.Render();
 
-                this.PlayedCardsQueue.push(card.Instance);
-                this.Log(new Trace(), `You play ${card.Instance} to ${side.Location}`);
+                this.PlayedCardsQueue.push(card.Controller);
+                this.Log(new Trace(), `You play ${card.Controller} to ${side.Location}`);
             }
         });
 
@@ -278,7 +278,7 @@ export class BattleScene extends HTMLElement {
             });
 
             // Update the collection state for the cards in the shop.
-            save_card_state(card.Instance, CollectionFlag.Seen);
+            save_card_state(card.Controller, CollectionFlag.Seen);
         }
 
         let game = this.closest("game-container") as GameContainer;
@@ -308,15 +308,15 @@ export class BattleScene extends HTMLElement {
                         new_card.replaceWith(backcard);
 
                         // Update the deck data.
-                        let offset = game.PlayerDeck.indexOf(new_card.Instance.Sprite);
-                        game.PlayerDeck.splice(offset, 1, new_card.Instance.Sprite);
+                        let offset = game.PlayerDeck.indexOf(new_card.Controller.Sprite);
+                        game.PlayerDeck.splice(offset, 1, new_card.Controller.Sprite);
 
                         // Update the deck UI.
                         new_card.setAttribute("slot", "deck");
                         card.replaceWith(new_card);
 
                         // Update the collection state for the new card in deck.
-                        save_card_state(new_card.Instance, CollectionFlag.Owned);
+                        save_card_state(new_card.Controller, CollectionFlag.Owned);
                         this.Game.Stats.CardsAcquired++;
 
                         if (this.Game.CardsInShop > 1) {
@@ -332,7 +332,7 @@ export class BattleScene extends HTMLElement {
             player_cards.push(card);
 
             // Update the collection state for the cards in hand.
-            save_card_state(card.Instance, CollectionFlag.Seen | CollectionFlag.Owned);
+            save_card_state(card.Controller, CollectionFlag.Seen | CollectionFlag.Owned);
         }
 
         player_cards.sort(CardElement.Compare);
@@ -356,10 +356,10 @@ export class BattleScene extends HTMLElement {
         let trace = new Trace();
 
         const villain = this.querySelector("a-actor:not([type=player])") as ActorElement;
-        yield* villain.Instance.StartBattle(trace.fork());
+        yield* villain.Controller.StartBattle(trace.fork());
 
         const player = this.querySelector("a-actor[type=player]") as ActorElement;
-        yield* player.Instance.StartBattle(trace.fork());
+        yield* player.Controller.StartBattle(trace.fork());
 
         // yield* this.BroadcastGameMessage(Message.BattleStarts);
         yield* this.StartTurn();
@@ -404,7 +404,7 @@ export class BattleScene extends HTMLElement {
         this.TheButton.disabled = true;
 
         for (let card of this.querySelectorAll<CardElement>("a-table a-card")) {
-            if (!card.Instance.IsRevealed) {
+            if (!card.Controller.IsRevealed) {
                 card.classList.remove("frontside");
             }
         }
@@ -502,7 +502,7 @@ export class BattleScene extends HTMLElement {
         // First, broadcast the message to the card itself.
         yield* card.OnMessageSelf(kind, trace.fork(card));
 
-        let card_location = card.Location;
+        let card_location = card.Field;
         if (card_location) {
             // Then, broadcast the message to the card's location, if it's revealed.
             if (card_location.IsRevealed && !trace.includes(card_location) && !processed.includes(card_location)) {
@@ -543,7 +543,7 @@ export class BattleScene extends HTMLElement {
 
     GetRevealedCards(actor?: ActorController) {
         return [...this.querySelectorAll<LocationElement>("a-location")].flatMap((location) =>
-            location.Instance.GetRevealedCards(actor),
+            location.Controller.GetRevealedCards(actor),
         );
     }
 

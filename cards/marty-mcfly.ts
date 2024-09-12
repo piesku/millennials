@@ -7,13 +7,13 @@ export class MartyMcFly extends CardController {
     Name = "McFarty";
     Cost = 1;
     Power = 3;
-    Text = "Once: Add a random card to your hand";
+    Description = "Once: Add a random card to your hand";
     Sprite = Sprites.MartyMcFly;
 
     override *OnReveal(trace: Trace) {
         const all_cards = this.Battle.Game.Collection.AllCards;
         const random_card = element(all_cards);
         let clone = random_card.Clone();
-        yield* clone.Instance.AddToHand(this.Owner, trace);
+        yield* clone.Controller.AddToHand(this.Owner, trace);
     }
 }

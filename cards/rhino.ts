@@ -5,7 +5,7 @@ export class Rhino extends CardController {
     Name = "Rhinoceros";
     Cost = 1;
     Power = 2;
-    Text = "<i>Growl!</i>";
+    Description = "<i>Growl!</i>";
     Sprite = Sprites.Rhino;
     override IsVillain = true;
 }

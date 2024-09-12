@@ -6,7 +6,7 @@ export class Aladdin extends CardController {
     Name = "La-la-din";
     Cost = 3;
     Power = 4;
-    Text = "When this moves, +6 Power";
+    Description = "When this moves, +6 Power";
     Sprite = Sprites.Aladdin;
 
     override *OnMessageSelf(kind: Message, trace: Trace) {

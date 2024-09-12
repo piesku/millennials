@@ -6,7 +6,7 @@ export class Frodo extends CardController {
     Name = "Brodo Smol";
     Cost = 4;
     Power = 4;
-    Text = "Always: Your 1-Cost cards have +1 Power";
+    Description = "Always: Your 1-Cost cards have +1 Power";
     Sprite = Sprites.Frodo;
 
     override *OnMessageSelf(kind: Message, trace: Trace) {

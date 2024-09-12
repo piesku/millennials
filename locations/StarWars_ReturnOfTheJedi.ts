@@ -7,7 +7,7 @@ export class ReturnOfTheJedi extends LocationController {
     Name = "Return of the Jedi";
     Description = "Transform any card played here into another card of the same cost.";
     override *OnMessage(kind: Message, trace: Trace, card: CardController) {
-        if (card?.Location === this) {
+        if (card?.Field === this) {
             switch (kind) {
                 case Message.CardEntersTable:
                     let cards_of_same_cost: CardController[] = this.Battle.Game.Collection.AllCards.filter(
@@ -19,7 +19,7 @@ export class ReturnOfTheJedi extends LocationController {
                         yield trace.log(`${card} is now ${other_card}`);
                         card.Element.setAttribute("type", other_card.Element.getAttribute("type")!);
                         // Reveal the new card type.
-                        yield* card.Element.Instance.Reveal(trace.fork(), false);
+                        yield* card.Element.Controller.Reveal(trace.fork(), false);
                     }
 
                     break;

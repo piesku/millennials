@@ -6,7 +6,7 @@ export class Neo extends CardController {
     Name = "One";
     Cost = 6;
     Power = 9;
-    Text = "Once: Move your other cards one location to the left";
+    Description = "Once: Move your other cards one location to the left";
     Sprite = Sprites.Neo;
 
     override *OnReveal(trace: Trace) {
@@ -14,7 +14,7 @@ export class Neo extends CardController {
 
         for (let card of other_cards) {
             const locations = this.Battle.Locations;
-            const current_location_index = locations.indexOf(card.Location!);
+            const current_location_index = locations.indexOf(card.Field!);
             if (current_location_index > 0) {
                 const new_location = locations[current_location_index - 1];
                 if (new_location) {
