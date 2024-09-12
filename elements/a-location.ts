@@ -11,14 +11,12 @@ import {NoOp} from "../locations/no_op.js";
 import {OnceDontWork} from "../locations/once_dont_work.js";
 import {OneTwoThree} from "../locations/one_two_three.js";
 import {ReturnToOwnerHand} from "../locations/return_to_owner_hand.js";
-import {Roulette} from "../locations/roulette.js";
 import {ShuffleMarbles} from "../locations/shuffle_marbles.js";
 import {ANewHope} from "../locations/StarWars_ANewHope.js";
 import {AttackOfTheClones} from "../locations/StarWars_AttackOfTheClones.js";
 import {ReturnOfTheJedi} from "../locations/StarWars_ReturnOfTheJedi.js";
 import {TheEmpireStrikesBack} from "../locations/StarWars_TheEmpireStrikesBack.js";
 import {TrashFourthTurn} from "../locations/trash_fourth_turn.js";
-import {TrashFromHand} from "../locations/trash_from_hand.js";
 import {TurnSeven} from "../locations/turn_seven.js";
 import {WinnerDrawsTwo} from "../locations/winner_draws_two.js";
 
@@ -37,14 +35,12 @@ export class LocationElement extends HTMLElement {
         [LocationType.OnceDontWork]: OnceDontWork,
         [LocationType.OneTwoThree]: OneTwoThree,
         [LocationType.TrashFourthTurn]: TrashFourthTurn,
-        [LocationType.TrashFromHand]: TrashFromHand,
         [LocationType.TurnSeven]: TurnSeven,
         [LocationType.WinnerDrawsTwo]: WinnerDrawsTwo,
         [LocationType.NoOp]: NoOp,
         [LocationType.CopyToOwnerHand]: CopyToOwnerHand,
         [LocationType.CopyToOpponentHand]: CopyToOpponentHand,
         [LocationType.ReturnToOwnerHand]: ReturnToOwnerHand,
-        [LocationType.Roulette]: Roulette,
         [LocationType.ShuffleMarbles]: ShuffleMarbles,
         [LocationType.CantPlayHere]: CastleBonehead,
     };
