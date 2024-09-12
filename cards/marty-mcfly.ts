@@ -1,4 +1,6 @@
-import {Message, Trace} from "../messages.js";
+import {CardElement} from "../elements/a-card.js";
+import {element} from "../lib/random.js";
+import {Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
@@ -6,17 +8,14 @@ export class MartyMcFly extends CardController {
     Name = "Flarty McMy";
     Cost = 1;
     Power = 3;
-    Text = "Each turn your opponent doesn't play a card here, +2 Power.";
+    Text = "Once: Add a random card to your hand";
     Sprite = Sprites.MartyMcFly;
 
-    override *OnMessage(kind: Message, trace: Trace, card?: CardController): Generator<[Trace, string], void> {
-        if (kind === Message.TurnEnds && this.Location) {
-            const opponent_cards = this.Location.GetRevealedCards(this.Opponent);
-            const current_turn = this.Battle.CurrentTurn;
-            const opponent_cards_played_this_turn = opponent_cards.filter((card) => card.TurnPlayed === current_turn);
-            if (opponent_cards_played_this_turn.length === 0) {
-                yield trace.log(this.AddModifier(this, "addpower", 2));
-            }
-        }
+    override *OnReveal(trace: Trace) {
+        const all_cards = this.Battle.Game.Collection.AllCards;
+        const random_card_type = element(all_cards);
+        let card = document.createElement("a-card") as CardElement;
+        card.setAttribute("type", random_card_type.Element.getAttribute("type")!);
+        yield* card.Instance.AddToHand(this.Owner, trace);
     }
 }
