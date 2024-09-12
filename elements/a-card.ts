@@ -31,7 +31,7 @@ import {IndianaJones} from "../cards/indiana-jones.js";
 import {JamesBond} from "../cards/james-bond.js";
 import {JohnMcClane} from "../cards/john-mcclane.js";
 import {JohnRambo} from "../cards/john-rambo.js";
-import {JohnyBravo} from "../cards/johny-bravo.js";
+import {JohnyBravo, Placki} from "../cards/johny-bravo.js";
 import {KevinHomeAlone} from "../cards/kevin-homealone.js";
 import {Kirilin} from "../cards/kirilan.js";
 import {Krecik} from "../cards/kre-cik.js";
@@ -151,6 +151,7 @@ export class CardElement extends HTMLElement {
         [Sprites.Sauron]: Sauron,
 
         [Sprites.Rhino]: Rhino,
+        [Sprites.Placki]: Placki,
     };
 
     BaseCost = NaN;

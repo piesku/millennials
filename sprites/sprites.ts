@@ -80,4 +80,5 @@ export const enum Sprites {
     Sauron,
 
     Rhino,
+    Placki,
 }
