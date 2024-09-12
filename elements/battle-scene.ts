@@ -153,17 +153,17 @@ export class BattleScene extends HTMLElement {
                 <main name="prep" style="padding:20px;">
                     <flex-row gap start>
                         <div>
-                            <h2>Shop — Pick ${this.Game.CardsInShop} or <button id="skip">Skip</button></h2>
+                            <h2>Card Exchange — Pick ${this.Game.CardsInShop} or <button id="skip">Skip</button></h2>
                             <div class="grid" style="background:darksalmon;">
                                 <slot name="shop"></slot>
                             </div>
-                            <h2>Your Deck</h2>
+                            <h2>Your Deck — Drop Here to Replace</h2>
                             <div class="grid" style="background:darkseagreen;">
                                 <slot name="deck"></slot>
                             </div>
                         </div>
                         <div style="width:520px">
-                            <h2>Next Up</h2>
+                            <h2>Next Duel</h2>
                             <div style="padding:20px; background:lightblue; border-radius:5px;">
                                 <h3 style="margin-top:0;">${this.Villain.Name}</h3>
                                 <div class="sprite-border">
@@ -171,6 +171,7 @@ export class BattleScene extends HTMLElement {
                                     <div class="mask"></div>
                                 </div>
                                 <p><i>${this.Villain.Description}</i></p>
+                                <hr />
                                 ${locations.map(
                                     (location) => html`
                                         <h4>${location.Name}</h4>
