@@ -60,8 +60,6 @@ export class GameContainer extends HTMLElement {
     connectedCallback() {
         load_game_state(this);
 
-        history.replaceState(this.CurrentView, "");
-
         this.shadowRoot!.addEventListener("click", (e) => {
             let target = e.target as HTMLElement;
             switch (target.id) {
@@ -81,17 +79,6 @@ export class GameContainer extends HTMLElement {
                 case "reset":
                     this.Reset();
                     break;
-                case "collection":
-                    this.CurrentView = "collection";
-                    this.Commit();
-                    break;
-            }
-        });
-
-        window.addEventListener("popstate", (e) => {
-            if (e.state) {
-                this.CurrentView = e.state as string;
-                this.Render();
             }
         });
 
@@ -302,7 +289,6 @@ export class GameContainer extends HTMLElement {
 
     Commit() {
         save_game_state(this);
-        history.pushState(this.CurrentView, "");
         this.Render();
     }
 
