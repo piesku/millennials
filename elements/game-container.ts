@@ -1,6 +1,6 @@
 import {STARTING_DECK} from "../actors/player.js";
 import {html} from "../lib/html.js";
-import {format_percent, format_time} from "../lib/number.js";
+import {format_time} from "../lib/number.js";
 import {element, integer, set_seed, shuffle} from "../lib/random.js";
 import {load_game_state, save_game_state} from "../storage.js";
 import {BattleScene} from "./battle-scene.js";
@@ -21,6 +21,25 @@ export class GameContainer extends HTMLElement {
                 :host {
                     display: block;
                 }
+
+                dialog {
+                    outline: none;
+                    border-radius: 5px;
+                    width: 30vw;
+                }
+
+                dialog::backdrop {
+                    background: radial-gradient(#f69d3caa, #3f87a6aa);
+                }
+
+                table {
+                    width: 100%;
+                }
+
+                button {
+                    flex: 1;
+                    margin: 10px;
+                }
             </style>
             <multi-view current="${this.CurrentView}">
                 <collection-title name="title">
@@ -36,11 +55,7 @@ export class GameContainer extends HTMLElement {
                 </main>
                 <collection-viewer name="collection"></collection-viewer>
             </multi-view>
-            <dialog>
-                <table></table>
-                <button id="reset">Play Again</button>
-                <button id="continue">Continue Playing</button>
-            </dialog>
+            <dialog></dialog>
         `;
     }
 
@@ -185,7 +200,7 @@ export class GameContainer extends HTMLElement {
             this.InitBattle();
             this.Commit();
         } else if (this.CurrentOpponent === VILLAINS_COUNT + 1) {
-            this.ShowSummary();
+            this.ShowSummary(true);
         } else if (this.CurrentOpponent > VILLAINS_COUNT + 1) {
             this.Populate(true);
             this.InitBattle();
@@ -193,62 +208,66 @@ export class GameContainer extends HTMLElement {
         }
     }
 
-    ShowSummary() {
+    ShowSummary(won: boolean) {
         let dialog = this.shadowRoot!.querySelector("dialog");
         DEBUG: if (!dialog) {
             throw "Dialog not found";
         }
 
-        let table = dialog.querySelector("table");
-        DEBUG: if (!table) {
-            throw "Table not found";
-        }
-
         let total_battles = this.querySelectorAll<BattleScene>("battle-scene").length;
         let total_seconds = (Date.now() - this.Stats.DateStarted) / 1000;
-        let villains_bested = this.Stats.Battles - 1;
+        let villains_bested = this.Stats.Battles - Number(!won);
 
-        table.innerHTML = html`
-            <tr>
-                <td>Villains Bested</td>
-                <td>${villains_bested} (${format_percent(villains_bested / total_battles)})</td>
-            </tr>
-            <tr>
-                <td>Cards Played</td>
-                <td>${this.Stats.CardsPlayed}</td>
-            </tr>
-            <tr>
-                <td>Cards Trashed</td>
-                <td>${this.Stats.CardsTrashed}</td>
-            </tr>
-            <tr>
-                <td>Cards Moved</td>
-                <td>${this.Stats.CardsMoved}</td>
-            </tr>
-            <tr>
-                <td>Cards Acquired</td>
-                <td>${this.Stats.CardsAcquired}</td>
-            </tr>
-            <tr>
-                <td>Locations Won</td>
-                <td>${this.Stats.LocationsWon}</td>
-            </tr>
-            <tr>
-                <td>Locations Lost</td>
-                <td>${this.Stats.LocationsLost}</td>
-            </tr>
-            <tr>
-                <td>Total Power</td>
-                <td>${this.Stats.TotalPower}</td>
-            </tr>
-            <tr>
-                <td>Energy Spent</td>
-                <td>${this.Stats.EnergySpent}</td>
-            </tr>
-            <tr>
-                <td>Total Time</td>
-                <td>${format_time(total_seconds)}</td>
-            </tr>
+        dialog.innerHTML = html`
+            <h2>${won ? "You win the run!" : "You lose the run."}</h2>
+            <flex-col gap>
+                <table>
+                    <tr>
+                        <td>Villains Bested</td>
+                        <td>${villains_bested}</td>
+                    </tr>
+                    <tr>
+                        <td>Cards Played</td>
+                        <td>${this.Stats.CardsPlayed}</td>
+                    </tr>
+                    <tr>
+                        <td>Cards Trashed</td>
+                        <td>${this.Stats.CardsTrashed}</td>
+                    </tr>
+                    <tr>
+                        <td>Cards Moved</td>
+                        <td>${this.Stats.CardsMoved}</td>
+                    </tr>
+                    <tr>
+                        <td>Cards Acquired</td>
+                        <td>${this.Stats.CardsAcquired}</td>
+                    </tr>
+                    <tr>
+                        <td>Locations Won</td>
+                        <td>${this.Stats.LocationsWon}</td>
+                    </tr>
+                    <tr>
+                        <td>Locations Lost</td>
+                        <td>${this.Stats.LocationsLost}</td>
+                    </tr>
+                    <tr>
+                        <td>Total Power</td>
+                        <td>${this.Stats.TotalPower}</td>
+                    </tr>
+                    <tr>
+                        <td>Energy Spent</td>
+                        <td>${this.Stats.EnergySpent}</td>
+                    </tr>
+                    <tr>
+                        <td>Total Time</td>
+                        <td>${format_time(total_seconds)}</td>
+                    </tr>
+                </table>
+                <flex-row>
+                    <button id="reset">Play Again</button>
+                    ${won && `<button id="continue">Continue Playing</button>`}
+                </flex-row>
+            </flex-col>
         `;
 
         dialog.showModal();

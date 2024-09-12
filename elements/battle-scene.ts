@@ -235,7 +235,7 @@ export class BattleScene extends HTMLElement {
                         game.ProgressToNextOpponent();
                         break;
                     case "lost":
-                        game.ShowSummary();
+                        game.ShowSummary(false);
                         break;
                 }
             } else if (target.id === "undo") {
