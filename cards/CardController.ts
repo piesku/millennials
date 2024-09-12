@@ -267,7 +267,6 @@ export abstract class CardController {
     Clone() {
         let card = this.Element.cloneNode(true) as CardElement;
         card.setAttribute("type", this.Element.getAttribute("type") || "");
-        card.classList.add("frontside");
         return card;
     }
 }
