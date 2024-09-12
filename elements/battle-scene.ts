@@ -370,7 +370,7 @@ export class BattleScene extends HTMLElement {
         this.CurrentTurn++;
         this.TheButton.textContent = `End Turn ${this.CurrentTurn}`;
 
-        yield trace.log(`--- Turn ${this.CurrentTurn} ---`);
+        yield trace.log(`<h3>Turn ${this.CurrentTurn}</h3>`);
 
         if (this.CurrentTurn < 4) {
             let location = this.Locations[this.CurrentTurn - 1];
@@ -493,6 +493,7 @@ export class BattleScene extends HTMLElement {
             trace.map((value) => (typeof value === "number" ? value : value.Name)),
         );
 
+        // Each card should only be processed once per message.
         let processed: Array<LocationController | CardController> = [];
 
         // First, broadcast the message to the card itself.
@@ -557,9 +558,6 @@ export class BattleScene extends HTMLElement {
             let indent = new Array(tabs).fill("…").join(" ");
             console.log(`%c${indent} ${message}`, "color: green", trace);
 
-            if (message.startsWith("---") && message.endsWith("---")) {
-                message = `<h3>${message.slice(3, -3).trim()}</h3>`;
-            }
             logDisplay.innerHTML += `<div>${indent} ${message}</div>`;
             logDisplay.scrollTo({
                 top: logDisplay.scrollHeight,
