@@ -8,4 +8,5 @@ export class Marble extends CardController {
     Text = "<i>Clink!</i>";
     Sprite = Sprites.Marble;
     override IsVillain = true;
+    override SpriteOffset: number = 1;
 }

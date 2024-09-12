@@ -5,30 +5,30 @@ import {Sprites} from "../sprites/sprites.js";
 import {ActorController} from "./ActorController.js";
 
 const orc_name = "Org";
-const goblin_name = "Golbin";
+const goblin_name = "Gobelin";
 const sauron_name = "Eye of Zauron";
 
 export class Orc extends CardController {
     Name = orc_name;
     Cost = 1;
-    Power = 1;
+    Power = 2;
     Text = `<i>Where there's a whip, there's a way</i>`;
     Sprite = Sprites.Orc;
     override IsVillain = true;
-    override SpriteOffset = 1;
+    override SpriteOffset = 2;
 }
 
 export class Goblin extends CardController {
     Name = goblin_name;
     Cost = 2;
     Power = 4;
-    Text = `Once: Find the ${sauron_name} in the deck and put it in hand. If not found, draw one card.`;
+    Text = `Once: Draw ${sauron_name} or another card`;
     Sprite = Sprites.Goblin;
     override IsVillain = true;
+    override SpriteOffset = 2;
 
     override *OnReveal(trace: Trace) {
-        const deck = this.Owner.Element.querySelector("a-deck")!;
-        const cards = deck.querySelectorAll<CardElement>("a-card");
+        const cards = this.Owner.Deck.querySelectorAll<CardElement>("a-card");
         let found = false;
 
         for (const card of cards) {
@@ -47,17 +47,14 @@ export class Goblin extends CardController {
 
 export class Sauron extends CardController {
     Name = sauron_name;
-    Cost = 5;
+    Cost = 6;
     Power = 1;
     Text = `Once: Add +2 Power to each ${orc_name} and ${goblin_name}`;
     Sprite = Sprites.Sauron;
     override IsVillain = true;
 
     override *OnReveal(trace: Trace) {
-        const owners_revealed_cards = this.Battle.GetRevealedCards(this.Owner);
-        const opponents_revealed_cards = this.Battle.GetRevealedCards(this.Opponent);
-
-        for (const card of [...owners_revealed_cards, ...opponents_revealed_cards]) {
+        for (const card of this.Battle.GetRevealedCards()) {
             if (card.Name === orc_name || card.Name === goblin_name) {
                 yield trace.log(card.AddModifier(this, "addpower", 2));
             }
