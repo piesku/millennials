@@ -17,7 +17,7 @@ export class Goku extends CardController {
                 let combined_power = 0;
                 let trashed_cards = this.Battle.querySelectorAll<CardElement>("a-trash a-card");
                 for (let card of trashed_cards) {
-                    combined_power += card.Instance.Power;
+                    combined_power += card.Instance.CurrentPower;
                 }
                 yield trace.log(this.AddModifier(this, "setpower", combined_power));
                 break;
@@ -35,7 +35,7 @@ export class Goku extends CardController {
                 let combined_power = 0;
                 let trashed_cards = this.Battle.querySelectorAll<CardElement>("a-trash a-card");
                 for (let card of trashed_cards) {
-                    combined_power += card.Instance.Power;
+                    combined_power += card.Instance.CurrentPower;
                 }
                 yield trace.log(this.AddModifier(this, "setpower", combined_power));
         }

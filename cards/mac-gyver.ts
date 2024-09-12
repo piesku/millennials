@@ -1,10 +1,22 @@
+import {Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
 export class MacGyver extends CardController {
     Name = "GacMyver";
     Cost = 6;
-    Power = 0;
-    Text = "";
+    Power = 8;
+    Text = "Once: Repeat the Once abilities of all your revealed cards.";
     Sprite = Sprites.MacGyver;
+
+    override *OnReveal(trace: Trace) {
+        for (const card of this.Battle.GetRevealedCards(this.Owner)) {
+            if (!card.Text.startsWith("Once") || trace.includes(card)) {
+                continue;
+            }
+
+            yield trace.log(`repeating ${card}'s ability`);
+            yield* card.OnReveal(trace.fork(card));
+        }
+    }
 }
