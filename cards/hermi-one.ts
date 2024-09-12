@@ -6,7 +6,7 @@ export class Hermione extends CardController {
     Name = "Hermitwo";
     Cost = 2;
     Power = 3;
-    Text = "Always: After you play a card here, +2 Power.";
+    Text = "After you play a card here, +2 Power.";
     Sprite = Sprites.Hermione;
 
     override *OnMessage(kind: Message, trace: Trace, card?: CardController) {

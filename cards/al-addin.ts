@@ -3,7 +3,7 @@ import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
 export class Aladdin extends CardController {
-    Name = "Thief of Persia";
+    Name = "La-la-din";
     Cost = 3;
     Power = 4;
     Text = "When this moves, +6 Power";

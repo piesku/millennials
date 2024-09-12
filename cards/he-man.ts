@@ -3,21 +3,18 @@ import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
 export class Heman extends CardController {
-    Name = "HeBoy";
+    Name = "He-Boy";
     Cost = 3;
     Power = 0;
-    Text = "Once: Trash your other cards here, add their Power to this";
+    Text = "Once: Trash your other cards here, gain their Power";
     Sprite = Sprites.HeMan;
 
     override *OnReveal(trace: Trace) {
         const otherCards: CardController[] = this.Location?.GetRevealedCards(this.Owner) || [];
-        let totalPower = 0;
 
         for (let card of otherCards) {
-            totalPower += card.CurrentPower;
+            yield trace.log(this.AddModifier(this, "addpower", card.CurrentPower));
             yield* card.Trash(trace);
         }
-
-        yield trace.log(this.AddModifier(this, "addpower", totalPower));
     }
 }

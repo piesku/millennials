@@ -3,10 +3,10 @@ import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
 export class MichaelAngelo extends CardController {
-    Name = "Van Gogh";
+    Name = "Buonarroti";
     Cost = 3;
     Power = 3;
-    Text = "Once: Destroy all cards costing 1";
+    Text = "Once: Trash all cards costing 1";
     Sprite = Sprites.MichaelAngelo;
 
     override *OnReveal(trace: Trace) {

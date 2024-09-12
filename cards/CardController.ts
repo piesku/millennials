@@ -190,7 +190,7 @@ export abstract class CardController {
         const revealed_cards = this.Location?.GetRevealedCards();
         const armor_card = revealed_cards?.find((card) => card.Name === "Magic Ginger");
         if (armor_card) {
-            yield trace.log("Magic Ginger is here, trashing forbidden");
+            yield trace.log(`but ${armor_card} is here`);
             return;
         }
         if (this.Element.closest("a-hand")) {

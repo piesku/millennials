@@ -3,19 +3,20 @@ import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
 export class Donatello extends CardController {
-    Name = "Picasso";
+    Name = "Bardi";
     Cost = 3;
-    Power = 1;
-    Text = "After you play a card, this gains +1 Power";
+    Power = 2;
+    Text = "After you play a card, +1 Power";
     Sprite = Sprites.Donatello;
 
     override *OnMessage(kind: Message, trace: Trace, card?: CardController) {
-        switch (kind) {
-            case Message.CardEntersTable:
-                if (card?.Owner === this.Owner && this.Battle.PlayedCardsQueue.includes(card)) {
+        if (card?.Owner === this.Owner) {
+            switch (kind) {
+                case Message.CardEntersTable:
                     yield trace.log(this.AddModifier(card!, "addpower", 1));
-                }
-                break;
+
+                    break;
+            }
         }
     }
 }
