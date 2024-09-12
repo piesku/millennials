@@ -7,11 +7,15 @@ export class LukeSkywalker extends CardController {
     Name = "Suke Lywalker";
     Cost = 1;
     Power = 5;
-    Text = "After each turn, this moves";
+    Text = "Moves each turn";
     Sprite = Sprites.LukeSkywalker;
 
     override *OnMessage(kind: Message, trace: Trace, card?: CardController): Generator<[Trace, string], void> {
-        if (kind === Message.TurnEnds && this.Location) {
+        DEBUG: if (!this.Location) {
+            throw "Luke Skywalker must be in a location";
+        }
+
+        if (kind === Message.TurnEnds) {
             let other_locations = this.Battle.Locations.filter(
                 (location) => location !== this.Location && !location.IsFull(this.Owner),
             );
