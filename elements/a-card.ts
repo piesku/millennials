@@ -229,56 +229,34 @@ export class CardElement extends HTMLElement {
         this.shadowRoot!.innerHTML = html`
             <style>
                 :host {
-                    user-select: none;
+                    position: relative;
+                    height: 180px;
+                    width: 120px;
                     border-radius: 5px;
+                    user-select: none;
                 }
 
                 :host .body {
-                    height: 180px;
-                    position: relative;
+                    position: absolute;
+                    inset: 0;
                     border-radius: 5px;
                     background: ${color_from_seed(this.Instance.Sprite + this.Instance.SpriteOffset)};
                     cursor: pointer;
                 }
 
                 :host-context(location-owner) {
+                    width: 60px;
+                    height: 90px;
+
                     .body {
-                        width: 60px;
-                        height: 90px;
+                        inset: -50%;
+                        height: 180px;
+                        width: 120px;
+                        scale: 0.5;
+                    }
 
-                        .header {
-                            font-size: 0.4em;
-                            margin: 0 3px;
-                        }
-
-                        .header span {
-                            font-size: 8px;
-                        }
-
-                        .sprite-border {
-                            height: ${target_height / 2}px;
-                        }
-
-                        .sprite {
-                            width: ${target_height / 4}px;
-                            height: ${target_height / 2}px;
-                            margin: 0 ${pixel_size}px 0 ${pixel_size * 1.5}px;
-                            background-position: 0 -${sprite_y / 2}px;
-                            background-size: ${target_height / 4}px auto;
-                        }
-
-                        .text-container {
-                            height: 28px;
-                        }
-
-                        .name {
-                            font-size: 0.5em;
-                            padding: 0 1px;
-                        }
-
-                        .description {
-                            display: none;
-                        }
+                    .description {
+                        display: none;
                     }
                 }
 
@@ -292,12 +270,10 @@ export class CardElement extends HTMLElement {
                     cursor: not-allowed;
                 }
 
-                :host-context(#villain) > *,
                 :host > * {
                     visibility: hidden;
                 }
 
-                :host-context(a-hand) > *,
                 :host(.frontside) > * {
                     visibility: visible;
                 }

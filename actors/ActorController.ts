@@ -82,6 +82,7 @@ export abstract class ActorController {
 
             if (this.Type === "player") {
                 card.setAttribute("draggable", "true");
+                card.classList.add("frontside");
                 yield trace.log(`${this} draw ${card.Instance}`);
             } else {
                 yield trace.log(`${this} draw a card`);

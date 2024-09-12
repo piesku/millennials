@@ -248,8 +248,13 @@ export abstract class CardController {
         } else {
             this.IsRevealed = false;
             this.TurnPlayed = 0;
-            this.Element.classList.remove("frontside");
-            this.Element.draggable = actor.Type === "player";
+            if (actor.Type === "player") {
+                this.Element.draggable = true;
+                this.Element.classList.add("frontside");
+            } else {
+                this.Element.draggable = false;
+                this.Element.classList.remove("frontside");
+            }
             actor.Hand.append(this.Element);
             yield* this.Battle.BroadcastCardMessage(Message.CardEntersHand, trace, this);
         }
@@ -263,8 +268,13 @@ export abstract class CardController {
             yield* this.Battle.BroadcastCardMessage(Message.CardLeavesTable, trace, this);
             this.IsRevealed = false;
             this.TurnPlayed = 0;
-            this.Element.classList.remove("frontside");
-            this.Element.draggable = this.Owner.Type === "player";
+            if (this.Owner.Type === "player") {
+                this.Element.draggable = true;
+                this.Element.classList.add("frontside");
+            } else {
+                this.Element.draggable = false;
+                this.Element.classList.remove("frontside");
+            }
             this.Owner.Hand.append(this.Element);
             this.Battle.PlayedCardsQueue.splice(this.Battle.PlayedCardsQueue.indexOf(this), 1);
             yield* this.Battle.BroadcastCardMessage(Message.CardEntersHand, trace, this);
