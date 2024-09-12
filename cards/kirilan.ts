@@ -16,7 +16,8 @@ export class Kirilin extends CardController {
                 const random_location = element(this.Battle.GetPossibleLocations(this));
                 if (random_location) {
                     yield* random_location.AddCard(this, trace, this.Owner);
-                    yield trace.log(this.AddModifier(this, "addpower", 2));
+                    this.AddModifier(this, "addpower", 2);
+                    yield trace.log(`${this} respawns in ${random_location}`);
                 }
                 break;
         }
