@@ -29,3 +29,7 @@ s/frontside/f/g
 s/unplayable/u/g
 s/unknown/k/g
 s/unowned/o/g
+
+# JS
+s/\.\.toString\(\)//g
+
