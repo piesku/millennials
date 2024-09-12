@@ -41,7 +41,7 @@ export class JohnRambo extends CardController {
             case Message.CardMovesToLocation:
             case Message.CardMovesFromLocation:
                 let total_power = 0;
-                let cards_here = this.Location?.GetRevealedCards(this.Owner) || [];
+                let cards_here = this.Location!.GetRevealedCards(this.Owner);
                 for (let card of cards_here) {
                     if (card !== this) {
                         total_power += card.CurrentPower;

@@ -6,7 +6,7 @@ export class Obelix extends CardController {
     Name = "Boulderix";
     Cost = 5;
     Power = 3;
-    Text = "Has +3 for each card in hand";
+    Text = "Always: +3 Power for each card in your hand";
     Sprite = Sprites.Obelix;
 
     override *OnMessageSelf(kind: Message, trace: Trace) {

@@ -30,9 +30,10 @@ export const STARTING_DECK: Array<Sprites> = [
 
     // // 6
     // Sprites.Krecik,
-    Sprites.Tsubasa,
-    Sprites.Tsubasa,
-    Sprites.Tsubasa,
+    Sprites.PowerpuffBubbles,
+    Sprites.PowerpuffBubbles,
+    Sprites.PowerpuffBubbles,
+    Sprites.PowerpuffBubbles,
     Sprites.RedPowerRanger,
     Sprites.RedPowerRanger,
     Sprites.RedPowerRanger,

@@ -7,7 +7,7 @@ export class LuckyLuke extends CardController {
     Name = "Fortune Lucas";
     Cost = 5;
     Power = 7;
-    Text = "Once: Trash the cheapest card from your opponent's hand";
+    Text = "Once: Trash the cheapest card from opponent's hand";
     Sprite = Sprites.LuckyLuke;
 
     override *OnReveal(trace: Trace) {
