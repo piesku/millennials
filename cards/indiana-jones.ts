@@ -6,7 +6,7 @@ export class IndianaJones extends CardController {
     Name = "Iowa Jones";
     Cost = 4;
     Power = 10;
-    Text = "You can only play this at locations where you are winning.";
+    Text = "You can only play this at locations where you are winning";
     Sprite = Sprites.IndianaJones;
 
     override CanBePlayedHere(location: LocationController): boolean {

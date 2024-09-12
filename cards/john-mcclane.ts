@@ -8,11 +8,17 @@ export class JohnMcClane extends CardController {
     Name = "Hard Die";
     Cost = 4;
     Power = 8;
-    Text = "Once: trash two cards from your hand";
+    Text = "Once: Trash two cards from your hand";
     Sprite = Sprites.JohnMcClane;
 
     override *OnReveal(trace: Trace) {
-        for (let i = 0; i < 2; i++) {
+        {
+            let random_card = element(this.Owner.Hand.querySelectorAll<CardElement>("a-card"));
+            if (random_card) {
+                yield* random_card.Instance.Trash(trace);
+            }
+        }
+        {
             let random_card = element(this.Owner.Hand.querySelectorAll<CardElement>("a-card"));
             if (random_card) {
                 yield* random_card.Instance.Trash(trace);

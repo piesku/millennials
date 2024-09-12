@@ -3,10 +3,10 @@ import {Sprites} from "../sprites/sprites.js";
 import {CardController} from "./CardController.js";
 
 export class LaraCroft extends CardController {
-    Name = "Grave Driver";
+    Name = "Grave Digger";
     Cost = 4;
     Power = 7;
-    Text = "Once: Repeat the Once abilities of your other cards here, then trash them";
+    Text = "Once: Repeat and trash other Once cards here";
     Sprite = Sprites.LaraCroft;
 
     override *OnReveal(trace: Trace) {
@@ -15,7 +15,7 @@ export class LaraCroft extends CardController {
         }
 
         for (const card of this.Location.GetRevealedCards(this.Owner)) {
-            if (!card.Text.startsWith("Once")) {
+            if (!card.Text.startsWith("Once") || trace.includes(card)) {
                 continue;
             }
 

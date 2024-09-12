@@ -5,6 +5,6 @@ export class Tarzan extends CardController {
     Name = "Jungle Kid";
     Cost = 4;
     Power = 6;
-    Text = "<i>Aaah-aaah-aaah! Ooo-eee-ooo!</i>";
+    Text = "<i>Aaah-oooh-eeeh!</i>";
     Sprite = Sprites.Tarzan;
 }

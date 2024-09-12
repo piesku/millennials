@@ -6,7 +6,7 @@ export class Pikachu extends CardController {
     Name = "Electric Mouse";
     Cost = 4;
     Power = 3;
-    Text = "Once: Trash all enemy cards here that have 10 or more Power.";
+    Text = "Once: Trash all opponent 10+ Power cards here";
     Sprite = Sprites.Pikachu;
 
     override *OnReveal(trace: Trace) {

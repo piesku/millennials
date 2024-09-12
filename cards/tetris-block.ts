@@ -6,7 +6,7 @@ export class TetrisBlock extends CardController {
     Name = "Tetra Block";
     Cost = 4;
     Power = 8;
-    Text = "Always: Trash all cards if location is full";
+    Text = "Always: Trash all cards here if location is full";
     Sprite = Sprites.TetrisBlock;
 
     override *OnMessageSelf(kind: Message, trace: Trace) {
