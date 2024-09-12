@@ -1,5 +1,6 @@
 import {ActorController} from "../actors/ActorController.js";
 import {CartoonVillainsController} from "../actors/cartoon.js";
+import {EndlessController} from "../actors/endless.js";
 import {FantasyController} from "../actors/fantasy.js";
 import {PlayerController} from "../actors/player.js";
 import {SpaceVillainsController} from "../actors/space.js";
@@ -14,6 +15,7 @@ export class ActorElement extends HTMLElement {
         space: SpaceVillainsController,
         pirates: FantasyController,
         cartoon: CartoonVillainsController,
+        endless: EndlessController,
     };
 
     constructor() {

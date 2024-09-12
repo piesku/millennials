@@ -6,6 +6,8 @@ import {load_game_state, save_game_state} from "../storage.js";
 import {BattleScene} from "./battle-scene.js";
 import {CollectionViewer} from "./collection-viewer.js";
 
+const VILLAINS_COUNT = 3;
+
 export class GameContainer extends HTMLElement {
     constructor() {
         super();
@@ -13,7 +15,7 @@ export class GameContainer extends HTMLElement {
     }
 
     Render() {
-        let has_previous_run = this.CurrentOpponent > -1;
+        let has_previous_run = this.CurrentOpponent > 0;
         this.shadowRoot!.innerHTML = html`
             <style>
                 :host {
@@ -37,6 +39,7 @@ export class GameContainer extends HTMLElement {
             <dialog>
                 <table></table>
                 <button id="reset">Play Again</button>
+                <button id="continue">Continue Playing</button>
             </dialog>
         `;
     }
@@ -50,18 +53,16 @@ export class GameContainer extends HTMLElement {
             let target = e.target as HTMLElement;
             switch (target.id) {
                 case "continue":
-                    this.Populate();
+                    this.Populate(this.CurrentOpponent > VILLAINS_COUNT);
                     this.InitBattle();
                     this.Commit();
                     break;
                 case "run":
                     this.ResetState();
-                    this.Populate();
                     this.ProgressToNextOpponent();
                     break;
                 case "daily":
                     this.ResetState(Math.floor(Date.now() / (24 * 60 * 60 * 1000)));
-                    this.Populate();
                     this.ProgressToNextOpponent();
                     break;
                 case "reset":
@@ -102,7 +103,7 @@ export class GameContainer extends HTMLElement {
 
     Seed = Date.now();
     CurrentView = "title";
-    CurrentOpponent = -1;
+    CurrentOpponent = 0;
     CardsInShop = 1;
     PlayerDeck = [...STARTING_DECK];
 
@@ -114,14 +115,21 @@ export class GameContainer extends HTMLElement {
         return collection;
     }
 
-    Populate() {
-        set_seed(this.Seed);
+    Populate(endless = false) {
+        let villains = shuffle(["space", "pirates", "cartoon"]);
+        let offset = 1;
+
+        if (endless) {
+            villains = ["endless"];
+            offset = this.CurrentOpponent;
+        }
+
+        set_seed(this.Seed * this.CurrentOpponent);
 
         let by_cost = this.Collection.AllCardsByCost();
-        let villains = shuffle(["space", "pirates", "cartoon"]);
         for (let [i, villain] of villains.entries()) {
             let battle = document.createElement("battle-scene");
-            battle.setAttribute("name", i.toString());
+            battle.setAttribute("name", (offset + i).toString());
             battle.innerHTML = html`
                 <a-actor type="${villain}" id="villain" slot="villain">
                     <a-deck reverse></a-deck>
@@ -169,14 +177,20 @@ export class GameContainer extends HTMLElement {
     ProgressToNextOpponent() {
         this.CurrentOpponent++;
 
-        let next_battle = this.querySelector<BattleScene>(`battle-scene[name="${this.CurrentOpponent}"]`);
-        if (!next_battle) {
+        if (this.CurrentOpponent === 1) {
+            this.Populate();
+            this.InitBattle();
+            this.Commit();
+        } else if (this.CurrentOpponent <= VILLAINS_COUNT) {
+            this.InitBattle();
+            this.Commit();
+        } else if (this.CurrentOpponent === VILLAINS_COUNT + 1) {
             this.ShowSummary();
-            alert("You win the run!");
+        } else if (this.CurrentOpponent > VILLAINS_COUNT + 1) {
+            this.Populate(true);
+            this.InitBattle();
+            this.Commit();
         }
-
-        this.InitBattle();
-        this.Commit();
     }
 
     ShowSummary() {
@@ -249,7 +263,7 @@ export class GameContainer extends HTMLElement {
 
     ResetState(seed = Date.now()) {
         this.Seed = seed;
-        this.CurrentOpponent = -1;
+        this.CurrentOpponent = 0;
         this.CardsInShop = 1;
         this.PlayerDeck = [...STARTING_DECK];
         this.Stats = {
