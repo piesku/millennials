@@ -1,7 +1,6 @@
 import {element} from "../lib/random.js";
 import {Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
-import {CollectionFlag, save_card_state} from "../storage.js";
 import {CardController} from "./CardController.js";
 
 export class MartyMcFly extends CardController {
@@ -16,9 +15,5 @@ export class MartyMcFly extends CardController {
         const random_card = element(all_cards);
         let clone = random_card.Clone();
         yield* clone.Controller.AddToHand(this.Owner, trace);
-
-        if (save_card_state(random_card, CollectionFlag.Seen)) {
-            yield trace.Fork(1).Log(`you see ${random_card} for the first time!`);
-        }
     }
 }

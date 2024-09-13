@@ -251,6 +251,10 @@ export abstract class CardController {
             if (actor.Type === "player") {
                 this.Element.draggable = true;
                 this.Element.classList.add("frontside");
+
+                if (save_card_state(this, CollectionFlag.Seen)) {
+                    yield trace.Fork(1).Log(`you see ${this} for the first time!`);
+                }
             } else {
                 this.Element.draggable = false;
                 this.Element.classList.remove("frontside");
@@ -267,6 +271,7 @@ export abstract class CardController {
     Clone() {
         let card = this.Element.cloneNode(true) as CardElement;
         card.setAttribute("type", this.Element.getAttribute("type") || "");
+        card.classList.remove("frontside", "unknown", "unowned");
         return card;
     }
 }

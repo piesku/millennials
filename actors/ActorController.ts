@@ -4,6 +4,7 @@ import {BattleScene} from "../elements/battle-scene.js";
 import {element} from "../lib/random.js";
 import {Message, Trace} from "../messages.js";
 import {Sprites} from "../sprites/sprites.js";
+import {CollectionFlag, save_card_state} from "../storage.js";
 
 export abstract class ActorController {
     abstract Type: "player" | "villain";
@@ -84,6 +85,10 @@ export abstract class ActorController {
                 yield trace.Log(`${this} draw ${card.Controller}`);
                 card.setAttribute("draggable", "true");
                 card.classList.add("frontside");
+
+                if (save_card_state(card.Controller, CollectionFlag.Seen)) {
+                    yield trace.Fork(1).Log(`you see ${card.Controller} for the first time!`);
+                }
             } else {
                 yield trace.Log(`${this} draw a card`);
             }
