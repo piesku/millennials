@@ -23,27 +23,27 @@ import {WinnerDrawsTwo} from "../locations/winner_draws_two.js";
 export class LocationElement extends HTMLElement {
     Controller!: LocationController;
 
-    static Controllers: Record<LocationType, new (el: LocationElement) => LocationController> = {
-        [LocationType.StarWars_ANewHope]: TheEmpireStrikesBack,
-        [LocationType.StarWars_TheEmpireStrikesBack]: ANewHope,
-        [LocationType.StarWars_ReturnOfTheJedi]: ReturnOfTheJedi,
-        [LocationType.StarWars_AttackOfTheClones]: AttackOfTheClones,
-        [LocationType.GainOneEnergy]: GainOneEnergy,
-        [LocationType.GainOneEnergyEmpty]: GainOneEnergyEmpty,
-        [LocationType.GiveCostHand]: GiveCostHand,
-        [LocationType.LoseOnePower]: LoseOnePower,
-        [LocationType.OnceDontWork]: OnceDontWork,
-        [LocationType.OneTwoThree]: OneTwoThree,
-        [LocationType.TrashFourthTurn]: TrashFourthTurn,
-        [LocationType.TurnSeven]: TurnSeven,
-        [LocationType.WinnerDrawsTwo]: WinnerDrawsTwo,
-        [LocationType.NoOp]: NoOp,
-        [LocationType.CopyToOwnerHand]: CopyToOwnerHand,
-        [LocationType.CopyToOpponentHand]: CopyToOpponentHand,
-        [LocationType.ReturnToOwnerHand]: ReturnToOwnerHand,
-        [LocationType.ShuffleMarbles]: ShuffleMarbles,
-        [LocationType.CantPlayHere]: CastleBonehead,
-    };
+    static Controllers: Array<new (el: LocationElement) => LocationController> = [
+        TheEmpireStrikesBack,
+        ANewHope,
+        ReturnOfTheJedi,
+        AttackOfTheClones,
+        GainOneEnergy,
+        GainOneEnergyEmpty,
+        GiveCostHand,
+        LoseOnePower,
+        OnceDontWork,
+        OneTwoThree,
+        TrashFourthTurn,
+        TurnSeven,
+        WinnerDrawsTwo,
+        NoOp,
+        CopyToOwnerHand,
+        CopyToOpponentHand,
+        ReturnToOwnerHand,
+        ShuffleMarbles,
+        CastleBonehead,
+    ];
 
     constructor() {
         super();
