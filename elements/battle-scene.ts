@@ -199,7 +199,7 @@ export class BattleScene extends HTMLElement {
                             <flex-row>
                                 <slot name="player"></slot>
                                 <flex-col>
-                                    <button id="end" disabled style="flex:1">End Turn</button>
+                                    <button id="end" style="flex:1" disabled>End Turn</button>
                                     <button id="undo">Undo</button>
                                 </flex-col>
                             </flex-row>
@@ -451,22 +451,22 @@ export class BattleScene extends HTMLElement {
         this.Game.Stats.LocationsWon += locations_won.length;
         this.Game.Stats.LocationsLost += this.Locations.length - locations_won.length;
 
+        this.TheButton.disabled = true;
+
         let player_score = this.Player.GetScore();
         let villain_score = this.Villain.GetScore();
 
         if (player_score > villain_score || (player_score === villain_score && locations_won.length > 1)) {
             this.State = "won";
-            this.TheButton.textContent = "Next!";
             yield trace.Log(`<h3>You win ${player_score} — ${villain_score}!</h3>`);
             yield trace.Log(`You win ${locations_won.join(", ")}.`);
-            yield trace.Log(`Choose ${locations_won.length} card(s) in the shop.`);
+            yield trace.Log(`Choose ${locations_won.length} card(s) in the shop.<br>`);
+            yield trace.Log(`<button id="end" style="width:100%">Next!</button>`);
         } else {
             this.State = "lost";
-            this.TheButton.textContent = "Summary";
             yield trace.Log(`<h3>You lose ${player_score} — ${villain_score}!</h3>`);
+            yield trace.Log(`<button id="end" style="width:100%">Summary</button>`);
         }
-
-        this.TheButton.disabled = false;
 
         // yield* this.BroadcastGameMessage(Message.BattleEnds);
     }
