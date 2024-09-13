@@ -210,13 +210,11 @@ export class CardElement extends HTMLElement {
                     ${this.Controller.CurrentPower}
                 </span>
             </div>
-            <div class="sprite-border">
-                <div class="sprite"></div>
-                <div class="mask"></div>
-            </div>
-            <div class="text-container">
+            <div class="sprite"></div>
+            <div class="mask"></div>
+            <div class="text">
                 <div class="name">${this.Controller.Name}</div>
-                <div class="description">${this.Controller.Description}</div>
+                <div class="desc">${this.Controller.Description}</div>
             </div>
         `;
 
@@ -248,7 +246,7 @@ export class CardElement extends HTMLElement {
                         width: 120px;
                         scale: 0.5;
 
-                        .description {
+                        .desc {
                             display: none;
                         }
                     }
@@ -343,10 +341,9 @@ export class CardElement extends HTMLElement {
                     scale: 5;
                 }
 
-                .text-container {
+                .text {
                     position: absolute;
-                    inset: auto 0 0;
-                    height: 58px;
+                    inset: 120px 0 0;
                     padding: 1px;
                     border-radius: 0 0 5px 5px;
                     background: #00000066;
@@ -360,7 +357,7 @@ export class CardElement extends HTMLElement {
                     font-weight: bold;
                 }
 
-                .description {
+                .desc {
                     font-size: 0.7em;
                 }
 
@@ -388,7 +385,7 @@ export class CardElement extends HTMLElement {
                     padding: 0;
 
                     position: relative;
-                    transform: rotateX(var(--x-rotation)) rotateY(var(--y-rotation));
+                    transform: rotateX(var(--rx)) rotateY(var(--ry));
                     transition: transform 0.1s;
 
                     border-radius: 5px;
@@ -397,7 +394,7 @@ export class CardElement extends HTMLElement {
                 }
 
                 dialog card-detail:hover {
-                    transform: rotateX(var(--x-rotation)) rotateY(var(--y-rotation)) scale(1.2);
+                    transform: rotateX(var(--rx)) rotateY(var(--ry)) scale(1.2);
                 }
 
                 dialog .reflection {
@@ -420,7 +417,7 @@ export class CardElement extends HTMLElement {
                     padding: 10px;
 
                     font-size: 6px;
-                    background: rgba(255, 255, 255, 0.8);
+                    background: #ffffffdd;
                     box-shadow: 0 20px 10px -5px #00000088;
                     border-radius: 5px;
                 }
@@ -460,8 +457,8 @@ export class CardElement extends HTMLElement {
             let x_rotation = (x_percent - 0.5) * 20;
             let y_rotation = (0.5 - y_percent) * 20;
 
-            dialog.style.setProperty("--x-rotation", `${y_rotation}deg`);
-            dialog.style.setProperty("--y-rotation", `${x_rotation}deg`);
+            dialog.style.setProperty("--rx", `${y_rotation}deg`);
+            dialog.style.setProperty("--ry", `${x_rotation}deg`);
             dialog.style.setProperty("--x", `${x_percent * 100}%`);
             dialog.style.setProperty("--y", `${y_percent * 100}%`);
         });
