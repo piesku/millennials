@@ -453,7 +453,7 @@ export class BattleScene extends HTMLElement {
         let player_score = this.Player.GetScore();
         let villain_score = this.Villain.GetScore();
 
-        if (player_score > villain_score) {
+        if (player_score > villain_score || (player_score === villain_score && locations_won.length > 1)) {
             this.State = "won";
             this.TheButton.textContent = "Next!";
             yield trace.Log(`<h3>You win ${player_score} — ${villain_score}!</h3>`);
