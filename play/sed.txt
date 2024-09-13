@@ -39,3 +39,7 @@ s/unowned/o/g
 
 # JS
 s/\.\.toString()//g
+
+# Undo some of the above
+s/Once:/Once: /g
+s/Always:/Always: /g
