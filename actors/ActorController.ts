@@ -81,9 +81,9 @@ export abstract class ActorController {
             let card = deck.firstElementChild! as CardElement;
 
             if (this.Type === "player") {
+                yield trace.Log(`${this} draw ${card.Controller}`);
                 card.setAttribute("draggable", "true");
                 card.classList.add("frontside");
-                yield trace.Log(`${this} draw ${card.Controller}`);
             } else {
                 yield trace.Log(`${this} draw a card`);
             }
