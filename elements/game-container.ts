@@ -261,7 +261,6 @@ export class GameContainer extends HTMLElement {
     Reset() {
         this.CurrentView = "title";
         this.ResetState();
-        this.Populate();
         this.Commit();
     }
 

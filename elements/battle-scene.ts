@@ -18,7 +18,7 @@ const INTERVAL = 150;
 export class BattleScene extends HTMLElement {
     CurrentTurn = 0;
     MaxTurns = 6;
-    State: "prep" | "playing" | "won" | "lost" = "prep";
+    State: "prep" | "play" | "won" | "lost" = "prep";
 
     PlayedCardsQueue: Array<CardController> = [];
 
@@ -187,7 +187,7 @@ export class BattleScene extends HTMLElement {
                         </div>
                     </flex-row>
                 </main>
-                <main name="playing">
+                <main name="play">
                     <flex-row>
                         <flex-col style="flex: 1; justify-content: space-evenly;">
                             <flex-row>
@@ -232,7 +232,7 @@ export class BattleScene extends HTMLElement {
             let target = e.target as HTMLElement;
             if (target.id === "end") {
                 switch (this.State) {
-                    case "playing":
+                    case "play":
                         this.RunEndTurn();
                         break;
                     case "won":
@@ -345,7 +345,7 @@ export class BattleScene extends HTMLElement {
     }
 
     async InitBattle() {
-        this.State = "playing";
+        this.State = "play";
         this.Render();
 
         this.Game.Stats.Battles++;
