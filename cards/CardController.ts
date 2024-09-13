@@ -193,7 +193,7 @@ export abstract class CardController {
 
     *Trash(trace: Trace) {
         if (this.Field) {
-            const revealed_cards = this.Field.GetRevealedCards();
+            const revealed_cards = [...this.Field.GetRevealedCards()];
             const armor_card = revealed_cards.find((card) => card.Name === "Magic Ginger");
             if (armor_card) {
                 yield trace.Log(`but ${armor_card} is here`);

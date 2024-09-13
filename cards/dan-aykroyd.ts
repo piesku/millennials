@@ -11,7 +11,7 @@ export class DanAykroyd extends CardController {
     Sprite = Sprites.DanAykroyd;
 
     override *OnReveal(trace: Trace) {
-        const revealedCards = shuffle(this.Battle.GetRevealedCards(this.Owner));
+        const revealedCards = shuffle([...this.Battle.GetRevealedCards(this.Owner)]);
         const cardsToBuff = revealedCards.slice(0, 3);
 
         for (let card of cardsToBuff) {

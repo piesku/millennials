@@ -15,7 +15,7 @@ export class Genie extends CardController {
             throw "Genie has no location";
         }
 
-        let cards_here = this.Field.GetRevealedCards(this.Owner);
+        let cards_here = [...this.Field.GetRevealedCards(this.Owner)];
         let card = element(cards_here);
         if (card) {
             yield* card.Trash(trace);

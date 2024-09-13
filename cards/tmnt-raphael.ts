@@ -11,7 +11,7 @@ export class Raphael extends CardController {
     Sprite = Sprites.Raphael;
 
     override *OnReveal(trace: Trace) {
-        const enemy_cards = this.Battle.GetRevealedCards(this.Opponent).filter(
+        const enemy_cards = [...this.Battle.GetRevealedCards(this.Opponent)].filter(
             (card) => [1, 2].includes(card.CurrentCost) && card.Field !== this.Field,
         );
 

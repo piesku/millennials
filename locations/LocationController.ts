@@ -58,7 +58,7 @@ export abstract class LocationController {
     }
 
     GetScore(actor: ActorController) {
-        let revealed_cards = this.GetRevealedCards(actor);
+        let revealed_cards = [...this.GetRevealedCards(actor)];
         let total_power = revealed_cards.map((card) => card.CurrentPower).reduce((a, b) => a + b, 0);
         let doublers = revealed_cards.filter((card) => card.Name === "Ron Jambo");
         for (let _ of doublers) {
@@ -67,14 +67,16 @@ export abstract class LocationController {
         return total_power;
     }
 
-    GetRevealedCards(actor?: ActorController) {
+    *GetRevealedCards(actor?: ActorController) {
         let root = actor ? this.Element.querySelector(`location-owner[slot="${actor.Type}"]`)! : this.Element;
-        if (!root) {
-            return [];
-        }
-        return Array.from(root.querySelectorAll<CardElement>("a-card"))
+        let revealed_cards = [...root.querySelectorAll<CardElement>("a-card")]
             .map((card) => card.Controller)
             .filter((card) => card.IsRevealed);
+        for (let card of revealed_cards) {
+            if (card.Field === this && (!actor || card.Owner === actor)) {
+                yield card;
+            }
+        }
     }
 
     IsFull(actor: ActorController) {

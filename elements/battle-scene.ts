@@ -555,10 +555,10 @@ export class BattleScene extends HTMLElement {
         }
     }
 
-    GetRevealedCards(actor?: ActorController) {
-        return [...this.querySelectorAll<LocationElement>("a-location")].flatMap((location) =>
-            location.Controller.GetRevealedCards(actor),
-        );
+    *GetRevealedCards(actor?: ActorController) {
+        for (let location of this.Locations) {
+            yield* location.GetRevealedCards(actor);
+        }
     }
 
     GetPossibleLocations(card: CardController) {

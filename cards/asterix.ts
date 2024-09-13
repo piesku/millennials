@@ -13,7 +13,7 @@ export class Asterix extends CardController {
         let highest_power = -Infinity;
         let highest_power_cards: CardController[] = [];
 
-        const card_played_this_turn_by_the_opponent = this.Battle.GetRevealedCards(this.Opponent).filter(
+        const card_played_this_turn_by_the_opponent = [...this.Battle.GetRevealedCards(this.Opponent)].filter(
             (card) => card.TurnPlayed === this.Battle.CurrentTurn,
         );
 

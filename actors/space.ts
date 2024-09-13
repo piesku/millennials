@@ -30,7 +30,7 @@ export class Alien extends CardController {
     override IsVillain = true;
 
     override *OnReveal(trace: Trace) {
-        const opponent_cards = this.Field!.GetRevealedCards(this.Opponent);
+        const opponent_cards = [...this.Field!.GetRevealedCards(this.Opponent)];
         const card = element(opponent_cards);
 
         if (card) {
@@ -62,7 +62,7 @@ export class Stormtrooper extends CardController {
     Sprite = Sprites.Stormtrooper;
     override IsVillain = true;
     override *OnReveal(trace: Trace) {
-        const revealedCards = this.Battle.GetRevealedCards();
+        const revealedCards = [...this.Battle.GetRevealedCards()];
         const sameNameCards = revealedCards.filter((card) => card.Name === this.Name);
         const count = sameNameCards.length;
         yield trace.Log(this.AddModifier(this, "addpower", count));

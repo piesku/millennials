@@ -10,7 +10,7 @@ export class Pikachu extends CardController {
     Sprite = Sprites.Pikachu;
 
     override *OnReveal(trace: Trace) {
-        const enemyCardsWithMoreThan10Power = this.Field!.GetRevealedCards(this.Opponent).filter(
+        const enemyCardsWithMoreThan10Power = [...this.Field!.GetRevealedCards(this.Opponent)].filter(
             (card) => card.CurrentPower >= 10,
         );
 

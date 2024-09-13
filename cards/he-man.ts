@@ -10,9 +10,11 @@ export class Heman extends CardController {
     Sprite = Sprites.HeMan;
 
     override *OnReveal(trace: Trace) {
-        const otherCards: CardController[] = this.Field?.GetRevealedCards(this.Owner) || [];
+        DEBUG: if (!this.Field) {
+            throw "He-Man must be in a location";
+        }
 
-        for (let card of otherCards) {
+        for (let card of this.Field.GetRevealedCards(this.Owner)) {
             yield trace.Log(this.AddModifier(this, "addpower", card.CurrentPower));
             yield* card.Trash(trace);
         }

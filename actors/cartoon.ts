@@ -16,7 +16,7 @@ export class DaltonBro extends CardController {
     override IsVillain = true;
 
     override *OnReveal(trace: Trace) {
-        const other_dalton_cards = this.Battle.GetRevealedCards().filter((card) => card.Name === this.Name);
+        const other_dalton_cards = [...this.Battle.GetRevealedCards()].filter((card) => card.Name === this.Name);
 
         const card = element(other_dalton_cards);
         if (card) {
