@@ -312,7 +312,7 @@ export class BattleScene extends HTMLElement {
                         new_card.replaceWith(backcard);
 
                         // Update the deck data.
-                        let offset = game.PlayerDeck.indexOf(new_card.Controller.Sprite);
+                        let offset = game.PlayerDeck.indexOf(card.Controller.Sprite);
                         game.PlayerDeck.splice(offset, 1, new_card.Controller.Sprite);
 
                         // Update the deck UI.
