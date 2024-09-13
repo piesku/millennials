@@ -187,12 +187,15 @@ export abstract class CardController {
     }
 
     *Trash(trace: Trace) {
-        const revealed_cards = this.Field?.GetRevealedCards();
-        const armor_card = revealed_cards?.find((card) => card.Name === "Magic Ginger");
-        if (armor_card) {
-            yield trace.Log(`but ${armor_card} is here`);
-            return;
+        if (this.Field) {
+            const revealed_cards = this.Field.GetRevealedCards();
+            const armor_card = revealed_cards.find((card) => card.Name === "Magic Ginger");
+            if (armor_card) {
+                yield trace.Log(`but ${armor_card} is here`);
+                return;
+            }
         }
+
         if (this.Element.closest("a-hand")) {
             yield* this.Battle.BroadcastCardMessage(Message.CardLeavesHand, trace, this);
         } else if (this.Element.closest("a-deck")) {
