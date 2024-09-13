@@ -458,7 +458,7 @@ export class BattleScene extends HTMLElement {
             this.State = "won";
             yield trace.Log(`<h3>You win ${player_score} — ${villain_score}!</h3>`);
             yield trace.Log(`You win ${locations_won.join(", ")}.`);
-            yield trace.Log(`Choose ${locations_won.length} card(s) in the shop.<br>`);
+            yield trace.Log(`Choose ${locations_won.length} card(s) in the shop.<br><br>`);
             yield trace.Log(`<button id="end" style="width:100%">Next!</button>`);
         } else {
             this.State = "lost";
