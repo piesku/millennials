@@ -110,6 +110,7 @@ export class BattleScene extends HTMLElement {
 
                 ::slotted(a-log) {
                     display: block;
+                    box-sizing: border-box;
                     width: 40vw;
                     height: 100vh;
                     padding: 10px;
