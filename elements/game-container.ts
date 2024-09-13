@@ -306,4 +306,4 @@ export class GameContainer extends HTMLElement {
     };
 }
 
-customElements.define("game-container", GameContainer);
+customElements.define("g-c", GameContainer);

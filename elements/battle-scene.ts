@@ -28,7 +28,7 @@ export class BattleScene extends HTMLElement {
     }
 
     get Game() {
-        let game = this.closest<GameContainer>("game-container");
+        let game = this.closest<GameContainer>("g-c");
         DEBUG: if (!game) {
             throw "BattleScene must be a child of GameContainer";
         }
@@ -223,7 +223,7 @@ export class BattleScene extends HTMLElement {
         });
 
         this.shadowRoot!.addEventListener("click", (e) => {
-            let game = this.closest("game-container") as GameContainer;
+            let game = this.closest("g-c") as GameContainer;
             let target = e.target as HTMLElement;
             if (target.id === "end") {
                 switch (this.State) {
@@ -281,7 +281,7 @@ export class BattleScene extends HTMLElement {
             save_card_state(card.Controller, CollectionFlag.Seen);
         }
 
-        let game = this.closest("game-container") as GameContainer;
+        let game = this.closest("g-c") as GameContainer;
 
         let player_cards: Array<CardElement> = [];
         for (let card_type of game.PlayerDeck) {

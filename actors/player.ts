@@ -40,7 +40,7 @@ export class PlayerController extends ActorController {
     StartingDeck = STARTING_DECK;
 
     override *StartBattle(trace: Trace) {
-        let game = this.Element.closest("game-container") as GameContainer;
+        let game = this.Element.closest("g-c") as GameContainer;
         let cards = [...game.PlayerDeck];
 
         let hand = this.Element.querySelector("a-hand") as HandElement;
