@@ -467,9 +467,9 @@ export class BattleScene extends HTMLElement {
     }
 
     *BroadcastGameMessage(kind: Message) {
-        if (DEBUG) {
-            console.log("%c" + Message[kind], "color: orange");
-        }
+        // if (DEBUG) {
+        //     console.log("%c" + Message[kind], "color: orange");
+        // }
 
         let processed: Array<LocationController | CardController> = [];
         let trace = new Trace();
@@ -490,11 +490,11 @@ export class BattleScene extends HTMLElement {
     }
 
     *BroadcastCardMessage(kind: Message, trace: Trace, card: CardController) {
-        DEBUG: console.log(
-            Message[kind],
-            card.Name,
-            trace.map((value) => (typeof value === "number" ? value : value.Name)),
-        );
+        // DEBUG: console.log(
+        //     Message[kind],
+        //     card.Name,
+        //     trace.map((value) => (typeof value === "number" ? value : value.Name)),
+        // );
 
         // Each card should only be processed once per message.
         let processed: Array<LocationController | CardController> = [];

@@ -2,7 +2,7 @@ import {CardController} from "./cards/CardController.js";
 import {LocationController} from "./locations/LocationController.js";
 
 // TODO Use const enum.
-export enum Message {
+export const enum Message {
     // BattleStarts = 1,
     // BattleEnds,
     TurnStarts,
