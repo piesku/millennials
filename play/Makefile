@@ -9,6 +9,7 @@ game.esbuild.js: $(SOURCES)
 	npx esbuild ../index.ts \
 		--preserve-symlinks \
 		--define:DEBUG=false \
+		--define:INTERVAL=150 \
 		--drop:console \
 		--drop-labels=DEBUG \
 		--target=es2022 \

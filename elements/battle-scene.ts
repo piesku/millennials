@@ -13,8 +13,6 @@ import {LocationElement} from "./a-location.js";
 import {GameContainer} from "./game-container.js";
 import {LocationOwner} from "./location-owner.js";
 
-const INTERVAL = 150;
-
 export class BattleScene extends HTMLElement {
     CurrentTurn = 0;
     MaxTurns = 6;
