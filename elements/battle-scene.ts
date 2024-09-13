@@ -124,26 +124,25 @@ export class BattleScene extends HTMLElement {
                     font-size: 100%;
                 }
 
-                .sprite-border {
+                .spr {
                     position: relative;
-                    height: ${target_height}px;
                     background: ${color_from_seed(this.Villain.Sprite)};
-                    overflow: hidden;
                 }
 
                 .sprite {
                     width: ${target_height / 2}px;
                     height: ${target_height}px;
                     margin: 0 ${pixel_size * 2}px 0 ${pixel_size * 3}px;
-                    background-image: ${background_url};
                     background-position: 0 -${sprite_y}px;
                     background-size: ${target_height / 2}px auto;
+                    background-image: ${background_url};
                     image-rendering: pixelated;
                 }
 
                 .mask {
                     position: absolute;
                     inset: 0;
+                    border-radius: 5px;
                     background-image: ${mask_url};
                     background-size: ${target_height}px auto;
                     image-rendering: pixelated;
@@ -171,7 +170,7 @@ export class BattleScene extends HTMLElement {
                             <h2>Next Duel</h2>
                             <div style="padding:20px; background:#ADD8E6; border-radius:5px;">
                                 <h3 style="margin-top:0;">${this.Villain.Name}</h3>
-                                <div class="sprite-border">
+                                <div class="spr">
                                     <div class="sprite"></div>
                                     <div class="mask"></div>
                                 </div>
