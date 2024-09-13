@@ -156,19 +156,19 @@ export abstract class CardController {
             throw `${this} must be in a location to be revealed`;
         }
         if (trace.length === 0) {
-            yield trace.log(`${this.Owner} reveal ${this} in ${this.Field}`);
+            yield trace.Log(`${this.Owner} reveal ${this} in ${this.Field}`);
         }
         this.Element.classList.add("frontside");
         this.Element.classList.remove("unplayable");
         if (!this.Field.IsRevealed || this.Field.CanOnRevealHere(this)) {
-            yield* this.OnReveal(trace.fork(this));
+            yield* this.OnReveal(trace.Fork(this));
         }
         this.IsRevealed = true;
         this.TurnPlayed = this.Battle.CurrentTurn;
 
         // Update the collection state.
         if (save_card_state(this, CollectionFlag.Seen)) {
-            yield trace.fork(1).log(`you see ${this} for the first time!`);
+            yield trace.Fork(1).Log(`you see ${this} for the first time!`);
         }
 
         if (broadcast) {
@@ -190,7 +190,7 @@ export abstract class CardController {
         const revealed_cards = this.Field?.GetRevealedCards();
         const armor_card = revealed_cards?.find((card) => card.Name === "Magic Ginger");
         if (armor_card) {
-            yield trace.log(`but ${armor_card} is here`);
+            yield trace.Log(`but ${armor_card} is here`);
             return;
         }
         if (this.Element.closest("a-hand")) {
@@ -205,7 +205,7 @@ export abstract class CardController {
 
         const trash = this.Owner.Element.querySelector("a-trash")!;
         trash.append(this.Element);
-        yield trace.log(`${this} has been trashed`);
+        yield trace.Log(`${this} has been trashed`);
 
         yield* this.Battle.BroadcastCardMessage(Message.CardEntersTrash, trace, this);
 
@@ -217,9 +217,9 @@ export abstract class CardController {
     *Move(trace: Trace, target_location: LocationController, actor: ActorController) {
         const source_location = this.Field!;
 
-        yield trace.log(`${this} moves from ${source_location} to ${target_location} `);
+        yield trace.Log(`${this} moves from ${source_location} to ${target_location} `);
         if (target_location.IsFull(actor)) {
-            yield trace.fork(1).log(`but ${target_location} is full`);
+            yield trace.Fork(1).Log(`but ${target_location} is full`);
         } else {
             yield* this.Battle.BroadcastCardMessage(Message.CardMovesFromLocation, trace, this);
             target_location.GetSide(actor).append(this.Element);
@@ -232,7 +232,7 @@ export abstract class CardController {
     }
 
     *AddToDeck(actor: ActorController, trace: Trace) {
-        yield trace.log(`${actor} shuffle ${this} to deck`);
+        yield trace.Log(`${actor} shuffle ${this} to deck`);
         this.IsRevealed = false;
         this.TurnPlayed = 0;
         this.Element.classList.remove("frontside");
@@ -242,9 +242,9 @@ export abstract class CardController {
     }
 
     *AddToHand(actor: ActorController, trace: Trace) {
-        yield trace.log(`${actor} add ${this} to hand`);
+        yield trace.Log(`${actor} add ${this} to hand`);
         if (actor.Hand.children.length >= 7) {
-            yield trace.fork(1).log("but the hand is full");
+            yield trace.Fork(1).Log("but the hand is full");
         } else {
             this.IsRevealed = false;
             this.TurnPlayed = 0;

@@ -23,7 +23,7 @@ export class Genie extends CardController {
             for (let other_location of this.Battle.Locations) {
                 if (other_location !== this.Field) {
                     let clone = card.Clone();
-                    yield* other_location.AddCard(clone.Controller, trace.fork(1), this.Owner);
+                    yield* other_location.AddCard(clone.Controller, trace.Fork(1), this.Owner);
                 }
             }
         }

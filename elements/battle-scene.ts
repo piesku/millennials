@@ -356,10 +356,10 @@ export class BattleScene extends HTMLElement {
         let trace = new Trace();
 
         const villain = this.querySelector("a-actor:not([type=player])") as ActorElement;
-        yield* villain.Controller.StartBattle(trace.fork());
+        yield* villain.Controller.StartBattle(trace.Fork());
 
         const player = this.querySelector("a-actor[type=player]") as ActorElement;
-        yield* player.Controller.StartBattle(trace.fork());
+        yield* player.Controller.StartBattle(trace.Fork());
 
         // yield* this.BroadcastGameMessage(Message.BattleStarts);
         yield* this.StartTurn();
@@ -371,21 +371,21 @@ export class BattleScene extends HTMLElement {
         this.CurrentTurn++;
         this.TheButton.textContent = `End Turn ${this.CurrentTurn}`;
 
-        yield trace.log(`<h3>Turn ${this.CurrentTurn} of ${this.MaxTurns}</h3>`);
+        yield trace.Log(`<h3>Turn ${this.CurrentTurn} of ${this.MaxTurns}</h3>`);
 
         if (this.CurrentTurn < 4) {
             let location = this.Locations[this.CurrentTurn - 1];
-            yield* location.Reveal(trace.fork());
+            yield* location.Reveal(trace.Fork());
         }
 
-        yield* this.Player.StartTurn(this.CurrentTurn, trace.fork());
-        yield* this.Villain.StartTurn(this.CurrentTurn, trace.fork());
+        yield* this.Player.StartTurn(this.CurrentTurn, trace.Fork());
+        yield* this.Villain.StartTurn(this.CurrentTurn, trace.Fork());
 
         yield* this.BroadcastGameMessage(Message.TurnStarts);
 
-        yield* this.Villain.VillAIn(trace.fork());
+        yield* this.Villain.VillAIn(trace.Fork());
 
-        yield trace.log("<hr>");
+        yield trace.Log("<hr>");
         this.TheButton.disabled = false;
     }
 
@@ -399,7 +399,7 @@ export class BattleScene extends HTMLElement {
 
     *EndTurn() {
         let trace = new Trace();
-        yield trace.log("<hr>");
+        yield trace.Log("<hr>");
 
         this.TheButton.disabled = true;
 
@@ -411,8 +411,8 @@ export class BattleScene extends HTMLElement {
 
         let unrevealed_cards = this.PlayedCardsQueue.filter((card) => !card.IsRevealed);
         for (let card of unrevealed_cards) {
-            yield* this.BroadcastCardMessage(Message.CardLeavesHand, trace.fork(), card);
-            yield* card.Reveal(trace.fork());
+            yield* this.BroadcastCardMessage(Message.CardLeavesHand, trace.Fork(), card);
+            yield* card.Reveal(trace.Fork());
 
             if (card.Owner === this.Player) {
                 this.Game.Stats.CardsPlayed++;
@@ -452,13 +452,13 @@ export class BattleScene extends HTMLElement {
         if (player_score > villain_score) {
             this.State = "won";
             this.TheButton.textContent = "Next!";
-            yield trace.log(`<h3>You win ${player_score} — ${villain_score}!</h3>`);
-            yield trace.log(`You win ${locations_won.join(", ")}.`);
-            yield trace.log(`Choose ${locations_won.length} card(s) in the shop.`);
+            yield trace.Log(`<h3>You win ${player_score} — ${villain_score}!</h3>`);
+            yield trace.Log(`You win ${locations_won.join(", ")}.`);
+            yield trace.Log(`Choose ${locations_won.length} card(s) in the shop.`);
         } else {
             this.State = "lost";
             this.TheButton.textContent = "Summary";
-            yield trace.log(`<h3>You lose ${player_score} — ${villain_score}!</h3>`);
+            yield trace.Log(`<h3>You lose ${player_score} — ${villain_score}!</h3>`);
         }
 
         this.TheButton.disabled = false;
@@ -476,13 +476,13 @@ export class BattleScene extends HTMLElement {
 
         for (let location of this.Locations) {
             if (location.IsRevealed && !trace.includes(location) && !processed.includes(location)) {
-                yield* location.OnMessage(kind, trace.fork(location));
+                yield* location.OnMessage(kind, trace.Fork(location));
                 processed.push(location);
             }
 
             for (let card of location.GetRevealedCards()) {
                 if (!trace.includes(card) && !processed.includes(card)) {
-                    yield* card.OnMessage(kind, trace.fork(card));
+                    yield* card.OnMessage(kind, trace.Fork(card));
                     processed.push(card);
                 }
             }
@@ -500,20 +500,20 @@ export class BattleScene extends HTMLElement {
         let processed: Array<LocationController | CardController> = [];
 
         // First, broadcast the message to the card itself.
-        yield* card.OnMessageSelf(kind, trace.fork(card));
+        yield* card.OnMessageSelf(kind, trace.Fork(card));
 
         let card_location = card.Field;
         if (card_location) {
             // Then, broadcast the message to the card's location, if it's revealed.
             if (card_location.IsRevealed && !trace.includes(card_location) && !processed.includes(card_location)) {
-                yield* card_location.OnMessage(kind, trace.fork(card_location), card);
+                yield* card_location.OnMessage(kind, trace.Fork(card_location), card);
                 processed.push(card_location);
             }
 
             // Then, broadcast the message to other revealed cards in the same location.
             for (let other of card_location.GetRevealedCards()) {
                 if (other.Element !== card.Element && !trace.includes(other) && !processed.includes(other)) {
-                    yield* other.OnMessage(kind, trace.fork(other), card);
+                    yield* other.OnMessage(kind, trace.Fork(other), card);
                     processed.push(other);
                 }
             }
@@ -535,7 +535,7 @@ export class BattleScene extends HTMLElement {
                     !trace.includes(other_card) &&
                     !processed.includes(other_card)
                 ) {
-                    yield* other_card.OnMessage(kind, trace.fork(other_card), card);
+                    yield* other_card.OnMessage(kind, trace.Fork(other_card), card);
                     processed.push(other_card);
                 }
             }

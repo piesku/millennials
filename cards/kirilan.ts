@@ -16,9 +16,9 @@ export class Kirilin extends CardController {
             case Message.CardEntersTrash:
                 const random_location = element(this.Battle.GetPossibleLocations(this));
                 if (random_location) {
-                    yield trace.log(`${this} respawns in ${random_location}`);
+                    yield trace.Log(`${this} respawns in ${random_location}`);
                     yield* random_location.AddCard(this, trace, this.Owner);
-                    yield trace.log(this.AddModifier(this, "addpower", 2));
+                    yield trace.Log(this.AddModifier(this, "addpower", 2));
                 }
                 break;
         }

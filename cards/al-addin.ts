@@ -12,7 +12,7 @@ export class Aladdin extends CardController {
     override *OnMessageSelf(kind: Message, trace: Trace) {
         switch (kind) {
             case Message.CardMovesToLocation:
-                yield trace.log(this.AddModifier(this, "addpower", 6));
+                yield trace.Log(this.AddModifier(this, "addpower", 6));
                 break;
         }
     }

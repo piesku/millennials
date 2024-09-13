@@ -7,10 +7,10 @@ export class GainOneEnergy extends LocationController {
     override *OnReveal(trace: Trace) {
         this.Battle.Player.CurrentEnergy += 1;
         this.Battle.Player.Element.Render();
-        yield trace.log(`${this.Battle.Player} gain +1 energy`);
+        yield trace.Log(`${this.Battle.Player} gain +1 energy`);
 
         this.Battle.Villain.CurrentEnergy += 1;
         this.Battle.Villain.Element.Render();
-        yield trace.log(`${this.Battle.Player} gain +1 energy`);
+        yield trace.Log(`${this.Battle.Player} gain +1 energy`);
     }
 }

@@ -20,7 +20,7 @@ export class DaltonBro extends CardController {
 
         const card = element(other_dalton_cards);
         if (card) {
-            yield trace.log(card.AddModifier(this, "addpower", 1));
+            yield trace.Log(card.AddModifier(this, "addpower", 1));
         }
     }
 }
@@ -39,7 +39,7 @@ export class MojoJojo extends CardController {
         if (card_to_transform) {
             let old_card_instance = card_to_transform.Controller;
             card_to_transform.setAttribute("type", Sprites.Marble.toString());
-            yield trace.log(`${old_card_instance} is now a ${card_to_transform.Controller}!`);
+            yield trace.Log(`${old_card_instance} is now a ${card_to_transform.Controller}!`);
         }
     }
 }
@@ -66,7 +66,7 @@ export class Skeletor extends CardController {
         const location = this.Field!;
         const location_name = location.Name;
         location.Element.setAttribute("type", LocationType.CantPlayHere.toString());
-        yield trace.log(`${location_name} is now ${this.Field}`);
+        yield trace.Log(`${location_name} is now ${this.Field}`);
         // Reveal the new location.
         yield* location.Element.Controller.Reveal(trace);
     }

@@ -13,7 +13,7 @@ export class Batman extends CardController {
     override *OnReveal(trace: Trace) {
         if (this.Owner.Deck.firstElementChild) {
             const topCard = this.Owner.Deck.firstElementChild as CardElement;
-            yield trace.log(topCard.Controller.AddModifier(this, "addpower", 2));
+            yield trace.Log(topCard.Controller.AddModifier(this, "addpower", 2));
         }
     }
 }

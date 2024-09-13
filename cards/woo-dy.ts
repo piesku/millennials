@@ -13,8 +13,8 @@ export class Woody extends CardController {
     override *OnReveal(trace: Trace) {
         let card = this.Owner.Deck.firstElementChild as CardElement;
         if (card) {
-            yield trace.log(`${this} plays ${card.Controller} to ${this.Field}`);
-            yield* this.Field!.AddCard(card.Controller, trace.fork(1), this.Owner);
+            yield trace.Log(`${this} plays ${card.Controller} to ${this.Field}`);
+            yield* this.Field!.AddCard(card.Controller, trace.Fork(1), this.Owner);
         }
     }
 }

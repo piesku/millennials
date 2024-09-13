@@ -16,7 +16,7 @@ export class DarthVader extends CardController {
     override *OnReveal(trace: Trace) {
         const opponent_cards = this.Battle.GetRevealedCards(this.Opponent);
         for (let card of opponent_cards) {
-            yield trace.log(card.AddModifier(this, "addpower", -1));
+            yield trace.Log(card.AddModifier(this, "addpower", -1));
         }
     }
 }
@@ -49,7 +49,7 @@ export class Borg extends CardController {
 
     override *OnReveal(trace: Trace) {
         for (let card of this.Opponent.Hand.querySelectorAll<CardElement>("a-card")) {
-            yield trace.log(card.Controller.AddModifier(this, "addcost", 1));
+            yield trace.Log(card.Controller.AddModifier(this, "addcost", 1));
         }
     }
 }
@@ -65,7 +65,7 @@ export class Stormtrooper extends CardController {
         const revealedCards = this.Battle.GetRevealedCards();
         const sameNameCards = revealedCards.filter((card) => card.Name === this.Name);
         const count = sameNameCards.length;
-        yield trace.log(this.AddModifier(this, "addpower", count));
+        yield trace.Log(this.AddModifier(this, "addpower", count));
     }
 }
 

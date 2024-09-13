@@ -12,7 +12,7 @@ export class Murdock extends CardController {
 
     override *OnReveal(trace: Trace) {
         for (let card of this.Owner.Hand.querySelectorAll<CardElement>("a-card")) {
-            yield trace.log(card.Controller.AddModifier(this, "addpower", 1));
+            yield trace.Log(card.Controller.AddModifier(this, "addpower", 1));
         }
     }
 }

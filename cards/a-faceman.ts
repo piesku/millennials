@@ -12,7 +12,7 @@ export class Faceman extends CardController {
     override *OnReveal(trace: Trace) {
         let other_revealed_cards = this.Field!.GetRevealedCards(this.Owner);
         for (let card of other_revealed_cards) {
-            yield trace.log(card.AddModifier(this, "addpower", 1));
+            yield trace.Log(card.AddModifier(this, "addpower", 1));
         }
     }
 }

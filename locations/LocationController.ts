@@ -91,10 +91,10 @@ export abstract class LocationController {
 
     *Reveal(trace: Trace) {
         if (trace.length === 0) {
-            yield trace.log(`${this} is revealed`);
+            yield trace.Log(`${this} is revealed`);
         }
         this.Element.classList.add("frontside", "hilite");
-        yield* this.OnReveal(trace.fork(this));
+        yield* this.OnReveal(trace.Fork(this));
         this.IsRevealed = true;
 
         // TODO Broadcast?
@@ -106,7 +106,7 @@ export abstract class LocationController {
 
     *AddCard(card: CardController, trace: Trace, actor: ActorController, skip_reveal?: boolean) {
         if (this.IsFull(actor)) {
-            yield trace.log(`but ${this} is full`);
+            yield trace.Log(`but ${this} is full`);
         } else {
             if (card.Element.closest("a-hand")) {
                 yield* actor.Battle.BroadcastCardMessage(Message.CardLeavesHand, trace, card);

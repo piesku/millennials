@@ -15,7 +15,7 @@ export class DanAykroyd extends CardController {
         const cardsToBuff = revealedCards.slice(0, 3);
 
         for (let card of cardsToBuff) {
-            yield trace.log(card.AddModifier(this, "addpower", 3));
+            yield trace.Log(card.AddModifier(this, "addpower", 3));
         }
     }
 }

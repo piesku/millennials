@@ -12,7 +12,7 @@ export class MichaelAngelo extends CardController {
     override *OnReveal(trace: Trace) {
         for (let card of this.Battle.GetRevealedCards()) {
             if (card.CurrentCost === 1) {
-                yield* card.Trash(trace.fork());
+                yield* card.Trash(trace.Fork());
             }
         }
     }

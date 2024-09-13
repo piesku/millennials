@@ -7,9 +7,9 @@ export class LoseOnePower extends LocationController {
     Description = "Cards here lose 1 Power each turn.";
     override *OnMessage(kind: Message, trace: Trace, card: CardController) {
         if (kind === Message.TurnEnds) {
-            yield trace.fork(-1).log(`${this} damages all cards here`);
+            yield trace.Fork(-1).Log(`${this} damages all cards here`);
             for (let card of this.GetRevealedCards()) {
-                yield trace.log(card.AddModifier(this, "addpower", -1));
+                yield trace.Log(card.AddModifier(this, "addpower", -1));
             }
         }
     }

@@ -14,7 +14,7 @@ export class Frodo extends CardController {
             case Message.CardEntersTable:
                 for (let card of this.Battle.GetRevealedCards(this.Owner)) {
                     if (card.CurrentCost === 1) {
-                        yield trace.log(card.AddModifier(this, "addpower", 1));
+                        yield trace.Log(card.AddModifier(this, "addpower", 1));
                     }
                 }
                 break;
@@ -28,7 +28,7 @@ export class Frodo extends CardController {
         switch (kind) {
             case Message.CardEntersTable:
                 if (card.Owner === this.Owner && card.CurrentCost === 1) {
-                    yield trace.log(card.AddModifier(this, "addpower", 1));
+                    yield trace.Log(card.AddModifier(this, "addpower", 1));
                 }
                 break;
             case Message.CardLeavesTable:

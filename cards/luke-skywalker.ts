@@ -20,7 +20,7 @@ export class LukeSkywalker extends CardController {
                 (location) => location !== this.Field && !location.IsFull(this.Owner),
             );
             if (other_locations.length > 0) {
-                yield* this.Move(trace.fork(-1), element(other_locations), this.Owner);
+                yield* this.Move(trace.Fork(-1), element(other_locations), this.Owner);
             }
         }
     }

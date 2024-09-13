@@ -56,7 +56,7 @@ export class Sauron extends CardController {
     override *OnReveal(trace: Trace) {
         for (const card of this.Battle.GetRevealedCards()) {
             if (card.Name === orc_name || card.Name === goblin_name) {
-                yield trace.log(card.AddModifier(this, "addpower", 2));
+                yield trace.Log(card.AddModifier(this, "addpower", 2));
             }
         }
     }

@@ -8,17 +8,17 @@ export class GainOneEnergyEmpty extends LocationController {
     override *OnMessage(kind: Message, trace: Trace, card: CardController) {
         if (kind === Message.TurnStarts) {
             if (this.GetRevealedCards(this.Battle.Player).length === 0) {
-                yield trace.fork(-1).log(`${this.Battle.Player} have no cards at ${this}`);
+                yield trace.Fork(-1).Log(`${this.Battle.Player} have no cards at ${this}`);
                 this.Battle.Player.CurrentEnergy += 1;
                 this.Battle.Player.Element.Render();
-                yield trace.log(`${this.Battle.Player} gain +1 energy`);
+                yield trace.Log(`${this.Battle.Player} gain +1 energy`);
             }
 
             if (this.GetRevealedCards(this.Battle.Villain).length === 0) {
-                yield trace.fork(-1).log(`${this.Battle.Villain} have no cards at ${this}`);
+                yield trace.Fork(-1).Log(`${this.Battle.Villain} have no cards at ${this}`);
                 this.Battle.Villain.CurrentEnergy += 1;
                 this.Battle.Villain.Element.Render();
-                yield trace.log(`${this.Battle.Villain} gain +1 energy`);
+                yield trace.Log(`${this.Battle.Villain} gain +1 energy`);
             }
         }
     }

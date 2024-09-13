@@ -23,7 +23,7 @@ export const enum Message {
 type Traceable = CardController | LocationController | 1 | -1;
 
 export class Trace extends Array<Traceable> {
-    fork(traceable?: Traceable) {
+    Fork(traceable?: Traceable) {
         let trace = this.slice() as Trace;
         if (traceable) {
             trace.push(traceable);
@@ -31,7 +31,7 @@ export class Trace extends Array<Traceable> {
         return trace;
     }
 
-    log(msg: string): [Trace, string] {
+    Log(msg: string): [Trace, string] {
         return [this, msg];
     }
 }

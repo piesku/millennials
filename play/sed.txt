@@ -23,6 +23,7 @@ s/flex-col/f-c/g
 s/multi-view/m-v/g
 s/card-detail/c-d/g
 s/card-modifiers/c-m/g
+s/a-card/a-c/g
 
 # CSS class names
 s/frontside/f/g
@@ -32,3 +33,4 @@ s/unowned/o/g
 
 # JS
 s/\.\.toString()//g
+

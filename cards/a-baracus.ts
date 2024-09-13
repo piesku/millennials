@@ -15,7 +15,7 @@ export class Baracus extends CardController {
         }
         let index = this.Battle.Locations.indexOf(this.Field);
         if (index === 1) {
-            yield trace.log(this.AddModifier(this, "addpower", 3));
+            yield trace.Log(this.AddModifier(this, "addpower", 3));
         }
     }
 }

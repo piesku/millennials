@@ -19,7 +19,7 @@ export class Goku extends CardController {
                 for (let card of trashed_cards) {
                     combined_power += card.Controller.CurrentPower;
                 }
-                yield trace.log(this.AddModifier(this, "setpower", combined_power));
+                yield trace.Log(this.AddModifier(this, "setpower", combined_power));
                 break;
             case Message.CardLeavesTable:
                 this.RemoveModifiers(this);
@@ -37,7 +37,7 @@ export class Goku extends CardController {
                 for (let card of trashed_cards) {
                     combined_power += card.Controller.CurrentPower;
                 }
-                yield trace.log(this.AddModifier(this, "setpower", combined_power));
+                yield trace.Log(this.AddModifier(this, "setpower", combined_power));
         }
     }
 }

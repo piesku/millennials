@@ -19,8 +19,8 @@ export class LaraCroft extends CardController {
                 continue;
             }
 
-            yield trace.log(`repeating ${card}'s ability`);
-            yield* card.OnReveal(trace.fork(card));
+            yield trace.Log(`repeating ${card}'s ability`);
+            yield* card.OnReveal(trace.Fork(card));
             yield* card.Trash(trace);
         }
     }

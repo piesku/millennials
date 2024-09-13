@@ -10,13 +10,13 @@ export class GiveCostHand extends LocationController {
         {
             let random_card = element(this.Battle.Player.Hand.querySelectorAll<CardElement>("a-card"));
             if (random_card) {
-                yield trace.log(random_card.Controller.AddModifier(this, "addcost", 1));
+                yield trace.Log(random_card.Controller.AddModifier(this, "addcost", 1));
             }
         }
         {
             let random_card = element(this.Battle.Villain.Hand.querySelectorAll<CardElement>("a-card"));
             if (random_card) {
-                yield trace.log(random_card.Controller.AddModifier(this, "addcost", 1));
+                yield trace.Log(random_card.Controller.AddModifier(this, "addcost", 1));
             }
         }
     }

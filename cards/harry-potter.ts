@@ -12,7 +12,7 @@ export class HarryPotter extends CardController {
 
     override *OnReveal(trace: Trace): Generator<[Trace, string], void> {
         for (let card of this.Owner.Deck.querySelectorAll<CardElement>("a-card")) {
-            yield trace.log(card.Controller.AddModifier(this, "setpower", 4));
+            yield trace.Log(card.Controller.AddModifier(this, "setpower", 4));
         }
     }
 }

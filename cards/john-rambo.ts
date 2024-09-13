@@ -20,7 +20,7 @@ export class JohnRambo extends CardController {
                     }
                 }
 
-                yield trace.log(this.AddModifier(this, "setpower", total_power));
+                yield trace.Log(this.AddModifier(this, "setpower", total_power));
 
                 break;
         }
@@ -48,7 +48,7 @@ export class JohnRambo extends CardController {
                     }
                 }
                 this.RemoveModifiers(this);
-                yield trace.log(this.AddModifier(this, "setpower", total_power));
+                yield trace.Log(this.AddModifier(this, "setpower", total_power));
                 break;
         }
     }

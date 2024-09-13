@@ -14,13 +14,13 @@ export class KevinHomeAlone extends CardController {
             case Message.CardEntersTable:
             case Message.CardMovesToLocation:
                 if (this.Field?.IsFull(this.Opponent) && !this.HasModifiers(this)) {
-                    yield trace.log(this.AddModifier(this, "addpower", -6));
+                    yield trace.Log(this.AddModifier(this, "addpower", -6));
                 }
                 break;
             case Message.CardLeavesTable:
             case Message.CardMovesFromLocation:
                 this.RemoveModifiers(this);
-                yield trace.log(`it no longer has -6 Power`);
+                yield trace.Log(`it no longer has -6 Power`);
                 break;
         }
     }
@@ -36,14 +36,14 @@ export class KevinHomeAlone extends CardController {
             case Message.CardEntersTable:
             case Message.CardMovesToLocation:
                 if (this.Field?.IsFull(this.Opponent) && !this.HasModifiers(this)) {
-                    yield trace.log(this.AddModifier(this, "addpower", -6));
+                    yield trace.Log(this.AddModifier(this, "addpower", -6));
                 }
                 break;
             case Message.CardLeavesTable:
             case Message.CardMovesFromLocation:
                 if (this.Field?.IsFull(this.Opponent)) {
                     this.RemoveModifiers(this);
-                    yield trace.log(`${this} no longer has -6 Power`);
+                    yield trace.Log(`${this} no longer has -6 Power`);
                 }
                 break;
         }

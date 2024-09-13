@@ -8,11 +8,11 @@ export class WinnerDrawsTwo extends LocationController {
     override *OnMessage(kind: Message, trace: Trace, card: CardController) {
         if (kind === Message.TurnEnds && this.Battle.CurrentTurn === 4) {
             if (this.GetScore(this.Battle.Player) > this.GetScore(this.Battle.Villain)) {
-                yield trace.fork(-1).log(`${this.Battle.Player} are winning at ${this}`);
+                yield trace.Fork(-1).Log(`${this.Battle.Player} are winning at ${this}`);
                 yield* this.Battle.Player.DrawCard(trace);
                 yield* this.Battle.Player.DrawCard(trace);
             } else if (this.GetScore(this.Battle.Player) < this.GetScore(this.Battle.Villain)) {
-                yield trace.fork(-1).log(`${this.Battle.Villain} are winning at ${this}`);
+                yield trace.Fork(-1).Log(`${this.Battle.Villain} are winning at ${this}`);
                 yield* this.Battle.Villain.DrawCard(trace);
                 yield* this.Battle.Villain.DrawCard(trace);
             }

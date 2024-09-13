@@ -75,25 +75,25 @@ export abstract class ActorController {
         const deck = from ?? this.Deck;
 
         if (deck.firstElementChild && this.Hand.children.length >= 7) {
-            yield trace.log(`${this} draw a card`);
-            yield trace.fork(1).log("but the hand is full");
+            yield trace.Log(`${this} draw a card`);
+            yield trace.Fork(1).Log("but the hand is full");
         } else if (deck.firstElementChild) {
             let card = deck.firstElementChild! as CardElement;
 
             if (this.Type === "player") {
                 card.setAttribute("draggable", "true");
                 card.classList.add("frontside");
-                yield trace.log(`${this} draw ${card.Controller}`);
+                yield trace.Log(`${this} draw ${card.Controller}`);
             } else {
-                yield trace.log(`${this} draw a card`);
+                yield trace.Log(`${this} draw a card`);
             }
 
             // yield* this.Battle.BroadcastCardMessage(Message.CardLeavesDeck, trace, card.Instance);
             this.Hand.append(card);
             yield* this.Battle.BroadcastCardMessage(Message.CardEntersHand, trace, card.Controller);
         } else {
-            yield trace.log(`${this} draw a card`);
-            yield trace.fork(1).log("but the deck is empty");
+            yield trace.Log(`${this} draw a card`);
+            yield trace.Fork(1).Log("but the deck is empty");
         }
     }
 
@@ -122,7 +122,7 @@ export abstract class ActorController {
 
             let location = element(possible_locations);
 
-            yield trace.log(`${this} play a card to ${location}`);
+            yield trace.Log(`${this} play a card to ${location}`);
 
             location.GetSide(this).append(highest_cost_card);
             this.Battle.PlayedCardsQueue.push(highest_cost_card.Controller);

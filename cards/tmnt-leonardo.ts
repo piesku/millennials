@@ -12,7 +12,7 @@ export class Leonardo extends CardController {
     override *OnReveal(trace: Trace) {
         for (let card of this.Battle.GetRevealedCards(this.Owner)) {
             if (card.TurnPlayed === this.Battle.CurrentTurn) {
-                yield trace.log(this.AddModifier(this, "addpower", 2));
+                yield trace.Log(this.AddModifier(this, "addpower", 2));
             }
         }
     }

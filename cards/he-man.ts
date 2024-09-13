@@ -13,7 +13,7 @@ export class Heman extends CardController {
         const otherCards: CardController[] = this.Field?.GetRevealedCards(this.Owner) || [];
 
         for (let card of otherCards) {
-            yield trace.log(this.AddModifier(this, "addpower", card.CurrentPower));
+            yield trace.Log(this.AddModifier(this, "addpower", card.CurrentPower));
             yield* card.Trash(trace);
         }
     }

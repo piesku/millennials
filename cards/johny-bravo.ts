@@ -29,7 +29,7 @@ export class Placki extends CardController {
         const revealed_cards = this.Battle.GetRevealedCards();
         for (const card of revealed_cards) {
             if (card.Name === "Johny Alpha") {
-                yield trace.log(card.AddModifier(this, "addpower", 6));
+                yield trace.Log(card.AddModifier(this, "addpower", 6));
             }
         }
     }

@@ -13,7 +13,7 @@ export class Hermione extends CardController {
         switch (kind) {
             case Message.CardEntersTable:
                 if (card?.Field === this.Field && card?.Owner === this.Owner) {
-                    yield trace.log(this.AddModifier(this, "addpower", 2));
+                    yield trace.Log(this.AddModifier(this, "addpower", 2));
                 }
                 break;
         }

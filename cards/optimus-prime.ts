@@ -15,7 +15,7 @@ export class OptimusPrime extends CardController {
         }
 
         for (let card of this.Field.GetRevealedCards(this.Opponent)) {
-            yield trace.log(card.AddModifier(this, "addpower", 2));
+            yield trace.Log(card.AddModifier(this, "addpower", 2));
         }
     }
 }

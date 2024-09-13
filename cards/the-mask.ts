@@ -22,7 +22,7 @@ export class TheMask extends CardController {
                 continue;
             }
 
-            yield trace.log(`Resurrecting ${card.Controller} to ${random_location}`);
+            yield trace.Log(`Resurrecting ${card.Controller} to ${random_location}`);
             yield* random_location.AddCard(card.Controller, trace, this.Owner);
         }
     }
