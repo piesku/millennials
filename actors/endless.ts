@@ -14,7 +14,7 @@ export class EndlessController extends ActorController {
     constructor(actor_element: ActorElement) {
         super(actor_element);
 
-        let game = document.querySelector<GameContainer>("game-container");
+        let game = document.querySelector<GameContainer>("g-c");
         DEBUG: if (!game) {
             throw "Actor must be inside a game";
         }

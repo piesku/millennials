@@ -7,7 +7,7 @@ import {delay} from "../lib/timeout.js";
 import {LocationController} from "../locations/LocationController.js";
 import {Message, Trace} from "../messages.js";
 import {CollectionFlag, save_card_state} from "../storage.js";
-import {ActorElement} from "./a-actor.js";
+import {ActorElement, ActorType} from "./a-actor.js";
 import {CardElement} from "./a-card.js";
 import {LocationElement} from "./a-location.js";
 import {GameContainer} from "./game-container.js";
@@ -36,7 +36,7 @@ export class BattleScene extends HTMLElement {
     }
 
     get Player() {
-        let player_element = this.querySelector<ActorElement>("a-actor[type=player]");
+        let player_element = this.querySelector<ActorElement>(`a-actor[type="${ActorType.Player}"]`);
         DEBUG: if (!player_element) {
             throw "BattleScene must have a player";
         }
@@ -44,7 +44,7 @@ export class BattleScene extends HTMLElement {
     }
 
     get Villain() {
-        let villain_element = this.querySelector<ActorElement>("a-actor:not([type=player])");
+        let villain_element = this.querySelector<ActorElement>(`a-actor:not([type="${ActorType.Player}"])`);
         DEBUG: if (!villain_element) {
             throw "BattleScene must have a villain";
         }
@@ -355,10 +355,10 @@ export class BattleScene extends HTMLElement {
     *StartBattle() {
         let trace = new Trace();
 
-        const villain = this.querySelector("a-actor:not([type=player])") as ActorElement;
+        const villain = this.querySelector(`a-actor:not([type="${ActorType.Player}"])`) as ActorElement;
         yield* villain.Controller.StartBattle(trace.Fork());
 
-        const player = this.querySelector("a-actor[type=player]") as ActorElement;
+        const player = this.querySelector(`a-actor[type="${ActorType.Player}"]`) as ActorElement;
         yield* player.Controller.StartBattle(trace.Fork());
 
         // yield* this.BroadcastGameMessage(Message.BattleStarts);

@@ -3,6 +3,7 @@ import {html} from "../lib/html.js";
 import {format_time} from "../lib/number.js";
 import {element, integer, set_seed, shuffle} from "../lib/random.js";
 import {load_game_state, save_game_state} from "../storage.js";
+import {ActorType} from "./a-actor.js";
 import {BattleScene} from "./battle-scene.js";
 import {CollectionTitle} from "./collection-title.js";
 
@@ -118,11 +119,11 @@ export class GameContainer extends HTMLElement {
     Populate(endless = false) {
         set_seed(this.Seed * this.CurrentOpponent);
 
-        let villains = shuffle(["space", "pirates", "cartoon"]);
+        let villains = shuffle([ActorType.Cartoon, ActorType.Pirates, ActorType.Space]);
         let offset = 1;
 
         if (endless) {
-            villains = ["endless"];
+            villains = [ActorType.Endless];
             offset = this.CurrentOpponent;
         }
 
@@ -136,10 +137,10 @@ export class GameContainer extends HTMLElement {
                     <a-hand></a-hand>
                     <a-trash hidden></a-trash>
                 </a-actor>
-                <a-location slot="location" type="${integer(0, 19)}"></a-location>
-                <a-location slot="location" type="${integer(0, 19)}"></a-location>
-                <a-location slot="location" type="${integer(0, 19)}"></a-location>
-                <a-actor type="player" id="player" slot="player">
+                <a-location slot="location" type="${integer(0, 17)}"></a-location>
+                <a-location slot="location" type="${integer(0, 17)}"></a-location>
+                <a-location slot="location" type="${integer(0, 17)}"></a-location>
+                <a-actor type="${ActorType.Player}" id="player" slot="player">
                     <a-deck></a-deck>
                     <a-hand></a-hand>
                     <a-trash hidden></a-trash>

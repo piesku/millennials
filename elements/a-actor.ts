@@ -7,16 +7,23 @@ import {SpaceVillainsController} from "../actors/space.js";
 import {html} from "../lib/html.js";
 import {CardElement} from "./a-card.js";
 
+export const enum ActorType {
+    Player,
+    Space,
+    Pirates,
+    Cartoon,
+    Endless,
+}
 export class ActorElement extends HTMLElement {
     Controller!: ActorController;
 
-    static Controllers: Record<string, new (el: ActorElement) => ActorController> = {
-        player: PlayerController,
-        space: SpaceVillainsController,
-        pirates: FantasyController,
-        cartoon: CartoonVillainsController,
-        endless: EndlessController,
-    };
+    static Controllers: Array<new (el: ActorElement) => ActorController> = [
+        PlayerController, // 0
+        SpaceVillainsController, // 1
+        FantasyController, // 2
+        CartoonVillainsController, // 3
+        EndlessController, // 4
+    ];
 
     constructor() {
         super();
@@ -25,7 +32,7 @@ export class ActorElement extends HTMLElement {
 
     static observedAttributes = ["type"];
     attributeChangedCallback(name: string, old_value: string, new_value: string) {
-        this.Controller = new ActorElement.Controllers[new_value](this);
+        this.Controller = new ActorElement.Controllers[parseInt(new_value) as ActorType](this);
     }
 
     connectedCallback() {
