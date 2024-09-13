@@ -27,7 +27,7 @@ export class LocationOwner extends HTMLElement {
                     padding: 10px;
                 }
             </style>
-            <flex-row wrap start style="gap:10px;">
+            <flex-row start style="gap:10px;">
                 <slot></slot>
             </flex-row>
         `;

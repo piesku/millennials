@@ -17,10 +17,6 @@ customElements.define(
                         justify-content: space-between;
                     }
 
-                    :host([wrap]) {
-                        flex-wrap: wrap;
-                    }
-
                     :host([reverse]) {
                         flex-direction: row-reverse;
                     }
@@ -32,10 +28,6 @@ customElements.define(
 
                     :host([start]) {
                         justify-content: flex-start;
-                    }
-
-                    :host([end]) {
-                        justify-content: flex-end;
                     }
 
                     :host([gap]) {
@@ -65,10 +57,6 @@ customElements.define(
                         justify-content: space-between;
                     }
 
-                    :host([wrap]) {
-                        flex-wrap: wrap;
-                    }
-
                     :host([reverse]) {
                         flex-direction: column-reverse;
                     }
@@ -80,10 +68,6 @@ customElements.define(
 
                     :host([start]) {
                         justify-content: flex-start;
-                    }
-
-                    :host([end]) {
-                        justify-content: flex-end;
                     }
 
                     :host([gap]) {
