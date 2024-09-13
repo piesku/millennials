@@ -2,7 +2,6 @@ import {Trace} from "../messages.js";
 import {LocationController} from "./LocationController.js";
 
 export class TurnSeven extends LocationController {
-    Name = "TurnSeven";
     Description = "This battle has an extra turn.";
     override *OnReveal(trace: Trace) {
         this.Battle.MaxTurns++;

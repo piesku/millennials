@@ -57,7 +57,7 @@ export class Skeletor extends CardController {
     Name = "Telescore";
     Cost = 4;
     Power = 0;
-    Description = "Once: Change this location to Castle Bonehead";
+    Description = "Once: Lock this location down";
     Sprite = Sprites.Skeletor;
     override IsVillain = true;
     override SpriteOffset = 1;
@@ -66,7 +66,7 @@ export class Skeletor extends CardController {
         const location = this.Field!;
         const location_name = location.Name;
         location.Element.setAttribute("type", LocationType.CantPlayHere.toString());
-        yield trace.Log(`${location_name} is now ${this.Field}`);
+        yield trace.Log(`${location_name} is now locked down!`);
         // Reveal the new location.
         yield* location.Element.Controller.Reveal(trace);
     }

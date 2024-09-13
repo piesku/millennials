@@ -3,7 +3,6 @@ import {Message, Trace} from "../messages.js";
 import {LocationController} from "./LocationController.js";
 
 export class GainOneEnergyEmpty extends LocationController {
-    Name = "GainOneEnergyEmpty";
     Description = "If you have no cards here at the start of a turn, gain +1 energy.";
     override *OnMessage(kind: Message, trace: Trace, card: CardController) {
         if (kind === Message.TurnStarts) {

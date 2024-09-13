@@ -3,7 +3,6 @@ import {Message, Trace} from "../messages.js";
 import {LocationController} from "./LocationController.js";
 
 export class WinnerDrawsTwo extends LocationController {
-    Name = "WinnerDrawsTwo";
     Description = "After turn 4, whoever is winning here draws 2 cards.";
     override *OnMessage(kind: Message, trace: Trace, card: CardController) {
         if (kind === Message.TurnEnds && this.Battle.CurrentTurn === 4) {

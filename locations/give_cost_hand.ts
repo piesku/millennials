@@ -4,7 +4,6 @@ import {Trace} from "../messages.js";
 import {LocationController} from "./LocationController.js";
 
 export class GiveCostHand extends LocationController {
-    Name = "GiveCostHand";
     Description = "Give +$1 cost to a random card in each player's hand.";
     override *OnReveal(trace: Trace) {
         {

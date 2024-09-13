@@ -30,7 +30,6 @@ export const enum LocationType {
 }
 
 export abstract class LocationController {
-    abstract Name: string;
     abstract Description: string;
 
     Id = next_id();
@@ -40,6 +39,10 @@ export abstract class LocationController {
 
     toString() {
         return `<log-chip class="location" for="${this.Id}">${this.Name}</log-chip>`;
+    }
+
+    get Name() {
+        return this.Element.title + " Location";
     }
 
     get Battle() {

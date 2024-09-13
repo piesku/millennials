@@ -4,7 +4,6 @@ import {Message, Trace} from "../messages.js";
 import {LocationController} from "./LocationController.js";
 
 export class ReturnOfTheJedi extends LocationController {
-    Name = "Return of the Jedi";
     Description = "Transform any card played here into another card of the same cost.";
     override *OnMessage(kind: Message, trace: Trace, card: CardController) {
         if (card?.Field === this) {

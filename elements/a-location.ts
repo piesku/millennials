@@ -94,7 +94,6 @@ export class LocationElement extends HTMLElement {
                 <slot name="villain"></slot>
                 <b>${this.Controller.GetScore(this.Controller.Battle.Villain)}</b>
                 <div>
-                    <h3>${this.Controller.Name}</h3>
                     <p>${this.Controller.Description}</p>
                 </div>
                 <b>${this.Controller.GetScore(this.Controller.Battle.Player)}</b>

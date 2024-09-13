@@ -3,7 +3,6 @@ import {Message, Trace} from "../messages.js";
 import {LocationController} from "./LocationController.js";
 
 export class AttackOfTheClones extends LocationController {
-    Name = "Attack of the Clones";
     Description = "Cards played here fill the location with their copies.";
     override *OnMessage(kind: Message, trace: Trace, card: CardController) {
         if (card?.Field === this) {

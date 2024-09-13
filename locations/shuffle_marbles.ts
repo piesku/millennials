@@ -4,7 +4,6 @@ import {Sprites} from "../sprites/sprites.js";
 import {LocationController} from "./LocationController.js";
 
 export class ShuffleMarbles extends LocationController {
-    Name = "ShuffleMarbles";
     Description = "Shuffle 5 marbles into each player's deck.";
     override *OnReveal(trace: Trace) {
         for (let i = 0; i < 5; i++) {

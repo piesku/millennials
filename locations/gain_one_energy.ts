@@ -2,7 +2,6 @@ import {Trace} from "../messages.js";
 import {LocationController} from "./LocationController.js";
 
 export class GainOneEnergy extends LocationController {
-    Name = "GainOneEnergy";
     Description = "Gain +1 energy.";
     override *OnReveal(trace: Trace) {
         this.Battle.Player.CurrentEnergy += 1;

@@ -3,7 +3,6 @@ import {Message, Trace} from "../messages.js";
 import {LocationController} from "./LocationController.js";
 
 export class LoseOnePower extends LocationController {
-    Name = "LoseOnePower";
     Description = "Cards here lose 1 Power each turn.";
     override *OnMessage(kind: Message, trace: Trace, card: CardController) {
         if (kind === Message.TurnEnds) {

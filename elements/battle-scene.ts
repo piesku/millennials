@@ -148,6 +148,11 @@ export class BattleScene extends HTMLElement {
                     background-size: ${target_height}px auto;
                     image-rendering: pixelated;
                 }
+
+                dd {
+                    font-weight: bold;
+                    margin: 0 0 20px 20px;
+                }
             </style>
             <multi-view current="${this.State}">
                 <main name="prep" style="padding:20px;">
@@ -174,8 +179,8 @@ export class BattleScene extends HTMLElement {
                                 <hr />
                                 ${locations.map(
                                     (location) => html`
-                                        <h4>${location.Name}</h4>
-                                        <p>${location.Description}</p>
+                                        <dt>${location.Name}</dt>
+                                        <dd>${location.Description}</dd>
                                     `,
                                 )}
                             </div>
