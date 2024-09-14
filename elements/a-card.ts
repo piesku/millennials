@@ -340,12 +340,11 @@ export class CardElement extends HTMLElement {
                 }
 
                 .name {
-                    font-size: 1em;
                     font-weight: bold;
                 }
 
                 [part="desc"] {
-                    font-size: 0.7em;
+                    font-size: 11px;
                 }
 
                 dialog,
