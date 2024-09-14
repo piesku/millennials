@@ -381,6 +381,10 @@ export class CardElement extends HTMLElement {
                     transform: rotateX(var(--rx)) rotateY(var(--ry)) scale(1.2);
                 }
 
+                dialog [part="desc"] {
+                    display: block !important;
+                }
+
                 dialog .reflection {
                     position: absolute;
                     inset: 0;
