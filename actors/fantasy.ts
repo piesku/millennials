@@ -49,7 +49,7 @@ export class Sauron extends CardController {
     Name = sauron_name;
     Cost = 6;
     Power = 1;
-    Description = `Once: Add +2 Power to each ${orc_name} and ${goblin_name}`;
+    Description = `Once: +2 Power to each ${orc_name} and ${goblin_name}`;
     Sprite = Sprites.Sauron;
     override IsVillain = true;
 

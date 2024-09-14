@@ -11,7 +11,7 @@ export class DaltonBro extends CardController {
     Name = "Palton Brother";
     Cost = 1;
     Power = 2;
-    Description = `Once: Give another ${this.Name} +1 Power`;
+    Description = `Once: +1 Power to another ${this.Name}`;
     Sprite = Sprites.DaltonBro;
     override IsVillain = true;
 
@@ -29,7 +29,7 @@ export class MojoJojo extends CardController {
     Name = "DojoBojo";
     Cost = 3;
     Power = 6;
-    Description = "Once: Turn a card in the opponent's into a Marble";
+    Description = "Once: Turn a card in the opponent's hand into a Marble";
     Sprite = Sprites.MojoJojo;
     override IsVillain = true;
 
@@ -48,7 +48,6 @@ export class Joker extends MacGyver {
     override Name = "Poker";
     override Cost = 5;
     override Power = 0;
-    override Description = "Once: Repeat the Once abilities of all your revealed cards.";
     override Sprite = Sprites.Joker;
     override IsVillain = true;
 }
