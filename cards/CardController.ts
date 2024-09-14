@@ -93,7 +93,12 @@ export abstract class CardController {
         modifier.setAttribute("origin-name", origin.Name);
         modifier.setAttribute("op", op);
         modifier.setAttribute("value", value.toString());
-        this.Element.append(modifier);
+
+        if (origin === this) {
+            this.Element.prepend(modifier);
+        } else {
+            this.Element.append(modifier);
+        }
 
         // TODO Perhaps a MutationObserver would be a better way to handle this?
         this.Element.Render();
@@ -119,7 +124,7 @@ export abstract class CardController {
     RemoveModifiers(origin: CardController | LocationController) {
         const modifiers = this.Element.querySelectorAll(`a-modifier[origin-id="${origin.Id}"]`);
         for (let modifier of modifiers) {
-            this.Element.removeChild(modifier);
+            modifier.remove();
         }
         this.Element.Render();
     }

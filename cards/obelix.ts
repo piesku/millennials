@@ -11,9 +11,7 @@ export class Obelix extends CardController {
 
     override *OnMessageSelf(kind: Message, trace: Trace) {
         if (kind === Message.CardEntersTable) {
-            const cards_in_hand = this.Owner.Hand.children.length;
-
-            yield trace.Log(this.AddModifier(this, "addpower", cards_in_hand * 3));
+            yield trace.Log(this.AddModifier(this, "setpower", this.Power + this.Owner.Hand.childElementCount * 3));
         }
     }
 
@@ -22,11 +20,9 @@ export class Obelix extends CardController {
             return;
         }
 
-        const cards_in_hand = this.Owner.Hand.children.length;
-
         if (kind === Message.CardEntersHand || kind === Message.CardLeavesHand) {
             this.RemoveModifiers(this);
-            yield trace.Log(this.AddModifier(this, "addpower", cards_in_hand * 3));
+            yield trace.Log(this.AddModifier(this, "setpower", this.Power + this.Owner.Hand.childElementCount * 3));
         }
     }
 }
