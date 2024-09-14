@@ -2,7 +2,7 @@ import {CardController} from "../cards/CardController.js";
 import {Message, Trace} from "../messages.js";
 import {LocationController} from "./LocationController.js";
 
-export class AttackOfTheClones extends LocationController {
+export class FillWithClones extends LocationController {
     Description = "Cards played here fill the location with their copies.";
     override *OnMessage(kind: Message, trace: Trace, card: CardController) {
         if (card?.Field === this) {

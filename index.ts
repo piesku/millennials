@@ -48,6 +48,6 @@ import "./cards/tmnt-raphael.js";
 import "./cards/tsubasa.js";
 import "./cards/woo-dy.js";
 
-import "./locations/StarWars_ANewHope.js";
-import "./locations/StarWars_ReturnOfTheJedi.js";
-import "./locations/StarWars_TheEmpireStrikesBack.js";
+import "./locations/draw_a_card.js";
+import "./locations/gain_two_power.js";
+import "./locations/transform_same_cost.js";

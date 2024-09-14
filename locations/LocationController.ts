@@ -8,10 +8,10 @@ import {Message, Trace} from "../messages.js";
 import {CollectionFlag, save_card_state} from "../storage.js";
 
 export const enum LocationType {
-    StarWars_ANewHope,
-    StarWars_TheEmpireStrikesBack,
-    StarWars_ReturnOfTheJedi,
-    StarWars_AttackOfTheClones,
+    DrawACard,
+    GainTwoPower,
+    TransformSameCost,
+    FillWithClones,
     GainOneEnergy,
     GainOneEnergyEmpty,
     GiveCostHand,

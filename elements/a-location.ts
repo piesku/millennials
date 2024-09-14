@@ -2,8 +2,11 @@ import {html} from "../lib/html.js";
 import {CastleBonehead} from "../locations/cant_play_here.js";
 import {CopyToOpponentHand} from "../locations/copy_to_opponent_hand.js";
 import {CopyToOwnerHand} from "../locations/copy_to_owner_hand.js";
+import {DrawACard} from "../locations/draw_a_card.js";
+import {FillWithClones} from "../locations/fill_with_clones.js";
 import {GainOneEnergy} from "../locations/gain_one_energy.js";
 import {GainOneEnergyEmpty} from "../locations/gain_one_energy_empty.js";
+import {GainTwoPower} from "../locations/gain_two_power.js";
 import {GiveCostHand} from "../locations/give_cost_hand.js";
 import {LocationController, LocationType} from "../locations/LocationController.js";
 import {LoseOnePower} from "../locations/lose_one_power.js";
@@ -12,10 +15,7 @@ import {OnceDontWork} from "../locations/once_dont_work.js";
 import {OneTwoThree} from "../locations/one_two_three.js";
 import {ReturnToOwnerHand} from "../locations/return_to_owner_hand.js";
 import {ShuffleMarbles} from "../locations/shuffle_marbles.js";
-import {ANewHope} from "../locations/StarWars_ANewHope.js";
-import {AttackOfTheClones} from "../locations/StarWars_AttackOfTheClones.js";
-import {ReturnOfTheJedi} from "../locations/StarWars_ReturnOfTheJedi.js";
-import {TheEmpireStrikesBack} from "../locations/StarWars_TheEmpireStrikesBack.js";
+import {TransformSameCost} from "../locations/transform_same_cost.js";
 import {TrashFourthTurn} from "../locations/trash_fourth_turn.js";
 import {TurnSeven} from "../locations/turn_seven.js";
 import {WinnerDrawsTwo} from "../locations/winner_draws_two.js";
@@ -24,10 +24,10 @@ export class LocationElement extends HTMLElement {
     Controller!: LocationController;
 
     static Controllers: Array<new (el: LocationElement) => LocationController> = [
-        TheEmpireStrikesBack,
-        ANewHope,
-        ReturnOfTheJedi,
-        AttackOfTheClones,
+        DrawACard,
+        GainTwoPower,
+        TransformSameCost,
+        FillWithClones,
         GainOneEnergy,
         GainOneEnergyEmpty,
         GiveCostHand,
