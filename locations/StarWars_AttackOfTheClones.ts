@@ -8,16 +8,16 @@ export class AttackOfTheClones extends LocationController {
         if (card?.Field === this) {
             switch (kind) {
                 case Message.CardEntersTable:
-                    yield trace.Log(`${this.Name} fills with clones of ${card}`);
+                    yield trace.Log(`${this} fills with clones of ${card}`);
                     const cards = [];
                     while (!this.IsFull(card.Owner)) {
                         let clone = card.Clone();
                         cards.push(clone);
-                        yield* this.AddCard(clone.Controller, trace.Fork(), card.Owner, true);
+                        yield* this.AddCard(clone.Controller, trace, card.Owner, true);
                     }
 
                     for (let card of cards) {
-                        yield* card.Controller.Reveal(trace.Fork(card.Controller));
+                        yield* card.Controller.Reveal(trace);
                     }
                     break;
             }
