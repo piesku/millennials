@@ -427,7 +427,7 @@ export class CardElement extends HTMLElement {
                     <flex-col start>${card_body}</flex-col>
                 </card-detail>
                 <card-modifiers>
-                    <slot>${this.Controller.toString()} doesn't have any active modifiers.</slot>
+                    <slot>${this.Controller} doesn't have any active modifiers.</slot>
                 </card-modifiers>
             </dialog>
         `;

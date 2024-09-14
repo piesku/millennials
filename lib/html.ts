@@ -1,4 +1,4 @@
-type Interpolation = string | number | boolean | undefined | null | Array<Interpolation>;
+type Interpolation = {toString(): string} | boolean | undefined | null | Array<Interpolation>;
 
 function shift(values: Array<Interpolation>) {
     let value = values.shift();
