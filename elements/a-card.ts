@@ -214,7 +214,7 @@ export class CardElement extends HTMLElement {
             <div class="mask"></div>
             <div class="text">
                 <div class="name">${this.Controller.Name}</div>
-                <div class="desc">${this.Controller.Description}</div>
+                <div part="desc">${this.Controller.Description}</div>
             </div>
         `;
 
@@ -228,36 +228,12 @@ export class CardElement extends HTMLElement {
                     user-select: none;
                 }
 
-                :host .body {
-                    position: absolute;
-                    inset: 0;
-                    border-radius: 5px;
-                    background: ${color_from_seed(this.Controller.Sprite + this.Controller.SpriteOffset)};
-                    cursor: pointer;
-                }
-
-                :host-context(location-owner) {
-                    width: 60px;
-                    height: 90px;
-
-                    .body {
-                        inset: -50%;
-                        height: 180px;
-                        width: 120px;
-                        scale: 0.5;
-
-                        .desc {
-                            display: none;
-                        }
-                    }
-                }
-
                 :host(:not(.frontside)) {
                     background-image: repeating-linear-gradient(45deg, #fe7 0px, #fd6 10px, #fa8 20px);
                     box-shadow: inset 0 0 0 1px #00000066;
                 }
 
-                :host(.unplayable) .body {
+                :host(.unplayable) [part="body"] {
                     filter: contrast(0.3) brightness(1.5);
                     cursor: not-allowed;
                 }
@@ -288,6 +264,14 @@ export class CardElement extends HTMLElement {
 
                 :host(.unowned) dialog {
                     filter: grayscale(1);
+                }
+
+                [part="body"] {
+                    position: absolute;
+                    inset: 0;
+                    border-radius: 5px;
+                    background: ${color_from_seed(this.Controller.Sprite + this.Controller.SpriteOffset)};
+                    cursor: pointer;
                 }
 
                 .sprite {
@@ -357,7 +341,7 @@ export class CardElement extends HTMLElement {
                     font-weight: bold;
                 }
 
-                .desc {
+                [part="desc"] {
                     font-size: 0.7em;
                 }
 
@@ -427,7 +411,7 @@ export class CardElement extends HTMLElement {
                 }
             </style>
 
-            <flex-col class="body" start onclick="event.stopPropagation(); this.nextElementSibling.showModal();"
+            <flex-col part="body" start onclick="event.stopPropagation(); this.nextElementSibling.showModal();"
                 >${card_body}</flex-col
             >
 

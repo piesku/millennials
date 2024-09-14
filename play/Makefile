@@ -20,7 +20,7 @@ game.esbuild.js: $(SOURCES)
 game.sed.js: game.esbuild.js sed.txt
 	sed -f sed.txt $< | tr '\n' ' ' | sed -f sed.txt > $@
 
-game.terser.js: game.sed.js terser_compress.txt | node_modules
+game.terser.js: game.sed.js terser_compress.txt sed.txt | node_modules
 	npx --quiet terser $< \
 		--ecma 2022 \
 		--mangle toplevel \
@@ -37,8 +37,8 @@ game.html: ../index.html
 		-e 's/\.\/sprites/..\/sprites/' \
 		$< > $@
 
-index.html: game.html game.roadroller.js posthtml.cjs | node_modules
-	node posthtml.cjs $< > $@
+index.html: game.html game.roadroller.js posthtml.cjs sed.txt | node_modules
+	node posthtml.cjs $< | sed -f sed.txt > $@
 
 # https://www.7-zip.org/download.html
 index.zip: index.html

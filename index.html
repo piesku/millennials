@@ -36,6 +36,22 @@
     .hilite {
         scale: 1.2;
     }
+
+    a-location a-card {
+        width: 60px;
+        height: 90px;
+    }
+
+    a-location a-card::part(body) {
+        inset: -50%;
+        height: 180px;
+        width: 120px;
+        scale: 0.5;
+    }
+
+    a-location a-card::part(desc) {
+        display: none;
+    }
 </style>
 
 <body>
