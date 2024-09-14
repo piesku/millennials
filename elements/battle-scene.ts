@@ -270,20 +270,22 @@ export class BattleScene extends HTMLElement {
     }
 
     PrepareBattle() {
+        set_seed(this.Game.Seed * this.Game.CurrentOpponent);
         this.Render();
 
-        set_seed(this.Game.Seed * (this.Game.CurrentOpponent + 1));
-
-        let by_cost = this.Game.Collection.AllCardsByCost();
+        let all = this.Game.Collection.AllCardsByCost();
         for (let row = 0; row < Math.min(2, this.Game.CardsInShop); row++) {
-            this.innerHTML += html`
-                <a-card type="${element(by_cost[1]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
-                <a-card type="${element(by_cost[2]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
-                <a-card type="${element(by_cost[3]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
-                <a-card type="${element(by_cost[4]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
-                <a-card type="${element(by_cost[5]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
-                <a-card type="${element(by_cost[6]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
-            `;
+            this.insertAdjacentHTML(
+                "beforeend",
+                html`
+                    <a-card type="${element(all[1]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
+                    <a-card type="${element(all[2]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
+                    <a-card type="${element(all[3]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
+                    <a-card type="${element(all[4]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
+                    <a-card type="${element(all[5]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
+                    <a-card type="${element(all[6]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
+                `,
+            );
         }
 
         for (let card of this.querySelectorAll<CardElement>("a-card")) {

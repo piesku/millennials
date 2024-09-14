@@ -1,7 +1,7 @@
 let seed = 1;
 
 export function set_seed(new_seed: number) {
-    seed = 198706 * new_seed;
+    seed = new_seed;
 }
 
 export function rand() {

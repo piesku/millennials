@@ -20,26 +20,27 @@ export class EndlessController extends ActorController {
         }
 
         let avatar = element(game.Collection.AllCards);
+
         this.Sprite = avatar.Sprite;
         this.Name = `Evil ${avatar.Name}`;
         this.Description = `${this.Name} has joined the villains!`;
 
-        let by_cost = game.Collection.AllCardsByCost();
+        let all = game.Collection.AllCardsByCost();
 
         this.StartingDeck = [
             avatar.Sprite,
 
-            element(by_cost[1]!).Sprite,
-            element(by_cost[1]!).Sprite,
-            element(by_cost[2]!).Sprite,
-            element(by_cost[2]!).Sprite,
-            element(by_cost[3]!).Sprite,
-            element(by_cost[3]!).Sprite,
-            element(by_cost[4]!).Sprite,
-            element(by_cost[4]!).Sprite,
-            element(by_cost[5]!).Sprite,
-            element(by_cost[5]!).Sprite,
-            element(by_cost[6]!).Sprite,
+            element(all[1]!).Sprite,
+            element(all[1]!).Sprite,
+            element(all[2]!).Sprite,
+            element(all[2]!).Sprite,
+            element(all[3]!).Sprite,
+            element(all[3]!).Sprite,
+            element(all[4]!).Sprite,
+            element(all[4]!).Sprite,
+            element(all[5]!).Sprite,
+            element(all[5]!).Sprite,
+            element(all[6]!).Sprite,
         ];
     }
 }
