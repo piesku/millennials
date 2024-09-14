@@ -271,7 +271,7 @@ export class BattleScene extends HTMLElement {
         set_seed(this.Game.Seed * (this.Game.CurrentOpponent + 1));
 
         let by_cost = this.Game.Collection.AllCardsByCost();
-        for (let row = 0; row < this.Game.CardsInShop; row++) {
+        for (let row = 0; row < Math.min(2, this.Game.CardsInShop); row++) {
             this.innerHTML += html`
                 <a-card type="${element(by_cost[1]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
                 <a-card type="${element(by_cost[2]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
