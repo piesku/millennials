@@ -61,6 +61,8 @@ export class GameContainer extends HTMLElement {
     connectedCallback() {
         load_game_state(this);
 
+        history.replaceState(this.CurrentView, "");
+
         this.shadowRoot!.addEventListener("click", (e) => {
             let target = e.target as HTMLElement;
             switch (target.id) {
@@ -91,6 +93,13 @@ export class GameContainer extends HTMLElement {
         this.addEventListener("dragend", (e) => {
             let card = e.target as HTMLElement;
             card.classList.remove("dragging");
+        });
+
+        window.addEventListener("popstate", (e) => {
+            if (e.state) {
+                this.CurrentView = e.state as string;
+                this.Render();
+            }
         });
 
         switch (this.CurrentView) {
@@ -274,6 +283,7 @@ export class GameContainer extends HTMLElement {
 
     Commit() {
         save_game_state(this);
+        history.pushState(this.CurrentView, "");
         this.Render();
     }
 
