@@ -7,7 +7,7 @@ import {ActorType} from "./a-actor.js";
 import {BattleScene} from "./battle-scene.js";
 import {CollectionTitle} from "./collection-title.js";
 
-const VILLAINS_COUNT = 3;
+export const VILLAINS_COUNT = 3;
 
 export class GameContainer extends HTMLElement {
     constructor() {
