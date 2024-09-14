@@ -192,7 +192,7 @@ export class CardElement extends HTMLElement {
                 <flex-col start>
                     ${Array.from(
                         {length: this.Controller.CurrentCost},
-                        (_, i) => html`<span class="cost ${i > this.BaseCost && "incr"}"></span>`,
+                        (_, i) => html`<span class="cost ${i >= this.BaseCost && "incr"}"></span>`,
                     )}
                 </flex-col>
                 <span
