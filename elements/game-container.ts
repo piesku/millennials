@@ -143,12 +143,12 @@ export class GameContainer extends HTMLElement {
                 <a-location slot="location" title="Left" type="${integer(0, 17)}"></a-location>
                 <a-location slot="location" title="Middle" type="${integer(0, 17)}"></a-location>
                 <a-location slot="location" title="Right" type="${integer(0, 17)}"></a-location>
-                <a-actor type="${ActorType.Player}" id="player" slot="player">
+                <a-actor type="${ActorType.Player}" slot="player">
                     <a-deck></a-deck>
                     <a-hand></a-hand>
                     <a-trash hidden></a-trash>
                 </a-actor>
-                <a-actor type="${villain}" id="villain" slot="villain">
+                <a-actor type="${villain}" slot="villain">
                     <a-deck reverse></a-deck>
                     <a-hand></a-hand>
                     <a-trash hidden></a-trash>

@@ -63,8 +63,8 @@ export abstract class CardController {
     get Owner(): ActorController {
         let location_owner = this.Element.closest("location-owner");
         if (location_owner) {
-            let actor_id = location_owner.getAttribute("slot")!;
-            let actor = this.Battle.querySelector("#" + actor_id) as ActorElement;
+            let actor_slot = location_owner.getAttribute("slot")!;
+            let actor = this.Battle.querySelector(`a-actor[slot=${actor_slot}]`) as ActorElement;
             return actor.Controller;
         } else {
             let actor_element = this.Element.closest("a-actor") as ActorElement;
@@ -73,8 +73,8 @@ export abstract class CardController {
     }
 
     get Opponent(): ActorController {
-        let actor_id = this.Owner.Type === "player" ? "villain" : "player";
-        let actor = this.Battle.querySelector("#" + actor_id) as ActorElement;
+        let actor_slot = this.Owner.Type === "player" ? "villain" : "player";
+        let actor = this.Battle.querySelector(`a-actor[slot=${actor_slot}]`) as ActorElement;
         return actor.Controller;
     }
 
