@@ -113,8 +113,6 @@ export class BattleScene extends HTMLElement {
                     height: 100vh;
                     padding: 10px;
                     overflow-y: auto;
-                    background: rgba(255, 255, 255, 0.8);
-                    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
                 }
 
                 button {
