@@ -58,9 +58,13 @@ export abstract class LocationController {
     }
 
     GetScore(actor: ActorController) {
-        return this.GetRevealedCards(actor)
-            .map((card) => card.CurrentPower)
-            .reduce((a, b) => a + b, 0);
+        let revealed_cards = this.GetRevealedCards(actor);
+        let total_power = revealed_cards.map((card) => card.CurrentPower).reduce((a, b) => a + b, 0);
+        let doublers = revealed_cards.filter((card) => card.Name === "Ron Jambo");
+        for (let _ of doublers) {
+            total_power *= 2;
+        }
+        return total_power;
     }
 
     GetRevealedCards(actor?: ActorController) {
