@@ -15,7 +15,7 @@ s/ \{2,\}//g
 
 # Custom elements
 s/battle-scene/b-s/g
-s/collection-viewer/c-v/g
+s/collection-title/c-t/g
 s/location-owner/l-o/g
 s/location-slot/l-s/g
 s/flex-row/f-r/g
@@ -39,7 +39,10 @@ s/unowned/o/g
 
 # JS
 s/\.\.toString()//g
+s/const /let /g
 
 # Undo some of the above
 s/Once:/Once: /g
 s/Always:/Always: /g
+s/Energy:/Energy: /g
+s/Trash:/Trash: /g
