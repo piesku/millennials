@@ -6,7 +6,7 @@ export class Superman extends CardController {
     Name = "Mupersan";
     Cost = 5;
     Power = 8;
-    Description = "Once: All opponents cards here -1 Power";
+    Description = "Once: -1 Power to all opponents cards here";
     Sprite = Sprites.Superman;
 
     override *OnReveal(trace: Trace) {

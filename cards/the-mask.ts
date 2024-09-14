@@ -8,7 +8,7 @@ export class TheMask extends CardController {
     Name = "The Skam";
     Cost = 6;
     Power = 6;
-    Description = "Once: Resurrect all your trashed cards to random locations";
+    Description = "Once: Recycle all your trashed cards to random locations";
     Sprite = Sprites.TheMask;
 
     override *OnReveal(trace: Trace) {

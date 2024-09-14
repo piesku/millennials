@@ -6,7 +6,7 @@ export class JohnRambo extends CardController {
     Name = "Ron Jambo";
     Cost = 5;
     Power = 0;
-    Description = "Always: Has a Power equal to the sum of your other cards here";
+    Description = "Always: Has the combined Power of your other cards here";
     Sprite = Sprites.JohnRambo;
 
     override *OnMessageSelf(kind: Message, trace: Trace) {

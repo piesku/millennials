@@ -8,7 +8,7 @@ export class PowerpuffBubbles extends CardController {
     Name = "Bombles";
     Cost = 5;
     Power = 2;
-    Description = "Once: Add 8-Power Atomic Girl to another location.";
+    Description = "Once: Play 8-Power Atomic Girl to another location.";
     Sprite = Sprites.PowerpuffBubbles;
 
     override *OnReveal(trace: Trace) {

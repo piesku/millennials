@@ -6,7 +6,7 @@ export class Hannibal extends CardController {
     Name = "B. Cannibal";
     Cost = 5;
     Power = 3;
-    Description = "Always: Your other cards +1 Power";
+    Description = "Always: Your other cards have +1 Power";
     Sprite = Sprites.Hannibal;
 
     override *OnMessageSelf(kind: Message, trace: Trace) {

@@ -6,7 +6,7 @@ export class OptimusPrime extends CardController {
     Name = "Pessimus";
     Cost = 5;
     Power = 14;
-    Description = "Once: Opponent cards here +2 Power.";
+    Description = "Once: +2 Power to opponent cards here";
     Sprite = Sprites.OptimusPrime;
 
     override *OnReveal(trace: Trace) {

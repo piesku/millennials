@@ -6,7 +6,7 @@ export class Asterix extends CardController {
     Name = "Asterisk";
     Cost = 6;
     Power = 4;
-    Description = "Once: Clone the highest Power enemy cards played this turn";
+    Description = "Once: Clone highest Power cards opponent played this turn";
     Sprite = Sprites.Asterix;
 
     override *OnReveal(trace: Trace) {

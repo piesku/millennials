@@ -7,7 +7,7 @@ export class Kirilin extends CardController {
     Name = "Grillin";
     Cost = 2;
     Power = 3;
-    Description = "When trashed, +2 Power and play to a random location";
+    Description = "When trashed, +2 Power and recycle at a random location";
     Sprite = Sprites.Kirilin;
     override SpriteOffset = 18;
 

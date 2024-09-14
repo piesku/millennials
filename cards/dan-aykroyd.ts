@@ -7,7 +7,7 @@ export class DanAykroyd extends CardController {
     Name = "Dan";
     Cost = 3;
     Power = 2;
-    Description = "Once: Give 3 of your other cards +3 Power";
+    Description = "Once: Give your three other cards +3 Power";
     Sprite = Sprites.DanAykroyd;
 
     override *OnReveal(trace: Trace) {

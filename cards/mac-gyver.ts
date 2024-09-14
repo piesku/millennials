@@ -6,7 +6,7 @@ export class MacGyver extends CardController {
     Name = "GacMyver";
     Cost = 6;
     Power = 8;
-    Description = "Once: Repeat the Once abilities of all your revealed cards";
+    Description = "Once: Repeat all your revealed Once cards";
     Sprite = Sprites.MacGyver;
 
     override *OnReveal(trace: Trace) {
