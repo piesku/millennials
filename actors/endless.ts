@@ -1,5 +1,5 @@
 import {ActorElement} from "../elements/a-actor.js";
-import {GameContainer, VILLAINS_COUNT} from "../elements/game-container.js";
+import {GameContainer} from "../elements/game-container.js";
 import {element} from "../lib/random.js";
 import {Sprites} from "../sprites/sprites.js";
 import {ActorController} from "./ActorController.js";
@@ -21,7 +21,7 @@ export class EndlessController extends ActorController {
 
         let avatar = element(game.Collection.AllCards);
         this.Sprite = avatar.Sprite;
-        this.Name = `Evil ${avatar.Name} — Endless Duel #${game.CurrentOpponent - VILLAINS_COUNT}`;
+        this.Name = `Evil ${avatar.Name}`;
         this.Description = `${this.Name} has joined the villains!`;
 
         let by_cost = game.Collection.AllCardsByCost();

@@ -10,7 +10,7 @@ import {CollectionFlag, save_card_state} from "../storage.js";
 import {ActorElement, ActorType} from "./a-actor.js";
 import {CardElement} from "./a-card.js";
 import {LocationElement} from "./a-location.js";
-import {GameContainer} from "./game-container.js";
+import {GameContainer, VILLAINS_COUNT} from "./game-container.js";
 import {LocationOwner} from "./location-owner.js";
 
 export class BattleScene extends HTMLElement {
@@ -164,7 +164,11 @@ export class BattleScene extends HTMLElement {
                             </div>
                         </div>
                         <div style="width:520px">
-                            <h2>Next Duel</h2>
+                            <h2>
+                                ${this.Villain.Name.startsWith("Evil")
+                                    ? "Endless Duel #" + (this.Game.CurrentOpponent - VILLAINS_COUNT)
+                                    : "Next Duel"}
+                            </h2>
                             <div style="padding:20px; background:#ADD8E6; border-radius:5px;">
                                 <h3 style="margin-top:0;">${this.Villain.Name}</h3>
                                 <div class="spr">
