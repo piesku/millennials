@@ -14,7 +14,7 @@ export class Woody extends CardController {
         let card = this.Owner.Deck.firstElementChild as CardElement;
         if (card) {
             yield trace.Log(`${this} plays ${card.Controller} to ${this.Field}`);
-            yield* this.Field!.AddCard(card.Controller, trace.Fork(1), this.Owner);
+            yield* this.Field!.AddCard(card.Controller, trace, this.Owner);
         }
     }
 }
