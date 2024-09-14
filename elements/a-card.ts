@@ -188,24 +188,22 @@ export class CardElement extends HTMLElement {
         const mask_url = `url(${mask_src})`;
 
         const card_body = html`
-            <flex-row>
-                <flex-col start>
-                    ${Array.from(
-                        {length: this.Controller.CurrentCost},
-                        (_, i) => html`<span class="cost ${i >= this.BaseCost && "incr"}"></span>`,
-                    )}
-                </flex-col>
-                <span
-                    id="power"
-                    class="${this.Controller.CurrentPower > this.BasePower
-                        ? "incr"
-                        : this.Controller.CurrentPower < this.BasePower
-                          ? "decr"
-                          : ""}"
-                >
-                    ${this.Controller.CurrentPower}
-                </span>
-            </flex-row>
+            <flex-col start id="cost">
+                ${Array.from(
+                    {length: this.Controller.CurrentCost},
+                    (_, i) => html`<span class="cost ${i >= this.BaseCost && "incr"}"></span>`,
+                )}
+            </flex-col>
+            <span
+                id="power"
+                class="${this.Controller.CurrentPower > this.BasePower
+                    ? "incr"
+                    : this.Controller.CurrentPower < this.BasePower
+                      ? "decr"
+                      : ""}"
+            >
+                ${this.Controller.CurrentPower}
+            </span>
             <div class="sprite"></div>
             <div class="mask"></div>
             <div class="text">
@@ -297,13 +295,9 @@ export class CardElement extends HTMLElement {
                     background: none;
                 }
 
-                flex-row {
+                #cost {
                     position: absolute;
                     inset: 2px 3px auto;
-                    z-index: 1;
-                    color: #fff;
-                    font-weight: bold;
-                    font-size: 24px;
                 }
 
                 .cost {
@@ -318,13 +312,22 @@ export class CardElement extends HTMLElement {
                     background: radial-gradient(circle at 30% 30%, #ff6600, #ff660088);
                 }
 
+                #power {
+                    position: absolute;
+                    inset: 2px 3px auto auto;
+                    z-index: 1;
+                    color: #fff;
+                    font-weight: bold;
+                    font-size: 24px;
+                }
+
                 #power.decr {
-                    color: red;
+                    color: #ff6600;
                     scale: 3;
                 }
 
                 #power.incr {
-                    color: green;
+                    color: #00ff66;
                     scale: 3;
                 }
 
