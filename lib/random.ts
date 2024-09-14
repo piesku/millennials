@@ -17,7 +17,12 @@ export function float(min = 0, max = 1) {
     return rand() * (max - min) + min;
 }
 
-export function element<T>(list: T extends Node ? NodeListOf<T> | Array<T> : Array<T>) {
+interface Indexable<T> {
+    length: number;
+    [index: number]: T;
+}
+
+export function element<T>(list: Indexable<T>) {
     return list[integer(0, list.length - 1)];
 }
 
