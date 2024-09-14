@@ -188,17 +188,13 @@ export class CardElement extends HTMLElement {
         const mask_url = `url(${mask_src})`;
 
         const card_body = html`
-            <div class="header">
-                <span
-                    id="cost"
-                    class="${this.Controller.CurrentCost > this.BaseCost
-                        ? "incr"
-                        : this.Controller.CurrentCost < this.BaseCost
-                          ? "decr"
-                          : ""}"
-                >
-                    $${this.Controller.CurrentCost}
-                </span>
+            <flex-row>
+                <flex-col start>
+                    ${Array.from(
+                        {length: this.Controller.CurrentCost},
+                        (_, i) => html`<span class="cost ${i > this.BaseCost && "incr"}"></span>`,
+                    )}
+                </flex-col>
                 <span
                     id="power"
                     class="${this.Controller.CurrentPower > this.BasePower
@@ -209,7 +205,7 @@ export class CardElement extends HTMLElement {
                 >
                     ${this.Controller.CurrentPower}
                 </span>
-            </div>
+            </flex-row>
             <div class="sprite"></div>
             <div class="mask"></div>
             <div class="text">
@@ -301,28 +297,35 @@ export class CardElement extends HTMLElement {
                     background: none;
                 }
 
-                .header {
+                flex-row {
                     position: absolute;
                     inset: 2px 3px auto;
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
                     z-index: 1;
                     color: #fff;
                     font-weight: bold;
-                    font-size: 16px;
+                    font-size: 24px;
                 }
 
-                #cost.incr,
+                .cost {
+                    width: 10px;
+                    height: 10px;
+                    margin: 1px 0;
+                    border-radius: 50%;
+                    background: radial-gradient(circle at 30% 30%, #ffff00, #ffff00aa);
+                }
+
+                .cost.incr {
+                    background: radial-gradient(circle at 30% 30%, #ff6600, #ff660088);
+                }
+
                 #power.decr {
                     color: red;
-                    scale: 5;
+                    scale: 3;
                 }
 
-                #cost.decr,
                 #power.incr {
                     color: green;
-                    scale: 5;
+                    scale: 3;
                 }
 
                 .text {
