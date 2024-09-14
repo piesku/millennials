@@ -26,7 +26,7 @@ export abstract class CardController {
     constructor(public Element: CardElement) {}
 
     toString() {
-        return `<log-chip class="card" for="${this.Id}">${this.Name}</log-chip>`;
+        return `<span class="card" for="${this.Id}">${this.Name}</span>`;
     }
 
     get CurrentCost() {

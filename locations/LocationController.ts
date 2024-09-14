@@ -38,7 +38,7 @@ export abstract class LocationController {
     constructor(public Element: LocationElement) {}
 
     toString() {
-        return `<log-chip class="location" for="${this.Id}">${this.Name}</log-chip>`;
+        return `<span class="location" for="${this.Id}">${this.Name}</span>`;
     }
 
     get Name() {

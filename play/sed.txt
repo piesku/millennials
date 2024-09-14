@@ -30,8 +30,6 @@ s/a-hand/a-h/g
 s/a-location/a-f/g
 s/a-log/a-l/g
 s/a-modifier/a-m/g
-s/log-chip/l-c/g
-s/LOG-CHIP/L-C/g
 
 # CSS class names
 s/frontside/f/g
