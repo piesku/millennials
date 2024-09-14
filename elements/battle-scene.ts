@@ -2,7 +2,7 @@ import {ActorController} from "../actors/ActorController.js";
 import {CardController} from "../cards/CardController.js";
 import {color_from_seed} from "../lib/color.js";
 import {html} from "../lib/html.js";
-import {set_seed} from "../lib/random.js";
+import {element, set_seed} from "../lib/random.js";
 import {delay} from "../lib/timeout.js";
 import {LocationController} from "../locations/LocationController.js";
 import {Message, Trace} from "../messages.js";
@@ -269,6 +269,18 @@ export class BattleScene extends HTMLElement {
         this.Render();
 
         set_seed(this.Game.Seed * (this.Game.CurrentOpponent + 1));
+
+        let by_cost = this.Game.Collection.AllCardsByCost();
+        for (let row = 0; row < this.Game.CardsInShop; row++) {
+            this.innerHTML += html`
+                <a-card type="${element(by_cost[1]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
+                <a-card type="${element(by_cost[2]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
+                <a-card type="${element(by_cost[3]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
+                <a-card type="${element(by_cost[4]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
+                <a-card type="${element(by_cost[5]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
+                <a-card type="${element(by_cost[6]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
+            `;
+        }
 
         for (let card of this.querySelectorAll<CardElement>("a-card")) {
             card.addEventListener("dragstart", (e) => {

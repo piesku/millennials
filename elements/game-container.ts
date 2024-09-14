@@ -1,7 +1,7 @@
 import {STARTING_DECK} from "../actors/player.js";
 import {html} from "../lib/html.js";
 import {format_time} from "../lib/number.js";
-import {element, integer, set_seed, shuffle} from "../lib/random.js";
+import {integer, set_seed, shuffle} from "../lib/random.js";
 import {load_game_state, save_game_state} from "../storage.js";
 import {ActorType} from "./a-actor.js";
 import {BattleScene} from "./battle-scene.js";
@@ -127,7 +127,6 @@ export class GameContainer extends HTMLElement {
             offset = this.CurrentOpponent;
         }
 
-        let by_cost = this.Collection.AllCardsByCost();
         for (let [i, villain] of villains.entries()) {
             let battle = document.createElement("battle-scene");
             battle.setAttribute("name", (offset + i).toString());
@@ -146,20 +145,6 @@ export class GameContainer extends HTMLElement {
                     <a-trash hidden></a-trash>
                 </a-actor>
                 <a-log slot="log"></a-log>
-
-                <a-card type="${element(by_cost[1]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
-                <a-card type="${element(by_cost[2]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
-                <a-card type="${element(by_cost[3]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
-                <a-card type="${element(by_cost[4]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
-                <a-card type="${element(by_cost[5]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
-                <a-card type="${element(by_cost[6]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
-
-                <a-card type="${element(by_cost[1]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
-                <a-card type="${element(by_cost[2]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
-                <a-card type="${element(by_cost[3]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
-                <a-card type="${element(by_cost[4]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
-                <a-card type="${element(by_cost[5]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
-                <a-card type="${element(by_cost[6]!).Sprite}" slot="shop" draggable="true" class="frontside"></a-card>
             `;
             this.append(battle);
         }
