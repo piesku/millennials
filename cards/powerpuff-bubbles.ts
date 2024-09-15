@@ -25,6 +25,8 @@ export class PowerpuffBubbles extends CardController {
             card.Controller.Name = "Atomic Girl";
             card.Controller.Power = card.BasePower = 8;
             card.Controller.SpriteOffset = 5;
+
+            yield trace.Log(`${this} plays ${card.Controller} to ${this.Field}`);
             yield* target_location.AddCard(card.Controller, trace, this.Owner);
         }
     }
