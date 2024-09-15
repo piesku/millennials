@@ -126,14 +126,17 @@ export class GameContainer extends HTMLElement {
     }
 
     Populate(endless = false) {
-        set_seed(this.Seed * this.CurrentOpponent);
-
-        let villains = shuffle([ActorType.Cartoon, ActorType.Pirates, ActorType.Space]);
-        let offset = 1;
+        let villains: ActorType[];
+        let offset: number;
 
         if (endless) {
+            set_seed(this.Seed * this.CurrentOpponent);
             villains = [ActorType.Endless];
             offset = this.CurrentOpponent;
+        } else {
+            set_seed(this.Seed);
+            villains = shuffle([ActorType.Cartoon, ActorType.Pirates, ActorType.Space]);
+            offset = 1;
         }
 
         for (let [i, villain] of villains.entries()) {
