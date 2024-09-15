@@ -7,7 +7,7 @@ export class Raphael extends CardController {
     Name = "Santi";
     Cost = 3;
     Power = 5;
-    Description = "Once: Move an enemy 1 or 2-Cost card to this location.";
+    Description = "Once: Move an opponent 1 or 2-Cost card to this location.";
     Sprite = Sprites.Raphael;
 
     override *OnReveal(trace: Trace) {
@@ -17,7 +17,7 @@ export class Raphael extends CardController {
 
         let card_to_move = element(enemy_cards);
         if (card_to_move) {
-            yield* card_to_move.Move(trace, this.Field!, this.Owner);
+            yield* card_to_move.Move(trace, this.Field!, this.Opponent);
         }
     }
 }
