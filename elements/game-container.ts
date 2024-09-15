@@ -1,7 +1,7 @@
 import {STARTING_DECK} from "../actors/player.js";
 import {html} from "../lib/html.js";
 import {format_time} from "../lib/number.js";
-import {integer, set_seed, shuffle} from "../lib/random.js";
+import {set_seed, shuffle} from "../lib/random.js";
 import {load_game_state, save_game_state} from "../storage.js";
 import {ActorType} from "./a-actor.js";
 import {BattleScene} from "./battle-scene.js";
@@ -137,12 +137,16 @@ export class GameContainer extends HTMLElement {
         }
 
         for (let [i, villain] of villains.entries()) {
+            // Choose 3 non-repeating locations. C(18, 3) = 816
+            let all_locations = Array.from({length: 18}, (_, i) => i);
+            let battle_locations = shuffle(all_locations).slice(0, 3);
+
             let battle = document.createElement("battle-scene");
             battle.setAttribute("name", (offset + i).toString());
             battle.innerHTML = html`
-                <a-location slot="location" title="Left" type="${integer(0, 17)}"></a-location>
-                <a-location slot="location" title="Middle" type="${integer(0, 17)}"></a-location>
-                <a-location slot="location" title="Right" type="${integer(0, 17)}"></a-location>
+                <a-location slot="location" title="Left" type="${battle_locations[0]}"></a-location>
+                <a-location slot="location" title="Middle" type="${battle_locations[1]}"></a-location>
+                <a-location slot="location" title="Right" type="${battle_locations[2]}"></a-location>
                 <a-actor type="${ActorType.Player}" slot="player">
                     <a-deck></a-deck>
                     <a-hand></a-hand>
