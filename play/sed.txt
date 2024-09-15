@@ -37,6 +37,7 @@ s/unplayable/u/g
 s/unknown/k/g
 s/unowned/o/g
 s/hilite/h/g
+s/dragging/d/g
 
 # JS
 s/\.\.toString()//g

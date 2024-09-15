@@ -97,12 +97,8 @@ customElements.define(
             let current = this.getAttribute("current");
             this.shadowRoot!.innerHTML = html`
                 <style>
-                    ::slotted(*) {
+                    ::slotted(:not([name="${current}"])) {
                         display: none;
-                    }
-
-                    ::slotted([name="${current}"]) {
-                        display: block;
                     }
                 </style>
                 <slot></slot>

@@ -48,11 +48,9 @@ export class GameContainer extends HTMLElement {
                     <button id="run">New Run</button>
                     <button id="daily">Daily Challenge</button>
                 </collection-title>
-                <main name="run">
-                    <multi-view current="${this.CurrentOpponent}">
-                        <slot></slot>
-                    </multi-view>
-                </main>
+                <multi-view name="run" current="${this.CurrentOpponent}">
+                    <slot></slot>
+                </multi-view>
             </multi-view>
             <dialog></dialog>
         `;

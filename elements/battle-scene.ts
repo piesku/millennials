@@ -88,7 +88,7 @@ export class BattleScene extends HTMLElement {
                     display: block;
                 }
 
-                main {
+                multi-view {
                     box-sizing: border-box;
                     height: 100vh;
                     overflow-y: auto;
@@ -151,62 +151,58 @@ export class BattleScene extends HTMLElement {
                 }
             </style>
             <multi-view current="${this.State}">
-                <main name="prep" style="padding:20px;">
-                    <flex-row gap start>
-                        <div>
-                            <h2>Card Exchange — Pick ${this.Game.CardsInShop} or <button id="skip">Skip</button></h2>
-                            <div class="grid" style="background:#E9967A;">
-                                <slot name="shop"></slot>
-                            </div>
-                            <h2>Your Deck — Drop Here to Replace</h2>
-                            <div class="grid" style="background:#8FBC8F;">
-                                <slot name="deck"></slot>
-                            </div>
+                <flex-row name="prep" gap start style="padding:20px">
+                    <div>
+                        <h2>Card Exchange — Pick ${this.Game.CardsInShop} or <button id="skip">Skip</button></h2>
+                        <div class="grid" style="background:#E9967A;">
+                            <slot name="shop"></slot>
                         </div>
-                        <div style="width:520px">
-                            <h2>
-                                ${this.Villain.Name.startsWith("Evil")
-                                    ? "Endless Duel #" + (this.Game.CurrentOpponent - VILLAINS_COUNT)
-                                    : "Next Duel"}
-                            </h2>
-                            <div style="padding:20px; background:#ADD8E6; border-radius:5px;">
-                                <h3 style="margin-top:0;">${this.Villain.Name}</h3>
-                                <div class="spr">
-                                    <div class="sprite"></div>
-                                    <div class="mask"></div>
-                                </div>
-                                <p><i>${this.Villain.Description}</i></p>
-                                <hr />
-                                ${locations.map(
-                                    (location) => html`
-                                        <dt>${location.Name}</dt>
-                                        <dd>${location.Description}</dd>
-                                    `,
-                                )}
-                            </div>
+                        <h2>Your Deck — Drop Here to Replace</h2>
+                        <div class="grid" style="background:#8FBC8F;">
+                            <slot name="deck"></slot>
                         </div>
-                    </flex-row>
-                </main>
-                <main name="play">
-                    <flex-row>
-                        <flex-col style="flex: 1; justify-content: space-evenly;">
-                            <flex-row>
-                                <slot name="villain"></slot>
-                            </flex-row>
-                            <flex-row>
-                                <slot name="location"></slot>
-                            </flex-row>
-                            <flex-row>
-                                <slot name="player"></slot>
-                                <flex-col>
-                                    <button id="end" style="flex:1" disabled>End Turn</button>
-                                    <button id="undo">Undo</button>
-                                </flex-col>
-                            </flex-row>
-                        </flex-col>
-                        <slot name="log"></slot>
-                    </flex-row>
-                </main>
+                    </div>
+                    <div style="width:520px">
+                        <h2>
+                            ${this.Villain.Name.startsWith("Evil")
+                                ? "Endless Duel #" + (this.Game.CurrentOpponent - VILLAINS_COUNT)
+                                : "Next Duel"}
+                        </h2>
+                        <div style="padding:20px; background:#ADD8E6; border-radius:5px;">
+                            <h3 style="margin-top:0;">${this.Villain.Name}</h3>
+                            <div class="spr">
+                                <div class="sprite"></div>
+                                <div class="mask"></div>
+                            </div>
+                            <p><i>${this.Villain.Description}</i></p>
+                            <hr />
+                            ${locations.map(
+                                (location) => html`
+                                    <dt>${location.Name}</dt>
+                                    <dd>${location.Description}</dd>
+                                `,
+                            )}
+                        </div>
+                    </div>
+                </flex-row>
+                <flex-row name="play">
+                    <flex-col style="flex: 1; justify-content: space-evenly;">
+                        <flex-row>
+                            <slot name="villain"></slot>
+                        </flex-row>
+                        <flex-row>
+                            <slot name="location"></slot>
+                        </flex-row>
+                        <flex-row>
+                            <slot name="player"></slot>
+                            <flex-col>
+                                <button id="end" style="flex:1" disabled>End Turn</button>
+                                <button id="undo">Undo</button>
+                            </flex-col>
+                        </flex-row>
+                    </flex-col>
+                    <slot name="log"></slot>
+                </flex-row>
             </multi-view>
         `;
     }

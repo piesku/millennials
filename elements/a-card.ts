@@ -390,7 +390,7 @@ export class CardElement extends HTMLElement {
                     display: block !important;
                 }
 
-                dialog .reflection {
+                dialog .refl {
                     position: absolute;
                     inset: 0;
                     z-index: 1;
@@ -426,7 +426,7 @@ export class CardElement extends HTMLElement {
 
             <dialog onclick="event.stopPropagation(); this.close()">
                 <card-detail>
-                    <div class="reflection"></div>
+                    <div class="refl"></div>
                     <flex-col start>${card_body}</flex-col>
                 </card-detail>
                 <card-modifiers>
