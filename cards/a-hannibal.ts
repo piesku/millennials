@@ -13,7 +13,9 @@ export class Hannibal extends CardController {
         switch (kind) {
             case Message.CardEntersTable:
                 for (let card of this.Battle.GetRevealedCards(this.Owner)) {
-                    yield trace.Log(card.AddModifier(this, "addpower", 1));
+                    if (card !== this) {
+                        yield trace.Log(card.AddModifier(this, "addpower", 1));
+                    }
                 }
                 break;
             case Message.CardLeavesTable:

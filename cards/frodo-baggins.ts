@@ -13,7 +13,7 @@ export class Frodo extends CardController {
         switch (kind) {
             case Message.CardEntersTable:
                 for (let card of this.Battle.GetRevealedCards(this.Owner)) {
-                    if (card.CurrentCost === 1) {
+                    if (card !== this && card.CurrentCost === 1) {
                         yield trace.Log(card.AddModifier(this, "addpower", 1));
                     }
                 }
