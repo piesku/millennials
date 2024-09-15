@@ -16,7 +16,7 @@ export class MacGyver extends CardController {
             }
 
             yield trace.Log(`${this} repeats ${card}'s ability`);
-            yield* card.OnReveal(trace.Fork(card));
+            yield* card.Reveal(trace);
         }
     }
 }

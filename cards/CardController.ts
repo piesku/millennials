@@ -166,10 +166,11 @@ export abstract class CardController {
         this.Element.classList.add("frontside");
         this.Element.classList.remove("unplayable");
         if (!this.Field.IsRevealed || this.Field.CanOnRevealHere(this)) {
+            this.IsRevealed = false;
             yield* this.OnReveal(trace.Fork(this));
         }
         this.IsRevealed = true;
-        this.TurnPlayed = this.Battle.CurrentTurn;
+        this.TurnPlayed = this.TurnPlayed || this.Battle.CurrentTurn;
 
         // Update the collection state.
         if (save_card_state(this, CollectionFlag.Seen)) {
@@ -188,7 +189,7 @@ export abstract class CardController {
      * include it.
      */
     *OnReveal(trace: Trace): Generator<[Trace, string], void> {
-        // yield trace.log(`it does nothing special`);
+        // yield trace.Log(`it does nothing special`);
     }
 
     *Trash(trace: Trace) {

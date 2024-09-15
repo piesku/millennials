@@ -18,7 +18,7 @@ export class TransformSameCost extends LocationController {
                         yield trace.Log(`${card} is now ${other_card}`);
                         card.Element.setAttribute("type", other_card.Element.getAttribute("type")!);
                         // Reveal the new card type.
-                        yield* card.Element.Controller.Reveal(trace.Fork(), false);
+                        yield* card.Element.Controller.Reveal(trace, false);
                     }
 
                     break;
