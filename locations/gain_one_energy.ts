@@ -10,6 +10,6 @@ export class GainOneEnergy extends LocationController {
 
         this.Battle.Villain.CurrentEnergy += 1;
         this.Battle.Villain.Element.Render();
-        yield trace.Log(`${this.Battle.Player} gain +1 energy`);
+        yield trace.Log(`${this.Battle.Villain} gain +1 energy`);
     }
 }

@@ -370,8 +370,8 @@ export class BattleScene extends HTMLElement {
     *StartBattle() {
         let trace = new Trace();
 
-        yield* this.Villain.StartBattle(trace.Fork());
-        yield* this.Player.StartBattle(trace.Fork());
+        yield* this.Villain.StartBattle(trace);
+        yield* this.Player.StartBattle(trace);
 
         // yield* this.BroadcastGameMessage(Message.BattleStarts);
         yield* this.StartTurn();
@@ -385,17 +385,17 @@ export class BattleScene extends HTMLElement {
 
         yield trace.Log(`<h3>Turn ${this.CurrentTurn} of ${this.MaxTurns}</h3>`);
 
+        yield* this.Player.StartTurn(this.CurrentTurn, trace);
+        yield* this.Villain.StartTurn(this.CurrentTurn, trace);
+
         if (this.CurrentTurn < 4) {
             let location = this.Locations[this.CurrentTurn - 1];
-            yield* location.Reveal(trace.Fork());
+            yield* location.Reveal(trace);
         }
-
-        yield* this.Player.StartTurn(this.CurrentTurn, trace.Fork());
-        yield* this.Villain.StartTurn(this.CurrentTurn, trace.Fork());
 
         yield* this.BroadcastGameMessage(Message.TurnStarts);
 
-        yield* this.Villain.VillAIn(trace.Fork());
+        yield* this.Villain.VillAIn(trace);
 
         yield trace.Log("<hr>");
         this.TheButton.disabled = false;

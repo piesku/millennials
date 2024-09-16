@@ -66,10 +66,10 @@ export abstract class ActorController {
     }
 
     *StartTurn(turn: number, trace: Trace) {
-        yield* this.DrawCard(trace);
-
         this.CurrentEnergy = turn;
         this.Element.Render();
+
+        yield* this.DrawCard(trace);
     }
 
     *DrawCard(trace: Trace, from?: Element) {
