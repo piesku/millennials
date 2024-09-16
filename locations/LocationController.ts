@@ -84,7 +84,7 @@ export abstract class LocationController {
     }
 
     CleanUp(card: CardController) {
-        let modifiers = this.Element.querySelectorAll(`a-modifier[origin-id="${card.Id}"]`);
+        let modifiers = this.Element.querySelectorAll(`a-modifier[origin="${card.Id}"]`);
         for (let modifier of modifiers) {
             modifier.remove();
         }

@@ -89,8 +89,7 @@ export abstract class CardController {
 
     AddModifier(origin: CardController | LocationController, op: string, value: number) {
         let modifier = document.createElement("a-modifier")!;
-        modifier.setAttribute("origin-id", origin.Id.toString());
-        modifier.setAttribute("origin-name", origin.Name);
+        modifier.setAttribute("origin", origin.Id.toString());
         modifier.setAttribute("op", op);
         modifier.setAttribute("value", value.toString());
 
@@ -122,7 +121,7 @@ export abstract class CardController {
     }
 
     RemoveModifiers(origin: CardController | LocationController) {
-        const modifiers = this.Element.querySelectorAll(`a-modifier[origin-id="${origin.Id}"]`);
+        const modifiers = this.Element.querySelectorAll(`a-modifier[origin="${origin.Id}"]`);
         for (let modifier of modifiers) {
             modifier.remove();
         }
@@ -130,7 +129,7 @@ export abstract class CardController {
     }
 
     HasModifiers(origin: CardController | LocationController): boolean {
-        const modifiers = this.Element.querySelectorAll(`a-modifier[origin-id="${origin.Id}"]`);
+        const modifiers = this.Element.querySelectorAll(`a-modifier[origin="${origin.Id}"]`);
         return modifiers.length > 0;
     }
     /**

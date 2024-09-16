@@ -570,7 +570,7 @@ export class BattleScene extends HTMLElement {
     }
 
     CleanUp(card: CardController) {
-        let modifiers = this.querySelectorAll(`a-modifier[origin-id="${card.Id}"]`);
+        let modifiers = this.querySelectorAll(`a-modifier[origin="${card.Id}"]`);
         for (let modifier of modifiers) {
             modifier.remove();
         }
