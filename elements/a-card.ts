@@ -188,12 +188,12 @@ export class CardElement extends HTMLElement {
         const mask_url = `url(${mask_src})`;
 
         const card_body = html`
-            <flex-col start id="cost">
+            <flex-row start id="cost">
                 ${Array.from(
                     {length: this.Controller.CurrentCost},
                     (_, i) => html`<span class="cost ${i >= this.BaseCost && "incr"}"></span>`,
                 )}
-            </flex-col>
+            </flex-row>
             <span
                 id="power"
                 class="${this.Controller.CurrentPower > this.BasePower
@@ -297,13 +297,14 @@ export class CardElement extends HTMLElement {
 
                 #cost {
                     position: absolute;
-                    inset: 2px 3px auto;
+                    inset: 2px 90px auto 3px;
+                    flex-wrap: wrap;
+                    gap: 1px;
                 }
 
                 .cost {
                     width: 10px;
                     height: 10px;
-                    margin: 1px 0;
                     border-radius: 50%;
                     background: radial-gradient(circle at 30% 30%, #ffff00, #ffff00aa);
                 }
