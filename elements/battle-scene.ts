@@ -332,7 +332,7 @@ export class BattleScene extends HTMLElement {
 
                         // Update the collection state for the new card in deck.
                         save_card_state(new_card.Controller, CollectionFlag.Owned);
-                        this.Game.Stats.CardsAcquired++;
+                        this.Game.Stats["Cards Acquired"]++;
 
                         if (this.Game.CardsInShop > 1) {
                             this.Game.CardsInShop--;
@@ -358,7 +358,7 @@ export class BattleScene extends HTMLElement {
         this.State = "play";
         this.Render();
 
-        this.Game.Stats.Battles++;
+        this.Game.Stats["Battles"]++;
 
         for (let [trace, message] of this.StartBattle()) {
             this.Log(trace, message);
@@ -427,8 +427,8 @@ export class BattleScene extends HTMLElement {
             yield* card.Reveal(trace);
 
             if (card.Owner === this.Player) {
-                this.Game.Stats.CardsPlayed++;
-                this.Game.Stats.EnergySpent += card.CurrentCost;
+                this.Game.Stats["Cards Played"]++;
+                this.Game.Stats["Energy Spent"] += card.CurrentCost;
             }
         }
 
@@ -451,12 +451,12 @@ export class BattleScene extends HTMLElement {
                 locations_won.push(location);
             }
 
-            this.Game.Stats.TotalPower += score;
+            this.Game.Stats["Total Power"] += score;
         }
 
         this.Game.CardsInShop = locations_won.length;
-        this.Game.Stats.LocationsWon += locations_won.length;
-        this.Game.Stats.LocationsLost += this.Locations.length - locations_won.length;
+        this.Game.Stats["Locations Won"] += locations_won.length;
+        this.Game.Stats["Locations Lost"] += this.Locations.length - locations_won.length;
 
         this.TheButton.disabled = true;
 

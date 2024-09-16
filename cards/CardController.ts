@@ -219,7 +219,7 @@ export abstract class CardController {
         yield* this.Battle.BroadcastCardMessage(Message.CardEntersTrash, trace, this);
 
         if (this.Owner === this.Battle.Player) {
-            this.Battle.Game.Stats.CardsTrashed++;
+            this.Battle.Game.Stats["Cards Trashed"]++;
         }
     }
 
@@ -236,7 +236,7 @@ export abstract class CardController {
         }
 
         if (this.Owner === this.Battle.Player) {
-            this.Battle.Game.Stats.CardsMoved++;
+            this.Battle.Game.Stats["Cards Moved"]++;
         }
     }
 

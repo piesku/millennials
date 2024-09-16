@@ -199,53 +199,26 @@ export class GameContainer extends HTMLElement {
             throw "Dialog not found";
         }
 
-        let total_seconds = (Date.now() - this.Stats.DateStarted) / 1000;
-        let villains_bested = this.Stats.Battles - Number(!won);
-
-        dialog.innerHTML = html`
+        let contents = `
             <h2>${won ? "You win the run!" : "You lose the run."}</h2>
             <flex-col gap>
                 <table>
-                    <tr>
-                        <td>Villains Bested</td>
-                        <td>${villains_bested}</td>
-                    </tr>
-                    <tr>
-                        <td>Cards Played</td>
-                        <td>${this.Stats.CardsPlayed}</td>
-                    </tr>
-                    <tr>
-                        <td>Cards Trashed</td>
-                        <td>${this.Stats.CardsTrashed}</td>
-                    </tr>
-                    <tr>
-                        <td>Cards Moved</td>
-                        <td>${this.Stats.CardsMoved}</td>
-                    </tr>
-                    <tr>
-                        <td>Cards Acquired</td>
-                        <td>${this.Stats.CardsAcquired}</td>
-                    </tr>
-                    <tr>
-                        <td>Locations Won</td>
-                        <td>${this.Stats.LocationsWon}</td>
-                    </tr>
-                    <tr>
-                        <td>Locations Lost</td>
-                        <td>${this.Stats.LocationsLost}</td>
-                    </tr>
-                    <tr>
-                        <td>Total Power</td>
-                        <td>${this.Stats.TotalPower}</td>
-                    </tr>
-                    <tr>
-                        <td>Energy Spent</td>
-                        <td>${this.Stats.EnergySpent}</td>
-                    </tr>
-                    <tr>
-                        <td>Total Time</td>
-                        <td>${format_time(total_seconds)}</td>
-                    </tr>
+        `;
+
+        for (let stat in this.Stats) {
+            contents += `
+                <tr>
+                    <td>${stat}</td>
+                    <td>${this.Stats[stat]}</td>
+                </tr>
+            `;
+        }
+
+        contents += html`
+                <tr>
+                    <td>Total Time</td>
+                    <td>${format_time(this.TotalTime / 1000)}</td>
+                </tr>
                 </table>
                 <flex-row>
                     <button id="reset">Play Again</button>
@@ -254,6 +227,7 @@ export class GameContainer extends HTMLElement {
             </flex-col>
         `;
 
+        dialog.innerHTML = contents;
         dialog.showModal();
     }
 
@@ -268,17 +242,17 @@ export class GameContainer extends HTMLElement {
         this.CurrentOpponent = 0;
         this.CardsInShop = 1;
         this.PlayerDeck = [...STARTING_DECK];
+        this.TotalTime = 0;
         this.Stats = {
-            Battles: 0,
-            CardsPlayed: 0,
-            CardsTrashed: 0,
-            CardsMoved: 0,
-            CardsAcquired: 0,
-            LocationsWon: 0,
-            LocationsLost: 0,
-            TotalPower: 0,
-            EnergySpent: 0,
-            DateStarted: Date.now(),
+            ["Battles"]: 0,
+            ["Cards Played"]: 0,
+            ["Cards Trashed"]: 0,
+            ["Cards Moved"]: 0,
+            ["Cards Acquired"]: 0,
+            ["Locations Won"]: 0,
+            ["Locations Lost"]: 0,
+            ["Total Power"]: 0,
+            ["Energy Spent"]: 0,
         };
 
         for (let battle of this.querySelectorAll<BattleScene>("battle-scene")) {
@@ -287,22 +261,27 @@ export class GameContainer extends HTMLElement {
     }
 
     Commit() {
+        this.TotalTime += Date.now() - this.LastSavedAt;
+        this.LastSavedAt = Date.now();
         save_game_state(this);
         history.pushState(this.CurrentView, "");
         this.Render();
     }
 
-    Stats = {
-        Battles: 0,
-        CardsPlayed: 0,
-        CardsTrashed: 0,
-        CardsMoved: 0,
-        CardsAcquired: 0,
-        LocationsWon: 0,
-        LocationsLost: 0,
-        TotalPower: 0,
-        EnergySpent: 0,
-        DateStarted: Date.now(),
+    TotalTime = 0;
+    LastSavedAt = Date.now();
+    Stats: {
+        [key: string]: number;
+    } = {
+        ["Battles Played"]: 0,
+        ["Cards Played"]: 0,
+        ["Cards Trashed"]: 0,
+        ["Cards Moved"]: 0,
+        ["Cards Acquired"]: 0,
+        ["Locations Won"]: 0,
+        ["Locations Lost"]: 0,
+        ["Total Power"]: 0,
+        ["Energy Spent"]: 0,
     };
 }
 

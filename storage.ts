@@ -3,7 +3,7 @@ import {GameContainer} from "./elements/game-container.js";
 
 const enum Storage {
     Collection = "com.piesku.millennials.1",
-    CurrentRun = "com.piesku.millennials.2",
+    CurrentRun = "com.piesku.millennials.3",
 }
 
 interface CurrentRunState {
@@ -11,6 +11,8 @@ interface CurrentRunState {
     curr: number;
     shop: number;
     deck: number[];
+    stat: GameContainer["Stats"];
+    time: number;
 }
 
 export function save_game_state(game: GameContainer) {
@@ -19,6 +21,8 @@ export function save_game_state(game: GameContainer) {
         curr: game.CurrentOpponent,
         shop: game.CardsInShop,
         deck: game.PlayerDeck,
+        stat: game.Stats,
+        time: game.TotalTime,
     };
     localStorage.setItem(Storage.CurrentRun, JSON.stringify(state));
     console.log("%cGame state saved", "color: red");
@@ -42,6 +46,8 @@ export function load_game_state(game: GameContainer) {
         game.CurrentOpponent = state.curr;
         game.CardsInShop = state.shop;
         game.PlayerDeck = state.deck;
+        game.Stats = state.stat;
+        game.TotalTime = state.time;
         console.log("%cGame state loaded", "color: red");
     }
 }
