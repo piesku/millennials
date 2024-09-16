@@ -61,9 +61,9 @@ export class ActorElement extends HTMLElement {
                 <slot></slot>
                 <div>
                     <h2>${this.Controller.Name}</h2>
+                    <b style="font-size:100px;">${this.Controller.GetScore()}</b>
                     <div>Energy: ${this.Controller.CurrentEnergy}</div>
                     <div>Trash: ${this.querySelectorAll("a-trash a-card").length}</div>
-                    <b style="font-size:100px;">${this.Controller.GetScore()}</b>
                 </div>
             </flex-row>
         `;
