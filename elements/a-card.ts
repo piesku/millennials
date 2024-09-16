@@ -223,7 +223,7 @@ export class CardElement extends HTMLElement {
                 }
 
                 :host(:not(.frontside)) {
-                    background-image: repeating-linear-gradient(45deg, #fe7 0px, #fd6 10px, #fa8 20px);
+                    background: repeating-linear-gradient(45deg, #fe7 0px, #fd6 10px, #fa8 20px);
                     box-shadow: inset 0 0 0 1px #00000066;
                 }
 
@@ -272,9 +272,7 @@ export class CardElement extends HTMLElement {
                     width: ${target_height / 2}px;
                     height: ${target_height}px;
                     margin: 0 ${pixel_size * 2}px 0 ${pixel_size * 3}px;
-                    background-position: 0 -${sprite_y}px;
-                    background-size: ${target_height / 2}px auto;
-                    background-image: ${background_url};
+                    background: ${background_url} 0 -${sprite_y}px / ${target_height / 2}px auto;
                     image-rendering: pixelated;
                 }
 
@@ -286,8 +284,7 @@ export class CardElement extends HTMLElement {
                     position: absolute;
                     inset: 0;
                     border-radius: 5px;
-                    background-image: ${mask_url};
-                    background-size: ${target_height}px auto;
+                    background: ${mask_url} 0 0 / ${target_height}px auto;
                     image-rendering: pixelated;
                 }
 
@@ -396,7 +393,7 @@ export class CardElement extends HTMLElement {
                     inset: 0;
                     z-index: 1;
                     border-radius: 5px;
-                    background-image: radial-gradient(circle at var(--x) var(--y), #ffffff99 0%, transparent 65%);
+                    background: radial-gradient(circle at var(--x) var(--y), #ffffff99 0%, transparent 65%);
                 }
 
                 dialog::backdrop {

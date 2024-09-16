@@ -130,9 +130,7 @@ export class BattleScene extends HTMLElement {
                     width: ${target_height / 2}px;
                     height: ${target_height}px;
                     margin: 0 ${pixel_size * 2}px 0 ${pixel_size * 3}px;
-                    background-position: 0 -${sprite_y}px;
-                    background-size: ${target_height / 2}px auto;
-                    background-image: ${background_url};
+                    background: ${background_url} 0 -${sprite_y}px / ${target_height / 2}px auto;
                     image-rendering: pixelated;
                 }
 
@@ -140,8 +138,7 @@ export class BattleScene extends HTMLElement {
                     position: absolute;
                     inset: 0;
                     border-radius: 5px;
-                    background-image: ${mask_url};
-                    background-size: ${target_height}px auto;
+                    background: ${mask_url} 0 0 / ${target_height}px auto;
                     image-rendering: pixelated;
                 }
 
