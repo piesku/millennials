@@ -19,7 +19,7 @@ export class HandElement extends HTMLElement {
                 card.setAttribute(
                     "style",
                     `
-                        --tilt: ${tilt * 5}deg;
+                        --r: ${tilt * 5}deg;
                         --y: ${-Math.cos(x) * 30}px;
                         --z: ${index};
                     `,
@@ -36,13 +36,13 @@ export class HandElement extends HTMLElement {
                     display: block;
                 }
                 ::slotted(a-card) {
-                    transform: translateY(var(--y)) rotate(var(--tilt));
+                    transform: translateY(var(--y)) rotate(var(--r));
                     margin: 0 -20px;
                     transition: scale 0.1s;
                     z-index: var(--z);
                 }
                 ::slotted(a-card:hover) {
-                    transform: translateY(calc(var(--y) - 30px)) rotate(var(--tilt)) scale(1.2);
+                    transform: translateY(calc(var(--y) - 30px)) rotate(var(--r)) scale(1.2);
                     z-index: 100;
                 }
             </style>

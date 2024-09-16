@@ -14,12 +14,11 @@ export class DeckElement extends HTMLElement {
                 }
 
                 slot::slotted(*) {
-                    margin-right: -115px;
+                    margin: 0 -115px 0 0;
                 }
 
                 :host([reverse]) slot::slotted(*) {
-                    margin-right: 0;
-                    margin-left: -115px;
+                    margin: 0 0 0 -115px;
                 }
             </style>
             <flex-row start ${this.getAttribute("reverse") !== null && "reverse"}>

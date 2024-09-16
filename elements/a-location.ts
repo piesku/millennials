@@ -80,7 +80,7 @@ export class LocationElement extends HTMLElement {
                     background: bisque;
                 }
                 p {
-                    margin: 10px 0;
+                    margin: 20px 0;
                 }
                 div {
                     opacity: 0.3;
